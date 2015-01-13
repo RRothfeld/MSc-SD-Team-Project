@@ -1,18 +1,18 @@
 # Team Foxtrot
 
 ```
-              |     |
-              |  _  |
-______________|_( )_|______________
-   o   +|+   [ ( o ) ]   +|+
-            *[_]---[_]*
+		              |     |
+		              |  _  |
+		______________|_( )_|______________
+		   o   +|+   [ ( o ) ]   +|+    o
+		            *[_]---[_]*
 ```
 
 ## Introduction
 **Programming workflow:**
 + Git clone into Eclipse workspace `<project name>/`
 + The project should not exist and should be empty
-+ The Eclipse > File > New Java Project
++ The `Eclipse > File > New Java Project`
 + Name it the same way as you named the folder
 
 **In the terminal you do:**
