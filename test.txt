@@ -1,8 +1,12 @@
 Test
 
 Mickey Pashov
-Andrew Lowson
+Andrew Lowson v2
 Raoul Rothfeld
+<<<<<<< HEAD
+Marco Cook
+=======
 Redfielder?
+>>>>>>> 6663b3d2e62f33a1edf674c570f822f5a9748cf3
 
 Branching is cool
