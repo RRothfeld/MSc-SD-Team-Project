@@ -91,7 +91,7 @@ public class Match {
 	String ref1 = "Derek Riordan";
 	String ref2 = "Jane Gray";
 	String match = String.format("%d %s %s % %s %s",week, level, area, ref1, ref2);
-	return "";
+	return match;
     }
     
 }

@@ -1,7 +1,7 @@
 /**
  * Team Foxtrot
  * JavaBall Referees
- * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ * The main class
  * <p>
  * University of Glasgow
  * MSc/PGDip Information Technology/Software Development
@@ -18,13 +18,12 @@
 
 public class JavaBall 
 {
-
-    /**
-     * the main class
-     * @param args command line arguments
-     */
-    public static void main(String[] args)
-    {
-        // TODO Raoul
-    }
+	/**
+	 * The main method
+	 * @param args the arguments
+	 */
+	public static void main(String[] args) {
+		JavaBallGUI display = new JavaBallGUI();
+		display.setVisible(true);
+	}
 }
