@@ -1,7 +1,7 @@
 /**
  * Team Foxtrot
  * JavaBall Referees
- * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
  * <p>
  * University of Glasgow
  * MSc/PGDip Information Technology/Software Development
