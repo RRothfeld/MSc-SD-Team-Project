@@ -17,5 +17,5 @@
  */
 
 public class RefereeAssociation {
-
+	// TODO Marco
 }
