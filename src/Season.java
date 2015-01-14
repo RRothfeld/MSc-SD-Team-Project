@@ -7,7 +7,8 @@
  * MSc/PGDip Information Technology/Software Development
  * Team Project 2014/15
  *
- * @author  Raoul Rothfeld [2164502r]
+ * @author  Raoul Rothfeld, 2164502r
+ * 
  * @version 1.0
  * @since   14-01-2015
  */
