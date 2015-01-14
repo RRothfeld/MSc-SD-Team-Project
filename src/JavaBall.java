@@ -20,7 +20,7 @@ public class JavaBall
 {
 
     /**
-     *
+     * the main class
      * @param args command line arguments
      */
     public static void main(String[] args)
