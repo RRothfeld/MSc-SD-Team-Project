@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Team Foxtrot
  * JavaBall Referees
@@ -17,5 +19,11 @@
  */
 
 public class Season {
-	// TODO Mickey
+    
+    public ArrayList<Match> matches;
+    // public int numMatches; // no need if we use ArrayList
+    
+    // getMatchByIndex
+    // getNumMatches
+    // getMatchByRef
 }

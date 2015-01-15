@@ -25,6 +25,7 @@ public class Match {
     public String level; // "Junior" or "Senior"
     //public RefereeAssociation referees; // list of all suitable referees
     public ArrayList<Referee> referees;
+    // referees per season 12
     // public Association referees = new RefereeAssociation();
     // ^ same principle as List ls = new ArrayList(); ?
     /*
@@ -68,14 +69,17 @@ public class Match {
 	return week;
     }
     
+    /** */
     public String getArea() {
 	return area;
     }
     
+    /** */
     public String getLevel() {
 	return level;
     }
     
+    /** */
     public String getReferees() {
 	for (Referee rf: referees) {
 	    //rf.getName();
@@ -85,6 +89,7 @@ public class Match {
 	return "";
     }
     
+    /** */
     public String matchDetails() {
 	// this will print to MatchAllocs.txt
 	// could have toString method for match?
