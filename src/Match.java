@@ -20,9 +20,11 @@ import java.util.ArrayList;
 
 public class Match {
     
+	// week can be used as Match ID -rr
     public int week; // week when the match is held 1-52
     public String area; // area where the match is held
     public String level; // "Junior" or "Senior"
+     
     //public RefereeAssociation referees; // list of all suitable referees
     public ArrayList<Referee> referees;
     // referees per season 12

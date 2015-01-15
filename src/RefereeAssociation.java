@@ -20,8 +20,56 @@ public class RefereeAssociation {
 //<<<<<<< Updated upstream
 	// TODO Marco
 //=======
+    private final int MAXREFEREES = 12;
+    private final Referee[] RefereeAssociation;
     
+    private int activeReferees;
     
-
+    public RefereeAssociation()
+    {
+        RefereeAssociation = new Referee[MAXREFEREES];
+        activeReferees = 0;
+    }
+    
+    public void addReferee(Referee referee)
+    {
+        if (referee!=null)
+        {
+            RefereeAssociation[activeReferees] = referee;
+            activeReferees++;
+        }
+        
+    }
+    
+    public void removeReferee(String refereeID)
+    {   
+        for (int i =0; i<MAXREFEREES;i++ )
+        {
+            if (RefereeAssociation[i].getID().equals(refereeID))
+            {
+                RefereeAssociation[i] = null;
+            }
+        }    
+    }
+    
+    public void removeRefereeAtIndex(int index)
+    {
+        RefereeAssociation[index] = null;
+    }
+    
+    public Referee getRefereeAtIndex(int index)
+    {
+        return RefereeAssociation[index];
+    }
+    
+    public Referee[] getSuitableReferees(String location, String type)
+    {
+        
+        Referee[] suitableReferees = new Referee[2];
+        
+        //This requires thought
+        return null;
+    }
+    
 //>>>>>>> Stashed changes
 }
