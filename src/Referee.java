@@ -1,5 +1,5 @@
 
-import java.io.FileReader;
+import java.util.ArrayList;
 
 /**
  * Team Foxtrot
@@ -17,11 +17,22 @@ import java.io.FileReader;
  * 
  * @version 1.0
  * @since   14-01-2015
+ * 
  */
 
 //<<<<<<< Updated upstream
 public class Referee {
 	// TODO Andrew (Helped by Marco)
+    /**
+     * @author Andrew Lowson & Marco Cook
+     * This early version of the Referee Class tries to account for 
+     * as many possible implementations of other classes as possible.
+     * 
+     * There will be many methods here that end up becoming redundant
+     * but we wanted to try and accommodate different thoughts initially
+     * before deciding on final implementation.
+     */
+    
     //-------------------------------------------------------//
     
     //Basic information about Referee from the input file/user.
@@ -33,16 +44,22 @@ public class Referee {
     private String homeLocality;
     
     /* 
-     *  boolean values that represent whether or not Referee 
+     * boolean values that represent whether or not Referee 
      * will visit this location
      */
     private boolean visitNorth;
     private boolean visitCentre;
     private boolean visitSouth;
     
+    // Alternate method of storing visit areas
     private boolean[] visitArea;
     
-    private int matchesRefereed; // allocatedMatches -rr
+    // Count of amount of matches ref has been allocated to
+    private int allocatedCount; 
+    private int qualificationLevel;
+    
+    // List of matches by matchID referee has been allocated to
+    private ArrayList allocatedMatchesList;
     
     //-------------------------------------------------------//
     
@@ -51,58 +68,76 @@ public class Referee {
      */
     public Referee()
     {
-    
+        
     }
     /**
-     *
-     * @param id
-     * @param forename
-     * @param surname
-     * @param qualification
-     * @param matchesRefereed
-     * @param homeLocality
-     * @param travel
+     * Constructor to be used if passed either all referee information from 
+     * GUI when adding new ref, or if ReadLine splits details up before
+     * creating a Referee object. 
+     * 
+     * @param id - Referee ID, format XY1
+     * @param forename - Referee forename
+     * @param surname - Referee surname
+     * @param qual 
+     * @param allocCount - amount of matches allocated to referee
+     * @param homeLocality - home area for referee
+     * @param travel - string Y/N for areas Referee will travel too
      */
-    public Referee(String id, String forename, String surname, String qualification,
-                    String homeLocality, int matchesRefereed, String travel) 
+    public Referee(String id, String forename, String surname, 
+            String qual, String homeLocality, int allocCount, String travel) 
     {
+        //Full name 
         String name = forename + " " + surname;
-        setTravelLocations(travel);
+        
+        //Convert travel parameter to boolean values for area.
+        setTravelLocations(travel); 
              
-        this.uniqueID        = id;
-        this.forename        = forename;
-        this.surname         = surname;
-        this.fullname        = name;
-        this.qualification   = qualification;
-        this.homeLocality    = homeLocality;
-        this.matchesRefereed = matchesRefereed;
+        this.uniqueID       = id;
+        this.forename       = forename;
+        this.surname        = surname;
+        this.fullname       = name;
+        this.qualification  = qual;
+        this.homeLocality   = homeLocality;
+        this.allocatedCount = allocCount;
+        
+        allocatedMatchesList = new ArrayList<>(52);
                    
     }
     
     //-------------------------------------------------------//
     
     /**
-     *
-     * @param fileLine
+     * Constructor to be used if ReadLine has not been split before 
+     * instantiating new Referee object.
+     * String is split, verified for validity and values assigned.
+     * @param fileLine - Long line with all Referee Information
      */
         
     public Referee(String fileLine)
     {
         String [] refereeDetails = fileLine.split(" ");
         
+        //Check to make sure line split properly and has adequate items
         if (refereeDetails != null && refereeDetails.length == 7)
         {
-            this.uniqueID        = refereeDetails[0];
-            this.forename        = refereeDetails[1];
-            this.surname         = refereeDetails[2];
-            this.qualification   = refereeDetails[3];
-            this.matchesRefereed = Integer.parseInt(refereeDetails[4]);
-            this.homeLocality    = refereeDetails[5];
+            this.uniqueID       = refereeDetails[0];
+            this.forename       = refereeDetails[1];
+            this.surname        = refereeDetails[2];
+            this.qualification  = refereeDetails[3];
+            this.allocatedCount = Integer.parseInt(refereeDetails[4]);
+            this.homeLocality   = refereeDetails[5];
             
+            //convert travel locations to boolean
             setTravelLocations(refereeDetails[6]);
         }
     }
     
+    //-------------------------------------------------------//
+    
+    /**
+     * Method to convert Referee Area Options to boolean
+     * @param travel - the three character String eg. 'YYY'
+     */   
     private void setTravelLocations(String travel)
     {
         //remove any possible whitespace
@@ -124,10 +159,9 @@ public class Referee {
     //-------------------------------------------------------//
     
     /**
-     *
-     * @param ID
-     */
-        
+     * Set RefereeID
+     * @param ID 
+     */        
     public void setID(String ID)
     {
         this.uniqueID = ID;
@@ -135,7 +169,7 @@ public class Referee {
     //-------------------------------------------------------//
     
     /**
-     *
+     * Pass back refereeID
      * @return
      */
     public String getID()
@@ -146,8 +180,9 @@ public class Referee {
     //-------------------------------------------------------//
 
     /**
-     *
-     * @param fullname
+     * Set forename and surname if UI collects fullname "First Second" 
+     * from user.
+     * @param fullname - Full String format "Forename Surname"
      */
         public void setName(String fullname)
     {
@@ -160,7 +195,7 @@ public class Referee {
     //-------------------------------------------------------//
     
     /**
-     *
+     * Likely won't be used, concatenates fore and surnames.
      * @param forename
      * @param surname
      */
@@ -173,7 +208,7 @@ public class Referee {
     //-------------------------------------------------------//
     
     /**
-     *
+     * Returns Fullname, likely won't be used if fullname is not kept.
      * @return
      */
     public String getFullName()
@@ -184,7 +219,7 @@ public class Referee {
     //-------------------------------------------------------//
     
     /**
-     *
+     * Set forename of referee.
      * @param forename
      */
     public void setForename(String forename)
@@ -195,7 +230,7 @@ public class Referee {
     //-------------------------------------------------------//
     
     /**
-     *
+     * Return forename
      * @return
      */
         
@@ -206,7 +241,7 @@ public class Referee {
     
     //-------------------------------------------------------//
     /**
-     *
+     * Set surname for Referee
      * @param surname
      */
     public void setSurname(String surname)
@@ -230,16 +265,26 @@ public class Referee {
     //-------------------------------------------------------//
 
     /**
-     *
+     * 
      * @param qualifications
      */
-        public void setQualifications(String qualifications)
+    public void setQualifications(String qualifications)
     {
         this.qualification = qualifications;
     }
     
     //-------------------------------------------------------//
-    
+    /**
+     * Integer value for qualification level independent of other info.
+     * @param qualification - full qualification String eg. IJB1
+     */
+    public void setQualificationLevel(String qualification)
+    {
+        int length = qualification.length()-1;
+        qualificationLevel = (int) qualification.charAt(length);
+    }
+        
+    //-------------------------------------------------------//
     /**
      *
      * @return
@@ -280,10 +325,10 @@ public class Referee {
      */
     public void setMatchesRefereed(int matches)
     {
-        matchesRefereed = matches;
+        allocatedCount = matches;
     }
     
-//-------------------------------------------------------//
+    //-------------------------------------------------------//
     
     /**
      *
@@ -291,17 +336,19 @@ public class Referee {
      */
     public int getMatchesRefereed()
     {
-        return matchesRefereed;
+        return allocatedCount;
     }
     
     //-------------------------------------------------------//
     
     /**
      * 
+     * @param week
      */
-    public void increaseMatchesRefereed()
+    public void increaseMatchesRefereed(int week)
     {
-        matchesRefereed++;
+        allocatedCount++;
+        allocatedMatchesList.add(week);
     }
     
     //-------------------------------------------------------//
@@ -330,8 +377,9 @@ public class Referee {
     //-------------------------------------------------------//
     
     /**
-     *
-     * @param index
+     * Get boolean for location directly. 
+     * 0,1,2 = N,C,S respectively.
+     * @param index - value 0,1,2
      * @return
      */
     public boolean getTravelLocationAtIndex(int index)
@@ -342,9 +390,10 @@ public class Referee {
     //-------------------------------------------------------//
     
     /**
-     *
-     * @param location
-     * @return
+     * Returns a boolean value referring to whether the referee will travel
+     * to that area or not.
+     * @param location - location required.
+     * @return 
      */  
     public boolean getTravelLocation(String location)
     {
@@ -362,10 +411,12 @@ public class Referee {
         }
     }
     
-    /**
-     * Method to change a particular travel 
-     * @param index
-     * @param willTravel
+    //-------------------------------------------------------//
+    
+     /**
+     * Method to change a particular travel preference
+     * @param index - index for area. 0:North 1:Centre 2:South
+     * @param willTravel - true or false pertaining to that area.
      */
         
     public void changeLocationAtIndex(int index, boolean willTravel)
@@ -376,7 +427,9 @@ public class Referee {
     //-------------------------------------------------------//
     
     /**
-     * Method to change all three locations in one step
+     * Method to update all three locations in one step
+     * Referee can change travel preferences. 
+     * Takes in one string, same format as initial preference input.
      * @param travel - is the three character string eg. "YYN"
      * 
      */        
@@ -391,5 +444,7 @@ public class Referee {
             visitArea[i] = travel.charAt(i)=='Y';
         }   
     }
+    
+    //-------------------------------------------------------//
     
 }
