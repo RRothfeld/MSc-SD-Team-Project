@@ -36,8 +36,10 @@ public class Referee {
     private boolean visitCentre;
     private boolean visitSouth;
     
+    private boolean[] visitArea;
+    
     // char[] to store Y/N 3 times, one for each locality.
-    private char[] visit;
+    private char[] travelLocations;
     
     private int matchesRefereed;
     
@@ -54,10 +56,16 @@ public class Referee {
     public Referee(String id, String name, String qual,
                     String home, String travel) 
     {
-        uniqueID = id;
         setName(name);
+        setTravelLocations(travel);
+        
+             uniqueID = id;
+        qualification = qual;
+        homeLocality  = home;
+        
     }
     
+    //-------------------------------------------------------//
     
     /**
      * Default Constructor.
@@ -67,6 +75,25 @@ public class Referee {
     
     }
     
+    //-------------------------------------------------------//
+    
+    private void setTravelLocations(String travel)
+    {
+        //remove any possible whitespace
+        travel = travel.trim();
+        
+        // If we go with char array
+        travelLocations = travel.toCharArray();
+        
+        // if we go with boolean array.
+        for (int i=0;i<travel.length();i++)
+        {
+            visitArea[i] = travel.charAt(i)=='Y';
+        }   
+    }
+    
+    //-------------------------------------------------------//
+    
     private void setName(String fullname)
     {
         String [] names = fullname.split(" ");
@@ -75,6 +102,8 @@ public class Referee {
         surname  = names[1];
         
     }
+    
+    //-------------------------------------------------------//
     
     /**
      *
@@ -87,6 +116,8 @@ public class Referee {
         return fullname;
     }
     
+    //-------------------------------------------------------//
+    
     /**
      *
      * @param fn
@@ -95,6 +126,8 @@ public class Referee {
     {
         forename = fn;
     }
+    
+    //-------------------------------------------------------//
     
     /**
      *
@@ -105,6 +138,8 @@ public class Referee {
         forename = fn;
     }
     
+    //-------------------------------------------------------//
+    
     /**
      *
      * @param matches
@@ -113,6 +148,8 @@ public class Referee {
     {
         matchesRefereed = matches;
     }
+    
+    //-------------------------------------------------------//
     
     /**
      *
@@ -123,6 +160,8 @@ public class Referee {
         return matchesRefereed;
     }
     
+    //-------------------------------------------------------//
+    
     /**
      *
      */
@@ -131,5 +170,6 @@ public class Referee {
         matchesRefereed++;
     }
     
-       
+    //-------------------------------------------------------//
+    
 }
