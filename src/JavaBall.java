@@ -1,5 +1,6 @@
 /**
  * Team Foxtrot
+<<<<<<< Updated upstream
  * JavaBall Referees
  * The main class
  * <p>
@@ -11,6 +12,11 @@
  * @author  Andrew Lowson, 0800685L
  * @author  Marco Cook, 2152599C
  * @author  Raoul Rothfeld, 2164502R
+=======
+ * JavaBall Main Class
+ * 
+ * @author Andrew Lowson
+>>>>>>> Stashed changes
  * 
  * @version 1.0
  * @since   14-01-2015

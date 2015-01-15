@@ -5,7 +5,7 @@
  * <p>
  * University of Glasgow
  * MSc/PGDip Information Technology/Software Development
- * Team Project 2014/15
+ * Team Project 2014/15 
  *
  * @author  Miroslav Pashov, 1005139P
  * @author  Andrew Lowson, 0800685L

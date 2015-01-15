@@ -1,4 +1,4 @@
-/nbproject/private/
+nbproject/
 
 build.xml
 
@@ -44,3 +44,5 @@ local.properties
 .mtj.tmp/
 
 
+/dist/
+/build/

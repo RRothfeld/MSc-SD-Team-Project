@@ -16,6 +16,120 @@
  * @since   14-01-2015
  */
 
+//<<<<<<< Updated upstream
 public class Referee {
 	// TODO Andrew (Helped by Marco)
+    //-------------------------------------------------------//
+    
+    //Basic information about Referee from the input file/user.
+    private String forename;
+    private String surname;
+    private String uniqueID;
+    private String qualification;
+    private String homeLocality;
+    
+    /* 
+     *  boolean values that represent whether or not Referee 
+     * will visit this location
+     */
+    private boolean visitNorth;
+    private boolean visitCentre;
+    private boolean visitSouth;
+    
+    // char[] to store Y/N 3 times, one for each locality.
+    private char[] visit;
+    
+    private int matchesRefereed;
+    
+    //-------------------------------------------------------//
+    
+    /**
+     *
+     * @param id
+     * @param name
+     * @param qual
+     * @param home
+     * @param travel
+     */
+    public Referee(String id, String name, String qual,
+                    String home, String travel) 
+    {
+        uniqueID = id;
+        setName(name);
+    }
+    
+    
+    /**
+     * Default Constructor.
+     */
+    public Referee()
+    {
+    
+    }
+    
+    private void setName(String fullname)
+    {
+        String [] names = fullname.split(" ");
+        
+        forename = names[0];
+        surname  = names[1];
+        
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public String getFullName()
+    {
+        String fullname = forename + " " + surname;
+        
+        return fullname;
+    }
+    
+    /**
+     *
+     * @param fn
+     */
+    public void setForename(String fn)
+    {
+        forename = fn;
+    }
+    
+    /**
+     *
+     * @param fn
+     */
+    public void setSurname(String fn)
+    {
+        forename = fn;
+    }
+    
+    /**
+     *
+     * @param matches
+     */
+    public void setMatchesRefereed(int matches)
+    {
+        matchesRefereed = matches;
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public int getMatchesRefereed()
+    {
+        return matchesRefereed;
+    }
+    
+    /**
+     *
+     */
+    public void increaseMatchesRefereed()
+    {
+        matchesRefereed++;
+    }
+    
+       
 }

@@ -17,5 +17,11 @@
  */
 
 public class RefereeAssociation {
+//<<<<<<< Updated upstream
 	// TODO Marco
+//=======
+    
+    
+
+//>>>>>>> Stashed changes
 }
