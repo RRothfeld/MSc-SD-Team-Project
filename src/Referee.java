@@ -27,9 +27,9 @@ public class Referee {
     //Basic information about Referee from the input file/user.
     private String forename;
     private String surname;
-    private String fullname; // Decide later
+    private String fullname; // Decide later: delete -rr
     private String uniqueID;
-    private String qualification;
+    private String qualification; //maybe as int (without NJB/IJB)? -rr
     private String homeLocality;
     
     /* 
@@ -42,7 +42,7 @@ public class Referee {
     
     private boolean[] visitArea;
     
-    private int matchesRefereed;
+    private int matchesRefereed; // allocatedMatches -rr
     
     //-------------------------------------------------------//
     
