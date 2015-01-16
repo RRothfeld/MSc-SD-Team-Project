@@ -56,10 +56,10 @@ public class Referee {
     
     // Count of amount of matches ref has been allocated to
     private int allocatedCount; 
-    private int qualificationLevel;
+    private int qualificationLevel; 
     
     // List of matches by matchID referee has been allocated to
-    private ArrayList allocatedMatchesList;
+    private ArrayList<Integer> allocatedMatchesList;
     
     //-------------------------------------------------------//
     
@@ -68,6 +68,13 @@ public class Referee {
      */
     public Referee()
     {
+        this.uniqueID       = "";
+        this.forename       = "";
+        this.surname        = "";
+        this.fullname       = "";
+        this.qualification  = "";
+        this.homeLocality   = "";
+        this.allocatedCount = 0;
         
     }
     /**
@@ -92,13 +99,13 @@ public class Referee {
         //Convert travel parameter to boolean values for area.
         setTravelLocations(travel); 
              
-        this.uniqueID       = id;
-        this.forename       = forename;
-        this.surname        = surname;
-        this.fullname       = name;
-        this.qualification  = qual;
-        this.homeLocality   = homeLocality;
-        this.allocatedCount = allocCount;
+        this.uniqueID        = id;
+        this.forename        = forename;
+        this.surname         = surname;
+        this.fullname        = name;
+        this.qualification   = qual;
+        this.homeLocality    = homeLocality;
+        this.allocatedCount  = allocCount;
         
         allocatedMatchesList = new ArrayList<>(52);
                    
@@ -112,7 +119,6 @@ public class Referee {
      * String is split, verified for validity and values assigned.
      * @param fileLine - Long line with all Referee Information
      */
-        
     public Referee(String fileLine)
     {
         String [] refereeDetails = fileLine.split(" ");
@@ -120,13 +126,14 @@ public class Referee {
         //Check to make sure line split properly and has adequate items
         if (refereeDetails != null && refereeDetails.length == 7)
         {
-            this.uniqueID       = refereeDetails[0];
-            this.forename       = refereeDetails[1];
-            this.surname        = refereeDetails[2];
-            this.qualification  = refereeDetails[3];
-            this.allocatedCount = Integer.parseInt(refereeDetails[4]);
-            this.homeLocality   = refereeDetails[5];
+            this.uniqueID        = refereeDetails[0];
+            this.forename        = refereeDetails[1];
+            this.surname         = refereeDetails[2];
+            this.qualification   = refereeDetails[3];
+            this.allocatedCount  = Integer.parseInt(refereeDetails[4]);
+            this.homeLocality    = refereeDetails[5];
             
+            allocatedMatchesList = new ArrayList<>(52);
             //convert travel locations to boolean
             setTravelLocations(refereeDetails[6]);
         }
@@ -150,9 +157,9 @@ public class Referee {
         }   
         
         // Other implimentation
-        visitNorth  = visitArea[0];
-        visitCentre = visitArea[1];
-        visitSouth  = visitArea[2];
+        this.visitNorth  = visitArea[0];
+        this.visitCentre = visitArea[1];
+        this.visitSouth  = visitArea[2];
         
     }
     
@@ -180,7 +187,7 @@ public class Referee {
     //-------------------------------------------------------//
 
     /**
-     * Set forename and surname if UI collects fullname "First Second" 
+     * Set forename and surname if UI collects full name "First Second" 
      * from user.
      * @param fullname - Full String format "Forename Surname"
      */
@@ -188,8 +195,8 @@ public class Referee {
     {
         String [] names = fullname.split(" ");
         
-        forename = names[0];
-        surname  = names[1];
+        this.forename = names[0];
+        this.surname  = names[1];
     }
     
     //-------------------------------------------------------//
@@ -255,7 +262,6 @@ public class Referee {
      *
      * @return
      */
-        
     public String getSurname()
     {
         return surname;
@@ -280,7 +286,7 @@ public class Referee {
      */
     public void setQualificationLevel(String qualification)
     {
-        int length = qualification.length()-1;
+        int length         = qualification.length()-1;
         qualificationLevel = (int) qualification.charAt(length);
     }
         
@@ -288,8 +294,7 @@ public class Referee {
     /**
      *
      * @return
-     */
-        
+     */ 
     public String getQualifications()
     {
         return qualification;
@@ -301,7 +306,6 @@ public class Referee {
      *
      * @param location
      */
-        
     public void setHomeLocation(String location)
     {
         this.homeLocality = location;
@@ -316,7 +320,6 @@ public class Referee {
     {
         return homeLocality;
     }
-    
     //-------------------------------------------------------//
     
     /**
@@ -325,7 +328,7 @@ public class Referee {
      */
     public void setMatchesRefereed(int matches)
     {
-        allocatedCount = matches;
+        this.allocatedCount = matches;
     }
     
     //-------------------------------------------------------//
