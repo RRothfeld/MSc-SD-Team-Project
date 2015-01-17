@@ -64,11 +64,43 @@ public class RefereeAssociation {
     
     public Referee[] getSuitableReferees(String location, String type)
     {
+        String matchLocation = location;
+        String matchType = type;
+        
+        
         
         Referee[] suitableReferees = new Referee[2];
         
         //This requires thought
+        //Get referees with top two qualifications
+        //Compare Match area with referees areas
         return null;
+    }
+    
+    /**
+     * Method to create the ID for a new referee based on their initials
+     * and the sequence number 1. If the initials already exist, they are 
+     * allocated the next number in the sequence. 
+     * @param forename - the forename of the new referee
+     * @param surname - the surname of the new referee
+     * @return
+     */
+    public String createNewID(String forename, String surname) {
+    	
+    	String refereeForename = forename;
+    	String refereeSurname = surname;
+    	
+    	//Get first characters (initials) of the referee's 
+    	//forename and surname
+    	char f = refereeForename.charAt(0);
+		char s = refereeSurname.charAt(0);
+		
+		StringBuilder initials = new StringBuilder();
+		//Convert characters to strings and add to StringBuilder
+		initials.append(Character.toString(f) + Character.toString(s));
+		
+		
+    	return null;
     }
     
 //>>>>>>> Stashed changes
