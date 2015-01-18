@@ -33,7 +33,7 @@ public class RefereeAssociation {
     
     public void addReferee(Referee referee)
     {
-        if (referee!=null)
+        if (referee != null)
         {
             RefereeAssociation[activeReferees] = referee;
             activeReferees++;
@@ -43,13 +43,13 @@ public class RefereeAssociation {
     
     public void removeReferee(String refereeID)
     {   
-        for (int i =0; i<MAXREFEREES;i++ )
+        for (int i = 0; i < MAXREFEREES; i++)
         {
             if (RefereeAssociation[i].getID().equals(refereeID))
             {
                 RefereeAssociation[i] = null;
             }
-        }    
+        }
     }
     
     public void removeRefereeAtIndex(int index)
@@ -70,6 +70,4 @@ public class RefereeAssociation {
         //This requires thought
         return null;
     }
-    
-//>>>>>>> Stashed changes
 }

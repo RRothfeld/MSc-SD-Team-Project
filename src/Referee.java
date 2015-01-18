@@ -156,7 +156,7 @@ public class Referee {
             visitArea[i] = travel.charAt(i)=='Y';
         }   
         
-        // Other implimentation
+        // Other implementation
         this.visitNorth  = visitArea[0];
         this.visitCentre = visitArea[1];
         this.visitSouth  = visitArea[2];

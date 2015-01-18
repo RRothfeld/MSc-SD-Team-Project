@@ -25,8 +25,8 @@ public class Match {
     public String area; // area where the match is held
     public String level; // "Junior" or "Senior"
      
-    //public RefereeAssociation referees; // list of all suitable referees
-    public ArrayList<Referee> referees;
+    public RefereeAssociation referees; // list of all suitable referees
+    //public ArrayList<Referee> referees;
     // referees per season 12
     // public Association referees = new RefereeAssociation();
     // ^ same principle as List ls = new ArrayList(); ?
@@ -60,6 +60,10 @@ public class Match {
 	initReferees();
     }
     
+    public Match(RefereeAssociation refAssociation) {
+	
+    }
+    
     /** Initiate Referees Array */
     public void initReferees () {
 	referees = new ArrayList();
@@ -83,9 +87,9 @@ public class Match {
     
     /** */
     public String getReferees() {
-	for (Referee rf: referees) {
-	    //rf.getName();
-	    //rf.getAllocations();
+	for () {
+	    rf.getFullName();
+	    rf.getAllocations();
 	    //TODO selection of 2 most suitable refs
 	}
 	return "";
@@ -95,9 +99,12 @@ public class Match {
     public String matchDetails() {
 	// this will print to MatchAllocs.txt
 	// could have toString method for match?
-	String ref1 = "Derek Riordan";
+	
+	// 
+	String ref1 = "John Doe"
 	String ref2 = "Jane Gray";
-	String match = String.format("%d %s %s % %s %s",week, level, area, ref1, ref2);
+	String match = 
+		String.format("%d %s %s %s %s", week, level, area, ref1, ref2);
 	return match;
     }
     
