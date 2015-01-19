@@ -70,7 +70,8 @@ public class RefereeAssociation {
         
         
         Referee[] suitableReferees = new Referee[2];
-        
+        //For loop to get referees that live in area matchLocation
+        //For loop to get referees that have qualifications =< matchType
         //This requires thought
         //Get referees with top two qualifications
         //Compare Match area with referees areas
