@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author  Raoul Rothfeld, 2164502R
  * 
  * @version 1.0
- * @since   14-01-2015
+ * @since   18-01-2015
  */
 
 public class Match {

@@ -8,8 +8,8 @@ import java.io.*;
 
 /**
  * Team Foxtrot
- * JavaBall Referees
- * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ * JavaBall Referees - JavaBallGUI.java
+ * Defines JavaBall GUI that displays referee and match details
  * <p>
  * University of Glasgow
  * MSc/PGDip Information Technology/Software Development
@@ -21,32 +21,20 @@ import java.io.*;
  * @author  Raoul Rothfeld, 2164502R
  * 
  * @version 1.0
- * @since   14-01-2015
+ * @since   18-01-2015
  */
 
 public class JavaBallGUI extends JFrame implements ActionListener {
 	// TODO Raoul
-	/*
-	 *  JFrame
- 2 JPanels, one with scroll bar
- 1 JLabel for title
- 5 JButtons - Add Referee button, Search Referee button, View Bar Chart button, View and
-Allocate Matches button, Exit Program button.
- 1 JTextfield for searching a referee
- 1 JTextArea for displaying all Referees
- 6 JLabels 
-	 */
+	// DESIGN ACCORDING TO MARCO GUI FRAME #2
 	
-
-	/** GUI JButtons */
-	private JButton test;
-
-	/** GUI JTextFields */
-	private JTextField test2;
-
-	/** Display of class timetable */
-	private JTextArea test3;
-
+	// GUI components as instance variables
+	private JPanel panelNavigation, panelCenter, panelSearch, panelList;
+	private JButton buttonAdd, buttonChart, buttonAllocate, buttonExit,
+			buttonSearch;
+	private JTextField fieldSearch;
+	private JTextArea areaRefereeList;
+	
 	/**
 	 * Constructor for JavaBallGUI
 	 */
@@ -54,9 +42,59 @@ Allocate Matches button, Exit Program button.
 		// initiate GUI and its components
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("JavaBall Referees");
-		setSize(500, 500);
+		setSize(800, 500);
+		layoutComponents();
+		updateRefereeList();
 	}
 
+	private void layoutComponents() {
+		// create JPanels
+		panelNavigation = new JPanel();
+		panelNavigation.setLayout(new BoxLayout(panelNavigation,
+				BoxLayout.PAGE_AXIS));
+		panelCenter = new JPanel(new BorderLayout());
+		panelSearch = new JPanel();
+		panelList = new JPanel();
+
+		// set JPanel backgrounds
+		panelNavigation.setBackground(Color.gray);
+		panelCenter.setBackground(Color.white);
+		panelSearch.setBackground(Color.white);
+		panelList.setBackground(Color.white);
+			
+		// add main JPanels to JFrame
+		add(panelNavigation, BorderLayout.WEST);
+		add(panelCenter, BorderLayout.CENTER);
+		panelCenter.add(panelSearch, BorderLayout.NORTH);
+		panelCenter.add(panelList, BorderLayout.SOUTH);
+		
+		// create JTextField
+		// length of JTextField measured in amount of visible 'm' characters
+		fieldSearch = new JTextField(40); //length of 40 for String input
+		fieldSearch.setText("Enter referee name or ID ...");
+		
+		// create JButtons
+		buttonAdd = new JButton("Add Referee");
+		buttonChart = new JButton("Show Chart");
+		buttonAllocate = new JButton("Allocate Refs");
+		buttonExit = new JButton("Save & Exit");
+		buttonSearch = new JButton("Search");
+		
+		//add center components to center panels
+		panelSearch.add(fieldSearch);
+		panelSearch.add(buttonSearch);
+		
+		//add navigation components to panelNavigation
+		panelNavigation.add(buttonAdd);
+		panelNavigation.add(buttonChart);
+		panelNavigation.add(buttonAllocate);
+		panelNavigation.add(buttonExit);
+	}
+	
+	private void updateRefereeList() {
+		
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 	}
