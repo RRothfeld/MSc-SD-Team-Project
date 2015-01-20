@@ -33,7 +33,7 @@ public class RefereeAssociation {
     
     public void addReferee(Referee referee)
     {
-        if (referee!=null)
+        if (referee != null)
         {
             RefereeAssociation[activeReferees] = referee;
             activeReferees++;
@@ -43,13 +43,13 @@ public class RefereeAssociation {
     
     public void removeReferee(String refereeID)
     {   
-        for (int i =0; i<MAXREFEREES;i++ )
+        for (int i = 0; i < MAXREFEREES; i++)
         {
             if (RefereeAssociation[i].getID().equals(refereeID))
             {
                 RefereeAssociation[i] = null;
             }
-        }    
+        }
     }
     
     public void removeRefereeAtIndex(int index)
@@ -77,6 +77,7 @@ public class RefereeAssociation {
         //Compare Match area with referees areas
         return null;
     }
+<<<<<<< HEAD
     
     /**
      * Method to create the ID for a new referee based on their initials
@@ -105,4 +106,6 @@ public class RefereeAssociation {
     }
     
 //>>>>>>> Stashed changes
+=======
+>>>>>>> 0fef1a73d85aac1e285d1e9ea12a526287fbf9cd
 }
