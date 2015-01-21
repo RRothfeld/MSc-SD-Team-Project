@@ -19,6 +19,10 @@ import java.util.ArrayList;
  */
 
 public class Match {
+	
+	public static final int NORTH = -1;
+	public static final int CENTRE = -1;
+	public static final int SOUTH = -1;
     
     public int week; // week when the match is held 1-52
     public String area; // area where the match is held
