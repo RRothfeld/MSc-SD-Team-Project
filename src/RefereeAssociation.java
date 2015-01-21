@@ -77,7 +77,6 @@ public class RefereeAssociation {
         //Compare Match area with referees areas
         return null;
     }
-<<<<<<< HEAD
     
     /**
      * Method to create the ID for a new referee based on their initials
@@ -104,8 +103,4 @@ public class RefereeAssociation {
 		
     	return null;
     }
-    
-//>>>>>>> Stashed changes
-=======
->>>>>>> 0fef1a73d85aac1e285d1e9ea12a526287fbf9cd
 }
