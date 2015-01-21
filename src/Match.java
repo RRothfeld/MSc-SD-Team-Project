@@ -26,6 +26,8 @@ public class Match {
     public String level; // "Junior" or "Senior"
     public ArrayList<Referee> suitableReferees;
     
+    public enum Level { JUNIOR, SENIOR };
+    
     /**
      * Instantiates a new Match (default constructor)
      */
