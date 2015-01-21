@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class Season {
     
-    public final int MAXMATCHES = 52;
+    public static final int MAX_MATCHES = 52;
     
     public ArrayList<Match> matches;
     // public int numMatches; // no need if we use ArrayList

@@ -75,8 +75,7 @@ public class RefereeAssociation {
 	 * @param type
 	 * @return
 	 */
-	public Referee[] getSuitableReferees(String location, String type) {
-		// TODO change to enum
+	public Referee[] getSuitableReferees(Match.Location location, String type) {
 		int n = 0, m = 0;
 		
 		// if senior dann min lvl 2

@@ -100,7 +100,7 @@ public class Referee implements Comparable<Referee> {
         
         this.preSeasonAllocations = allocCount;
         
-        allocatedMatchesList = new ArrayList();                   
+        allocatedMatchesList = new ArrayList<Match>();                   
     }
     
     //-------------------------------------------------------//
@@ -123,11 +123,11 @@ public class Referee implements Comparable<Referee> {
             this.forename = refereeDetails[1];
             this.surname  = refereeDetails[2];
             
-            allocatedMatchesList = new ArrayList(52);
+            allocatedMatchesList = new ArrayList<Match>(Season.MAX_MATCHES);
 
-            this.homeLocation  = refereeDetails[5];
+            this.homeLocation  = refereeDetails[5]; // TODO magic number
            
-            allocatedMatchesList  = new ArrayList();
+            allocatedMatchesList  = new ArrayList<Match>();
 
             //convert travel locations to boolean
             setTravelLocations(refereeDetails[6]);
@@ -152,7 +152,7 @@ public class Referee implements Comparable<Referee> {
         // if we go with boolean array.
         for (int i=0;i<travel.length();i++)
         {
-            visitArea[i] = travel.charAt(i) == 'Y';
+            visitArea[i] = travel.charAt(i) == 'Y'; // TODO magic value
         }   
         
         // Other implementation
@@ -198,7 +198,7 @@ public class Referee implements Comparable<Referee> {
      */
     public void setQualifications(String qualifications)
     {
-        if (qualifications.length() < 4)
+        if (qualifications.length() < 4) // TODO More magic numbers
         {
             this.qualification = qualifications;
         } else 
@@ -294,8 +294,8 @@ public class Referee implements Comparable<Referee> {
      */
     public int getAllocations()
     {
-        int total = allocatedMatchesList.size() + preSeasonAllocations;
-        return total;
+        int totalAllocations = allocatedMatchesList.size() + preSeasonAllocations;
+        return totalAllocations;
     }
     
     //-------------------------------------------------------//

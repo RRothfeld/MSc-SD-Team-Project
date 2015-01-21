@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 /**
- * Team Foxtrot JavaBall Referees XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ * Team Foxtrot JavaBall Referees 
+ * Class which holds information relating to ma
  * <p>
  * University of Glasgow MSc/PGDip Information Technology/Software Development
  * Team Project 2014/15
@@ -16,20 +17,22 @@ import java.util.ArrayList;
  */
 
 public class Match {
-
-    public static final int NORTH = -1;
-    public static final int CENTRE = -2;
-    public static final int SOUTH = -3;
-
+    
+    /** Possible locations for the match */
+    public enum Location {
+	NORTH, CENTRE, SOUTH
+    }
+    
+    /** The level of play in a match */
+    public enum Level {
+	JUNIOR, SENIOR
+    }
+    
     private static final int NOT_SCHEDULED = -1;
     public int week; // week when the match is held 1-52
     public String area; // area where the match is held
-    public String level; // "Junior" or "Senior"
+    public Level level;
     public ArrayList<Referee> suitableReferees;
-
-    public enum Level {
-	JUNIOR, SENIOR
-    };
 
     /**
      * Instantiates a new Match (default constructor)
@@ -37,7 +40,6 @@ public class Match {
     public Match() {
 	week = NOT_SCHEDULED;
 	area = "";
-	level = "";
 	initReferees();
     }
 
@@ -52,7 +54,7 @@ public class Match {
      * @param area
      *            that the match is held in
      */
-    public Match(int week, String level, String area) {
+    public Match(int week, Level level, String area) {
 	this.week = week;
 	this.level = level;
 	this.area = area;
@@ -79,12 +81,12 @@ public class Match {
     }
 
     /** Get match level (i.e. Senior or Junior */
-    public String getLevel() {
+    public Level getLevel() {
 	return level;
     }
 
     /** Get two suggested referees for the match */
-    public ArrayList getReferees() {
+    public ArrayList<Referee> getReferees() {
 	return suitableReferees;
     }
 

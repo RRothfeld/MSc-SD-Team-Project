@@ -65,6 +65,7 @@ public class ChartFrame extends JFrame {
 	return scrollPane;
     }
 
+    /** A method to render the barchart in the frame */
     private void drawChart() {
 
     }

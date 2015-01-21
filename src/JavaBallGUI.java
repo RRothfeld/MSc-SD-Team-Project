@@ -117,7 +117,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	} else if (ae.getSource() == allocateButton) {
 	   System.out.println("Allocate");
 	} else if (ae.getSource() == chartButton) {
-	    System.out.println("Chart");
+	    displayChart();
 	} else if (ae.getSource() == searchButton) {
 	   System.out.println("Search");
 	} else if (ae.getSource() == exitButton) {
