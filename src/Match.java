@@ -88,16 +88,11 @@ public class Match {
 	return level;
     }
     
-    /** Get all suggested referees for the match */
-    public String getReferees() {
-	RefereeAssociation rf = new RefereeAssociation();
-	for (Referee ref: referees) {
-	    ref.getFullName();
-	    ref.getAllocations();
-	    //TODO selection of 2 most suitable refs
+	/** Get all suggested referees for the match */
+	public String getReferees() {
+		// done via RefereeAssocciation.getReferees!
+		return "";
 	}
-	return "";
-    }
     
     /** Get match details */
     public String matchDetails() {
