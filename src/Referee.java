@@ -89,12 +89,13 @@ public class Referee implements Comparable<Referee> {
         //Convert travel parameter to boolean values for area.
         
         setTravelLocations(travel); 
-             
+        setQualifications(qual);
+        
         this.uniqueID = id;
         this.forename = forename;
         this.surname  = surname;
         
-        this.qualification = qual;
+        
         this.homeLocation  = homeLocality;
         
         this.preSeasonAllocations = allocCount;
@@ -124,13 +125,13 @@ public class Referee implements Comparable<Referee> {
             
             allocatedMatchesList = new ArrayList(52);
 
-            this.qualification = refereeDetails[3];
             this.homeLocation  = refereeDetails[5];
            
             allocatedMatchesList  = new ArrayList();
 
             //convert travel locations to boolean
             setTravelLocations(refereeDetails[6]);
+            setQualifications(refereeDetails[3]);
         }
     }
     
@@ -192,14 +193,19 @@ public class Referee implements Comparable<Referee> {
      */
     
     /**
-     * 
+     * Method to set Qualification
      * @param qualifications
      */
     public void setQualifications(String qualifications)
     {
-        
-        //if (qualifications.length()<)
-        this.qualification = qualifications;
+        if (qualifications.length() < 4)
+        {
+            this.qualification = qualifications;
+        } else 
+        {
+            this.qualification = qualifications.substring(0, 3);
+            setQualificationLevel(qualifications);
+        }
     }
     
     //-------------------------------------------------------//
@@ -211,9 +217,9 @@ public class Referee implements Comparable<Referee> {
      */
     public void setQualificationLevel(String qualification)
     {
-        int length = qualification.length()-1;
+        int lastChar = qualification.length()-1;
         
-        this.qualificationLevel = (int) qualification.charAt(length);
+        this.qualificationLevel = (int) qualification.charAt(lastChar);
     }
     
     //-------------------------------------------------------//
@@ -229,6 +235,16 @@ public class Referee implements Comparable<Referee> {
     
     //-------------------------------------------------------//
     
+    /**
+     * Integer value for qualification level independent of other info.
+     * 
+     */
+    public int getQualificationLevel()
+    {
+        return this.qualificationLevel;
+    }
+    
+    //-------------------------------------------------------//
     /**
      * Pass back refereeID
      * @return
