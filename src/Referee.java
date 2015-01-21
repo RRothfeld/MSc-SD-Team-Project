@@ -1,5 +1,7 @@
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Team Foxtrot
@@ -20,8 +22,7 @@ import java.util.ArrayList;
  * 
  */
 
-//<<<<<<< Updated upstream
-public class Referee {
+public class Referee implements Comparable<Referee> {
 	// TODO Andrew (Helped by Marco)
     /**
      * @author Andrew Lowson & Marco Cook
@@ -61,6 +62,8 @@ public class Referee {
     // List of matches by matchID referee has been allocated to
     private ArrayList<Integer> allocatedMatchesList;
     
+    private final int MAXMATCHES = 52;
+    
     //-------------------------------------------------------//
     
     /**
@@ -68,6 +71,7 @@ public class Referee {
      */
     public Referee()
     {
+        
         this.uniqueID       = "";
         this.forename       = "";
         this.surname        = "";
@@ -93,6 +97,7 @@ public class Referee {
     public Referee(String id, String forename, String surname, 
             String qual, String homeLocality, int allocCount, String travel) 
     {
+       
         //Full name 
         String name = forename + " " + surname;
         
@@ -107,7 +112,7 @@ public class Referee {
         this.homeLocality    = homeLocality;
         this.allocatedCount  = allocCount;
         
-        allocatedMatchesList = new ArrayList<>(52);
+        allocatedMatchesList = new ArrayList(MAXMATCHES);
                    
     }
     
@@ -121,6 +126,7 @@ public class Referee {
      */
     public Referee(String fileLine)
     {
+        
         String [] refereeDetails = fileLine.split(" ");
         
         //Check to make sure line split properly and has adequate items
@@ -133,7 +139,7 @@ public class Referee {
             this.allocatedCount  = Integer.parseInt(refereeDetails[4]);
             this.homeLocality    = refereeDetails[5];
             
-            allocatedMatchesList = new ArrayList<>(52);
+            allocatedMatchesList = new ArrayList(52);
             //convert travel locations to boolean
             setTravelLocations(refereeDetails[6]);
         }
@@ -156,7 +162,7 @@ public class Referee {
             visitArea[i] = travel.charAt(i)=='Y';
         }   
         
-        // Other implimentation
+        // Other implementation
         this.visitNorth  = visitArea[0];
         this.visitCentre = visitArea[1];
         this.visitSouth  = visitArea[2];
@@ -173,6 +179,7 @@ public class Referee {
     {
         this.uniqueID = ID;
     }
+    
     //-------------------------------------------------------//
     
     /**
@@ -320,16 +327,6 @@ public class Referee {
     {
         return homeLocality;
     }
-    //-------------------------------------------------------//
-    
-    /**
-     *
-     * @param matches
-     */
-    public void setMatchesRefereed(int matches)
-    {
-        this.allocatedCount = matches;
-    }
     
     //-------------------------------------------------------//
     
@@ -337,7 +334,7 @@ public class Referee {
      *
      * @return
      */
-    public int getMatchesRefereed()
+    public int getAllocations()
     {
         return allocatedCount;
     }
@@ -364,6 +361,17 @@ public class Referee {
     public void setTravelAreas(String travel)
     {
         setTravelLocations(travel);
+    }
+    
+    //-------------------------------------------------------//
+    
+    /**
+     *
+     * @param matches
+     */
+    public void setMatchesRefereed(int matches)
+    {
+        this.allocatedCount = matches;
     }
     
     //-------------------------------------------------------//
@@ -449,5 +457,14 @@ public class Referee {
     }
     
     //-------------------------------------------------------//
-    
+
+    @Override
+    public int compareTo(Referee ref) 
+    {
+        // this has not been tested but StackOverflow said it would work
+        // Will test in a separate programme.
+        return this.getID().compareTo(ref.getID());
+    }
+
+    //-------------------------------------------------------//
 }

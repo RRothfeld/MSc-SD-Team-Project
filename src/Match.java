@@ -15,12 +15,11 @@ import java.util.ArrayList;
  * @author  Raoul Rothfeld, 2164502R
  * 
  * @version 1.0
- * @since   14-01-2015
+ * @since   18-01-2015
  */
 
 public class Match {
     
-	// week can be used as Match ID -rr
     public int week; // week when the match is held 1-52
     public String area; // area where the match is held
     public String level; // "Junior" or "Senior"
@@ -60,44 +59,52 @@ public class Match {
 	initReferees();
     }
     
+    public Match(RefereeAssociation refAssociation) {
+	
+    }
+    
     /** Initiate Referees Array */
     public void initReferees () {
-	referees = new ArrayList();
+	referees = new ArrayList<Referee>();
 	//TODO should I store null values?
     }
     
-    /** */
+    /** Get week number which is also match ID */
     public int getWeek() {
 	return week;
     }
     
-    /** */
+    /** Get match area*/
     public String getArea() {
 	return area;
     }
     
-    /** */
+    /** Get match level (i.e. Senior or Junior */
     public String getLevel() {
 	return level;
     }
     
-    /** */
+    /** Get all suggested referees for the match */
     public String getReferees() {
-	for (Referee rf: referees) {
-	    //rf.getName();
-	    //rf.getAllocations();
+	RefereeAssociation rf = new RefereeAssociation();
+	for (Referee ref: referees) {
+	    ref.getFullName();
+	    ref.getAllocations();
 	    //TODO selection of 2 most suitable refs
 	}
 	return "";
     }
     
-    /** */
+    /** Get match details */
     public String matchDetails() {
 	// this will print to MatchAllocs.txt
 	// could have toString method for match?
-	String ref1 = "Derek Riordan";
+	
+	// 
+	String ref1 = "John Doe";
 	String ref2 = "Jane Gray";
-	String match = String.format("%d %s %s % %s %s",week, level, area, ref1, ref2);
+	String match = 
+		String.format("%d %s %s %s %s", week, level, area, ref1, ref2);
 	return match;
     }
     

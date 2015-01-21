@@ -1,6 +1,6 @@
 /**
  * Team Foxtrot
- * JavaBall Referees
+ * JavaBall Referees - JavaBall.java
  * The main class
  * <p>
  * University of Glasgow
