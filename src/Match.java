@@ -20,26 +20,17 @@ import java.util.ArrayList;
 
 public class Match {
     
+    private static final int NOT_SCHEDULED = -1;
     public int week; // week when the match is held 1-52
     public String area; // area where the match is held
     public String level; // "Junior" or "Senior"
-     
-    //public RefereeAssociation referees; // list of all suitable referees
-    public ArrayList<Referee> referees;
-    // referees per season 12
-    // public Association referees = new RefereeAssociation();
-    // ^ same principle as List ls = new ArrayList(); ?
-    /*
-     * Brownie points for
-     * + reusability
-     * + use of inheritance
-     */
+    public ArrayList<Referee> suitableReferees;
     
     /**
      * Instantiates a new Match (default constructor)
      */
     public Match() {
-	week = 0; //TODO sentinel value as a CONSTANT?
+	week = NOT_SCHEDULED;
 	area = "";
 	level = "";
 	initReferees();
@@ -56,17 +47,15 @@ public class Match {
 	this.week = week;
 	this.level = level;
 	this.area = area;
-	initReferees();
+	initReferees(); 
+	// TODO this method could get the 2 suitable refs and get them from RefAss
     }
     
-    public Match(RefereeAssociation refAssociation) {
-	
-    }
-    
-    /** Initiate Referees Array */
+    /** Store the two suitable referees for the match */
     public void initReferees () {
-	referees = new ArrayList<Referee>();
-	//TODO should I store null values?
+	// TODO take in a ref association
+	// then 
+	// suitableReferees = refAss.getSuitableRefs();
     }
     
     /** Get week number which is also match ID */
@@ -74,7 +63,7 @@ public class Match {
 	return week;
     }
     
-    /** Get match area*/
+    /** Get match area */
     public String getArea() {
 	return area;
     }
@@ -84,28 +73,25 @@ public class Match {
 	return level;
     }
     
-    /** Get all suggested referees for the match */
-    public String getReferees() {
-	RefereeAssociation rf = new RefereeAssociation();
-	for (Referee ref: referees) {
-	    ref.getFullName();
-	    ref.getAllocations();
-	    //TODO selection of 2 most suitable refs
-	}
-	return "";
+    /** Get two suggested referees for the match */
+    public ArrayList getReferees() {
+	return suitableReferees;
     }
     
-    /** Get match details */
-    public String matchDetails() {
+    /** Gets match details */
+    public String matchReport() {
 	// this will print to MatchAllocs.txt
 	// could have toString method for match?
-	
-	// 
-	String ref1 = "John Doe";
+	String ref1 = "John Doe"; // ref.get(1).get
 	String ref2 = "Jane Gray";
 	String match = 
 		String.format("%d %s %s %s %s", week, level, area, ref1, ref2);
 	return match;
+    }
+    
+    /**  */
+    public String toString() {
+	return "hello";
     }
     
 }
