@@ -1,28 +1,9 @@
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-/**
- * Team Foxtrot
- * JavaBall Referees
- * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
- * <p>
- * University of Glasgow
- * MSc/PGDip Information Technology/Software Development
- * Team Project 2014/15
- *
- * @author  Miroslav Pashov, 1005139P
- * @author  Andrew Lowson, 0800685L
- * @author  Marco Cook, 2152599C
- * @author  Raoul Rothfeld, 2164502R
- * 
- * @version 1.0
- * @since   14-01-2015
- * 
- */
 
 public class Referee implements Comparable<Referee> {
+
+
 	// TODO Andrew (Helped by Marco)
     /**
      * @author Andrew Lowson & Marco Cook
@@ -39,10 +20,10 @@ public class Referee implements Comparable<Referee> {
     //Basic information about Referee from the input file/user.
     private String forename;
     private String surname;
-    private String fullname; // Decide later: delete -rr
     private String uniqueID;
-    private String qualification; //maybe as int (without NJB/IJB)? -rr
-    private String homeLocality;
+    private String qualification; //maybe as int (without NJB/IJB)? -rr 
+    private String homeLocation;
+    private int    qualificationLevel;
     
     /* 
      * boolean values that represent whether or not Referee 
@@ -52,17 +33,10 @@ public class Referee implements Comparable<Referee> {
     private boolean visitCentre;
     private boolean visitSouth;
     
-    // Alternate method of storing visit areas
-    private boolean[] visitArea;
-    
-    // Count of amount of matches ref has been allocated to
-    private int allocatedCount; 
-    private int qualificationLevel; 
-    
     // List of matches by matchID referee has been allocated to
-    private ArrayList<Integer> allocatedMatchesList;
+    private ArrayList<Match> allocatedMatchesList;
     
-    private final int MAXMATCHES = 52;
+    private int preSeasonAllocations;
     
     //-------------------------------------------------------//
     
@@ -71,15 +45,13 @@ public class Referee implements Comparable<Referee> {
      */
     public Referee()
     {
+        this.uniqueID = "";
+        this.forename = "";
+        this.surname  = "";        
         
-        this.uniqueID       = "";
-        this.forename       = "";
-        this.surname        = "";
-        this.fullname       = "";
         this.qualification  = "";
-        this.homeLocality   = "";
-        this.allocatedCount = 0;
-        
+        this.homeLocation   = "";
+        this.preSeasonAllocations = 0;
     }
     /**
      * Constructor to be used if passed either all referee information from 
@@ -97,23 +69,21 @@ public class Referee implements Comparable<Referee> {
     public Referee(String id, String forename, String surname, 
             String qual, String homeLocality, int allocCount, String travel) 
     {
-       
-        //Full name 
-        String name = forename + " " + surname;
-        
+        //TODO SPLIT QUALIFICATION INTO TYPE AND LEVEL
         //Convert travel parameter to boolean values for area.
+        
         setTravelLocations(travel); 
              
-        this.uniqueID        = id;
-        this.forename        = forename;
-        this.surname         = surname;
-        this.fullname        = name;
-        this.qualification   = qual;
-        this.homeLocality    = homeLocality;
-        this.allocatedCount  = allocCount;
+        this.uniqueID = id;
+        this.forename = forename;
+        this.surname  = surname;
         
-        allocatedMatchesList = new ArrayList(MAXMATCHES);
-                   
+        this.qualification = qual;
+        this.homeLocation  = homeLocality;
+        
+        this.preSeasonAllocations = allocCount;
+        
+        allocatedMatchesList = new ArrayList();                   
     }
     
     //-------------------------------------------------------//
@@ -126,20 +96,23 @@ public class Referee implements Comparable<Referee> {
      */
     public Referee(String fileLine)
     {
-        
         String [] refereeDetails = fileLine.split(" ");
         
-        //Check to make sure line split properly and has adequate items
+        // TODO call the next constructor
+        // Check to make sure line split properly and has adequate items
         if (refereeDetails != null && refereeDetails.length == 7)
         {
-            this.uniqueID        = refereeDetails[0];
-            this.forename        = refereeDetails[1];
-            this.surname         = refereeDetails[2];
-            this.qualification   = refereeDetails[3];
-            this.allocatedCount  = Integer.parseInt(refereeDetails[4]);
-            this.homeLocality    = refereeDetails[5];
+            this.uniqueID = refereeDetails[0];
+            this.forename = refereeDetails[1];
+            this.surname  = refereeDetails[2];
             
             allocatedMatchesList = new ArrayList(52);
+
+            this.qualification = refereeDetails[3];
+            this.homeLocation  = refereeDetails[5];
+           
+            allocatedMatchesList  = new ArrayList();
+
             //convert travel locations to boolean
             setTravelLocations(refereeDetails[6]);
         }
@@ -148,18 +121,21 @@ public class Referee implements Comparable<Referee> {
     //-------------------------------------------------------//
     
     /**
+     * TOSDO CHANGE TO GET RID OF ARRAY
      * Method to convert Referee Area Options to boolean
      * @param travel - the three character String eg. 'YYY'
      */   
     private void setTravelLocations(String travel)
     {
-        //remove any possible whitespace
+        // TODO using three seperate variables.
+        // remove any possible whitespace
         travel = travel.trim();
         
+        boolean[] visitArea = new boolean[3];
         // if we go with boolean array.
         for (int i=0;i<travel.length();i++)
         {
-            visitArea[i] = travel.charAt(i)=='Y';
+            visitArea[i] = travel.charAt(i) == 'Y';
         }   
         
         // Other implementation
@@ -170,79 +146,6 @@ public class Referee implements Comparable<Referee> {
     }
     
     //-------------------------------------------------------//
-    
-    /**
-     * Set RefereeID
-     * @param ID 
-     */        
-    public void setID(String ID)
-    {
-        this.uniqueID = ID;
-    }
-    
-    //-------------------------------------------------------//
-    
-    /**
-     * Pass back refereeID
-     * @return
-     */
-    public String getID()
-    {
-        return uniqueID;
-    }
-    
-    //-------------------------------------------------------//
-
-    /**
-     * Set forename and surname if UI collects full name "First Second" 
-     * from user.
-     * @param fullname - Full String format "Forename Surname"
-     */
-        public void setName(String fullname)
-    {
-        String [] names = fullname.split(" ");
-        
-        this.forename = names[0];
-        this.surname  = names[1];
-    }
-    
-    //-------------------------------------------------------//
-    
-    /**
-     * Likely won't be used, concatenates fore and surnames.
-     * @param forename
-     * @param surname
-     */
-        
-    public void setFullName(String forename, String surname)
-    {
-        this.fullname = forename+" "+surname;   
-    }
-    
-    //-------------------------------------------------------//
-    
-    /**
-     * Returns Fullname, likely won't be used if fullname is not kept.
-     * @return
-     */
-    public String getFullName()
-    {
-        return fullname;
-    }
-    
-    //-------------------------------------------------------//
-    
-    /**
-     * Set forename of referee.
-     * @param forename
-     */
-    public void setForename(String forename)
-    {
-        this.forename = forename;
-    }
-    
-    //-------------------------------------------------------//
-    
     /**
      * Return forename
      * @return
@@ -251,16 +154,6 @@ public class Referee implements Comparable<Referee> {
     public String getForename()
     {
         return forename;
-    }
-    
-    //-------------------------------------------------------//
-    /**
-     * Set surname for Referee
-     * @param surname
-     */
-    public void setSurname(String surname)
-    {
-        this.surname = surname;
     }
     
     //-------------------------------------------------------//
@@ -276,28 +169,61 @@ public class Referee implements Comparable<Referee> {
     
     
     //-------------------------------------------------------//
-
+    /**
+     * qualifications
+     * need to be able to take 3 character string, 4 character and int.
+     * 
+     */
+    
     /**
      * 
      * @param qualifications
      */
     public void setQualifications(String qualifications)
     {
+        
+        //if (qualifications.length()<)
         this.qualification = qualifications;
     }
     
     //-------------------------------------------------------//
+    
+    
     /**
      * Integer value for qualification level independent of other info.
      * @param qualification - full qualification String eg. IJB1
      */
     public void setQualificationLevel(String qualification)
     {
-        int length         = qualification.length()-1;
-        qualificationLevel = (int) qualification.charAt(length);
-    }
+        int length = qualification.length()-1;
         
+        this.qualificationLevel = (int) qualification.charAt(length);
+    }
+    
     //-------------------------------------------------------//
+    
+    /**
+     * Integer value for qualification level independent of other info.
+     * @param qualification - full qualification String eg. IJB1
+     */
+    public void setQualificationLevel(int qualification)
+    {
+        this.qualificationLevel = qualification;
+    }
+    
+    //-------------------------------------------------------//
+    
+    /**
+     * Pass back refereeID
+     * @return
+     */
+    public String getID()
+    {
+        return uniqueID;
+    }
+    
+    //-------------------------------------------------------//
+    
     /**
      *
      * @return
@@ -315,7 +241,7 @@ public class Referee implements Comparable<Referee> {
      */
     public void setHomeLocation(String location)
     {
-        this.homeLocality = location;
+        this.homeLocation = location;
     }
     //-------------------------------------------------------//
     
@@ -325,7 +251,7 @@ public class Referee implements Comparable<Referee> {
      */
     public String getHomeLocation()
     {
-        return homeLocality;
+        return homeLocation;
     }
     
     //-------------------------------------------------------//
@@ -336,19 +262,19 @@ public class Referee implements Comparable<Referee> {
      */
     public int getAllocations()
     {
-        return allocatedCount;
+        int total = allocatedMatchesList.size() + preSeasonAllocations;
+        return total;
     }
     
     //-------------------------------------------------------//
     
     /**
      * 
-     * @param week
+     * @param match
      */
-    public void increaseMatchesRefereed(int week)
+    public void addMatch(Match match)
     {
-        allocatedCount++;
-        allocatedMatchesList.add(week);
+        allocatedMatchesList.add(match);
     }
     
     //-------------------------------------------------------//
@@ -356,46 +282,10 @@ public class Referee implements Comparable<Referee> {
     /**
      *
      * @param travel
-     */
-        
+     */  
     public void setTravelAreas(String travel)
     {
         setTravelLocations(travel);
-    }
-    
-    //-------------------------------------------------------//
-    
-    /**
-     *
-     * @param matches
-     */
-    public void setMatchesRefereed(int matches)
-    {
-        this.allocatedCount = matches;
-    }
-    
-    //-------------------------------------------------------//
-    
-    /**
-     *
-     * @return
-     */
-        
-    public boolean[] getTravelLocations()
-    {
-        return visitArea;
-    }
-    //-------------------------------------------------------//
-    
-    /**
-     * Get boolean for location directly. 
-     * 0,1,2 = N,C,S respectively.
-     * @param index - value 0,1,2
-     * @return
-     */
-    public boolean getTravelLocationAtIndex(int index)
-    {
-        return visitArea[index];
     }
     
     //-------------------------------------------------------//
@@ -424,18 +314,7 @@ public class Referee implements Comparable<Referee> {
     
     //-------------------------------------------------------//
     
-     /**
-     * Method to change a particular travel preference
-     * @param index - index for area. 0:North 1:Centre 2:South
-     * @param willTravel - true or false pertaining to that area.
-     */
-        
-    public void changeLocationAtIndex(int index, boolean willTravel)
-    {
-        visitArea[index] = willTravel;
-    }
-    
-    //-------------------------------------------------------//
+    // TODO add method to flip boolean value of 
     
     /**
      * Method to update all three locations in one step
@@ -446,13 +325,15 @@ public class Referee implements Comparable<Referee> {
      */        
     public void updateTravelLocations(String travel)
     {
+        // swaps boolean for String of area
+        
         //remove any possible whitespace
         travel = travel.trim();
         
         // if we go with boolean array.
         for (int i=0;i<travel.length();i++)
         {
-            visitArea[i] = travel.charAt(i)=='Y';
+            //visitArea[i] = travel.charAt(i)=='Y';
         }   
     }
     
