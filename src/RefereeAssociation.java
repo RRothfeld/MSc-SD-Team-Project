@@ -51,36 +51,95 @@ public class RefereeAssociation {
 	public boolean removeReferee(Referee ref) {   
 		return listedReferees.remove(ref); // FIXME trimToSize()?
 	}
-
-	public ArrayList<Referee> getReferees(int n) {
-		// test for qualification level or region code
-		if (1 <= n && n <= 4) {
-			
+	
+	
+	/**
+	 * 
+	 * @param ID
+	 * @return
+	 */
+	public Referee getReferee(String id) {
+		// find referee with desired ID
+		for (Referee ref : listedReferees) {
+			if (ref.getID().equals(id))
+				return ref;
 		}
-		else if (n == Match.NORTH || n == Match.CENTRE || n == Match.SOUTH)
-		  
+		
+		// if ID was not found
 		return null;
-		// TODO either level or region
-	}
-	
-	public ArrayList<Referee> getReferees(String name) {
-		return null;
-		// TODO either fname or sname
-	}
-	
-	public Referee getReferee(String fname, String sname) {
-		return null; // TODO
-	}
-	
-	public Referee getReferee(String ID) {
-		return null; // TODO
 	}
 
-	public Referee[] getSuitableReferees(String location, String type)
-	{
-		String matchLocation = location;
-		String matchType = type; // TODO
+	/**
+	 * 
+	 * @param location
+	 * @param type
+	 * @return
+	 */
+	public Referee[] getSuitableReferees(String location, String type) {
+		// TODO change to enum
+		int n = 0, m = 0;
 		
-		return null;
+		// if senior dann min lvl 2
+		// 
+		
+		Referee [] suitableReferees = {listedReferees.get(n), listedReferees.get(m)};
+		return suitableReferees;
+	}
+
+	/**
+	 * 
+	 * @param level
+	 * @return
+	 */
+	public ArrayList<Referee> getReferees(int level) {
+		// list to hold referees after filtering
+		ArrayList<Referee> filteredReferees = new ArrayList<Referee>();
+		
+		// add all referees with the desired qualification level
+		for (Referee ref : listedReferees) {
+			if (ref.getQualificationLevel() == level)
+				filteredReferees.add(ref);
+		}
+		
+		return filteredReferees;
+	}
+	
+	// TODO get refs for LOCATION
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public ArrayList<Referee> getReferees(String name) {
+		// list to hold referees after filtering
+		ArrayList<Referee> filteredReferees = new ArrayList<Referee>();
+		
+		// add all referees with either the desired fore- or surname
+		for (Referee ref : listedReferees) {
+			if (ref.getForename().equals(name) || ref.getSurname().equals(name))
+				filteredReferees.add(ref);
+		}
+		
+		return filteredReferees;
+	}
+	
+	/**
+	 * 
+	 * @param fname
+	 * @param sname
+	 * @return
+	 */
+	public ArrayList<Referee> getReferees(String fname, String sname) {
+		// list to hold referees after filtering
+		ArrayList<Referee> filteredReferees = new ArrayList<Referee>();
+		
+		// add all referees with either the desired fore- and surname
+		for (Referee ref : listedReferees) {
+			if (ref.getForename().equals(fname) && ref.getSurname().equals(sname))
+				filteredReferees.add(ref);
+		}
+		
+		return filteredReferees;
 	}
 }
