@@ -1,7 +1,8 @@
+import java.util.ArrayList;
+
 /**
- * Team Foxtrot
- * JavaBall Referees
- * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX	TODO Class Description
+ * Team Foxtrot - JavaBall Referees
+ * Aggregation class for all available and registered referees
  * <p>
  * University of Glasgow
  * MSc/PGDip Information Technology/Software Development
@@ -12,102 +13,74 @@
  * @author  Marco Cook, 2152599C
  * @author  Raoul Rothfeld, 2164502R
  * 
- * @version 1.0
- * @since   14-01-2015
+ * @version 1.1
+ * @since   21-01-2015
  */
 
 public class RefereeAssociation {
-	//<<<<<<< Updated upstream
-	// TODO Marco
-	//=======
-	private final int MAXREFEREES = 12;
+	/** maximum number of listed referees */
+	private final static int MAX_REFEREES = 12;
 	
-	//TODO make array list
-	private final Referee[] RefereeAssociation;
+	/** list of all registered referees */
+	private final ArrayList<Referee> listedReferees;
 
-
-
-	public RefereeAssociation()
-	{
-		//TODO make array list
-		RefereeAssociation = new Referee[MAXREFEREES];
-		
+	/** Default constructor */
+	public RefereeAssociation() {
+		listedReferees = new ArrayList<Referee>();
 	}
 	
-	public void addReferee(Referee referee)
-	{
-		if (referee != null)
-		{
-			//RefereeAssociation[activeReferees] = referee;
+	/**
+	 * Adds a referee to the list of registered referees and makes him/her
+	 * available for match allocation.
+	 * @param ref the Referee Object to be registered
+	 * @return indication of successful referee registration
+	 */
+	public boolean add(Referee ref) {
+		// test if another referee may be added
+		if (listedReferees.size() <= MAX_REFEREES)
+			return listedReferees.add(ref);
+		else
+			return false;
+	}
+	
+	/**
+	 * Removes a referee from the lost of registered referees
+	 * @param ref the Referee Object to be removed from the list
+	 * @return indication of successful referee removal
+	 */
+	public boolean removeReferee(Referee ref) {   
+		return listedReferees.remove(ref); // FIXME trimToSize()?
+	}
+
+	public ArrayList<Referee> getReferees(int n) {
+		// test for qualification level or region code
+		if (1 <= n && n <= 4) {
 			
 		}
-
-	}
-	
-	// TODO Modify for use with ArrayList
-	// Use .remove with arraylist rather than null 
-	
-	public void removeReferee(String refereeID)
-	{   
-		for (int i = 0; i < MAXREFEREES; i++)
-		{
-			if (RefereeAssociation[i].getID().equals(refereeID))
-			{
-				RefereeAssociation[i] = null;
-			}
-		}
-	}
-
-	public Referee getRefereeAtIndex(int index)
-	{ //TODO change to take in a string
+		else if (n == Match.NORTH || n == Match.CENTRE || n == Match.SOUTH)
 		
-		return RefereeAssociation[index];
+		return null;
+		// TODO either level or region
 	}
-	//TODO create method to get refereeS travel locations, name(first or last)
-	//or qualification level
 	
+	public ArrayList<Referee> getReferees(String name) {
+		return null;
+		// TODO either fname or sname
+	}
+	
+	public Referee getReferee(String fname, String sname) {
+		return null; // TODO
+	}
+	
+	public Referee getReferee(String ID) {
+		return null; // TODO
+	}
 
 	public Referee[] getSuitableReferees(String location, String type)
 	{
 		String matchLocation = location;
-		String matchType = type;
-
-
-
-		Referee[] suitableReferees = new Referee[2];
-		// For loop to get referees that live in area matchLocation
-		// For loop to get referees that have qualifications =< matchType
-
+		String matchType = type; // TODO
 		
-		// Get referees with top two qualifications
-		// Compare Match area with referees areas
-		
-		return null;
-	}
-
-	/**
-	 * Method to create the ID for a new referee based on their initials
-	 * and the sequence number 1. If the initials already exist, they are 
-	 * allocated the next number in the sequence. 
-	 * @param forename - the forename of the new referee
-	 * @param surname - the surname of the new referee
-	 * @return
-	 */
-	public String createNewID(String forename, String surname) {
-
-		String refereeForename = forename;
-		String refereeSurname = surname;
-
-		// Get first characters (initials) of the referee's 
-		// forename and surname
-		char f = refereeForename.charAt(0);
-		char s = refereeSurname.charAt(0);
-
-		StringBuilder initials = new StringBuilder();
-		// Convert characters to strings and add to StringBuilder
-		initials.append(Character.toString(f) + Character.toString(s));
-
-
 		return null;
 	}
 }
