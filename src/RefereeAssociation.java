@@ -104,7 +104,7 @@ public class RefereeAssociation {
 		return filteredReferees;
 	}
 	
-	// TODO get refs for LOCATION
+	// TODO get refs for LOCATIONs
 	
 	/**
 	 * 
