@@ -43,6 +43,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
     private RefereeList referees;
 
     private final String INPUTFILENAME = "RefereesIn.txt";
+    private final RefereeList  refList = new RefereeList();
        
     /**
      * Constructor for JavaBallGUI
@@ -113,11 +114,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
     }
     
     /**
-     *  Test method for Referee/RefereeList 
+     * Method to read in file, create Referee Obects and fill refList. 
      */
     private void initList() {
-        
-        RefereeList refList = new RefereeList();
         
         try {
         
@@ -135,10 +134,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                 
             }
         } catch(FileNotFoundException ex) {
-            Logger.getLogger(JavaBallGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JavaBallGUI.class.getName()).log(Level.SEVERE, 
+                                null, ex);
         } 
         
-        System.err.println(refList.getRefereeListSize());
+        //Temporary testing method in RefereeList to make sure methods work
         refList.debug();
     }
     
