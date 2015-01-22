@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * @since 18-01-2015
  */
 
-public class JavaBallGUI extends JFrame implements ActionListener  {
+public class JavaBallGUI extends JFrame implements ActionListener {
 
     // TODO Raoul
     // DESIGN ACCORDING TO MARCO GUI FRAME #2
@@ -130,7 +130,6 @@ public class JavaBallGUI extends JFrame implements ActionListener  {
     private void initList() {
         
         try {
-        
             FileReader refereeFile = new FileReader(INPUTFILENAME);
             Scanner    refScanner  = new Scanner(refereeFile);
 
@@ -148,13 +147,12 @@ public class JavaBallGUI extends JFrame implements ActionListener  {
             Logger.getLogger(JavaBallGUI.class.getName()).log(Level.SEVERE, 
                                 null, ex);
         } 
-        
         //Temporary testing method in RefereeList to make sure methods work
         refList.debug();
     }
     
     private void displayChart() {
-
+        
 	chart = new ChartFrame(referees);
 	chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	chart.setVisible(true);
