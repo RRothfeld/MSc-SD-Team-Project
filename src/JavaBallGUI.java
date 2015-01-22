@@ -89,7 +89,9 @@ public class JavaBallGUI extends JFrame implements ActionListener  {
         searchField.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent event){
-            searchField.setText("");
+                if (searchField.getText().equals("Enter referee name or ID ...")){
+                    searchField.setText("");
+                }
             }
         });
         // create JButtons
