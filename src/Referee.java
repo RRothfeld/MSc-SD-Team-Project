@@ -54,6 +54,7 @@ public class Referee implements Comparable<Referee> {
     
     private int preSeasonAllocations;
     
+    
     //-------------------------------------------------------//
     
     /**
@@ -70,6 +71,41 @@ public class Referee implements Comparable<Referee> {
         this.preSeasonAllocations = 0;
         this.allocatedMatchesList = new ArrayList(); 
     }
+    
+    
+    /**
+     * Constructor to be used if ReadLine has not been split before 
+     * instantiating new Referee object.
+     * String is split, verified for validity and values assigned.
+     * @param fileLine - Long line with all Referee Information
+     */
+    public Referee(String fileLine)
+    {
+        String [] refereeDetails = fileLine.split(" ");
+        
+        System.err.println(refereeDetails[0]);
+        
+        // TODO call the next constructor
+        // Check to make sure line split properly and has adequate items
+        if (refereeDetails != null && refereeDetails.length == 7)
+        {
+            this.uniqueID = refereeDetails[0];
+            this.forename = refereeDetails[1];
+            this.surname  = refereeDetails[2];
+            
+            this.homeLocation = refereeDetails[5];
+            
+            int preSeasonAllocations = Integer.parseInt(refereeDetails[4]);
+            allocatedMatchesList = new ArrayList<>();
+            
+            //convert travel locations to boolean
+            setTravelLocations(refereeDetails[6]);
+            setQualifications(refereeDetails[3]);
+        }
+    }
+    
+    //-------------------------------------------------------//
+    
     /**
      * Constructor to be used if passed either all referee information from 
      * GUI when adding new ref, or if ReadLine splits details up before
@@ -84,54 +120,10 @@ public class Referee implements Comparable<Referee> {
      * @param travel - string Y/N for areas Referee will travel too
      */
     public Referee(String id, String forename, String surname, 
-            String qual, String homeLocality, int allocCount, String travel) 
+            String qual, int allocCount,String homeLocality, String travel) 
     {
-        //TODO SPLIT QUALIFICATION INTO TYPE AND LEVEL
-        //Convert travel parameter to boolean values for area.
-        setTravelLocations(travel); 
-        setQualifications(qual);
-        
-        this.uniqueID = id;
-        this.forename = forename;
-        this.surname  = surname;
-        this.homeLocation  = homeLocality;
-        this.allocatedMatchesList = new ArrayList();                   
-        this.preSeasonAllocations = allocCount;
-
-        
-        allocatedMatchesList = new ArrayList<Match>();                   
-    }
-    
-    //-------------------------------------------------------//
-    
-    /**
-     * Constructor to be used if ReadLine has not been split before 
-     * instantiating new Referee object.
-     * String is split, verified for validity and values assigned.
-     * @param fileLine - Long line with all Referee Information
-     */
-    public Referee(String fileLine)
-    {
-        String [] refereeDetails = fileLine.split(" ");
-        
-        // TODO call the next constructor
-        // Check to make sure line split properly and has adequate items
-        if (refereeDetails != null && refereeDetails.length == 7)
-        {
-            this.uniqueID = refereeDetails[0];
-            this.forename = refereeDetails[1];
-            this.surname  = refereeDetails[2];
-            
-            allocatedMatchesList = new ArrayList<Match>(Season.MAX_MATCHES);
-
-            this.homeLocation  = refereeDetails[5]; // TODO magic number
-           
-            allocatedMatchesList  = new ArrayList<Match>();
-
-            //convert travel locations to boolean
-            setTravelLocations(refereeDetails[6]);
-            setQualifications(refereeDetails[3]);
-        }
+        this(id + " " + forename + " " + surname + " " + qual + " "+
+             allocCount + " " + homeLocality+ " " + travel);   
     }
     
     //-------------------------------------------------------//
@@ -152,6 +144,7 @@ public class Referee implements Comparable<Referee> {
         for (int i=0;i<travel.length();i++)
         {
             visitArea[i] = travel.charAt(i) == 'Y'; // TODO magic value
+            
         }   
         
         // Other implementation
