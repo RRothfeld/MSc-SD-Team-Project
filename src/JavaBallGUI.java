@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
@@ -26,7 +28,7 @@ import java.util.logging.Logger;
  * @since 18-01-2015
  */
 
-public class JavaBallGUI extends JFrame implements ActionListener {
+public class JavaBallGUI extends JFrame implements ActionListener  {
 
     // TODO Raoul
     // DESIGN ACCORDING TO MARCO GUI FRAME #2
@@ -82,8 +84,15 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	// length of JTextField measured in amount of visible 'm' characters
 	searchField = new JTextField(40); // length of 40 for String input
 	searchField.setText("Enter referee name or ID ...");
-
-	// create JButtons
+        searchField.addActionListener(this);
+        //Clear the text field if the mouse is clicked in it
+        searchField.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent event){
+            searchField.setText("");
+            }
+        });
+        // create JButtons
 	addButton = new JButton("Add Referee");
 
 	chartButton = new JButton("Show Chart");
@@ -112,7 +121,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
     private void updateRefereeList() {
 
     }
-    
+        
     /**
      * Method to read in file, create Referee Obects and fill refList. 
      */
@@ -160,7 +169,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	   System.out.println("Search");
 	} else if (ae.getSource() == exitButton) {
 	    System.exit(0);
-	}
-
+	} 
     }
 }
