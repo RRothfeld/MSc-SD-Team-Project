@@ -95,7 +95,7 @@ public class Referee implements Comparable<Referee> {
             
             this.homeLocation = refereeDetails[5];
             
-            int preSeasonAllocations = Integer.parseInt(refereeDetails[4]);
+            preSeasonAllocations = Integer.parseInt(refereeDetails[4]);
             allocatedMatchesList = new ArrayList<>();
             
             //convert travel locations to boolean
