@@ -27,7 +27,7 @@ import javax.swing.JTextArea;
 
 public class ChartFrame extends JFrame {
 
-    private RefereeAssociation referees;
+    private RefereeList referees;
     private JTextArea textArea;
 
     // Dimensions of the text area
@@ -43,7 +43,7 @@ public class ChartFrame extends JFrame {
      * FitnessProgram instance variable and add the JTextArea component to the
      * window.
      */
-    public ChartFrame(RefereeAssociation referees) {
+    public ChartFrame(RefereeList referees) {
 	this.referees = referees;
 
 	// order by ref ID

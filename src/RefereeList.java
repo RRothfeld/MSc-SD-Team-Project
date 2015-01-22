@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @since   21-01-2015
  */
 
-public class RefereeAssociation {
+public class RefereeList {
 	/** maximum number of listed referees */
 	private final static int MAX_REFEREES = 12;
 	
@@ -25,7 +25,7 @@ public class RefereeAssociation {
 	private final ArrayList<Referee> listedReferees;
 
 	/** Default constructor */
-	public RefereeAssociation() {
+	public RefereeList() {
 		listedReferees = new ArrayList<Referee>();
 	}
 	

@@ -35,7 +35,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
     //
     private JFrame chart;
-    private RefereeAssociation referees;
+    private RefereeList referees;
 
     /**
      * Constructor for JavaBallGUI
