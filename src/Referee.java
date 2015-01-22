@@ -54,7 +54,6 @@ public class Referee implements Comparable<Referee> {
     
     private int preSeasonAllocations;
     
-    
     //-------------------------------------------------------//
     
     /**
@@ -72,6 +71,7 @@ public class Referee implements Comparable<Referee> {
         this.allocatedMatchesList = new ArrayList(); 
     }
     
+    //-------------------------------------------------------//
     
     /**
      * Constructor to be used if ReadLine has not been split before 
@@ -155,6 +155,7 @@ public class Referee implements Comparable<Referee> {
     }
     
     //-------------------------------------------------------//
+    
     /**
      * 
      * @return
@@ -175,8 +176,8 @@ public class Referee implements Comparable<Referee> {
         return surname;
     }
     
-    
     //-------------------------------------------------------//
+    
     /**
      * Method to set Qualification
      * @param qualifications
@@ -194,7 +195,6 @@ public class Referee implements Comparable<Referee> {
     }
     
     //-------------------------------------------------------//
-    
     
     /**
      * Integer value for qualification level independent of other info.
@@ -241,6 +241,7 @@ public class Referee implements Comparable<Referee> {
     }
     
     //-------------------------------------------------------//
+    
     /**
      * Pass back refereeID
      * @return
