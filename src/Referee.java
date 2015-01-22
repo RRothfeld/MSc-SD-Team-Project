@@ -128,30 +128,27 @@ public class Referee implements Comparable<Referee> {
     
     //-------------------------------------------------------//
     
-    /**
-     * TOSDO CHANGE TO GET RID OF ARRAY
+    /** 
      * Method to convert Referee Area Options to boolean
      * @param travel - the three character String eg. 'YYY'
      */   
     private void setTravelLocations(String travel)
-    {
-        // TODO using three seperate variables.
-        // remove any possible whitespace
+    {        
         travel = travel.trim();
+        boolean[] visits = new boolean[3];
         
-        boolean[] visitArea = new boolean[3];
-        // if we go with boolean array.
-        for (int i=0;i<travel.length();i++)
+        for (int i = 0; i < travel.length(); i++)
         {
-            visitArea[i] = travel.charAt(i) == 'Y'; // TODO magic value
-            
-        }   
+            if (travel.charAt(i)=='Y'){
+                visits[i]  = true;
+            } else {
+                visits[i]  = false;
+            }
+        } 
         
-        // Other implementation
-        this.visitNorth  = visitArea[0];
-        this.visitCentre = visitArea[1];
-        this.visitSouth  = visitArea[2];
-        
+        this.visitNorth  = visits[0];
+        this.visitCentre = visits[1];
+        this.visitSouth  = visits[2];
     }
     
     //-------------------------------------------------------//
@@ -299,7 +296,7 @@ public class Referee implements Comparable<Referee> {
     //-------------------------------------------------------//
     
     /**
-     *
+     * This will take the three characters 'YYN'
      * @param travel
      */  
     public void setTravelAreas(String travel)
@@ -315,7 +312,7 @@ public class Referee implements Comparable<Referee> {
      * @param location - location required.
      * @return 
      */  
-    public boolean getTravelLocation(String location)
+    public boolean getTravelLocation(Match.Location location)
     {
         if (location.equals("North"))
         {
@@ -344,16 +341,8 @@ public class Referee implements Comparable<Referee> {
      */        
     public void updateTravelLocations(String travel)
     {
-        // swaps boolean for String of area
-        
-        //remove any possible whitespace
-        travel = travel.trim();
-        
-        // if we go with boolean array.
-        for (int i=0;i<travel.length();i++)
-        {
-            //visitArea[i] = travel.charAt(i)=='Y';
-        }   
+        //Does the same as setTravelAreas
+        setTravelLocations(travel); 
     }
     
     //-------------------------------------------------------//
