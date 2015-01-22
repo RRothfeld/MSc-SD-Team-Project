@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class Referee implements Comparable<Referee> {
 
 
-	// TODO Andrew (Helped by Marco)
+    // TODO Andrew (Helped by Marco)
     /**
      * @author Andrew Lowson & Marco Cook
      * This early version of the Referee Class tries to account for 
@@ -68,6 +68,7 @@ public class Referee implements Comparable<Referee> {
         this.qualification  = "";
         this.homeLocation   = "";
         this.preSeasonAllocations = 0;
+        this.allocatedMatchesList = new ArrayList(); 
     }
     /**
      * Constructor to be used if passed either all referee information from 
@@ -87,18 +88,16 @@ public class Referee implements Comparable<Referee> {
     {
         //TODO SPLIT QUALIFICATION INTO TYPE AND LEVEL
         //Convert travel parameter to boolean values for area.
-        
         setTravelLocations(travel); 
         setQualifications(qual);
         
         this.uniqueID = id;
         this.forename = forename;
         this.surname  = surname;
-        
-        
         this.homeLocation  = homeLocality;
-        
+        this.allocatedMatchesList = new ArrayList();                   
         this.preSeasonAllocations = allocCount;
+
         
         allocatedMatchesList = new ArrayList<Match>();                   
     }
@@ -164,10 +163,9 @@ public class Referee implements Comparable<Referee> {
     
     //-------------------------------------------------------//
     /**
-     * Return forename
+     * 
      * @return
      */
-        
     public String getForename()
     {
         return forename;
@@ -186,12 +184,6 @@ public class Referee implements Comparable<Referee> {
     
     
     //-------------------------------------------------------//
-    /**
-     * qualifications
-     * need to be able to take 3 character string, 4 character and int.
-     * 
-     */
-    
     /**
      * Method to set Qualification
      * @param qualifications
@@ -236,8 +228,19 @@ public class Referee implements Comparable<Referee> {
     //-------------------------------------------------------//
     
     /**
+     *
+     * @return
+     */ 
+    public String getQualifications()
+    {
+        return qualification;
+    }
+    
+    //-------------------------------------------------------//
+    /**
      * Integer value for qualification level independent of other info.
      * 
+     * @return 
      */
     public int getQualificationLevel()
     {
@@ -253,18 +256,7 @@ public class Referee implements Comparable<Referee> {
     {
         return uniqueID;
     }
-    
-    //-------------------------------------------------------//
-    
-    /**
-     *
-     * @return
-     */ 
-    public String getQualifications()
-    {
-        return qualification;
-    }
-    
+
     //-------------------------------------------------------//
     
     /**
@@ -275,6 +267,7 @@ public class Referee implements Comparable<Referee> {
     {
         this.homeLocation = location;
     }
+    
     //-------------------------------------------------------//
     
     /**

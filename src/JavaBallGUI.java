@@ -1,10 +1,14 @@
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
 import java.util.*;
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Team Foxtrot JavaBall Referees - JavaBallGUI.java Defines JavaBall GUI that
@@ -23,6 +27,7 @@ import java.io.*;
  */
 
 public class JavaBallGUI extends JFrame implements ActionListener {
+
     // TODO Raoul
     // DESIGN ACCORDING TO MARCO GUI FRAME #2
 
@@ -37,6 +42,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
     private JFrame chart;
     private RefereeList referees;
 
+    private final String INPUTFILENAME = "RefereesIn.txt";
+       
     /**
      * Constructor for JavaBallGUI
      */
@@ -47,6 +54,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	setSize(800, 500);
 	layoutComponents();
 	updateRefereeList();
+        initList();
     }
 
     private void layoutComponents() {
@@ -102,6 +110,36 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
     private void updateRefereeList() {
 
+    }
+    
+    /**
+     *  Test method for Referee/RefereeList 
+     */
+    private void initList() {
+        
+        RefereeList refList = new RefereeList();
+        
+        try {
+        
+            FileReader refereeFile = new FileReader(INPUTFILENAME);
+            Scanner    refScanner  = new Scanner(refereeFile);
+
+            while (refScanner.hasNextLine())
+            {
+                String  newReferee = refScanner.nextLine();
+                if (newReferee!=null)
+                {
+                    Referee referee = new Referee(newReferee);
+                    refList.add(referee);
+                }
+                
+            }
+        } catch(FileNotFoundException ex) {
+            Logger.getLogger(JavaBallGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+        System.err.println(refList.getRefereeListSize());
+        refList.debug();
     }
     
     private void displayChart() {

@@ -63,12 +63,10 @@ public class RefereeList {
 		for (Referee ref : listedReferees) {
 			if (ref.getID().equals(id))
 				return ref;
-		}
-		
-		// if ID was not found
-		return null;
-	}
-
+                }
+                return null;
+        }
+        
 	/**
 	 * 
 	 * @param location
@@ -105,6 +103,11 @@ public class RefereeList {
 	
 	// TODO get refs for LOCATIONs
 	
+        public int getRefereeListSize()
+        {
+            return listedReferees.size();
+        }
+        
 	/**
 	 * 
 	 * @param name
@@ -141,4 +144,18 @@ public class RefereeList {
 		
 		return filteredReferees;
 	}
-}
+        
+        public void debug()
+        {
+            int counter = 1;
+            for (Referee ref : listedReferees)
+            {
+                String forename = ref.getForename();
+                String info = String.format("Info for Referee %d. %s",counter,forename);
+                System.out.println(info);
+                counter++;
+                
+            }
+            
+        }
+} 
