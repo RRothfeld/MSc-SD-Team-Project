@@ -26,7 +26,7 @@ public class RefereeList {
 
 	/** Default constructor */
 	public RefereeList() {
-		listedReferees = new ArrayList<Referee>();
+		listedReferees = new ArrayList<>();
 	}
 	
 	/**
@@ -54,16 +54,16 @@ public class RefereeList {
 	
 	
 	/**
-	 * 
-	 * @param ID
-	 * @return
+	 * Method to return referee of specific ID 
+         * @param id - ID of Referee Desired
+	 * @return Referee if found, null if unsuccessful
 	 */
 	public Referee getReferee(String id) {
 		// find referee with desired ID
 		for (Referee ref : listedReferees) {
-			if (ref.getID().equals(id))
-				return ref;
-                }
+                    if (ref.getID().equals(id))
+                        return ref;
+                } 
                 return null;
         }
         
@@ -84,13 +84,13 @@ public class RefereeList {
 	}
 
 	/**
-	 * 
-	 * @param level
-	 * @return
+	 * Method to return list of Referees with particular qualification level
+	 * @param level - Desired qualification
+	 * @return ArrayList of matching Referees
 	 */
 	public ArrayList<Referee> getReferees(int level) {
 		// list to hold referees after filtering
-		ArrayList<Referee> filteredReferees = new ArrayList<Referee>();
+		ArrayList<Referee> filteredReferees = new ArrayList<>();
 		
 		// add all referees with the desired qualification level
 		for (Referee ref : listedReferees) {
@@ -109,13 +109,13 @@ public class RefereeList {
         }
         
 	/**
-	 * 
-	 * @param name
-	 * @return
+	 * Method to return Referees with matching forename/surname
+	 * @param name - Either forename of surname of a Referee
+	 * @return ArrayList of Matching referees
 	 */
 	public ArrayList<Referee> getReferees(String name) {
 		// list to hold referees after filtering
-		ArrayList<Referee> filteredReferees = new ArrayList<Referee>();
+		ArrayList<Referee> filteredReferees = new ArrayList<>();
 		
 		// add all referees with either the desired fore- or surname
 		for (Referee ref : listedReferees) {
@@ -127,14 +127,14 @@ public class RefereeList {
 	}
 	
 	/**
-	 * 
-	 * @param fname
-	 * @param sname
-	 * @return
+	 * Method to return a list of Referees with matching full name.
+	 * @param fname - Referee Forename
+	 * @param sname - Referee Surname
+	 * @return ArrayList with matching referees.
 	 */
 	public ArrayList<Referee> getReferees(String fname, String sname) {
 		// list to hold referees after filtering
-		ArrayList<Referee> filteredReferees = new ArrayList<Referee>();
+		ArrayList<Referee> filteredReferees = new ArrayList<>();
 		
 		// add all referees with either the desired fore- and surname
 		for (Referee ref : listedReferees) {
@@ -145,6 +145,9 @@ public class RefereeList {
 		return filteredReferees;
 	}
         
+        /**
+         * Method to test Referee and RefList class methods.
+         */
         public void debug()
         {
             int counter = 1;
