@@ -18,20 +18,6 @@ import java.util.ArrayList;
  */
 
 public class Referee implements Comparable<Referee> {
-
-
-    // TODO Andrew (Helped by Marco)
-    /**
-     * @author Andrew Lowson & Marco Cook
-     * This early version of the Referee Class tries to account for 
-     * as many possible implementations of other classes as possible.
-     * 
-     * There will be many methods here that end up becoming redundant
-     * but we wanted to try and accommodate different thoughts initially
-     * before deciding on final implementation.
-     */
-    
-    //-------------------------------------------------------//
     
     //Basic information about Referee from the input file/user.
     private String forename;
@@ -53,6 +39,7 @@ public class Referee implements Comparable<Referee> {
     private ArrayList<Match> allocatedMatchesList;
     
     private int preSeasonAllocations;
+    private final int MAXQUALLENGTH = 4;
     
     //-------------------------------------------------------//
     
@@ -83,9 +70,8 @@ public class Referee implements Comparable<Referee> {
     {
         String [] refereeDetails = fileLine.split(" ");
         
-        System.err.println(refereeDetails[0]);
-        
-        // TODO call the next constructor
+        System.err.println(refereeDetails[0]);        
+
         // Check to make sure line split properly and has adequate items
         if (refereeDetails != null && refereeDetails.length == 7)
         {
@@ -139,11 +125,7 @@ public class Referee implements Comparable<Referee> {
         
         for (int i = 0; i < travel.length(); i++)
         {
-            if (travel.charAt(i)=='Y'){
-                visits[i]  = true;
-            } else {
-                visits[i]  = false;
-            }
+            visits[i] = travel.charAt(i)=='Y';
         } 
         
         this.visitNorth  = visits[0];
@@ -154,23 +136,23 @@ public class Referee implements Comparable<Referee> {
     //-------------------------------------------------------//
     
     /**
-     * 
-     * @return
+     * Method to return Forename of Referee
+     * @return - forename
      */
     public String getForename()
     {
-        return forename;
+        return this.forename;
     }
     
     //-------------------------------------------------------//
     
     /**
-     *
-     * @return
+     * Method to return Surname of Referee
+     * @return - Surname
      */
     public String getSurname()
     {
-        return surname;
+        return this.surname;
     }
     
     //-------------------------------------------------------//
@@ -179,9 +161,9 @@ public class Referee implements Comparable<Referee> {
      * Method to set Qualification
      * @param qualifications
      */
-    public void setQualifications(String qualifications)
+    private void setQualifications(String qualifications)
     {
-        if (qualifications.length() < 4) // TODO More magic numbers
+        if (qualifications.length() < MAXQUALLENGTH) 
         {
             this.qualification = qualifications;
         } else 
@@ -218,7 +200,7 @@ public class Referee implements Comparable<Referee> {
     //-------------------------------------------------------//
     
     /**
-     *
+     * Method to return Qualification Type
      * @return
      */ 
     public String getQualifications()
@@ -273,8 +255,8 @@ public class Referee implements Comparable<Referee> {
     //-------------------------------------------------------//
     
     /**
-     *
-     * @return
+     * Method to return amount of allocations
+     * @return - number of allocations
      */
     public int getAllocations()
     {
@@ -285,7 +267,7 @@ public class Referee implements Comparable<Referee> {
     //-------------------------------------------------------//
     
     /**
-     * 
+     * Method to add Match to Referee Allocations List
      * @param match
      */
     public void addMatch(Match match)
@@ -310,27 +292,37 @@ public class Referee implements Comparable<Referee> {
      * Returns a boolean value referring to whether the referee will travel
      * to that area or not.
      * @param location - location required.
-     * @return 
+     * @return - boolean for particular location
      */  
     public boolean getTravelLocation(Match.Location location)
     {
-        if (location.equals("North"))
-        {
-            return visitNorth;
-        } 
-        else if (location.equals("Centre")) 
-        {
-            return visitCentre;
-        } 
-        else 
-        {
-            return visitSouth;
+        if (location.equals(Match.Location.NORTH)){
+            return this.visitNorth;
+        } else if (location.equals(Match.Location.CENTRE)){
+            return this.visitCentre;
+        } else {
+            return this.visitSouth;
         }
     }
     
     //-------------------------------------------------------//
     
-    // TODO add method to flip boolean value of 
+    /**
+     * Method to Change whether a Referee will travel to an Area
+     * @param location - Location to be flipped
+     */
+    public void flipTravel(Match.Location location)
+    {
+        if (location.equals(Match.Location.NORTH)){
+            this.visitNorth = !visitNorth;
+        } else if (location.equals(Match.Location.CENTRE)){
+            this.visitCentre = !visitCentre;
+        } else if (location.equals(Match.Location.SOUTH)){
+            this.visitSouth = !visitSouth;
+        }
+    }
+    
+    //-------------------------------------------------------//
     
     /**
      * Method to update all three locations in one step
