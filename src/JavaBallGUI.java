@@ -29,10 +29,6 @@ import java.util.logging.Logger;
  */
 
 public class JavaBallGUI extends JFrame implements ActionListener {
-
-    // TODO Raoul
-    // DESIGN ACCORDING TO MARCO GUI FRAME #2
-
     // GUI components as instance variables
     private JPanel navPanel, centrePanel, searchPanel, listPanel;
     private JButton addButton, chartButton, allocateButton, exitButton,
@@ -40,7 +36,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
     private JTextField searchField;
     private JTextArea areaRefereeList;
 
-    //
+    // TODO
     private JFrame chart;
     private RefereeList referees;
 
@@ -124,39 +120,37 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
     }
         
-    /**
-     * Method to read in file, create Referee Obects and fill refList. 
-     */
-    private void initList() {
-        
-        try {
-            FileReader refereeFile = new FileReader(INPUTFILENAME);
-            Scanner    refScanner  = new Scanner(refereeFile);
+	/**
+	 * Method to read in file, create Referee Obects and fill refList.
+	 */
+	private void initList() {
 
-            while (refScanner.hasNextLine())
-            {
-                String  newReferee = refScanner.nextLine();
-                if (newReferee!=null)
-                {
-                    Referee referee = new Referee(newReferee);
-                    refList.add(referee);
-                }
-                
-            }
-        } catch(FileNotFoundException ex) {
-            Logger.getLogger(JavaBallGUI.class.getName()).log(Level.SEVERE, 
-                                null, ex);
-        } 
-        //Temporary testing method in RefereeList to make sure methods work
-        refList.debug();
-    }
-    
-    private void displayChart() {
-        
-	chart = new ChartFrame(referees);
-	chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-	chart.setVisible(true);
-    }
+		try {
+			FileReader refereeFile = new FileReader(INPUTFILENAME);
+			Scanner refScanner = new Scanner(refereeFile);
+
+			while (refScanner.hasNextLine()) {
+				String newReferee = refScanner.nextLine();
+				if (newReferee != null) {
+					Referee referee = new Referee(newReferee);
+					refList.add(referee);
+				}
+
+			}
+		} catch (FileNotFoundException ex) {
+			Logger.getLogger(JavaBallGUI.class.getName()).log(Level.SEVERE,
+					null, ex);
+		}
+		// Temporary testing method in RefereeList to make sure methods work
+		refList.debug();
+	}
+
+	private void displayChart() {
+
+		chart = new ChartFrame(referees);
+		chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		chart.setVisible(true);
+	}
 
     public void actionPerformed(ActionEvent ae) {
 	if (ae.getSource() == addButton) {

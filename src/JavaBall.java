@@ -1,6 +1,5 @@
 /**
- * Team Foxtrot
- * JavaBall Referees - JavaBall.java
+ * Team Foxtrot - JavaBall Referees
  * The main class
  * <p>
  * University of Glasgow
@@ -12,18 +11,28 @@
  * @author  Marco Cook, 2152599C
  * @author  Raoul Rothfeld, 2164502R
  * 
- * @version 1.0
- * @since   14-01-2015
+ * @version 1.1 (final)
+ * @since   25-01-2015
  */
 
-public class JavaBall 
-{
+public class JavaBall {
 	/**
-	 * The main method opens GUI
+	 * The main method
 	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
-		JavaBallGUI display = new JavaBallGUI();
-		display.setVisible(true);
+		// initialise view
+		JavaBallGUI view = new JavaBallGUI();
+		view.setVisible(true);
+		
+		// initialise model (Season for Matches, RefereeList for Referees)
+		Season season = new Season();
+		RefereeList refList = new RefereeList();
+		
+		// fill season 
+
+		// initialise controller
+		JavaBallController controller = new JavaBallController(view, season,
+				refList);
 	}
 }

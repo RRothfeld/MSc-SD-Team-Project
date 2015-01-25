@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 
 /**
- * Team Foxtrot
- * JavaBall Referees
+ * Team Foxtrot - JavaBall Referees
  * Season class organising the matches of a season.
  * <p>
  * University of Glasgow
@@ -23,7 +22,8 @@ public class Season {
     public static final int MAX_MATCHES = 52;
     
     public ArrayList<Match> matches;
-    // public int numMatches; // no need if we use ArrayList
+    
+    // Constructor und accessor methods missing. -rr
     
     /** Return match based on week number */
     public Match getMatchByWeek(int week) {
