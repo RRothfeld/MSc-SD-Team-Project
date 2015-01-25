@@ -182,6 +182,10 @@ public class RefereeList {
 		return suitableReferees;
 
 		// if senior dann min lvl 2
+		// least number of allocations of all refs living in match area
+		// after that: least # of allocs of all refs who live adjacent there
+		// after that: least # of allocs of all refs who trave there
+		// if 2 are equally good, which one does not matter
 		// TODO
 		
 
