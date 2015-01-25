@@ -20,7 +20,7 @@ import java.util.Scanner;
  */
 
 public class JavaBall {
-	/** TODO */
+	/** The name of the referee input file */
 	private static final String INPUT_FILE = "RefereesIn.txt";
 	
 	/**
@@ -75,6 +75,6 @@ public class JavaBall {
 		} catch (IOException e) {} // do nothing if file not found
 		
 		// Temporary testing method in RefereeList to make sure methods work
-		refList.debug();
+		refList.debug(); // TODO DELETE
 	}
 }

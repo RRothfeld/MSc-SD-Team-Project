@@ -175,15 +175,17 @@ public class RefereeList {
 	 * @return an array of the two most suitable referees
 	 */
 	public Referee[] getSuitableReferees(Match match) {
-		int n = 0, m = 1;
-
-		// if senior dann min lvl 2
-		// TODO
-
 		// DUMMY RETURN
+		int n = 0, m = 1;
 		Referee[] suitableReferees = { listedReferees.get(n),
 				listedReferees.get(m) };
 		return suitableReferees;
+
+		// if senior dann min lvl 2
+		// TODO
+		
+
+
 	}
 
 	/**
