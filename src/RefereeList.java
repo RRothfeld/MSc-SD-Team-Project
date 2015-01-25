@@ -139,6 +139,7 @@ public class RefereeList {
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
 		
 		// add all referees with the home location
+                // Can you do .equals() on different enums?
 		for (Referee ref : listedReferees) {
 			if (ref.getHomeLocation() == home)
 				filteredReferees.add(ref);
