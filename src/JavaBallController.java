@@ -24,7 +24,7 @@ public class JavaBallController {
 	
 	/** TODO */
     public static enum Location {
-	NORTH, CENTRE, SOUTH
+	NORTH, CENTRAL, SOUTH
     }
 	
 	public JavaBallController(Season season, RefereeList refList) {

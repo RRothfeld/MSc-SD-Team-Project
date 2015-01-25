@@ -142,7 +142,7 @@ public class RefereeList {
 
 		// add all referees with the home location
 		for (Referee ref : listedReferees) {
-			if (ref.getHomeLocation() == home)
+			if (ref.getHomeLocation().equals(home))
 				filteredReferees.add(ref);
 		}
 
