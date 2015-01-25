@@ -296,7 +296,7 @@ public class Referee implements Comparable<Referee> {
     {
         if (location.equals(JavaBallController.Location.NORTH)){
             return this.visitNorth;
-        } else if (location.equals(JavaBallController.Location.CENTRE)){
+        } else if (location.equals(JavaBallController.Location.CENTRAL)){
             return this.visitCentre;
         } else {
             return this.visitSouth;
@@ -313,7 +313,7 @@ public class Referee implements Comparable<Referee> {
     {
         if (location.equals(JavaBallController.Location.NORTH)){
             this.visitNorth = !visitNorth;
-        } else if (location.equals(JavaBallController.Location.CENTRE)){
+        } else if (location.equals(JavaBallController.Location.CENTRAL)){
             this.visitCentre = !visitCentre;
         } else if (location.equals(JavaBallController.Location.SOUTH)){
             this.visitSouth = !visitSouth;
