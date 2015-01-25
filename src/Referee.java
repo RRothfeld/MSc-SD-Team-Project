@@ -26,7 +26,7 @@ public class Referee implements Comparable<Referee> {
     private String qualification; //maybe as int (without NJB/IJB)? -rr 
     
     public enum HomeLocation {
-	NORTH, CENTRE, SOUTH
+	NORTH, CENTRAL, SOUTH
     }
     private int    qualificationLevel;
     private HomeLocation homeLocation;
