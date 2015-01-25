@@ -24,9 +24,12 @@ public class Referee implements Comparable<Referee> {
     private String surname;
     private String uniqueID;
     private String qualification; //maybe as int (without NJB/IJB)? -rr 
-    private String homeLocation;
-    private int    qualificationLevel;
     
+    public enum HomeLocation {
+	NORTH, CENTRE, SOUTH
+    }
+    private int    qualificationLevel;
+    private HomeLocation homeLocation;
     /* 
      * boolean values that represent whether or not Referee 
      * will visit this location
@@ -53,7 +56,7 @@ public class Referee implements Comparable<Referee> {
         this.surname  = "";        
         
         this.qualification  = "";
-        this.homeLocation   = "";
+        
         this.preSeasonAllocations = 0;
         this.allocatedMatchesList = new ArrayList(); 
     }
@@ -79,7 +82,7 @@ public class Referee implements Comparable<Referee> {
             this.forename = refereeDetails[1];
             this.surname  = refereeDetails[2];
             
-            this.homeLocation = refereeDetails[5];
+            setHomeLocation(refereeDetails[5]);
             
             preSeasonAllocations = Integer.parseInt(refereeDetails[4]);
             allocatedMatchesList = new ArrayList<>();
@@ -231,14 +234,13 @@ public class Referee implements Comparable<Referee> {
     }
 
     //-------------------------------------------------------//
-    
     /**
-     *
-     * @param location
+     * 
+     * @param location 
      */
-    public void setHomeLocation(String location)
+    private void setHomeLocation(String location)
     {
-        this.homeLocation = location;
+        this.homeLocation = HomeLocation.valueOf(location.toUpperCase());
     }
     
     //-------------------------------------------------------//
@@ -247,7 +249,7 @@ public class Referee implements Comparable<Referee> {
      *
      * @return
      */
-    public String getHomeLocation()
+    public HomeLocation getHomeLocation()
     {
         return homeLocation;
     }
