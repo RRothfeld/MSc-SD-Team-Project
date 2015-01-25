@@ -1,3 +1,5 @@
+import javax.swing.WindowConstants;
+
 /**
  * Team Foxtrot - JavaBall Referees
  * The controller class
@@ -16,11 +18,52 @@
  */
 
 public class JavaBallController {
-	private JavaBallGUI view;
-	private Season season;
-	private RefereeList refList;
+	private final Season season;
+	private final RefereeList refList;
+	private ChartFrame chart;
 	
-	public JavaBallController(JavaBallGUI view) {
-		this.view = view;
+	public JavaBallController(Season season, RefereeList refList) {
+		this.season = season;
+		this.refList = refList;
+	}
+	
+	/**
+	 * 
+	 * @param s
+	 */
+	public void execAdd(String s) {
+		
+	}
+
+	/**
+	 * 
+	 * @param s
+	 */
+	public void execAllocate(String s) {
+		
+	}
+
+	/**
+	 * 
+	 */
+	public void execChart() {
+		chart = new ChartFrame(refList);
+		chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		chart.setVisible(true);
+	}
+	
+	/**
+	 * 
+	 * @param s
+	 */
+	public void execSearch(String s) {
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void execSaveExit() {
+		
 	}
 }
