@@ -79,16 +79,21 @@ public class RefereeList {
 	 * @param level the desired qualification
 	 * @return ArrayList of matching referees
 	 */
-	public ArrayList<Referee> getReferees(int level) {
+	public ArrayList<Referee> getReferees(Match.Level level) {
+		// if it is a junior match, all referees are applicable
+		if (level.equals(Match.Level.JUNIOR))
+			return listedReferees;
+		
+		// otherwise filter non-applicable referees out
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-
-		// add all referees with the desired qualification level
+		
+		// add all referees with minimum qualification level two
 		for (Referee ref : listedReferees) {
-			if (ref.getQualificationLevel() == level)
+			if (ref.getQualificationLevel() > 1)
 				filteredReferees.add(ref);
 		}
-
+		// return filtered list
 		return filteredReferees;
 	}
 	
@@ -177,19 +182,22 @@ public class RefereeList {
 	public Referee[] getSuitableReferees(Match match) {
 		// DUMMY RETURN
 		int n = 0, m = 1;
-		Referee[] suitableReferees = { listedReferees.get(n),
-				listedReferees.get(m) };
+		Referee[] suitableReferees= new Referee[2];
 		return suitableReferees;
 
+
+		
+		// list to hold referees after filtering
 		// if senior dann min lvl 2
+		// ArrayList<Referee> filteredReferees = getReferees(match.getLevel());
+
+		
 		// least number of allocations of all refs living in match area
 		// after that: least # of allocs of all refs who live adjacent there
 		// after that: least # of allocs of all refs who trave there
 		// if 2 are equally good, which one does not matter
 		// TODO
 		
-
-
 	}
 
 	/**
