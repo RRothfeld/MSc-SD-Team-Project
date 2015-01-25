@@ -23,13 +23,9 @@ public class Referee implements Comparable<Referee> {
     private String forename;
     private String surname;
     private String uniqueID;
-    private String qualification; //maybe as int (without NJB/IJB)? -rr 
-    
-    public enum HomeLocation {
-	NORTH, CENTRE, SOUTH
-    }
-    private int    qualificationLevel;
-    private HomeLocation homeLocation;
+    private String qualification;
+    private int qualificationLevel;
+    private JavaBallController.Location homeLocation;
     /* 
      * boolean values that represent whether or not Referee 
      * will visit this location
@@ -42,7 +38,7 @@ public class Referee implements Comparable<Referee> {
     private ArrayList<Match> allocatedMatchesList;
     
     private int preSeasonAllocations;
-    private final int MAXQUALLENGTH = 4;
+    private final int MAXQUALLENGTH = 4; // What is this? -rr
     
     //-------------------------------------------------------//
     
@@ -240,7 +236,7 @@ public class Referee implements Comparable<Referee> {
      */
     private void setHomeLocation(String location)
     {
-        this.homeLocation = HomeLocation.valueOf(location.toUpperCase());
+        this.homeLocation = JavaBallController.Location.valueOf(location.toUpperCase());
     }
     
     //-------------------------------------------------------//
@@ -249,7 +245,7 @@ public class Referee implements Comparable<Referee> {
      *
      * @return
      */
-    public HomeLocation getHomeLocation()
+    public JavaBallController.Location getHomeLocation()
     {
         return homeLocation;
     }
@@ -296,11 +292,11 @@ public class Referee implements Comparable<Referee> {
      * @param location - location required.
      * @return - boolean for particular location
      */  
-    public boolean getTravelLocation(Match.Location location)
+    public boolean getTravelLocation(JavaBallController.Location location)
     {
-        if (location.equals(Match.Location.NORTH)){
+        if (location.equals(JavaBallController.Location.NORTH)){
             return this.visitNorth;
-        } else if (location.equals(Match.Location.CENTRE)){
+        } else if (location.equals(JavaBallController.Location.CENTRE)){
             return this.visitCentre;
         } else {
             return this.visitSouth;
@@ -313,13 +309,13 @@ public class Referee implements Comparable<Referee> {
      * Method to Change whether a Referee will travel to an Area
      * @param location - Location to be flipped
      */
-    public void flipTravel(Match.Location location)
+    public void flipTravel(JavaBallController.Location location)
     {
-        if (location.equals(Match.Location.NORTH)){
+        if (location.equals(JavaBallController.Location.NORTH)){
             this.visitNorth = !visitNorth;
-        } else if (location.equals(Match.Location.CENTRE)){
+        } else if (location.equals(JavaBallController.Location.CENTRE)){
             this.visitCentre = !visitCentre;
-        } else if (location.equals(Match.Location.SOUTH)){
+        } else if (location.equals(JavaBallController.Location.SOUTH)){
             this.visitSouth = !visitSouth;
         }
     }

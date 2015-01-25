@@ -100,13 +100,13 @@ public class RefereeList {
 	public ArrayList<Referee> getReferees(String name) {
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-		
+
 		// add all referees with either the desired fore- or surname
 		for (Referee ref : listedReferees) {
 			if (ref.getForename().equals(name) || ref.getSurname().equals(name))
 				filteredReferees.add(ref);
 		}
-		
+
 		return filteredReferees;
 	}
 	
@@ -119,13 +119,14 @@ public class RefereeList {
 	public ArrayList<Referee> getReferees(String fname, String sname) {
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-		
+
 		// add all referees with either the desired fore- and surname
 		for (Referee ref : listedReferees) {
-			if (ref.getForename().equals(fname) && ref.getSurname().equals(sname))
+			if (ref.getForename().equals(fname)
+					&& ref.getSurname().equals(sname))
 				filteredReferees.add(ref);
 		}
-		
+
 		return filteredReferees;
 	}
 
@@ -134,16 +135,17 @@ public class RefereeList {
 	 * @param home the desired home location
 	 * @return ArrayList with matching referees
 	 */
-	public ArrayList<Referee> getRefereesByHome(Match.Location home) {
+	public ArrayList<Referee> getRefereesByHome(
+			JavaBallController.Location home) {
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-		
+
 		// add all referees with the home location
 		for (Referee ref : listedReferees) {
 			if (ref.getHomeLocation() == home)
 				filteredReferees.add(ref);
 		}
-		
+
 		return filteredReferees;
 	}
 	
@@ -152,10 +154,11 @@ public class RefereeList {
 	 * @param travel the desired travel location
 	 * @return ArrayList with matching referees
 	 */
-	public ArrayList<Referee> getRefereesByTravel(Match.Location travel) {
+	public ArrayList<Referee> getRefereesByTravel(
+			JavaBallController.Location travel) {
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-		
+
 		// add all referees with the desired travel preference
 		for (Referee ref : listedReferees) {
 			if (ref.getTravelLocation(travel))
@@ -173,12 +176,13 @@ public class RefereeList {
 	 */
 	public Referee[] getSuitableReferees(Match match) {
 		int n = 0, m = 1;
-		
+
 		// if senior dann min lvl 2
 		// TODO
-		
+
 		// DUMMY RETURN
-		Referee [] suitableReferees = {listedReferees.get(n), listedReferees.get(m)};
+		Referee[] suitableReferees = { listedReferees.get(n),
+				listedReferees.get(m) };
 		return suitableReferees;
 	}
 
