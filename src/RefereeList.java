@@ -79,16 +79,21 @@ public class RefereeList {
 	 * @param level the desired qualification
 	 * @return ArrayList of matching referees
 	 */
-	public ArrayList<Referee> getReferees(int level) {
+	public ArrayList<Referee> getReferees(Match.Level level) {
+		// if it is a junior match, all referees are applicable
+		if (level.equals(Match.Level.JUNIOR))
+			return listedReferees;
+		
+		// otherwise filter non-applicable referees out
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-
-		// add all referees with the desired qualification level
+		
+		// add all referees with minimum qualification level two
 		for (Referee ref : listedReferees) {
-			if (ref.getQualificationLevel() == level)
+			if (ref.getQualificationLevel() > 1)
 				filteredReferees.add(ref);
 		}
-
+		// return filtered list
 		return filteredReferees;
 	}
 	
@@ -100,13 +105,13 @@ public class RefereeList {
 	public ArrayList<Referee> getReferees(String name) {
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-		
+
 		// add all referees with either the desired fore- or surname
 		for (Referee ref : listedReferees) {
 			if (ref.getForename().equals(name) || ref.getSurname().equals(name))
 				filteredReferees.add(ref);
 		}
-		
+
 		return filteredReferees;
 	}
 	
@@ -119,13 +124,14 @@ public class RefereeList {
 	public ArrayList<Referee> getReferees(String fname, String sname) {
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-		
+
 		// add all referees with either the desired fore- and surname
 		for (Referee ref : listedReferees) {
-			if (ref.getForename().equals(fname) && ref.getSurname().equals(sname))
+			if (ref.getForename().equals(fname)
+					&& ref.getSurname().equals(sname))
 				filteredReferees.add(ref);
 		}
-		
+
 		return filteredReferees;
 	}
 
@@ -134,17 +140,18 @@ public class RefereeList {
 	 * @param home the desired home location
 	 * @return ArrayList with matching referees
 	 */
-	public ArrayList<Referee> getRefereesByHome(Match.Location home) {
+	public ArrayList<Referee> getRefereesByHome(
+			JavaBallController.Location home) {
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-		
+
 		// add all referees with the home location
                 // Can you do .equals() on different enums?
 		for (Referee ref : listedReferees) {
 			if (ref.getHomeLocation().equals(home))
 				filteredReferees.add(ref);
 		}
-		
+
 		return filteredReferees;
 	}
 	
@@ -153,10 +160,11 @@ public class RefereeList {
 	 * @param travel the desired travel location
 	 * @return ArrayList with matching referees
 	 */
-	public ArrayList<Referee> getRefereesByTravel(Match.Location travel) {
+	public ArrayList<Referee> getRefereesByTravel(
+			JavaBallController.Location travel) {
 		// list to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
-		
+
 		// add all referees with the desired travel preference
 		for (Referee ref : listedReferees) {
 			if (ref.getTravelLocation(travel))
@@ -173,14 +181,24 @@ public class RefereeList {
 	 * @return an array of the two most suitable referees
 	 */
 	public Referee[] getSuitableReferees(Match match) {
+		// DUMMY RETURN
 		int n = 0, m = 1;
+		Referee[] suitableReferees= new Referee[2];
+		return suitableReferees;
+
+
 		
+		// list to hold referees after filtering
 		// if senior dann min lvl 2
+		// ArrayList<Referee> filteredReferees = getReferees(match.getLevel());
+
+		
+		// least number of allocations of all refs living in match area
+		// after that: least # of allocs of all refs who live adjacent there
+		// after that: least # of allocs of all refs who trave there
+		// if 2 are equally good, which one does not matter
 		// TODO
 		
-		// DUMMY RETURN
-		Referee [] suitableReferees = {listedReferees.get(n), listedReferees.get(m)};
-		return suitableReferees;
 	}
 
 	/**

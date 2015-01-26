@@ -22,6 +22,11 @@ public class JavaBallController {
 	private final RefereeList refList;
 	private ChartFrame chart;
 	
+	/** TODO */
+    public static enum Location {
+	NORTH, CENTRAL, SOUTH
+    }
+	
 	public JavaBallController(Season season, RefereeList refList) {
 		this.season = season;
 		this.refList = refList;
