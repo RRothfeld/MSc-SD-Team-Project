@@ -208,8 +208,8 @@ public class RefereeList {
 		int counter = 1;
 		for (Referee ref : listedReferees) {
 			String forename = ref.getForename();
-			String info = String.format("Info for Referee %d. %s", counter,
-					forename);
+			String info = String.format("Info for Referee %d. %s:\tID %s", counter,
+					forename, ref.getID());
 			System.err.println(info);
 			counter++;
 
