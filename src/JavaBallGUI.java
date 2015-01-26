@@ -113,6 +113,40 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		navPanel.add(allocateButton);
 		navPanel.add(exitButton);
 	}
+	
+	public void updateDisplay() {
+	
+		
+	}
+	
+	
+	/**TODO
+	 * change text area to table!!!
+	 */
+	
+	
+	
+	/**TODO 
+	 * create one JFrame that is used for both adding, editing and deleting referees.
+	 * If adding a referee then save button is enabled and delete button is disabled.
+	 * If if deleting a referee then save is disabled and delete is enabled. 
+	 */
+	
+	/**
+	 * TODO
+	 * Upon clicking the allocate button, a new small JFrame comes up which contains areas to input the information
+	 * of a match (week number, area and level). There is a cancel button, and a get suitable referees
+	 * upon clicking this button the small JFrame is disposed and the main referee table is filtered to show the 
+	 * listed suitable referees, along with a note saying it is ordered and filtered according to suitability and there is 
+	 * a button to reset the table (No filter, and sort by the default ID).
+	 * 
+	 */
+	
+	
+	
+	/**TODO
+	 * make tables scrollable
+	 */
 
 	/**
 	 * TODO
