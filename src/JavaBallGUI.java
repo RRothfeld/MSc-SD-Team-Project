@@ -24,151 +24,110 @@ import java.util.logging.Logger;
  * @author Marco Cook, 2152599C
  * @author Raoul Rothfeld, 2164502R
  * 
- * @version 1.0
- * @since 18-01-2015
+ * @version 1.1
+ * @since 25-01-2015
  */
 
 public class JavaBallGUI extends JFrame implements ActionListener {
+	// GUI components as instance variables
+	private JPanel navPanel, centrePanel, searchPanel, listPanel;
+	private JButton addButton, chartButton, allocateButton, exitButton,
+			searchButton;
+	private JTextField searchField;
+	private JTextArea areaRefereeList;
 
-    // TODO Raoul
-    // DESIGN ACCORDING TO MARCO GUI FRAME #2
+	// TODO
+	private JavaBallController controller;
 
-    // GUI components as instance variables
-    private JPanel navPanel, centrePanel, searchPanel, listPanel;
-    private JButton addButton, chartButton, allocateButton, exitButton,
-	    searchButton;
-    private JTextField searchField;
-    private JTextArea areaRefereeList;
+	/**
+	 * Constructor for JavaBallGUI
+	 */
+	public JavaBallGUI(JavaBallController controller) {
+		// initiate GUI and its components
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setTitle("JavaBall Referees");
+		setSize(800, 500);
+		layoutComponents();
+		
+		// connect to controller
+		this.controller = controller;
+	}
 
-    //
-    private JFrame chart;
-    private RefereeList referees;
+	private void layoutComponents() {
+		// create JPanels
+		navPanel = new JPanel();
+		navPanel.setLayout(new BoxLayout(navPanel, BoxLayout.PAGE_AXIS));
+		centrePanel = new JPanel(new BorderLayout());
+		searchPanel = new JPanel();
+		listPanel = new JPanel();
 
-    private final String INPUTFILENAME = "RefereesIn.txt";
-    private final RefereeList  refList = new RefereeList();
-       
-    /**
-     * Constructor for JavaBallGUI
-     */
-    public JavaBallGUI() {
-	// initiate GUI and its components
-	setDefaultCloseOperation(EXIT_ON_CLOSE);
-	setTitle("JavaBall Referees");
-	setSize(800, 500);
-	layoutComponents();
-	updateRefereeList();
-        initList();
-    }
+		// set JPanel backgrounds
+		navPanel.setBackground(Color.gray);
+		centrePanel.setBackground(Color.white);
+		searchPanel.setBackground(Color.white);
+		listPanel.setBackground(Color.white);
 
-    private void layoutComponents() {
-	// create JPanels
-	navPanel = new JPanel();
-	navPanel.setLayout(new BoxLayout(navPanel, BoxLayout.PAGE_AXIS));
-	centrePanel = new JPanel(new BorderLayout());
-	searchPanel = new JPanel();
-	listPanel = new JPanel();
+		// add main JPanels to JFrame
+		add(navPanel, BorderLayout.WEST);
+		add(centrePanel, BorderLayout.CENTER);
+		centrePanel.add(searchPanel, BorderLayout.NORTH);
+		centrePanel.add(listPanel, BorderLayout.SOUTH);
 
-	// set JPanel backgrounds
-	navPanel.setBackground(Color.gray);
-	centrePanel.setBackground(Color.white);
-	searchPanel.setBackground(Color.white);
-	listPanel.setBackground(Color.white);
+		// create JTextField
+		// length of JTextField measured in amount of visible 'm' characters
+		searchField = new JTextField(40); // length of 40 for String input
+		searchField.setText("Enter referee name or ID ...");
+		searchField.addActionListener(this);
+		// Clear the text field if the mouse is clicked in it
+		searchField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (searchField.getText()
+						.equals("Enter referee name or ID ...")) {
+					searchField.setText("");
+				}
+			}
+		});
+		// create JButtons
+		addButton = new JButton("Add Referee");
 
-	// add main JPanels to JFrame
-	add(navPanel, BorderLayout.WEST);
-	add(centrePanel, BorderLayout.CENTER);
-	centrePanel.add(searchPanel, BorderLayout.NORTH);
-	centrePanel.add(listPanel, BorderLayout.SOUTH);
+		chartButton = new JButton("Show Chart");
+		chartButton.addActionListener(this);
 
-	// create JTextField
-	// length of JTextField measured in amount of visible 'm' characters
-	searchField = new JTextField(40); // length of 40 for String input
-	searchField.setText("Enter referee name or ID ...");
-        searchField.addActionListener(this);
-        //Clear the text field if the mouse is clicked in it
-        searchField.addMouseListener(new MouseAdapter(){
-            @Override
-            public void mouseClicked(MouseEvent event){
-                if (searchField.getText().equals("Enter referee name or ID ...")){
-                    searchField.setText("");
-                }
-            }
-        });
-        // create JButtons
-	addButton = new JButton("Add Referee");
+		allocateButton = new JButton("Allocate Refs");
+		allocateButton.addActionListener(this);
 
-	chartButton = new JButton("Show Chart");
-	chartButton.addActionListener(this);
+		exitButton = new JButton("Save & Exit");
+		exitButton.addActionListener(this);
 
-	allocateButton = new JButton("Allocate Refs");
-	allocateButton.addActionListener(this);
-	
-	exitButton = new JButton("Save & Exit");
-	exitButton.addActionListener(this);
-	
-	searchButton = new JButton("Search");
-	searchButton.addActionListener(this);
+		searchButton = new JButton("Search");
+		searchButton.addActionListener(this);
 
-	// add center components to center panels
-	searchPanel.add(searchField);
-	searchPanel.add(searchButton);
+		// add center components to center panels
+		searchPanel.add(searchField);
+		searchPanel.add(searchButton);
 
-	// add navigation components to panelNavigation
-	navPanel.add(addButton);
-	navPanel.add(chartButton);
-	navPanel.add(allocateButton);
-	navPanel.add(exitButton);
-    }
+		// add navigation components to panelNavigation
+		navPanel.add(addButton);
+		navPanel.add(chartButton);
+		navPanel.add(allocateButton);
+		navPanel.add(exitButton);
+	}
 
-    private void updateRefereeList() {
-
-    }
-        
-    /**
-     * Method to read in file, create Referee Obects and fill refList. 
-     */
-    private void initList() {
-        
-        try {
-            FileReader refereeFile = new FileReader(INPUTFILENAME);
-            Scanner    refScanner  = new Scanner(refereeFile);
-
-            while (refScanner.hasNextLine())
-            {
-                String  newReferee = refScanner.nextLine();
-                if (newReferee!=null)
-                {
-                    Referee referee = new Referee(newReferee);
-                    refList.add(referee);
-                }
-                
-            }
-        } catch(FileNotFoundException ex) {
-            Logger.getLogger(JavaBallGUI.class.getName()).log(Level.SEVERE, 
-                                null, ex);
-        } 
-        //Temporary testing method in RefereeList to make sure methods work
-        refList.debug();
-    }
-    
-    private void displayChart() {
-        
-	chart = new ChartFrame(referees);
-	chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-	chart.setVisible(true);
-    }
-
-    public void actionPerformed(ActionEvent ae) {
-	if (ae.getSource() == addButton) {
-	    System.out.println("Add");
-	} else if (ae.getSource() == allocateButton) {
-	   System.out.println("Allocate");
-	} else if (ae.getSource() == chartButton) {
-	    displayChart();
-	} else if (ae.getSource() == searchButton) {
-	   System.out.println("Search");
-	} else if (ae.getSource() == exitButton) {
-	    System.exit(0);
-	} 
-    }
+	/**
+	 * TODO
+	 */
+	public void actionPerformed(ActionEvent ae) {
+		if (ae.getSource() == addButton) {
+			controller.execAdd(" ");
+		} else if (ae.getSource() == allocateButton) {
+			controller.execAllocate(" ");
+		} else if (ae.getSource() == chartButton) {
+			controller.execChart();
+		} else if (ae.getSource() == searchButton) {
+			controller.execSearch(" ");
+		} else if (ae.getSource() == exitButton) {
+			controller.execSaveExit();
+		}
+	}
 }
