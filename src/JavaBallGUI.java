@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -34,8 +35,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JButton addButton, chartButton, allocateButton, exitButton,
 			searchButton;
 	private JTextField searchField;
-	private JTextArea areaRefereeList;
-
+	
+	private JTable table;
 	// TODO
 	private JavaBallController controller;
 
@@ -48,6 +49,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		setTitle("JavaBall Referees");
 		setSize(800, 500);
 		layoutComponents();
+		
+		createTableView();
 		
 		// connect to controller
 		this.controller = controller;
@@ -113,19 +116,46 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		navPanel.add(allocateButton);
 		navPanel.add(exitButton);
 	}
-	
-	public void updateDisplay() {
-	
+/**
+ * Method to create the main table view for to display the referees
+ * 
+ */
+	public void createTableView() {
+
+		// Column Names for table (Referee attributes)
+		String[] columnNames = {"ID", "First Name", "Last Name", "Qualification", "Match Allocations", "Home Region", "Travel Locations"};
+
+		// Referee data displayed in rows (ONLY FOR TESTING)
+		Object[][] data = {
+				{"JS1", "John", "Smith", "IJB3", "5", "North", "YYN"},
+				{"JB1", "Joe", "Bloggs", "NJB1"},
+				{"MC1", "Marco", "Cook", "IJB4"},
+				{"AL1", "Andrew", "Lowson", "IJB3"},
+
+		};
+		// Instantiate table component with referee data and column names
+		table = new JTable(data, columnNames);
 		
+		// Set table dimensions
+		table.setPreferredScrollableViewportSize(new Dimension(500, 200));
+		table.setFillsViewportHeight(true);
+		
+		// Create new JPane for table view
+		JScrollPane tablePane = new JScrollPane(table);
+		// Add tablePane to main GUI frame
+		add(tablePane);
 	}
-	
-	
+
+
+
+
+
 	/**TODO
 	 * change text area to table!!!
 	 */
-	
-	
-	
+
+
+
 	/**TODO 
 	 * create one JFrame that is used for both adding, editing and deleting referees.
 	 * If adding a referee then save button is enabled and delete button is disabled.
