@@ -24,6 +24,7 @@ public class Referee implements Comparable<Referee> {
     private String surname;
     private String uniqueID;
 <<<<<<< HEAD
+<<<<<<< HEAD
     private String qualification; //maybe as int (without NJB/IJB)? -rr 
     
     public enum HomeLocation {
@@ -32,6 +33,9 @@ public class Referee implements Comparable<Referee> {
     private int    qualificationLevel;
     private HomeLocation homeLocation;
 =======
+=======
+
+>>>>>>> 30ea62b592ffdff32fdd042128760a8c682d1f6d
     private String qualification;
     private int qualificationLevel;
     private JavaBallController.Location homeLocation;

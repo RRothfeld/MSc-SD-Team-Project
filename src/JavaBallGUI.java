@@ -8,11 +8,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
-import java.util.*;
-import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Team Foxtrot JavaBall Referees - JavaBallGUI.java Defines JavaBall GUI that
  * displays referee and match details
@@ -38,10 +33,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	
 	private JTable table;
 	// TODO
-	private JavaBallController controller;
+	private final JavaBallController controller;
 
 	/**
 	 * Constructor for JavaBallGUI
+     * @param controller
 	 */
 	public JavaBallGUI(JavaBallController controller) {
 		// initiate GUI and its components
@@ -116,6 +112,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		navPanel.add(allocateButton);
 		navPanel.add(exitButton);
 	}
+
 /**
  * Method to create the main table view for to display the referees
  * 
@@ -147,14 +144,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	}
 
 
-
-
-
+	
 	/**TODO
 	 * change text area to table!!!
 	 */
-
-
+	
 
 	/**TODO 
 	 * create one JFrame that is used for both adding, editing and deleting referees.
@@ -180,7 +174,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 	/**
 	 * TODO
+     * @param ae
 	 */
+        @Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == addButton) {
 			controller.execAdd(" ");
