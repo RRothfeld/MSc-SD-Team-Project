@@ -23,23 +23,12 @@ public class Referee implements Comparable<Referee> {
     private String forename;
     private String surname;
     private String uniqueID;
-<<<<<<< HEAD
-<<<<<<< HEAD
-    private String qualification; //maybe as int (without NJB/IJB)? -rr 
     
-    public enum HomeLocation {
-	NORTH, CENTRAL, SOUTH
-    }
     private int    qualificationLevel;
-    private HomeLocation homeLocation;
-=======
-=======
-
->>>>>>> 30ea62b592ffdff32fdd042128760a8c682d1f6d
     private String qualification;
-    private int qualificationLevel;
+
     private JavaBallController.Location homeLocation;
->>>>>>> FETCH_HEAD
+
     /* 
      * boolean values that represent whether or not Referee 
      * will visit this location
