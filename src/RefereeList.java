@@ -1,8 +1,10 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
+import java.util.Iterator;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -85,7 +87,7 @@ public class RefereeList implements Iterable<Referee> {
 	/**
 	 * Returns a list of referees given a qualification level
 	 * @param level the desired qualification
-	 * @return ArrayList of matching referees
+	 * @return ArrayList of matching referees TODO DELETE THIS METHOD?!
 	 */
 	public ArrayList<Referee> getReferees(Match.Level level) {
 		// if it is a junior match, all referees are applicable
@@ -181,32 +183,88 @@ public class RefereeList implements Iterable<Referee> {
 
 		return filteredReferees;
 	}
-	
     
 	/**
 	 * Returns an array of the two most suitable referees for any given match
 	 * @param match the match which requires two referees
 	 * @return an array of the two most suitable referees
 	 */
-	public Referee[] getSuitableReferees(Match match) {
-		// DUMMY RETURN
-		int n = 0, m = 1;
-		Referee[] suitableReferees= new Referee[2];
-		return suitableReferees;
-
-
+	public ArrayList<Referee> getSuitableReferees(Match match) {
+		// TODO
+		ArrayList<Referee> suitableReferees = getRefereesByTravel(match.getArea());
 		
-		// list to hold referees after filtering
-		// if senior dann min lvl 2
-		// ArrayList<Referee> filteredReferees = getReferees(match.getLevel());
-
+		// least important: least # of allocs of all refs who trave there
+		// if senior dann min lvl 2 and go to the area
+		if (match.getLevel().equals(Match.Level.SENIOR)) {
+			for (Referee ref : suitableReferees) {
+				if (ref.getQualificationLevel() < 2) // TODO Magic number?
+					suitableReferees.remove(ref);
+			}
+		}
+		
+		
+		// FIXME TEST; DELETE!!!!!!
+		for (Referee ref : suitableReferees) {
+			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
+					+ ref.getHomeLocation());
+			System.err.println("------------");
+		}
+		
+		int adjacentReferees = 0, localReferees = 0;
+		
+		// after that: least # of allocs of all refs who live adjacent there
+		// skip first one!
+		if (!match.getArea().equals(JavaBallController.Location.CENTRAL)) {
+			for (Referee ref : suitableReferees) {
+				if (ref.getHomeLocation().equals(
+						JavaBallController.Location.CENTRAL)) {
+					suitableReferees.set(0, ref);
+					adjacentReferees++;
+				}
+			}
+		}
 		
 		// least number of allocations of all refs living in match area
-		// after that: least # of allocs of all refs who live adjacent there
-		// after that: least # of allocs of all refs who trave there
-		// if 2 are equally good, which one does not matter
-		// TODO
+		for (Referee ref : suitableReferees) {
+			if (ref.getHomeLocation().equals(match.getArea())) {
+				suitableReferees.set(0, ref);
+				localReferees++;
+			}
+		}
+
+		// sort by allocations ascending for local referees (home in match area)
+		Collections.sort(suitableReferees.subList(0, localReferees - 1));
+
+		// sort by allocations ascending for adjacent referees only
+		Collections.sort(suitableReferees.subList(localReferees,
+				adjacentReferees - 1));
+
+		// sort by allocations ascending for non-adjacent, non-local referees
+		Collections.sort(suitableReferees.subList(adjacentReferees,
+				suitableReferees.size() - 1));
+
+		// @Override sorting to sort according to the number of allocations
+		Collections.sort(suitableReferees , new Comparator<Referee>() {
+			public int compare(Referee ref1, Referee ref2) {
+				int allocRef1 = ref1.getAllocations();
+				int allocRef2 = ref2.getAllocations();
+				
+				if (allocRef1 < allocRef2)
+					return -1;
+				else if (allocRef1 == allocRef2)
+					return 0;
+				else
+					return 1;
+			}
+		});
 		
+		// FIXME TEST; DELETE!!!!!!
+		for (Referee ref : suitableReferees) {
+			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
+					+ ref.getHomeLocation());
+		}
+		
+		return suitableReferees;
 	}
 	
         public String createID(String fname, String sname)
@@ -257,9 +315,8 @@ public class RefereeList implements Iterable<Referee> {
 			}
 		} catch (IOException e) {} // do nothing if file not found
 	}
-
 	@Override
 	public Iterator<Referee> iterator() {
-	    return listedReferees.iterator();
+		return listedReferees.iterator();
 	}
 }
