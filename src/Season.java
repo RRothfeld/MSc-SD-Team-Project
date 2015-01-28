@@ -21,18 +21,25 @@ public class Season {
     
     /** Total number of matches per season */
     public static final int MAX_MATCHES = 52;
+    // TODO think about the relationship
+    // between MAX_WEEKS and MAX_MATCHES
     
     /** Matches to be played this season */
     public ArrayList<Match> matches;
     
-    // Constructor und accessor methods missing. -rr
-    public Season(Match match) {
-	matches.add(match);
+    /** Default constructor */
+    public Season() {
+	// TODO let me know if you need to pass something
     }
     
     /** Returns all t */
     public ArrayList<Match> getMatches() {
 	return matches;
+    }
+    
+    /** Method for adding a match to a season */
+    public void addMatch(Match match) {
+	matches.add(match);
     }
     
     /** Return match based on week number */
