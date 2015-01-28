@@ -25,7 +25,7 @@ public class Referee implements Comparable<Referee> {
     private String uniqueID;
     
     private int qualificationLevel;
-    private String qualification;
+    private String qualification, travelLocations;
 
     private JavaBallController.Location homeLocation;
 
@@ -72,8 +72,6 @@ public class Referee implements Comparable<Referee> {
     {
         String [] refereeDetails = fileLine.split(" ");
         
-        System.err.println(refereeDetails[0]);        
-
         // Check to make sure line split properly and has adequate items
         if (refereeDetails != null && refereeDetails.length == 7)
         {
@@ -123,6 +121,8 @@ public class Referee implements Comparable<Referee> {
     private void setTravelLocations(String travel)
     {        
         travel = travel.trim();
+        
+        travelLocations = travel;
         boolean[] visits = new boolean[3];
         
         for (int i = 0; i < travel.length(); i++)
@@ -285,6 +285,13 @@ public class Referee implements Comparable<Referee> {
     public void setTravelAreas(String travel)
     {
         setTravelLocations(travel);
+    }
+    
+    //-------------------------------------------------------//
+    
+    public String getTravelLocations()
+    {
+        return travelLocations;
     }
     
     //-------------------------------------------------------//

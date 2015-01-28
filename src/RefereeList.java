@@ -1,6 +1,7 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Scanner;
  * @since   25-01-2015
  */
 
-public class RefereeList {
+public class RefereeList implements Iterable<Referee> {
 	/** The name of the referee input file */
 	public static final String INPUT_FILE = "RefereesIn.txt";
 	
@@ -28,11 +29,11 @@ public class RefereeList {
 	private final static int MAX_REFEREES = 12;
 	
 	/** list of all registered referees */
-	private ArrayList<Referee> listedReferees;
+	private final ArrayList<Referee> listedReferees;
 
 	/** Default constructor */
 	public RefereeList() {
-		this.listedReferees = new ArrayList<Referee>();
+		this.listedReferees = new ArrayList<>();
 		initFromFile(listedReferees);
 	}
 	
@@ -208,6 +209,22 @@ public class RefereeList {
 		
 	}
 	
+        public String createID(String fname, String sname)
+        {
+            String id = fname.toUpperCase().charAt(0) +
+                        sname.toUpperCase().charAt(0) + "";
+            int idNumber = 1;
+            for (Referee ref : listedReferees)
+            {
+                if (ref.getID().substring(0, 1).equals(id))
+                {
+                    idNumber++;
+                }
+            }
+            id += idNumber;
+            return id;
+        }
+        
 	/**
 	 * Reads in provided file and populates RefereeList
 	 * @param refList the RefereeList to be populated
@@ -233,9 +250,16 @@ public class RefereeList {
 				refScanner.close();
 			} finally {
 				// close input file if it has been opened
-				if (refereeFile != null)
-					refereeFile.close();
+				if (refereeFile != null) {
+                                        refereeFile.close();
+                                }
+                                        
 			}
 		} catch (IOException e) {} // do nothing if file not found
+	}
+
+	@Override
+	public Iterator<Referee> iterator() {
+	    return listedReferees.iterator();
 	}
 }

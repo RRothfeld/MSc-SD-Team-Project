@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * @since   14-01-2015
  */
 
-public class Season {
+public class Season implements Iterable<Match> {
     
     /** Total number of matches per season */
     public static final int MAX_MATCHES = 52;
@@ -50,5 +51,9 @@ public class Season {
     /** Returns the number of scheduled matches */
     public int getNumMatches() {
 	return matches.size();
+    }
+    
+    public Iterator<Match> iterator() {
+        return matches.iterator();
     }
 }

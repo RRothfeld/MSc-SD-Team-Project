@@ -1,4 +1,10 @@
 import javax.swing.WindowConstants;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -21,9 +27,12 @@ public class JavaBallController {
 	private final Season season;
 	private final RefereeList refList;
 	private ChartFrame chart;
+        
+        private final String REFEREEFILE = "RefereesOut.txt";
+        private final String MATCHFILE   = "MatchAllocs.txt";
 	
 	/** TODO */
-    public static enum Location {
+    public enum Location {
 	NORTH, CENTRAL, SOUTH
     }
 	
@@ -69,6 +78,100 @@ public class JavaBallController {
 	 * 
 	 */
 	public void execSaveExit() {
+            writeOutputFile();
+            
+            System.exit(0);
 		
 	}
+        
+        public Referee getReferee(String id)
+        {
+            Referee referee = refList.getReferee(id);
+            return referee;
+        }
+        
+        
+        public void addReferee(String fname, String sname, String qual, 
+                int level, Location home, String travel) {
+            
+            String qualification = qual+level;
+            String homeLocal;
+            if (home == Location.NORTH)
+            {
+                homeLocal = "North";
+            } else if (home == Location.CENTRAL) {
+                homeLocal = "Central";
+            } else {
+                homeLocal = "South";
+            }
+            
+            refList.add(new Referee(refList.createID(fname, sname), fname, 
+                    sname, qualification, 0, homeLocal, travel));
+        }  
+        
+        public void removeReferee(String id)
+        {
+            refList.remove(refList.getReferee(id));
+        }
+        
+        public void editReferee(String id) 
+        {
+            // TODO
+            // (b/c passed object via getReferee can directly edit data)
+        }
+        
+        //openChartFrame() --> returns void
+        
+        //addMatch(int week, Match.Level level, Controller.Location area) --> returns void
+        
+        public void updateRefereeList() {
+            // TODO
+            // --> returns sorted (by ID) RefereeList Object
+        }
+        /**
+         * Write report Files
+         */
+        private void writeOutputFile()
+        {
+            try {
+                FileWriter refereeFile = new FileWriter(REFEREEFILE);
+                FileWriter matchFile   = new FileWriter(MATCHFILE);
+                
+                String[] referees = new String[refList.size()];
+                String[] matches  = new String[season.getNumMatches()];
+                int refCounter = 0;
+                
+                updateRefereeList();
+                            
+                for (Referee ref : refList)
+                {
+                    String details = String.format("%s %s %s %s %d %s %s\n", 
+                            ref.getID(), ref.getForename(), ref.getSurname(),
+                            ref.getQualifications(), ref.getAllocations(), 
+                            ref.getHomeLocation(), ref.getTravelLocations());
+                    referees[refCounter] = details;    
+                    refCounter++;
+                }
+                
+                int counter = 0;
+                for (Match match : season)
+                {
+                    matches[counter] = (match.matchReport());
+                }
+                
+                for (String s : referees)
+                {
+                    refereeFile.write(s+"\n");
+                }
+                for (String s : matches)
+                {
+                    matchFile.write(s+"\n");
+                }
+                
+            } catch (IOException ex) {
+                
+            }
+            
+        }
+        
 }
