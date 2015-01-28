@@ -30,8 +30,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	// GUI components as instance variables
 	private JPanel navPanel, centrePanel, searchPanel, listPanel;
 	private JButton addButton, chartButton, allocateButton, exitButton,
-	searchButton;
+	searchButton, resetSearchButton;
 	private JTextField searchField;
+
+	// GUI buttons and textFields for viewRefereeFrame
+	private JButton backButton, saveButton, removeButton;
+	private JTextField idField, firstNameField, surnameField, 
+	qualificationField, matchesField, homeField, visitAreasField;
 
 	// GUI components for Table
 	private JScrollPane tablePane;
@@ -105,6 +110,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		searchButton = new JButton("Search");
 		searchButton.addActionListener(this);
 
+		resetSearchButton = new JButton("Reset Search");
+		resetSearchButton.addActionListener(this); 
+
 		// add center components to center panels
 		searchPanel.add(searchField);
 		searchPanel.add(searchButton);
@@ -113,6 +121,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		navPanel.add(addButton);
 		navPanel.add(chartButton);
 		navPanel.add(allocateButton);
+		navPanel.add(resetSearchButton);
 		navPanel.add(exitButton);
 
 
@@ -141,44 +150,57 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	}
 
 
-
-	/**
-	 * TODO
-	 * Upon clicking the allocate button, a new small JFrame comes up which contains areas to input the information
-	 * of a match (week number, area and level). There is a cancel button, and a get suitable referees
-	 * upon clicking this button the small JFrame is disposed and the main referee table is filtered to show the 
-	 * listed suitable referees, along with a note saying it is ordered and filtered according to suitability and there is 
-	 * a button to reset the table (No filter, and sort by the default ID).
-	 * 
-	 */
-
-
-
-	/**TODO
-	 * make tables scrollable
-	 */
-
 	/**
 	 * TODO
 	 * @param ae
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+		// If add button is pressed
 		if (ae.getSource() == addButton) {
-			
 			ViewRefereeFrame addRef = new ViewRefereeFrame();
 			addRef.setVisible(true);
+			removeButton.setEnabled(false);
+			saveButton.setText("Add Referee");
 			controller.execAdd(" ");
-			
+
+			// If allocate referee to matches button is pressed
 		} else if (ae.getSource() == allocateButton) {
+			AllocateMatches allocateRef = new AllocateMatches();
+			allocateRef.setVisible(true);
 			controller.execAllocate(" ");
+
+			// If chart button is pressed
 		} else if (ae.getSource() == chartButton) {
 			controller.execChart();
+
+			// If search button is pressed
 		} else if (ae.getSource() == searchButton) {
+			ViewRefereeFrame serachRef = new ViewRefereeFrame();
+			serachRef.setVisible(true);
+			firstNameField.setEditable(false);
+			surnameField.setEditable(false);
+			matchesField.setEditable(false);
 			controller.execSearch(" ");
-		} else if (ae.getSource() == exitButton) {
+
+			// If save and exit button is pressed
+		} else if (ae.getSource() == resetSearchButton) {
+			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
+					+ "referee ID.");
+			resetDisplay();
+			
+		}else if (ae.getSource() == exitButton) {
 			controller.execSaveExit();
 		}
+	}
+	
+	/**
+	 * A method to reset the table view of the main GUI after a match is
+	 * allocated.
+	 */
+	public void resetDisplay() {
+		
+		//TODO Reset main table view and sort referees by ID
 	}
 
 
@@ -193,70 +215,81 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * enabled. 
 	 */
 	private class ViewRefereeFrame extends JFrame implements ActionListener {
-		
-		private JButton backButton, saveButton, removeButton;
-		private JLabel idLabel, nameLabel, qualificationLabel, matchesLabel,
-		homeLabel, visitAreasLabel;
-		private JTextField idField, nameField, qualificationField, matchesField,
-		homeField, visitAreasField;
 
+		// GUI labels for viewRefereeFrame
+		private JLabel idLabel, firstNameLabel, surnameLabel, 
+		qualificationLabel, matchesLabel, homeLabel, visitAreasLabel;
 
+		/**
+		 * Constructor to add components and create frame.
+		 */
 		public ViewRefereeFrame() {
-			
+
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Add/Edit/Remove Referee");
 			setSize(1000, 200);
 			setLocation(200, 200);
-			
+			// Adds top GUI components
 			layoutTop();
+			// Adds central GUI components
 			layoutMiddle();
+			// Adds bottom GUI components
 			layoutBottom();
 
 		}
-
+		/**
+		 * Method to add labels to GUI.
+		 */
 		public void layoutTop() {
-			
+
 			JPanel top = new JPanel();
+
+			// Creates a border around the labels so they are spaced apart
 			EmptyBorder border = new EmptyBorder(10, 40, 10, 40);
-			
+
+			// Creates and adds ID Label
 			idLabel = new JLabel();
 			idLabel.setText("ID");
 			idLabel.setBorder(border);
 			top.add(idLabel);
-			
-			nameLabel = new JLabel();
-			nameLabel.setText("Name");
-			nameLabel.setBorder(border);
-			top.add(nameLabel);
-			
+			// Creates and adds first name Label
+			firstNameLabel = new JLabel();
+			firstNameLabel.setText("First Name");
+			firstNameLabel.setBorder(border);
+			top.add(firstNameLabel);
+			// Creates and adds first name Label
+			surnameLabel = new JLabel();
+			surnameLabel.setText("Surname Name");
+			surnameLabel.setBorder(border);
+			top.add(surnameLabel);
+			// Creates and adds qualification Label
 			qualificationLabel = new JLabel();
 			qualificationLabel.setText("Qualification");
 			qualificationLabel.setBorder(border);
 			top.add(qualificationLabel);
-			
+			// Creates and adds matches allocated Label
 			matchesLabel = new JLabel();
 			matchesLabel.setText("Matches Allocated");
 			matchesLabel.setBorder(border);
 			top.add(matchesLabel);
-			
+			// Creates and adds referees home location Label
 			homeLabel = new JLabel();
 			homeLabel.setText("Home Location");
 			homeLabel.setBorder(border);
 			top.add(homeLabel);
-			
+			// Creates and adds visit areas Label
 			visitAreasLabel = new JLabel();
 			visitAreasLabel.setText("Visitable Areas");
 			visitAreasLabel.setBorder(border);
 			top.add(visitAreasLabel);
-			
-			
-		    
-		    add(top, BorderLayout.NORTH);
-		
+
+			// Adds components to panel 'top'
+			add(top, BorderLayout.NORTH);
+
 		}
-		
+
 		public void layoutMiddle() {
-			
+
 			JPanel middle = new JPanel();
 			middle.setBackground(Color.gray);
 
@@ -264,47 +297,137 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			idField.setEditable(false);
 			middle.add(idField);
 
-			nameField = new JTextField(20);
-			nameField.setEditable(false);
-			middle.add(nameField);
+			firstNameField = new JTextField(10);
+			middle.add(firstNameField);
 
-			qualificationField = new JTextField(7);
+			surnameField = new JTextField(10);
+			middle.add(surnameField);
+
+			qualificationField = new JTextField(3);
 			middle.add(qualificationField);
 
-			matchesField = new JTextField(5);
-			matchesField.setEditable(false);
+			matchesField = new JTextField(3);
 			middle.add(matchesField);
 
 			homeField = new JTextField(10);
 			middle.add(homeField);
 			visitAreasField = new JTextField(10);
 			middle.add(visitAreasField);
-			
+
 			add(middle, BorderLayout.CENTER);
-			
+
 		}
 		public void layoutBottom() {
 
 			JPanel bottom = new JPanel();
-			
+
 			backButton = new JButton("Back");
 			backButton.addActionListener(this);
 			bottom.add(backButton);
-			saveButton = new JButton("Save Referee");
+			saveButton = new JButton("Save Changes");
 			saveButton.addActionListener(this);
 			bottom.add(saveButton);
 			removeButton = new JButton("Remove Referee");
 			removeButton.addActionListener(this);
 			bottom.add(removeButton);
-			
+
 			// Add components to panel
 			add(bottom, BorderLayout.SOUTH);
 
 		}
 
 		public void actionPerformed(ActionEvent ae) {
+			if(ae.getSource() == backButton) {
+
+				// TODO NOT SURE ABOUT THIS!
+				setVisible(false);
+			}
 
 		}
 
+	}
+	
+
+	/**
+	 * TODO
+	 * Upon clicking the allocate button, a new small JFrame comes up which contains areas to input the information
+	 * of a match (week number, area and level). There is a cancel button, and a get suitable referees
+	 * upon clicking this button the small JFrame is disposed and the main referee table is filtered to show the 
+	 * listed suitable referees, along with a note saying it is ordered and filtered according to suitability and there is 
+	 * a button to reset the table (No filter, and sort by the default ID).
+	 * 
+	 */
+	
+	private class AllocateMatches extends JFrame implements ActionListener {
+		
+		private JTextField weekNumber;
+		private JComboBox matchLevel, matchArea;
+		private JButton allocateReferees, cancelButton;
+		
+		public AllocateMatches() {
+
+			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			setTitle("Add Match");
+			setSize(500, 200);
+			setLocation(200, 200);
+			topLayout();
+			bottomLayout();
+		}
+		
+		public void topLayout() {
+			
+			JPanel top = new JPanel();
+			// Create and add text field for match week number
+			weekNumber = new JTextField(5);
+			top.add(weekNumber);
+			// Create and add JComboBox for selecting match level
+			matchLevel = new JComboBox();
+			matchLevel.setEditable(false);
+			matchLevel.addItem("Junior");
+			matchLevel.addItem("Senior");
+			top.add(matchLevel);
+			// Create and add JComboBox for selecting match location
+			matchArea = new JComboBox();
+			matchArea.setEditable(false);
+			matchArea.addItem("North");
+			matchArea.addItem("Central");
+			matchArea.addItem("South");
+			top.add(matchArea);
+			// Add panel 'top' to frame
+			add(top, BorderLayout.NORTH);
+			
+		}
+		
+		public void bottomLayout() {
+			
+			JPanel bottom = new JPanel();
+			// Create and add 'create match and allocate referees' button
+			bottom.setBackground(Color.gray);
+			allocateReferees = new JButton("Allocate Referees");
+			bottom.add(allocateReferees);
+			// Create and add back button
+			cancelButton = new JButton("Back");
+			cancelButton.addActionListener(this);
+			bottom.add(cancelButton);
+			// Add panel to frame
+			add(bottom, BorderLayout.CENTER);
+		}
+
+		public void actionPerformed(ActionEvent ae) {
+			if(ae.getSource() == allocateReferees) {
+				//TODO Filter list of Referees in main GUI to display suitable 
+				// referees for that match.
+				JOptionPane.showMessageDialog(null, "Referee table ordered by "
+						+ "suitibility for this match.");
+			}
+			
+			if(ae.getSource() == cancelButton) {
+				
+				// TODO NOT SURE ABOUT THIS!
+				setVisible(false);
+				
+			}
+			
+		}
 	}
 }
