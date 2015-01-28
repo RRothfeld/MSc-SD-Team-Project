@@ -102,5 +102,4 @@ public class Match {
 		suitableReferees[1], suitableReferees[2]);
 	return match;
     }
-
 }

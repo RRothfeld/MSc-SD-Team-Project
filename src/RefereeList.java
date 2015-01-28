@@ -1,4 +1,7 @@
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -27,6 +30,7 @@ public class RefereeList {
 	/** Default constructor */
 	public RefereeList() {
 		listedReferees = new ArrayList<>();
+		initFromFile();
 	}
 	
 	/**
@@ -200,50 +204,36 @@ public class RefereeList {
 		// TODO
 		
 	}
+	
+	
+	/**
+	 * Reads in provided file and populates RefereeList
+	 * @param refList the RefereeList to be populated
+	 */
+	private static void initFromFile() {
+		try {
+			// set scope of FileReader
+			FileReader refereeFile = null;
+			try {
+				// initialise FileReader with input file and initialise scanner
+				refereeFile = new FileReader(JavaBall.INPUT_FILE);
+				Scanner refScanner = new Scanner(refereeFile);
 
-    /**
-     * Method to test Referee and RefList class methods. TODO DELETE
-     */
-    public void debug(boolean toRun) {
-	if (toRun != true) {
-	    int counter = 1;
-	    for (Referee ref : listedReferees) {
-		String forename = ref.getForename();
-		String info = String.format("Info for Referee %d. %s:\tID %s",
-			counter, forename, ref.getID());
-		System.err.println(info);
-		counter++;
-
-	    }
-
-	    System.err.println("List size: " + listedReferees.size());
-	    System.err.println("Adding Referee");
-
-	    String uniqueID = "AL1";
-	    String forename = "Andrew";
-	    String surname = "Lowson";
-
-	    String homeLocation = "North";
-
-	    int alloc = 12;
-	    // convert travel locations to boolean
-	    String travel = "YYN";
-	    String qual = "IJB3";
-
-	    Referee referee = new Referee(uniqueID, forename, surname, qual,
-		    alloc, homeLocation, travel);
-	    listedReferees.add(referee);
-	    Referee testRef = listedReferees.get(6);
-
-	    String info = String.format("Info for Referee %d. %s", counter,
-		    testRef.getForename());
-	    System.err.println(info);
-
-	    System.err.println();
-	    System.err.println("List size: " + listedReferees.size());
-	    System.err.println("Removing Referee");
-	    listedReferees.remove(0);
-	    System.err.println("List size now: " + listedReferees.size());
+				// read every line of input file and create referees
+				while (refScanner.hasNextLine()) {
+					String newReferee = refScanner.nextLine();
+					if (newReferee != null) {
+						Referee referee = new Referee(newReferee);
+						listedReferees.add(referee);
+					}
+				}
+				// close scanner after usage
+				refScanner.close();
+			} finally {
+				// close input file if it has been opened
+				if (refereeFile != null)
+					refereeFile.close();
+			}
+		} catch (IOException e) {} // do nothing if file not found
 	}
-    }
 }
