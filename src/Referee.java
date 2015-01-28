@@ -24,7 +24,7 @@ public class Referee implements Comparable<Referee> {
     private String surname;
     private String uniqueID;
     
-    private int    qualificationLevel;
+    private int qualificationLevel;
     private String qualification;
 
     private JavaBallController.Location homeLocation;
