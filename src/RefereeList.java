@@ -201,47 +201,49 @@ public class RefereeList {
 		
 	}
 
-	/**
-	 * Method to test Referee and RefList class methods. TODO DELETE
-	 */
-	public void debug() {
-		int counter = 1;
-		for (Referee ref : listedReferees) {
-			String forename = ref.getForename();
-			String info = String.format("Info for Referee %d. %s:\tID %s", counter,
-					forename, ref.getID());
-			System.err.println(info);
-			counter++;
-
-		}
-
-		System.err.println("List size: " + listedReferees.size());
-		System.err.println("Adding Referee");
-
-		String uniqueID = "AL1";
-		String forename = "Andrew";
-		String surname = "Lowson";
-
-		String homeLocation = "North";
-
-		int alloc = 12;
-		// convert travel locations to boolean
-		String travel = "YYN";
-		String qual = "IJB3";
-
-		Referee referee = new Referee(uniqueID, forename, surname, qual, alloc,
-				homeLocation, travel);
-		listedReferees.add(referee);
-		Referee testRef = listedReferees.get(6);
-
-		String info = String.format("Info for Referee %d. %s", counter,
-				testRef.getForename());
+    /**
+     * Method to test Referee and RefList class methods. TODO DELETE
+     */
+    public void debug(boolean toRun) {
+	if (toRun != true) {
+	    int counter = 1;
+	    for (Referee ref : listedReferees) {
+		String forename = ref.getForename();
+		String info = String.format("Info for Referee %d. %s:\tID %s",
+			counter, forename, ref.getID());
 		System.err.println(info);
+		counter++;
 
-		System.err.println();
-		System.err.println("List size: " + listedReferees.size());
-		System.err.println("Removing Referee");
-		listedReferees.remove(0);
-		System.err.println("List size now: " + listedReferees.size());
+	    }
+
+	    System.err.println("List size: " + listedReferees.size());
+	    System.err.println("Adding Referee");
+
+	    String uniqueID = "AL1";
+	    String forename = "Andrew";
+	    String surname = "Lowson";
+
+	    String homeLocation = "North";
+
+	    int alloc = 12;
+	    // convert travel locations to boolean
+	    String travel = "YYN";
+	    String qual = "IJB3";
+
+	    Referee referee = new Referee(uniqueID, forename, surname, qual,
+		    alloc, homeLocation, travel);
+	    listedReferees.add(referee);
+	    Referee testRef = listedReferees.get(6);
+
+	    String info = String.format("Info for Referee %d. %s", counter,
+		    testRef.getForename());
+	    System.err.println(info);
+
+	    System.err.println();
+	    System.err.println("List size: " + listedReferees.size());
+	    System.err.println("Removing Referee");
+	    listedReferees.remove(0);
+	    System.err.println("List size now: " + listedReferees.size());
 	}
+    }
 }

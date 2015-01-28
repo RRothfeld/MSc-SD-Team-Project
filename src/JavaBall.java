@@ -75,6 +75,6 @@ public class JavaBall {
 		} catch (IOException e) {} // do nothing if file not found
 		
 		// Temporary testing method in RefereeList to make sure methods work
-		refList.debug(); // TODO DELETE
+		refList.debug(true); // TODO DELETE
 	}
 }
