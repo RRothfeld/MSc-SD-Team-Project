@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.Iterator;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -22,7 +23,7 @@ import java.util.Scanner;
  * @since   25-01-2015
  */
 
-public class RefereeList {
+public class RefereeList implements Iterable<Referee> {
 	/** The name of the referee input file */
 	public static final String INPUT_FILE = "RefereesIn.txt";
 	
@@ -266,8 +267,6 @@ public class RefereeList {
 		return suitableReferees;
 	}
 	
-
-	
 	/**
 	 * Reads in provided file and populates RefereeList
 	 * @param refList the RefereeList to be populated
@@ -297,5 +296,10 @@ public class RefereeList {
 					refereeFile.close();
 			}
 		} catch (IOException e) {} // do nothing if file not found
+	}
+	
+	// @Override TODO
+	public Iterator<Referee> iterator() {
+		return listedReferees.iterator();
 	}
 }
