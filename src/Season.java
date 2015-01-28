@@ -19,18 +19,28 @@ import java.util.ArrayList;
 
 public class Season {
     
+    /** Total number of matches per season */
     public static final int MAX_MATCHES = 52;
     
+    /** Matches to be played this season */
     public ArrayList<Match> matches;
     
     // Constructor und accessor methods missing. -rr
+    public Season(Match match) {
+	matches.add(match);
+    }
+    
+    /** Returns all t */
+    public ArrayList<Match> getMatches() {
+	return matches;
+    }
     
     /** Return match based on week number */
-    public Match getMatchByWeek(int week) {
+    public Match getMatch(int week) {
 	return matches.get(week);
     }
     
-    /** Returns the number of matches for a season */
+    /** Returns the number of scheduled matches */
     public int getNumMatches() {
 	return matches.size();
     }

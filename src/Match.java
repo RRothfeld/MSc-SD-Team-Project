@@ -49,17 +49,17 @@ public class Match {
 	this.suitableReferees = suitableReferees;
     }
     
-    /** Get week number which is also match ID */
+    /** Returns the week number which is also match ID */
     public int getWeek() {
 	return week;
     }
 
-    /** Get the area where the match is held */
+    /** Returns the area where the match is held */
     public JavaBallController.Location getArea() {
 	return area;
     }
 
-    /** Get match level (i.e. Senior or Junior */
+    /** Returns match level (i.e. Senior or Junior */
     public Level getLevel() {
 	return level;
     }
@@ -87,7 +87,7 @@ public class Match {
 //	return suitableReferees;
 //    }
 
-    /** Gets match details */
+    /** Returns match details */
     public String matchReport() {
 	// TODO this will print to MatchAllocs.txt
 	String match = String.format("%d %s %s %s %s", week, level, area,
@@ -97,7 +97,7 @@ public class Match {
 
     /**  */
     public String toString() {
-	// TODO this method feels redundant
+	// TODO this method seems redundant
 	String match = String.format("%d %s %s %s %s", week, level, area,
 		suitableReferees[1], suitableReferees[2]);
 	return match;
