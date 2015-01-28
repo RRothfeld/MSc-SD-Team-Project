@@ -21,16 +21,19 @@ import java.util.Scanner;
  */
 
 public class RefereeList {
+	/** The name of the referee input file */
+	public static final String INPUT_FILE = "RefereesIn.txt";
+	
 	/** maximum number of listed referees */
 	private final static int MAX_REFEREES = 12;
 	
 	/** list of all registered referees */
-	private final ArrayList<Referee> listedReferees;
+	private ArrayList<Referee> listedReferees;
 
 	/** Default constructor */
 	public RefereeList() {
-		listedReferees = new ArrayList<>();
-		initFromFile();
+		this.listedReferees = new ArrayList<Referee>();
+		initFromFile(listedReferees);
 	}
 	
 	/**
@@ -205,18 +208,17 @@ public class RefereeList {
 		
 	}
 	
-	
 	/**
 	 * Reads in provided file and populates RefereeList
 	 * @param refList the RefereeList to be populated
 	 */
-	private static void initFromFile() {
+	private static void initFromFile(ArrayList<Referee> refList) {
 		try {
 			// set scope of FileReader
 			FileReader refereeFile = null;
 			try {
 				// initialise FileReader with input file and initialise scanner
-				refereeFile = new FileReader(JavaBall.INPUT_FILE);
+				refereeFile = new FileReader(INPUT_FILE);
 				Scanner refScanner = new Scanner(refereeFile);
 
 				// read every line of input file and create referees
@@ -224,7 +226,7 @@ public class RefereeList {
 					String newReferee = refScanner.nextLine();
 					if (newReferee != null) {
 						Referee referee = new Referee(newReferee);
-						listedReferees.add(referee);
+						refList.add(referee);
 					}
 				}
 				// close scanner after usage

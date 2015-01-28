@@ -20,9 +20,6 @@ import java.util.Scanner;
  */
 
 public class JavaBall {
-	/** The name of the referee input file */
-	public static final String INPUT_FILE = "RefereesIn.txt";
-	
 	/**
 	 * The main method
 	 * @param args the arguments
