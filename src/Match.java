@@ -21,57 +21,46 @@ public class Match {
     public enum Level {
 	JUNIOR, SENIOR
     }
+    
+    public enum Week {
+	MIN (1), MAX (52);
+	
+	private final int number; // week number
+	Week(int number) {
+	    this.number = number;
+	}
+    }
 
-    /** TODO comment */
-    private static final int NOT_SCHEDULED = -1;
+    /** The week when a match is held also serves as an ID */
     public int week; // week when the match is held 1-52
 
-    public JavaBallController.Location area; // area where the match is held
+    /** The area where the match is held. */
+    public JavaBallController.Location area;
+    
+    /** The level of the */
     public Level level;
-    public ArrayList<Referee> suitableReferees;
-
-    /**
-     * Instantiates a new Match (default constructor)
-     */
-    public Match() {
-	week = NOT_SCHEDULED;
-	area = null;
-	initReferees();
-    }
+    public Referee[] suitableReferees;
 
     /**
      * Instantiates a new Match given a calendar week, area the match is held
      * in, level of the match
-     * 
-     * @param week
-     *            the number of the calendar match is held in (1-52)
-     * @param level
-     *            of the match (Junior or Senior)
-     * @param area
-     *            that the match is held in
+     * @param week the number of the calendar match is held in (1-52)
+     * @param level of the match (Junior or Senior)
+     * @param area that the match is held in
      */
-    public Match(int week, Level level, JavaBallController.Location area) {
+    public Match(int week, Level level, Referee[] suitableReferees, JavaBallController.Location area) {
 	this.week = week;
 	this.level = level;
 	this.area = area;
-	initReferees();
-	// TODO this method could get the 2 suitable refs and get them from
-	// RefAss
+	this.suitableReferees = suitableReferees;
     }
-
-
-    /** Store the two suitable referees for the match */
-    public void initReferees() {
-	// TODO take in a ref association
-	// then
-	// suitableReferees = refAss.getSuitableRefs();
-    }
+    
     /** Get week number which is also match ID */
     public int getWeek() {
 	return week;
     }
 
-    /** Get match area */
+    /** Get the area where the match is held */
     public JavaBallController.Location getArea() {
 	return area;
     }
@@ -80,27 +69,43 @@ public class Match {
     public Level getLevel() {
 	return level;
     }
-
-    /** Get two suggested referees for the match */
-    public ArrayList<Referee> getReferees() {
-	return suitableReferees;
+    
+    /** Set the week number which is also match ID */
+    public void setWeek(int week) {
+	// TODO we need to have constraint 1-52
+	// enums are another way
+	// will get rid of magic vars
+	if ((week >= Match.Week.MIN.number) && (week <= Match.Week.MAX.number)){
+	    this.week = week;
+	}
+	// do nothing or display msg?
     }
+    
+    /** Set the area where match is held */
+    public void setArea(JavaBallController.Location area) {
+	
+    }
+    
+// TODO RR said remove the method, but then don't we need getters for iv-s?
+//    /** Get two suggested referees for the match */
+//    public Referee[] getReferees() {
+//	return suitableReferees;
+//    }
 
     /** Gets match details */
     public String matchReport() {
-	// this will print to MatchAllocs.txt
-	// could have toString method for match?
-
-	String ref1 = "John Doe"; // ref.get(1).get
-	String ref2 = "Jane Gray";
-	String match = String.format("%d %s %s %s %s", week, level, area, ref1,
-		ref2);
+	// TODO this will print to MatchAllocs.txt
+	String match = String.format("%d %s %s %s %s", week, level, area,
+		suitableReferees[1], suitableReferees[2]);
 	return match;
     }
 
     /**  */
     public String toString() {
-	return "hello";
+	// TODO this method feels redundant
+	String match = String.format("%d %s %s %s %s", week, level, area,
+		suitableReferees[1], suitableReferees[2]);
+	return match;
     }
 
 }
