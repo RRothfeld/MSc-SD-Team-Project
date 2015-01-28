@@ -22,14 +22,8 @@ public class Match {
 	JUNIOR, SENIOR
     }
     
-    public enum Week {
-	MIN (1), MAX (52);
-	
-	private final int number; // week number
-	Week(int number) {
-	    this.number = number;
-	}
-    }
+    private int MIN_WEEK = 1;
+    private int MAX_WEEK = 52;
 
     /** The week when a match is held also serves as an ID */
     public int week; // week when the match is held 1-52
@@ -72,18 +66,19 @@ public class Match {
     
     /** Set the week number which is also match ID */
     public void setWeek(int week) {
-	// TODO we need to have constraint 1-52
-	// enums are another way
-	// will get rid of magic vars
-	if ((week >= Match.Week.MIN.number) && (week <= Match.Week.MAX.number)){
+	if ((week >= MIN_WEEK) && (week <= MAX_WEEK)){
 	    this.week = week;
 	}
-	// do nothing or display msg?
     }
     
     /** Set the area where match is held */
     public void setArea(JavaBallController.Location area) {
-	
+	this.area = area;
+    }
+    
+    /** Set match level (i.e. Senior or Junior */
+    public void getLevel(Level level) {
+	this.level = level;
     }
     
 // TODO RR said remove the method, but then don't we need getters for iv-s?
