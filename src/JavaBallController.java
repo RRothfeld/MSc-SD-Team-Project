@@ -2,10 +2,7 @@ import javax.swing.WindowConstants;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.*;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -34,8 +31,6 @@ public class JavaBallController {
     private final String MATCHFILE   = "MatchAllocs.txt";
     private final int    TABLEFIELDS = 7;
 	
-	
-        
         /** TODO */
     public enum Location {
             NORTH, CENTRAL, SOUTH
@@ -208,6 +203,11 @@ public class JavaBallController {
         }
         return table;
     }
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<Referee> orderByID() 
     {
         ArrayList<Referee> sorted = new ArrayList();

@@ -2,11 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -139,14 +139,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                 String[][] dataTable = controller.execTable();
                 
                 
-		// Referee data displayed in rows (ONLY FOR TESTING)
-		Object[][] data = {
-				{"JS1", "John", "Smith", "IJB3", "5", "North", "YYN"},
-				{"JB1", "Joe", "Bloggs", "NJB1", "1", "South", "YYY"},
-				{"MC1", "Marco", "Cook", "IJB4", "10", "Central", "NYN"},
-				{"AL1", "Andrew", "Lowson", "IJB3", "7", "North", "YYN"},
-
-		};
+//		// Referee data displayed in rows (ONLY FOR TESTING)
+//		Object[][] data = {
+//				{"JS1", "John", "Smith", "IJB3", "5", "North", "YYN"},
+//				{"JB1", "Joe", "Bloggs", "NJB1", "1", "South", "YYY"},
+//				{"MC1", "Marco", "Cook", "IJB4", "10", "Central", "NYN"},
+//				{"AL1", "Andrew", "Lowson", "IJB3", "7", "North", "YYN"},
+//		};
 		// Instantiate table component with referee data and column names
                 
 		table = new JTable(dataTable, columnNames);
