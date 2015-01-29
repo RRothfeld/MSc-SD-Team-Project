@@ -51,7 +51,8 @@ public class JavaBallController {
 	 * @param s
 	 */
 	public void execAdd(String s) {
-            //What is to go here?
+            //need to discuss the String going into this
+            refList.add(new Referee(s));
         }
 
 	/**
@@ -72,12 +73,35 @@ public class JavaBallController {
 		chart.setVisible(true);
 	}
 	
+        /**
+         * Method to edit fields of Referee
+         * @param id - ID of referee to edit
+         * @param info - Info being edited.
+         */
+        public void editReferee(String id, String info) {
+            Referee referee = refList.getReferee(id);
+            //TODO work out what the input to this method will be
+        }
+        
 	/**
-	 * 
-	 * @param s
+	 * Method to return a Referee to be displayed in Ref Window from Search
+	 * @param s - User provided String referring to the Referee 
+         * @return Referee required or null if not found
 	 */
-	public void execSearch(String s) {
-		
+	public Referee execSearch(String s) {
+            
+            // Assuming either ID or full name...
+            for (Referee ref : refList)
+            {
+                if (ref.getID().equals(s))
+                {
+                    return ref;
+                } else if ((ref.getForename()+" "+ref.getSurname()).equals(s))
+                {
+                    return ref;
+                } 
+            }
+            return null;
 	}
 	
 	/**

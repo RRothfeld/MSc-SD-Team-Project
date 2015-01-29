@@ -375,7 +375,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * 
 	 */
 	
-	private class AllocateMatches extends JFrame implements ActionListener {
+	private final class AllocateMatches extends JFrame implements ActionListener {
 		
 		private JTextField weekNumber;
 		private JComboBox matchLevel, matchArea;
@@ -430,6 +430,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			add(bottom, BorderLayout.CENTER);
 		}
 
+                @Override
 		public void actionPerformed(ActionEvent ae) {
 			if(ae.getSource() == allocateReferees) {
 				//TODO Filter list of Referees in main GUI to display suitable 
