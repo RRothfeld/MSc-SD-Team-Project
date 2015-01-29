@@ -190,8 +190,6 @@ public class JavaBallController {
     {
         orderByID();
         String[] refDetails = new String[TABLEFIELDS];
-        
-        
         String[][] table = new String[refList.size()][TABLEFIELDS];
         
         for (int row = 0; row < refList.size(); row++)
@@ -208,14 +206,6 @@ public class JavaBallController {
                 
             System.arraycopy(refDetails, 0, table[row], 0, TABLEFIELDS);
         }
-
-        Object[][] data = {
-                            {"JS1", "John", "Smith", "IJB3", "5", "North", "YYN"},
-                            {"JB1", "Joe", "Bloggs", "NJB1", "1", "South", "YYY"},
-                            {"MC1", "Marco", "Cook", "IJB4", "10", "Central", "NYN"},
-                            {"AL1", "Andrew", "Lowson", "IJB3", "7", "North", "YYN"},
-
-            };
         return table;
     }
     public ArrayList<Referee> orderByID() 
