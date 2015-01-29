@@ -32,21 +32,10 @@ import javax.swing.*;
 public class ChartFrame extends JFrame {
 
     private RefereeList referees;
-    private JTextArea textArea;
-
-    // Dimensions of the text area
-    private final int ROWS = 3;
-    private final int COLUMNS = 7;
 
     // Dimensions of the frame
-<<<<<<< HEAD
-    private static final int FRAME_WIDTH = 800;
-
-    private static final int FRAME_HEIGHT = 500;
-=======
-    private static final int FRAME_WIDTH = 300;
-    private static final int FRAME_HEIGHT = 180;
->>>>>>> master
+    private static final int FRAME_WIDTH = 400;
+    private static final int FRAME_HEIGHT = 400;
 
     /**
      * A constructor with a FitnessProgram parameter used to initialise the
@@ -56,8 +45,8 @@ public class ChartFrame extends JFrame {
     public ChartFrame(RefereeList referees) {
 	this.referees = referees;
 
-//	JScrollPane scrollPane = addScrollPane();
-//	add(scrollPane, BorderLayout.CENTER);
+	// JScrollPane scrollPane = addScrollPane();
+	// add(scrollPane, BorderLayout.CENTER);
 	RectangleComponent component = new RectangleComponent();
 	add(component);
 	setTitle("Barchart of Referee Allocations");
@@ -67,18 +56,14 @@ public class ChartFrame extends JFrame {
 
     /** A method to build the scroll pane */
     public JScrollPane addScrollPane() {
-	JScrollPane scrollPane = new JScrollPane(textArea);
+	JScrollPane scrollPane = new JScrollPane(this);
 	return scrollPane;
     }
 
     /**
      * A component that draws some shapes and displays a message
      */
-<<<<<<< HEAD
     private class RectangleComponent extends JComponent {
-=======
-    private static class RectangleComponent extends JComponent {
->>>>>>> master
 	/**
 	 * Constructor for RectangleComponent object
 	 */
@@ -86,47 +71,11 @@ public class ChartFrame extends JFrame {
 	}
 
 	public void paintComponent(Graphics g) {
-<<<<<<< HEAD
-//	    int rectWidth = 30;
-//	    int rectHeight = 450;
-//
-//	    // Recover Graphics2D
-//	    Graphics2D g2 = (Graphics2D) g;
-//
-//	    // set background colour to be blue
-//	    g2.setColor(Color.WHITE);
-//	    g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-//
-//	    int x = 10;
-//	    int y = 10;
-//	    // blocks
-//	    g2.setColor(Color.GRAY);
-//	    for (int i = 1; i <= 10; i++) {
-//		g2.fillRect(x, y, rectWidth, rectHeight);
-//		x += rectWidth + 50;
-//		y -= 40;
-//		rectHeight += 10;
-//	    }
+	    int START = 100;
+	    int SCALE = 7;
 	    
-//	    for (Referee ref : referees) {
-//		g2.fillRect(x, y, rectWidth, rectHeight);
-//		x += rectWidth + 10;
-//		y -= 10;
-//		rectHeight += ref.getAllocations();
-//	    }
-
-	    // text
-//	    x = 50; // reset x back to start
-//	    y = 320; // set y underneath the blocks
-//	    g2.setColor(Color.GRAY);
-//	    g2.setFont(new Font("Monospaced", Font.BOLD, 18));
-//	    for (int i = 1; i <= 5; i++) {
-//		g2.drawString("" + x, x, y);
-//		x += rectWidth + 10;
-//	    }
-=======
-	    int rectWidth = 30;
-	    int rectHeight = 50;
+	    int width = 30;
+	    int height = 0;
 
 	    // Recover Graphics2D
 	    Graphics2D g2 = (Graphics2D) g;
@@ -135,27 +84,29 @@ public class ChartFrame extends JFrame {
 	    g2.setColor(Color.WHITE);
 	    g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-	    int x = 50;
-	    int y = 50;
+	    int x = START;
+	    int y = START;
 	    // blocks
 	    g2.setColor(Color.GRAY);
-	    for (int i = 1; i <= 5; i++) {
-		g2.fillRect(x, y, rectWidth, rectHeight);
-		x += rectWidth + 10;
-		y -= 10;
-		rectHeight += 10;
+
+	    for (Referee ref : referees) {
+		 g2.fillRect(x, y, width, height);
+		 x += width + SCALE;
+		 y -= ref.getAllocations();
+		 height += ref.getAllocations();
 	    }
 
 	    // text
-	    x = 50; // reset x back to start
-	    y = 120; // set y underneath the blocks
+	    x = START; // reset x back to start
+	    y = height + START - SCALE; // set y underneath the blocks
+	    
 	    g2.setColor(Color.GRAY);
 	    g2.setFont(new Font("Monospaced", Font.BOLD, 18));
-	    for (int i = 1; i <= 5; i++) {
-		g2.drawString("" + x, x, y);
-		x += rectWidth + 10;
+	    for (Referee ref : referees) {
+		g2.drawString(ref.getID(), x, y);
+		x += width + SCALE;
 	    }
->>>>>>> master
+
 	}
     }
 }
