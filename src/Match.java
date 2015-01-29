@@ -26,14 +26,16 @@ public class Match {
     private int MAX_WEEK = 52;
 
     /** The week when a match is held also serves as an ID */
-    public int week; // week when the match is held 1-52
+    private int week; // week when the match is held 1-52
 
     /** The area where the match is held. */
-    public JavaBallController.Location area;
+    private JavaBallController.Location area;
     
-    /** The level of the */
-    public Level level;
-    public Referee[] suitableReferees;
+    /** The level of the match */
+    private Level level;
+    
+    /** Suitable referees for the match */
+    private Referee[] suitableReferees;
 
     /**
      * Instantiates a new Match given a calendar week, area the match is held
