@@ -46,15 +46,16 @@ public class JavaBallController {
 	 * @param s
 	 */
 	public void execAdd(String s) {
-		
-	}
+            //What is to go here?
+        }
 
 	/**
 	 * 
 	 * @param s
 	 */
 	public void execAllocate(String s) {
-		
+            //TODO finish once RefereeList method is complete
+            refList.getSuitableReferees(null);
 	}
 
 	/**
@@ -79,15 +80,12 @@ public class JavaBallController {
 	 */
 	public void execSaveExit() {
             writeOutputFile();
-            
-            System.exit(0);
-		
+            System.exit(0);		
 	}
         
         public Referee getReferee(String id)
         {
-            Referee referee = refList.getReferee(id);
-            return referee;
+            return refList.getReferee(id);
         }
         
         
@@ -109,7 +107,7 @@ public class JavaBallController {
                     sname, qualification, 0, homeLocal, travel));
         }  
         
-        public void removeReferee(String id)
+        public void execRemoveReferee(String id)
         {
             refList.remove(refList.getReferee(id));
         }
@@ -167,9 +165,10 @@ public class JavaBallController {
                 {
                     matchFile.write(s+"\n");
                 }
-                
+                refereeFile.close();
+                matchFile.close();
             } catch (IOException ex) {
-                
+                //TODO
             }
             
         }

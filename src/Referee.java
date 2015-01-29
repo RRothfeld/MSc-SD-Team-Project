@@ -120,10 +120,9 @@ public class Referee implements Comparable<Referee> {
      */   
     private void setTravelLocations(String travel)
     {        
-        travel = travel.trim();
         
         travelLocations = travel;
-        boolean[] visits = new boolean[3];
+        boolean[] visits = new boolean[travel.length()];
         
         for (int i = 0; i < travel.length(); i++)
         {
