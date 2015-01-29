@@ -176,12 +176,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 			// If search button is pressed
 		} else if (ae.getSource() == searchButton) {
-			ViewRefereeFrame serachRef = new ViewRefereeFrame();
+                        
+                        Referee ref = controller.execSearch(searchField.getText());
+			ViewRefereeFrame serachRef = new ViewRefereeFrame(ref);
 			serachRef.setVisible(true);
 			firstNameField.setEditable(false);
 			surnameField.setEditable(false);
 			matchesField.setEditable(false);
-			controller.execSearch(" ");
+			
 
 			// If save and exit button is pressed
 		} else if (ae.getSource() == resetSearchButton) {
@@ -219,11 +221,25 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		// GUI labels for viewRefereeFrame
 		private JLabel idLabel, firstNameLabel, surnameLabel, 
 		qualificationLabel, matchesLabel, homeLabel, visitAreasLabel;
-
+                private Referee referee;
 		/**
 		 * Constructor to add components and create frame.
 		 */
 		public ViewRefereeFrame() {
+
+			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			setTitle("Add/Edit/Remove Referee");
+			setSize(1000, 200);
+			setLocation(200, 200);
+			// Adds top GUI components
+			layoutTop();
+			// Adds central GUI components
+			layoutMiddle();
+			// Adds bottom GUI components
+			layoutBottom();
+
+		}
+                public ViewRefereeFrame(Referee referee) {
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Add/Edit/Remove Referee");
