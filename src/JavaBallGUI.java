@@ -43,6 +43,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JTable table;
 	// TODO
 	private final JavaBallController controller;
+        private boolean orderedBySuitability;
 
 	/**
 	 * Constructor for JavaBallGUI
@@ -158,7 +159,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		// If add button is pressed
 		if (ae.getSource() == addButton) {
-			ViewRefereeFrame addRef = new ViewRefereeFrame();
+			RefereeFrame addRef = new RefereeFrame();
 			addRef.setVisible(true);
 			removeButton.setEnabled(false);
 			saveButton.setText("Add Referee");
@@ -178,7 +179,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                         Referee ref = controller.execSearch(searchField.getText());
                         if (ref != null)
                         {
-                            ViewRefereeFrame serachRef = new ViewRefereeFrame(ref);
+                            RefereeFrame serachRef = new RefereeFrame(ref);
                             serachRef.setVisible(true);
                             firstNameField.setEditable(false);
                             surnameField.setEditable(false);
@@ -203,9 +204,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * A method to reset the table view of the main GUI after a match is
 	 * allocated.
 	 */
-	public void resetDisplay() {
-		
-		//TODO Reset main table view and sort referees by ID
+	public void resetDisplay() 
+        {
+            if (orderedBySuitability)
+            {
+                controller.orderByID();
+                orderedBySuitability = false;
+            }   
 	}
 
 
@@ -219,7 +224,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * disabled.If if deleting a referee then save is disabled and delete is 
 	 * enabled. 
 	 */
-	private final class ViewRefereeFrame extends JFrame implements ActionListener {
+	private final class RefereeFrame extends JFrame implements ActionListener {
 
 		// GUI labels for viewRefereeFrame
 		private JLabel idLabel, firstNameLabel, surnameLabel, 
@@ -228,7 +233,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		/**
 		 * Constructor to add components and create frame.
 		 */
-		public ViewRefereeFrame() {
+		public RefereeFrame() {
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Add/Edit/Remove Referee");
@@ -243,7 +248,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		}
                 
-                public ViewRefereeFrame(Referee referee) {
+                public RefereeFrame(Referee referee) {
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Add/Edit/Remove Referee");
@@ -455,8 +460,10 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			if(ae.getSource() == allocateReferees) {
 				//TODO Filter list of Referees in main GUI to display suitable 
 				// referees for that match.
+                            
 				JOptionPane.showMessageDialog(null, "Referee table ordered by "
 						+ "suitibility for this match.");
+                                orderedBySuitability = true;
 			}
 			
 			if(ae.getSource() == cancelButton) {
