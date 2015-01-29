@@ -162,13 +162,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			addRef.setVisible(true);
 			removeButton.setEnabled(false);
 			saveButton.setText("Add Referee");
-			controller.execAdd(" ");
 
 			// If allocate referee to matches button is pressed
 		} else if (ae.getSource() == allocateButton) {
 			AllocateMatches allocateRef = new AllocateMatches();
 			allocateRef.setVisible(true);
-			controller.execAllocate(" ");
 
 			// If chart button is pressed
 		} else if (ae.getSource() == chartButton) {
@@ -178,13 +176,18 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		} else if (ae.getSource() == searchButton) {
                         
                         Referee ref = controller.execSearch(searchField.getText());
-			ViewRefereeFrame serachRef = new ViewRefereeFrame(ref);
-			serachRef.setVisible(true);
-			firstNameField.setEditable(false);
-			surnameField.setEditable(false);
-			matchesField.setEditable(false);
-			
-
+                        if (ref != null)
+                        {
+                            ViewRefereeFrame serachRef = new ViewRefereeFrame(ref);
+                            serachRef.setVisible(true);
+                            firstNameField.setEditable(false);
+                            surnameField.setEditable(false);
+                            matchesField.setEditable(false);
+                        }
+                        else if (ref==null)
+                        {
+                            JOptionPane.showMessageDialog(null, "Referee not found");
+                        }
 			// If save and exit button is pressed
 		} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
@@ -239,6 +242,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			layoutBottom();
 
 		}
+                
                 public ViewRefereeFrame(Referee referee) {
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
