@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -36,6 +37,7 @@ public class ChartFrame extends JFrame {
 
     // Dimensions of the frame
     private static final int FRAME_WIDTH = 800;
+
     private static final int FRAME_HEIGHT = 500;
 
     /**
@@ -65,17 +67,54 @@ public class ChartFrame extends JFrame {
 	return scrollPane;
     }
 
-    /** A method to render the barchart in the frame */
-    private void drawChart() {
-
-    }
-
     /**
-     * Updates the display
-     * @param g the Graphics object
+     * A component that draws some shapes and displays a message
      */
-    public void paintComponent(Graphics g) {
-	// Recover Graphics2D
-	//Graphics2D g2 = (Graphics2D) g;
+    private class RectangleComponent extends JComponent {
+	/**
+	 * Constructor for RectangleComponent object
+	 */
+	public RectangleComponent() {
+	}
+
+	public void paintComponent(Graphics g) {
+//	    int rectWidth = 30;
+//	    int rectHeight = 450;
+//
+//	    // Recover Graphics2D
+//	    Graphics2D g2 = (Graphics2D) g;
+//
+//	    // set background colour to be blue
+//	    g2.setColor(Color.WHITE);
+//	    g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+//
+//	    int x = 10;
+//	    int y = 10;
+//	    // blocks
+//	    g2.setColor(Color.GRAY);
+//	    for (int i = 1; i <= 10; i++) {
+//		g2.fillRect(x, y, rectWidth, rectHeight);
+//		x += rectWidth + 50;
+//		y -= 40;
+//		rectHeight += 10;
+//	    }
+	    
+//	    for (Referee ref : referees) {
+//		g2.fillRect(x, y, rectWidth, rectHeight);
+//		x += rectWidth + 10;
+//		y -= 10;
+//		rectHeight += ref.getAllocations();
+//	    }
+
+	    // text
+//	    x = 50; // reset x back to start
+//	    y = 320; // set y underneath the blocks
+//	    g2.setColor(Color.GRAY);
+//	    g2.setFont(new Font("Monospaced", Font.BOLD, 18));
+//	    for (int i = 1; i <= 5; i++) {
+//		g2.drawString("" + x, x, y);
+//		x += rectWidth + 10;
+//	    }
+	}
     }
 }
