@@ -236,10 +236,11 @@ public class JavaBallController {
                 updateRefereeList();
                 for (Referee ref : refList)
                 {
-                    String details = String.format("%s %s %s %s %d %s %s\n",
+                    String details = String.format("%s %s %s %s%d %d %s %s\n",
                             ref.getID(), ref.getForename(), ref.getSurname(),
-                            ref.getQualifications(), ref.getAllocations(),
-                            ref.getHomeLocation(), ref.getTravelLocations());
+                            ref.getQualifications(), ref.getQualificationLevel(),
+                            ref.getAllocations(), ref.getHomeLocation(), 
+                            ref.getTravelLocations());
                     referees[refCounter] = details;
                     refCounter++;
                 }   int counter = 0;
@@ -248,7 +249,7 @@ public class JavaBallController {
                     matches[counter] = (match.matchReport());
                 }   for (String s : referees)
                 {
-                    refereeFile.write(s+"\n");
+                    refereeFile.write(s);
                 }   for (String s : matches)
                 {
                     matchFile.write(s+"\n");

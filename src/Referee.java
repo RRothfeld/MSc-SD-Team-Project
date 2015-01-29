@@ -165,7 +165,7 @@ public class Referee implements Comparable<Referee> {
     private void setQualifications(String qualifications)
     {
         if (qualifications.length() < MAXQUALLENGTH) 
-        {
+        {            
             this.qualification = qualifications;
         } else 
         {
@@ -182,9 +182,8 @@ public class Referee implements Comparable<Referee> {
      */
     public void setQualificationLevel(String qualification)
     {
-        int lastChar = qualification.length()-1;
-        
-        this.qualificationLevel = (int) qualification.charAt(lastChar);
+        String lastChar = qualification.substring(qualification.length()-1);
+        this.qualificationLevel = Integer.parseInt(lastChar);
     }
     
     //-------------------------------------------------------//
@@ -195,6 +194,7 @@ public class Referee implements Comparable<Referee> {
      */
     public void setQualificationLevel(int qualification)
     {
+        
         this.qualificationLevel = qualification;
     }
     
