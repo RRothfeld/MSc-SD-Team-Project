@@ -31,6 +31,11 @@ public class ModelTests {
     }
     
     @Test
+    public void testAssertTrue() {
+      org.junit.Assert.assertTrue("failure - should be true", true);
+    }
+    
+    @Test
     public void testReferees() {
 
 	    System.err.println("List size: " + listedReferees.size());
