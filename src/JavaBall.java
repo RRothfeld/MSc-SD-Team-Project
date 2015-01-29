@@ -1,6 +1,3 @@
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -32,8 +29,8 @@ public class JavaBall {
 		// initialise controller
 		JavaBallController controller = new JavaBallController(season,
 				refList);
-		
-		// initialise view
+                
+                // initialise view
 		JavaBallGUI view = new JavaBallGUI(controller);
 		view.setVisible(true);
 	}

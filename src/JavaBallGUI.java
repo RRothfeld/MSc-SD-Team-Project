@@ -52,13 +52,15 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 */
 	public JavaBallGUI(JavaBallController controller) {
 		// initiate GUI and its components
+            
+		// connect to controller
+		this.controller = controller;
+                
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("JavaBall Referees");
 		setSize(800, 500);
 		layoutComponents();
 
-		// connect to controller
-		this.controller = controller;
 	}
 
 	private void layoutComponents() {
@@ -129,7 +131,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		// Column Names for table (Referee attributes)
 		String[] columnNames = {"ID", "First Name", "Last Name", "Qualification", "Match Allocations", "Home Region", "Travel Locations"};
-
+                
+                if (controller == null)
+                {
+                    System.err.println("Controller is null! Ah!");
+                }
+                String[][] dataTable = controller.execTable();
+                
+                
 		// Referee data displayed in rows (ONLY FOR TESTING)
 		Object[][] data = {
 				{"JS1", "John", "Smith", "IJB3", "5", "North", "YYN"},
@@ -139,7 +148,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		};
 		// Instantiate table component with referee data and column names
-		table = new JTable(data, columnNames);
+                
+		table = new JTable(dataTable, columnNames);
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
 		// Set table dimensions
 		table.setPreferredScrollableViewportSize(new Dimension(400, 100));

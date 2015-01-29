@@ -267,6 +267,16 @@ public class RefereeList implements Iterable<Referee> {
 		return suitableReferees;
 	}
 	
+        /**
+         *
+         * @param index
+         * @return
+         */
+        public Referee get(int index)
+        {            
+            return listedReferees.get(index);
+        }
+        
         public String createID(String fname, String sname)
         {
             String id = fname.toUpperCase().charAt(0) +
@@ -313,6 +323,8 @@ public class RefereeList implements Iterable<Referee> {
                                 }
                                         
 			}
+                        
+                        
 		} catch (IOException e) {} // do nothing if file not found
 	}
 	@Override
