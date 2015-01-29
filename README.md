@@ -105,4 +105,12 @@ are marks for GUI design which primarily relate to “usability” issues, and h
 impact on functionality. For example, a text field with no label beside it may not, strictly
 speaking, in itself cause the program to output an incorrect result, but it makes it very
 difficult for a user to know exactly what should be entered in that text field! 
+
+### Team Submission
+Your submission should contain the following parts:
+- The report
+- The code .pdf
+- The individual Java files.
+
+They should all be put in a `.zip` file called TeamF (if you are team F).
 ###Coding Standards
