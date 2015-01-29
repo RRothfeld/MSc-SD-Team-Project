@@ -33,10 +33,15 @@ public class JavaBallController {
 	
 	/** TODO */
     public enum Location {
-	NORTH, CENTRAL, SOUTH
-    }
+            NORTH, CENTRAL, SOUTH
+        }
 	
-	public JavaBallController(Season season, RefereeList refList) {
+    /**
+     *
+     * @param season
+     * @param refList
+     */
+    public JavaBallController(Season season, RefereeList refList) {
 		this.season = season;
 		this.refList = refList;
 	}
@@ -46,15 +51,16 @@ public class JavaBallController {
 	 * @param s
 	 */
 	public void execAdd(String s) {
-		
-	}
+            //What is to go here?
+        }
 
 	/**
 	 * 
 	 * @param s
 	 */
 	public void execAllocate(String s) {
-		
+            //TODO finish once RefereeList method is complete
+            refList.getSuitableReferees(null);
 	}
 
 	/**
@@ -79,19 +85,29 @@ public class JavaBallController {
 	 */
 	public void execSaveExit() {
             writeOutputFile();
-            
-            System.exit(0);
-		
+            System.exit(0);		
 	}
         
-        public Referee getReferee(String id)
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Referee getReferee(String id)
         {
-            Referee referee = refList.getReferee(id);
-            return referee;
+            return refList.getReferee(id);
         }
         
-        
-        public void addReferee(String fname, String sname, String qual, 
+    /**
+     *
+     * @param fname
+     * @param sname
+     * @param qual
+     * @param level
+     * @param home
+     * @param travel
+     */
+    public void addReferee(String fname, String sname, String qual, 
                 int level, Location home, String travel) {
             
             String qualification = qual+level;
@@ -109,12 +125,20 @@ public class JavaBallController {
                     sname, qualification, 0, homeLocal, travel));
         }  
         
-        public void removeReferee(String id)
+    /**
+     *
+     * @param id
+     */
+    public void execRemoveReferee(String id)
         {
             refList.remove(refList.getReferee(id));
         }
         
-        public void editReferee(String id) 
+    /**
+     *
+     * @param id
+     */
+    public void editReferee(String id) 
         {
             // TODO
             // (b/c passed object via getReferee can directly edit data)
@@ -124,6 +148,10 @@ public class JavaBallController {
         
         //addMatch(int week, Match.Level level, Controller.Location area) --> returns void
         
+    /**
+     *
+     */
+            
         public void updateRefereeList() {
             // TODO
             // --> returns sorted (by ID) RefereeList Object
@@ -134,42 +162,38 @@ public class JavaBallController {
         private void writeOutputFile()
         {
             try {
-                FileWriter refereeFile = new FileWriter(REFEREEFILE);
-                FileWriter matchFile   = new FileWriter(MATCHFILE);
-                
-                String[] referees = new String[refList.size()];
-                String[] matches  = new String[season.getNumMatches()];
-                int refCounter = 0;
-                
-                updateRefereeList();
-                            
-                for (Referee ref : refList)
-                {
-                    String details = String.format("%s %s %s %s %d %s %s\n", 
-                            ref.getID(), ref.getForename(), ref.getSurname(),
-                            ref.getQualifications(), ref.getAllocations(), 
-                            ref.getHomeLocation(), ref.getTravelLocations());
-                    referees[refCounter] = details;    
-                    refCounter++;
+                FileWriter matchFile;
+                try (FileWriter refereeFile = new FileWriter(REFEREEFILE)) {
+                    
+                    matchFile = new FileWriter(MATCHFILE);
+                    String[] referees = new String[refList.size()];
+                    // Throws null pointer
+                    String[] matches  = new String[season.getNumMatches()];
+                    int refCounter = 0;
+                    updateRefereeList();
+                    for (Referee ref : refList)
+                    {
+                        String details = String.format("%s %s %s %s %d %s %s\n",
+                                ref.getID(), ref.getForename(), ref.getSurname(),
+                                ref.getQualifications(), ref.getAllocations(),
+                                ref.getHomeLocation(), ref.getTravelLocations());
+                        referees[refCounter] = details;
+                        refCounter++;
+                    }   int counter = 0;
+                    for (Match match : season)
+                    {
+                        matches[counter] = (match.matchReport());
+                    }   for (String s : referees)
+                    {
+                        refereeFile.write(s+"\n");
+                    }   for (String s : matches)
+                    {
+                        matchFile.write(s+"\n");
                 }
-                
-                int counter = 0;
-                for (Match match : season)
-                {
-                    matches[counter] = (match.matchReport());
                 }
-                
-                for (String s : referees)
-                {
-                    refereeFile.write(s+"\n");
-                }
-                for (String s : matches)
-                {
-                    matchFile.write(s+"\n");
-                }
-                
+                matchFile.close();
             } catch (IOException ex) {
-                
+                //TODO
             }
             
         }

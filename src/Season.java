@@ -33,22 +33,35 @@ public class Season implements Iterable<Match> {
 	// TODO let me know if you need to pass something
     }
     
-    /** Returns all t */
+    /** 
+     * Returns all t
+     * @return  
+     */
     public ArrayList<Match> getMatches() {
 	return matches;
     }
     
-    /** Method for adding a match to a season */
+    /** 
+     * Method for adding a match to a season
+     * @param match 
+     */
     public void addMatch(Match match) {
 	matches.add(match);
     }
     
-    /** Return match based on week number */
+    /** 
+     * Return match based on week number
+     * @param week
+     * @return  
+     */
     public Match getMatch(int week) {
 	return matches.get(week);
     }
     
-    /** Returns the number of scheduled matches */
+    /** 
+     * Returns the number of scheduled matches
+     * @return  
+     */
     public int getNumMatches() {
 	return matches.size();
     }
