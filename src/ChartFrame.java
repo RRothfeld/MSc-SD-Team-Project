@@ -9,7 +9,10 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
+import java.awt.*;
+
+import javax.swing.*;
 
 /**
  * Team Foxtrot JavaBall Referees XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -36,9 +39,14 @@ public class ChartFrame extends JFrame {
     private final int COLUMNS = 7;
 
     // Dimensions of the frame
+<<<<<<< HEAD
     private static final int FRAME_WIDTH = 800;
 
     private static final int FRAME_HEIGHT = 500;
+=======
+    private static final int FRAME_WIDTH = 300;
+    private static final int FRAME_HEIGHT = 180;
+>>>>>>> master
 
     /**
      * A constructor with a FitnessProgram parameter used to initialise the
@@ -48,12 +56,10 @@ public class ChartFrame extends JFrame {
     public ChartFrame(RefereeList referees) {
 	this.referees = referees;
 
-	// order by ref ID
-	// initialise an array
-
-	JScrollPane scrollPane = addScrollPane();
-	add(scrollPane, BorderLayout.CENTER);
-
+//	JScrollPane scrollPane = addScrollPane();
+//	add(scrollPane, BorderLayout.CENTER);
+	RectangleComponent component = new RectangleComponent();
+	add(component);
 	setTitle("Barchart of Referee Allocations");
 	setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
@@ -61,8 +67,6 @@ public class ChartFrame extends JFrame {
 
     /** A method to build the scroll pane */
     public JScrollPane addScrollPane() {
-	textArea = new JTextArea(ROWS, COLUMNS);
-	textArea.setText("Hello");
 	JScrollPane scrollPane = new JScrollPane(textArea);
 	return scrollPane;
     }
@@ -70,7 +74,11 @@ public class ChartFrame extends JFrame {
     /**
      * A component that draws some shapes and displays a message
      */
+<<<<<<< HEAD
     private class RectangleComponent extends JComponent {
+=======
+    private static class RectangleComponent extends JComponent {
+>>>>>>> master
 	/**
 	 * Constructor for RectangleComponent object
 	 */
@@ -78,6 +86,7 @@ public class ChartFrame extends JFrame {
 	}
 
 	public void paintComponent(Graphics g) {
+<<<<<<< HEAD
 //	    int rectWidth = 30;
 //	    int rectHeight = 450;
 //
@@ -115,6 +124,38 @@ public class ChartFrame extends JFrame {
 //		g2.drawString("" + x, x, y);
 //		x += rectWidth + 10;
 //	    }
+=======
+	    int rectWidth = 30;
+	    int rectHeight = 50;
+
+	    // Recover Graphics2D
+	    Graphics2D g2 = (Graphics2D) g;
+
+	    // set background colour to be blue
+	    g2.setColor(Color.WHITE);
+	    g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+
+	    int x = 50;
+	    int y = 50;
+	    // blocks
+	    g2.setColor(Color.GRAY);
+	    for (int i = 1; i <= 5; i++) {
+		g2.fillRect(x, y, rectWidth, rectHeight);
+		x += rectWidth + 10;
+		y -= 10;
+		rectHeight += 10;
+	    }
+
+	    // text
+	    x = 50; // reset x back to start
+	    y = 120; // set y underneath the blocks
+	    g2.setColor(Color.GRAY);
+	    g2.setFont(new Font("Monospaced", Font.BOLD, 18));
+	    for (int i = 1; i <= 5; i++) {
+		g2.drawString("" + x, x, y);
+		x += rectWidth + 10;
+	    }
+>>>>>>> master
 	}
     }
 }
