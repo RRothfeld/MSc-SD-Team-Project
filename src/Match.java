@@ -22,8 +22,8 @@ public class Match {
 	JUNIOR, SENIOR
     }
     
-    private int MIN_WEEK = 1;
-    private int MAX_WEEK = 52;
+    private final int MIN_WEEK = 1;
+    private final int MAX_WEEK = 52;
 
     /** The week when a match is held also serves as an ID */
     private int week; // week when the match is held 1-52
@@ -35,13 +35,14 @@ public class Match {
     private Level level;
     
     /** Suitable referees for the match */
-    private Referee[] suitableReferees;
+    private final Referee[] suitableReferees;
 
     /**
      * Instantiates a new Match given a calendar week, area the match is held
      * in, level of the match
      * @param week the number of the calendar match is held in (1-52)
      * @param level of the match (Junior or Senior)
+     * @param suitableReferees
      * @param area that the match is held in
      */
     public Match(int week, Level level, Referee[] suitableReferees, JavaBallController.Location area) {
@@ -56,29 +57,34 @@ public class Match {
 	return week;
     }
 
-    /** Returns the area where the match is held */
+    /** Returns the area where the match is held
+     * @return  */
     public JavaBallController.Location getArea() {
 	return area;
     }
 
-    /** Returns match level (i.e. Senior or Junior */
+    /** Returns match level (i.e. Senior or Junior
+     * @return  */
     public Level getLevel() {
 	return level;
     }
     
-    /** Set the week number which is also match ID */
+    /** Set the week number which is also match ID
+     * @param week */
     public void setWeek(int week) {
 	if ((week >= MIN_WEEK) && (week <= MAX_WEEK)){
 	    this.week = week;
 	}
     }
     
-    /** Set the area where match is held */
+    /** Set the area where match is held
+     * @param area */
     public void setArea(JavaBallController.Location area) {
 	this.area = area;
     }
     
-    /** Set match level (i.e. Senior or Junior */
+    /** Set match level (i.e. Senior or Junior
+     * @param level */
     public void getLevel(Level level) {
 	this.level = level;
     }
@@ -89,7 +95,8 @@ public class Match {
 //	return suitableReferees;
 //    }
 
-    /** Returns match details */
+    /** Returns match details
+     * @return  */
     public String matchReport() {
 	// TODO this will print to MatchAllocs.txt
 	String match = String.format("%d %s %s %s %s", week, level, area,
@@ -98,6 +105,7 @@ public class Match {
     }
 
     /**  */
+    @Override
     public String toString() {
 	// TODO this method seems redundant
 	String match = String.format("%d %s %s %s %s", week, level, area,

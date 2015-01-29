@@ -30,7 +30,7 @@ public class Season implements Iterable<Match> {
     
     /** Default constructor */
     public Season() {
-	// TODO let me know if you need to pass something
+	matches = new ArrayList<>();
     }
     
     /** 
@@ -66,6 +66,7 @@ public class Season implements Iterable<Match> {
 	return matches.size();
     }
     
+    @Override
     public Iterator<Match> iterator() {
         return matches.iterator();
     }
