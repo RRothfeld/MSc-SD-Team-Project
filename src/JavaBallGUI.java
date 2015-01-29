@@ -214,7 +214,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * disabled.If if deleting a referee then save is disabled and delete is 
 	 * enabled. 
 	 */
-	private class ViewRefereeFrame extends JFrame implements ActionListener {
+	private final class ViewRefereeFrame extends JFrame implements ActionListener {
 
 		// GUI labels for viewRefereeFrame
 		private JLabel idLabel, firstNameLabel, surnameLabel, 
@@ -336,13 +336,30 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		}
 
+                @Override
 		public void actionPerformed(ActionEvent ae) {
 			if(ae.getSource() == backButton) {
 
 				// TODO NOT SURE ABOUT THIS!
 				setVisible(false);
 			}
+                        if(ae.getSource() == removeButton) {
+                            controller.execRemoveReferee(idField.getText());
+			}
+                        if(ae.getSource() == saveButton) {
+                            /**
+                             * TODO, ASK Marco, question! :)
+                             * From the requested Controller methods on 
+                             * github, I thought matchesField would actually 
+                             * be levelField. Could you clarify? 
+                             */
 
+                            controller.addReferee(firstNameField.getText(), 
+                                    surnameField.getText(), qualificationField.getText(), 
+                                    Integer.parseInt(matchesField.getText()), 
+                                    JavaBallController.Location.valueOf(homeField.getText().toUpperCase()), 
+                                    visitAreasField.getText());
+			}
 		}
 
 	}
