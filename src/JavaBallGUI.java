@@ -44,6 +44,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JTable table;
 	// TODO
 	private final JavaBallController controller;
+        private boolean orderedBySuitability;
 
 	/**
 	 * Constructor for JavaBallGUI
@@ -163,13 +164,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			addRef.setVisible(true);
 			removeButton.setEnabled(false);
 			saveButton.setText("Add Referee");
-			controller.execAdd(" ");
 
 			// If allocate referee to matches button is pressed
 		} else if (ae.getSource() == allocateButton) {
 			AllocateMatches allocateRef = new AllocateMatches();
 			allocateRef.setVisible(true);
-			controller.execAllocate(" ");
 
 			// If chart button is pressed
 		} else if (ae.getSource() == chartButton) {
@@ -177,15 +176,20 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 			// If search button is pressed
 		} else if (ae.getSource() == searchButton) {
-
+                        
 			Referee ref = controller.execSearch(searchField.getText());
-			RefereeFrame serachRef = new RefereeFrame(ref);
-			serachRef.setVisible(true);
-			firstNameField.setEditable(false);
-			surnameField.setEditable(false);
-			matchesField.setEditable(false);
-
-
+			if (ref != null)
+			{
+				RefereeFrame serachRef = new RefereeFrame(ref);
+				serachRef.setVisible(true);
+				firstNameField.setEditable(false);
+				surnameField.setEditable(false);
+				matchesField.setEditable(false);
+			}
+			else if (ref==null)
+			{
+				JOptionPane.showMessageDialog(null, "Referee not found");
+			}
 			// If save and exit button is pressed
 		} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
@@ -201,9 +205,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * A method to reset the table view of the main GUI after a match is
 	 * allocated.
 	 */
-	public void resetDisplay() {
-
-		//TODO Reset main table view and sort referees by ID
+	public void resetDisplay() 
+        {
+            if (orderedBySuitability)
+            {
+                controller.orderByID();
+                orderedBySuitability = false;
+            }   
 	}
 
 
@@ -240,7 +248,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			layoutBottom();
 
 		}
+                
 		public RefereeFrame(Referee referee) {
+
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Add/Edit/Remove Referee");
@@ -457,8 +467,10 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			if(ae.getSource() == allocateReferees) {
 				//TODO Filter list of Referees in main GUI to display suitable 
 				// referees for that match.
+                            
 				JOptionPane.showMessageDialog(null, "Referee table ordered by "
 						+ "suitibility for this match.");
+                                orderedBySuitability = true;
 			}
 
 			if(ae.getSource() == cancelButton) {

@@ -85,19 +85,17 @@ public class JavaBallController {
         
 	/**
 	 * Method to return a Referee to be displayed in Ref Window from Search
-	 * @param s - User provided String referring to the Referee 
+	 * @param input - User provided String referring to the Referee 
          * @return Referee required or null if not found
 	 */
-	public Referee execSearch(String s) {
+	public Referee execSearch(String input) {
             
-            // Assuming either ID or full name...
+            // Assuming full name...
             for (Referee ref : refList)
             {
-                if (ref.getID().equals(s))
+                if ((ref.getForename()+" "+ref.getSurname()).equals(input))
                 {
-                    return ref;
-                } else if ((ref.getForename()+" "+ref.getSurname()).equals(s))
-                {
+                    // Always returns first Referee with that name
                     return ref;
                 } 
             }
@@ -177,9 +175,21 @@ public class JavaBallController {
      */
             
         public void updateRefereeList() {
-            // TODO
-            // --> returns sorted (by ID) RefereeList Object
+            orderByID();
         }
+        
+        
+        public ArrayList<Referee> orderByID() 
+        {
+            ArrayList<Referee> sorted = new ArrayList();
+            for (Referee ref : refList)
+            {
+                sorted.add(ref);
+            }
+            Collections.sort(sorted);
+            return sorted;
+        }
+        
         /**
          * Write report Files
          */
