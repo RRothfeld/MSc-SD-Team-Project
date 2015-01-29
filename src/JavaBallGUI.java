@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,7 +35,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JTextField searchField;
 
 	// GUI buttons and textFields for viewRefereeFrame
-	private JButton backButton, saveButton, removeButton;
+	private JButton backButton, saveButton, removeButton; 
 	private JTextField idField, firstNameField, surnameField, 
 	qualificationField, matchesField, homeField, visitAreasField;
 
@@ -138,7 +139,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		};
 		// Instantiate table component with referee data and column names
 		table = new JTable(data, columnNames);
-
+		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
 		// Set table dimensions
 		table.setPreferredScrollableViewportSize(new Dimension(400, 100));
 		table.setFillsViewportHeight(true);
@@ -158,7 +159,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		// If add button is pressed
 		if (ae.getSource() == addButton) {
-			ViewRefereeFrame addRef = new ViewRefereeFrame();
+			RefereeFrame addRef = new RefereeFrame();
 			addRef.setVisible(true);
 			removeButton.setEnabled(false);
 			saveButton.setText("Add Referee");
@@ -176,32 +177,32 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 			// If search button is pressed
 		} else if (ae.getSource() == searchButton) {
-                        
-                        Referee ref = controller.execSearch(searchField.getText());
-			ViewRefereeFrame serachRef = new ViewRefereeFrame(ref);
+
+			Referee ref = controller.execSearch(searchField.getText());
+			RefereeFrame serachRef = new RefereeFrame(ref);
 			serachRef.setVisible(true);
 			firstNameField.setEditable(false);
 			surnameField.setEditable(false);
 			matchesField.setEditable(false);
-			
+
 
 			// If save and exit button is pressed
 		} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
 			resetDisplay();
-			
-		}else if (ae.getSource() == exitButton) {
+
+		} else if (ae.getSource() == exitButton) {
 			controller.execSaveExit();
 		}
 	}
-	
+
 	/**
 	 * A method to reset the table view of the main GUI after a match is
 	 * allocated.
 	 */
 	public void resetDisplay() {
-		
+
 		//TODO Reset main table view and sort referees by ID
 	}
 
@@ -216,16 +217,16 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * disabled.If if deleting a referee then save is disabled and delete is 
 	 * enabled. 
 	 */
-	private final class ViewRefereeFrame extends JFrame implements ActionListener {
+	private final class RefereeFrame extends JFrame implements ActionListener {
 
 		// GUI labels for viewRefereeFrame
 		private JLabel idLabel, firstNameLabel, surnameLabel, 
 		qualificationLabel, matchesLabel, homeLabel, visitAreasLabel;
-                private Referee referee;
+		private Referee referee;
 		/**
 		 * Constructor to add components and create frame.
 		 */
-		public ViewRefereeFrame() {
+		public RefereeFrame() {
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Add/Edit/Remove Referee");
@@ -239,7 +240,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			layoutBottom();
 
 		}
-                public ViewRefereeFrame(Referee referee) {
+		public RefereeFrame(Referee referee) {
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Add/Edit/Remove Referee");
@@ -352,34 +353,39 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		}
 
-                @Override
+		@Override
 		public void actionPerformed(ActionEvent ae) {
 			if(ae.getSource() == backButton) {
 
-				// TODO NOT SURE ABOUT THIS!
-				setVisible(false);
+				// Close window
+				dispose();
 			}
-                        if(ae.getSource() == removeButton) {
-                            controller.execRemoveReferee(idField.getText());
-			}
-                        if(ae.getSource() == saveButton) {
-                            /**
-                             * TODO, ASK Marco, question! :)
-                             * From the requested Controller methods on 
-                             * github, I thought matchesField would actually 
-                             * be levelField. Could you clarify? 
-                             */
+			if(ae.getSource() == removeButton) {
+				controller.execRemoveReferee(idField.getText());
 
-                            controller.addReferee(firstNameField.getText(), 
-                                    surnameField.getText(), qualificationField.getText(), 
-                                    Integer.parseInt(matchesField.getText()), 
-                                    JavaBallController.Location.valueOf(homeField.getText().toUpperCase()), 
-                                    visitAreasField.getText());
+				// Close window
+				dispose();
+			}
+			if(ae.getSource() == saveButton) {
+				/**
+				 * TODO, ASK Marco, question! :)
+				 * From the requested Controller methods on 
+				 * github, I thought matchesField would actually 
+				 * be levelField. Could you clarify? 
+				 */
+
+				controller.addReferee(firstNameField.getText(), 
+						surnameField.getText(), qualificationField.getText(), 
+						Integer.parseInt(matchesField.getText()), 
+						JavaBallController.Location.valueOf(homeField.getText().toUpperCase()), 
+						visitAreasField.getText());
+				// Close window
+				dispose();
 			}
 		}
 
 	}
-	
+
 
 	/**
 	 * TODO
@@ -390,13 +396,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * a button to reset the table (No filter, and sort by the default ID).
 	 * 
 	 */
-	
+
 	private final class AllocateMatches extends JFrame implements ActionListener {
-		
+
 		private JTextField weekNumber;
 		private JComboBox matchLevel, matchArea;
 		private JButton allocateReferees, cancelButton;
-		
+
 		public AllocateMatches() {
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -406,9 +412,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			topLayout();
 			bottomLayout();
 		}
-		
+
 		public void topLayout() {
-			
+
 			JPanel top = new JPanel();
 			// Create and add text field for match week number
 			weekNumber = new JTextField(5);
@@ -428,11 +434,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			top.add(matchArea);
 			// Add panel 'top' to frame
 			add(top, BorderLayout.NORTH);
-			
+
 		}
-		
+
 		public void bottomLayout() {
-			
+
 			JPanel bottom = new JPanel();
 			// Create and add 'create match and allocate referees' button
 			bottom.setBackground(Color.gray);
@@ -446,7 +452,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			add(bottom, BorderLayout.CENTER);
 		}
 
-                @Override
+		@Override
 		public void actionPerformed(ActionEvent ae) {
 			if(ae.getSource() == allocateReferees) {
 				//TODO Filter list of Referees in main GUI to display suitable 
@@ -454,14 +460,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Referee table ordered by "
 						+ "suitibility for this match.");
 			}
-			
+
 			if(ae.getSource() == cancelButton) {
-				
-				// TODO NOT SURE ABOUT THIS!
-				setVisible(false);
-				
+
+				// Close window
+				dispose();
+
 			}
-			
+
 		}
 	}
 }
