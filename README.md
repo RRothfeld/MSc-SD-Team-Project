@@ -1,5 +1,12 @@
 # Team Foxtrot
 
+![](https://d13yacurqjgara.cloudfront.net/users/31664/screenshots/351839/jets7.png)
+
+<!-- ![](https://d13yacurqjgara.cloudfront.net/users/159905/screenshots/1522008/jet_main.gif)
+
+![](https://d13yacurqjgara.cloudfront.net/users/31664/screenshots/377241/fuckyeah.png)
+-->
+
 ```
 		              |     |
 		              |  _  |
@@ -97,8 +104,6 @@ see Part II, Lecture 18.) The batch file should be called `TeamProj.bat`.
 #### Don't use absolute paths
 After submission your program will be tested, so it is particularly important that the filehandling
 within your program does not refer to the absolute location of your text files. 
-
-
 #### Usability NOT Design
 Fine details of the GUI (colour scheme, font size etc.) are not important, however there
 are marks for GUI design which primarily relate to “usability” issues, and how they
