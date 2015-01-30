@@ -442,16 +442,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			matchLevel = new JComboBox();
                         matchLevel.setModel(new DefaultComboBoxModel(Match.Level.values()));
 			matchLevel.setEditable(false);
-			matchLevel.addItem(Match.Level.JUNIOR);
-			matchLevel.addItem(Match.Level.SENIOR);
 			top.add(matchLevel);
 			// Create and add JComboBox for selecting match location
 			matchArea = new JComboBox();
 			matchArea.setEditable(false);
-                        matchArea.setModel(new DefaultComboBoxModel(Match.Level.values()));
-			matchArea.addItem(JavaBallController.Location.NORTH);
-			matchArea.addItem(JavaBallController.Location.CENTRAL);
-			matchArea.addItem(JavaBallController.Location.SOUTH);
+                        matchArea.setModel(new DefaultComboBoxModel(JavaBallController.Location.values()));
 			top.add(matchArea);
 			// Add panel 'top' to frame
 			add(top, BorderLayout.NORTH);
@@ -464,6 +459,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			// Create and add 'create match and allocate referees' button
 			bottom.setBackground(Color.gray);
 			allocateReferees = new JButton("Allocate Referees");
+                        allocateReferees.addActionListener(this);
 			bottom.add(allocateReferees);
 			// Create and add back button
 			cancelButton = new JButton("Back");
@@ -482,11 +478,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                             Match.Level level = (Match.Level) matchLevel.getSelectedItem();
                             JavaBallController.Location area = 
                                     (JavaBallController.Location) matchArea.getSelectedItem();
+                            
                             controller.execAllocate(Integer.parseInt(weekNumber.getText()), 
                                     level, area);
                             JOptionPane.showMessageDialog(null, "Referee table ordered by "
                                             + "suitibility for this match.");
                             orderedBySuitability = true;
+                            dispose();
 			}
 
 			if(ae.getSource() == cancelButton) {
