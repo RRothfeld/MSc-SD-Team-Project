@@ -86,7 +86,8 @@ public class JavaBallController {
      */
     public void editReferee(String id, String info) {
         Referee referee = refList.getReferee(id);
-        //TODO work out what the input to this method will be
+        
+        
     }
 
     /**
@@ -151,6 +152,7 @@ public class JavaBallController {
 
         refList.add(new Referee(refList.createID(fname, sname), fname, 
                 sname, qualification, 0, homeLocal, travel));
+        
     }  
         
     /**
