@@ -44,8 +44,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JTable table;
 	// TODO
 	private final JavaBallController controller;
-        private boolean orderedBySuitability;
-
+        private boolean orderedBySuitability, addReferee;
+        
 	/**
 	 * Constructor for JavaBallGUI
 	 * @param controller
@@ -131,22 +131,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		// Column Names for table (Referee attributes)
 		String[] columnNames = {"ID", "First Name", "Last Name", "Qualification", "Match Allocations", "Home Region", "Travel Locations"};
-                
-                if (controller == null)
-                {
-                    System.err.println("Controller is null! Ah!");
-                }
                 String[][] dataTable = controller.execTable();
-                
-                
-//		// Referee data displayed in rows (ONLY FOR TESTING)
-//		Object[][] data = {
-//				{"JS1", "John", "Smith", "IJB3", "5", "North", "YYN"},
-//				{"JB1", "Joe", "Bloggs", "NJB1", "1", "South", "YYY"},
-//				{"MC1", "Marco", "Cook", "IJB4", "10", "Central", "NYN"},
-//				{"AL1", "Andrew", "Lowson", "IJB3", "7", "North", "YYN"},
-//		};
-		// Instantiate table component with referee data and column names
                 
 		table = new JTable(dataTable, columnNames);
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
@@ -170,9 +155,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		// If add button is pressed
 		if (ae.getSource() == addButton) {
 			RefereeFrame addRef = new RefereeFrame();
+                        addReferee = true;
 			addRef.setVisible(true);
 			removeButton.setEnabled(false);
 			saveButton.setText("Add Referee");
+                        
 
 			// If allocate referee to matches button is pressed
 		} else if (ae.getSource() == allocateButton) {
@@ -260,7 +247,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                 
 		public RefereeFrame(Referee referee) {
 
-
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setTitle("Add/Edit/Remove Referee");
 			setSize(1000, 200);
@@ -273,6 +259,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			layoutBottom();
 
 		}
+                
 		/**
 		 * Method to add labels to GUI.
 		 */
@@ -374,33 +361,49 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-			if(ae.getSource() == backButton) {
+                    if(ae.getSource() == backButton) {
 
-				// Close window
-				dispose();
-			}
-			if(ae.getSource() == removeButton) {
-				controller.execRemoveReferee(idField.getText());
+                            // Close window
+                            dispose();
+                    }
+                    if(ae.getSource() == removeButton) {
+                            controller.execRemoveReferee(idField.getText());
 
-				// Close window
-				dispose();
-			}
-			if(ae.getSource() == saveButton) {
-				/**
-				 * TODO, ASK Marco, question! :)
-				 * From the requested Controller methods on 
-				 * github, I thought matchesField would actually 
-				 * be levelField. Could you clarify? 
-				 */
+                            // Close window
+                            dispose();
+                    }
+                    if(ae.getSource() == saveButton) {
+                            /**
+                             * TODO, ASK Marco, question! :)
+                             * From the requested Controller methods on 
+                             * Github, I thought matchesField would actually 
+                             * be levelField. Could you clarify? 
+                             */
+                            if (addReferee)
+                            {
+                                controller.addReferee(firstNameField.getText(), 
+                                    surnameField.getText(), 
+                                    qualificationField.getText(), 
+                                    Integer.parseInt(matchesField.getText()), 
+                                    JavaBallController.Location.valueOf(homeField.getText().toUpperCase()), 
+                                    visitAreasField.getText()); 
+                                
+                                controller.updateRefereeList();
+                            } else {
 
-				controller.addReferee(firstNameField.getText(), 
-						surnameField.getText(), qualificationField.getText(), 
-						Integer.parseInt(matchesField.getText()), 
-						JavaBallController.Location.valueOf(homeField.getText().toUpperCase()), 
-						visitAreasField.getText());
-				// Close window
-				dispose();
-			}
+                                controller.editReferee(idField.getText(), 
+                                        null);
+                            }
+                            String[] columnNames = {"ID", "First Name", "Last Name", "Qualification", "Match Allocations", "Home Region", "Travel Locations"};
+                            table = new JTable(controller.execTable(), columnNames);
+                            // Close window
+                            Referee ref = controller.getReferee("AL1");
+                            if (ref==null)
+                            {
+                                System.err.println("Oops");
+                            }
+                            dispose();
+                    }
 		}
 
 	}
@@ -418,84 +421,83 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 	private final class AllocateMatches extends JFrame implements ActionListener {
 
-		private JTextField weekNumber;
-		private JComboBox matchLevel, matchArea;
-		private JButton allocateReferees, cancelButton;
+            private JTextField weekNumber;
+            private JComboBox matchLevel, matchArea;
+            private JButton allocateReferees, cancelButton;
 
-		public AllocateMatches() {
+            public AllocateMatches() {
 
-			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-			setTitle("Add Match");
-			setSize(500, 200);
-			setLocation(200, 200);
-			topLayout();
-			bottomLayout();
-		}
+                    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    setTitle("Add Match");
+                    setSize(500, 200);
+                    setLocation(200, 200);
+                    topLayout();
+                    bottomLayout();
+            }
 
-		public void topLayout() {
+            public void topLayout() {
 
-			JPanel top = new JPanel();
-			// Create and add text field for match week number
-			weekNumber = new JTextField(5);
-			top.add(weekNumber);
-			// Create and add JComboBox for selecting match level
-			matchLevel = new JComboBox();
-                        matchLevel.setModel(new DefaultComboBoxModel(Match.Level.values()));
-			matchLevel.setEditable(false);
-			matchLevel.addItem(Match.Level.JUNIOR);
-			matchLevel.addItem(Match.Level.SENIOR);
-			top.add(matchLevel);
-			// Create and add JComboBox for selecting match location
-			matchArea = new JComboBox();
-			matchArea.setEditable(false);
-                        matchArea.setModel(new DefaultComboBoxModel(Match.Level.values()));
-			matchArea.addItem(JavaBallController.Location.NORTH);
-			matchArea.addItem(JavaBallController.Location.CENTRAL);
-			matchArea.addItem(JavaBallController.Location.SOUTH);
-			top.add(matchArea);
-			// Add panel 'top' to frame
-			add(top, BorderLayout.NORTH);
+                    JPanel top = new JPanel();
+                    // Create and add text field for match week number
+                    weekNumber = new JTextField(5);
+                    top.add(weekNumber);
+                    // Create and add JComboBox for selecting match level
+                    matchLevel = new JComboBox();
+                    matchLevel.setModel(new DefaultComboBoxModel(Match.Level.values()));
+                    matchLevel.setEditable(false);
+                    top.add(matchLevel);
+                    // Create and add JComboBox for selecting match location
+                    matchArea = new JComboBox();
+                    matchArea.setEditable(false);
+                    matchArea.setModel(new DefaultComboBoxModel(JavaBallController.Location.values()));
+                    top.add(matchArea);
+                    // Add panel 'top' to frame
+                    add(top, BorderLayout.NORTH);
 
-		}
+            }
 
-		public void bottomLayout() {
+            public void bottomLayout() {
 
-			JPanel bottom = new JPanel();
-			// Create and add 'create match and allocate referees' button
-			bottom.setBackground(Color.gray);
-			allocateReferees = new JButton("Allocate Referees");
-			bottom.add(allocateReferees);
-			// Create and add back button
-			cancelButton = new JButton("Back");
-			cancelButton.addActionListener(this);
-			bottom.add(cancelButton);
-			// Add panel to frame
-			add(bottom, BorderLayout.CENTER);
-		}
+                    JPanel bottom = new JPanel();
+                    // Create and add 'create match and allocate referees' button
+                    bottom.setBackground(Color.gray);
+                    allocateReferees = new JButton("Allocate Referees");
+                    allocateReferees.addActionListener(this);
+                    bottom.add(allocateReferees);
+                    // Create and add back button
+                    cancelButton = new JButton("Back");
+                    cancelButton.addActionListener(this);
+                    bottom.add(cancelButton);
+                    // Add panel to frame
+                    add(bottom, BorderLayout.CENTER);
+            }
 
-		@Override
-		public void actionPerformed(ActionEvent ae) {
-			if(ae.getSource() == allocateReferees) 
-                        {
-                            //TODO Filter list of Referees in main GUI to display suitable 
-                            // referees for that match.
-                            Match.Level level = (Match.Level) matchLevel.getSelectedItem();
-                            JavaBallController.Location area = 
-                                    (JavaBallController.Location) matchArea.getSelectedItem();
-                            controller.execAllocate(Integer.parseInt(weekNumber.getText()), 
-                                    level, area);
-                            JOptionPane.showMessageDialog(null, "Referee table ordered by "
-                                            + "suitibility for this match.");
-                            orderedBySuitability = true;
-			}
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if(ae.getSource() == allocateReferees) 
+                {
+                    //TODO Filter list of Referees in main GUI to display suitable 
+                    // referees for that match.
+                    Match.Level level = (Match.Level) matchLevel.getSelectedItem();
+                    JavaBallController.Location area = 
+                            (JavaBallController.Location) matchArea.getSelectedItem();
 
-			if(ae.getSource() == cancelButton) {
+                    controller.execAllocate(Integer.parseInt(weekNumber.getText()), 
+                            level, area);
+                    JOptionPane.showMessageDialog(null, "Referee table ordered by "
+                                    + "suitibility for this match.");
+                    orderedBySuitability = true;
+                    dispose();
+                    
+                }
 
-				// Close window
-				dispose();
+                if(ae.getSource() == cancelButton) {
 
-			}
+                        // Close window
+                        dispose();
 
-		}
+                }
+
+            }
 	}
 }

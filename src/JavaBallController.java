@@ -86,7 +86,8 @@ public class JavaBallController {
      */
     public void editReferee(String id, String info) {
         Referee referee = refList.getReferee(id);
-        //TODO work out what the input to this method will be
+        
+        
     }
 
     /**
@@ -131,14 +132,14 @@ public class JavaBallController {
      * @param fname
      * @param sname
      * @param qual
-     * @param level
+     * @param allocations
      * @param home
      * @param travel
      */
     public void addReferee(String fname, String sname, String qual, 
-                int level, Location home, String travel) {
+                int allocations, Location home, String travel) {
             
-        String qualification = qual+level;
+        String qualification = qual;
         String homeLocal;
         if (home == Location.NORTH)
         {
@@ -150,7 +151,8 @@ public class JavaBallController {
         }
 
         refList.add(new Referee(refList.createID(fname, sname), fname, 
-                sname, qualification, 0, homeLocal, travel));
+                sname, qualification, allocations, homeLocal, travel));
+        
     }  
         
     /**
@@ -202,7 +204,7 @@ public class JavaBallController {
             refDetails[2] = referee.getSurname();
             refDetails[3] = referee.getQualifications();
             refDetails[4] = Integer.toString(referee.getAllocations());
-            refDetails[5] = referee.getHomeLocation()+"";
+            refDetails[5] = referee.getHomeLocation().toString();
             refDetails[6] = referee.getTravelLocations(); 
                 
             System.arraycopy(refDetails, 0, table[row], 0, TABLEFIELDS);

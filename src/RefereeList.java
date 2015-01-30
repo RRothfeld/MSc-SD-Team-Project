@@ -279,18 +279,19 @@ public class RefereeList implements Iterable<Referee> {
         
         public String createID(String fname, String sname)
         {
-            String id = fname.toUpperCase().charAt(0) +
-                        sname.toUpperCase().charAt(0) + "";
+            char id  = fname.toUpperCase().charAt(0);
+            char id2 = sname.toUpperCase().charAt(0);
+            String refID = String.format("%c%c", id, id2);
             int idNumber = 1;
             for (Referee ref : listedReferees)
             {
-                if (ref.getID().substring(0, 1).equals(id))
+                if (ref.getID().substring(0, 2).equals(refID))
                 {
                     idNumber++;
                 }
             }
-            id += idNumber;
-            return id;
+            String refereeID = String.format("%s%d",refID,idNumber);
+            return refereeID;
         }
         
 	/**
@@ -298,35 +299,33 @@ public class RefereeList implements Iterable<Referee> {
 	 * @param refList the RefereeList to be populated
 	 */
 	private static void initFromFile(ArrayList<Referee> refList) {
-		try {
-			// set scope of FileReader
-			FileReader refereeFile = null;
-			try {
-				// initialise FileReader with input file and initialise scanner
-				refereeFile = new FileReader(INPUT_FILE);
-				Scanner refScanner = new Scanner(refereeFile);
+            
+            try {
+                    // set scope of FileReader
+                    FileReader refereeFile = null;
+                    try {
+                            // initialise FileReader with input file and initialise scanner
+                            refereeFile = new FileReader(INPUT_FILE);
+                            Scanner refScanner = new Scanner(refereeFile);
 
-				// read every line of input file and create referees
-				while (refScanner.hasNextLine()) {
-					String newReferee = refScanner.nextLine();
-					if (newReferee != null) {
-						Referee referee = new Referee(newReferee);
-						refList.add(referee);
-					}
-				}
-				// close scanner after usage
-				refScanner.close();
-			} finally {
-				// close input file if it has been opened
-				if (refereeFile != null) {
-                                        refereeFile.close();
-                                }
-                                        
-			}
-                        
-                        
-		} catch (IOException e) {} // do nothing if file not found
-	}
+                            // read every line of input file and create referees
+                            while (refScanner.hasNextLine()) {
+                                    String newReferee = refScanner.nextLine();
+                                    if (newReferee != null) {
+                                            Referee referee = new Referee(newReferee);
+                                            refList.add(referee);
+                                    }
+                            }
+                            // close scanner after usage
+                            refScanner.close();
+                    } finally {
+                            // close input file if it has been opened
+                            if (refereeFile != null) {
+                                    refereeFile.close();
+                            }
+                    }
+            } catch (IOException e) {} // do nothing if file not found
+        }
 	@Override
 	public Iterator<Referee> iterator() {
 		return listedReferees.iterator();
