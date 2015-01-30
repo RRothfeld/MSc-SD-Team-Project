@@ -1,6 +1,6 @@
 # Team Foxtrot
 
-![](https://d13yacurqjgara.cloudfront.net/users/31664/screenshots/351839/jets7.png)
+![](http://i.imgur.com/Dtp5rQy.png)
 
 <!-- ![](https://d13yacurqjgara.cloudfront.net/users/159905/screenshots/1522008/jet_main.gif)
 
