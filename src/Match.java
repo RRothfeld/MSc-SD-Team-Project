@@ -35,21 +35,19 @@ public class Match {
     private Level level;
     
     /** Suitable referees for the match */
-    private final Referee[] suitableReferees;
+    private final ArrayList<Referee> suitableReferees = new ArrayList<>();
 
     /**
      * Instantiates a new Match given a calendar week, area the match is held
      * in, level of the match
      * @param week the number of the calendar match is held in (1-52)
      * @param level of the match (Junior or Senior)
-     * @param suitableReferees
      * @param area that the match is held in
      */
-    public Match(int week, Level level, Referee[] suitableReferees, JavaBallController.Location area) {
+    public Match(int week, Level level, JavaBallController.Location area) {
 	this.week = week;
 	this.level = level;
 	this.area = area;
-	this.suitableReferees = suitableReferees;
     }
     
     /** Returns the week number which is also match ID */
@@ -89,18 +87,28 @@ public class Match {
 	this.level = level;
     }
     
-// TODO RR said remove the method, but then don't we need getters for iv-s?
-//    /** Get two suggested referees for the match */
-//    public Referee[] getReferees() {
-//	return suitableReferees;
-//    }
-
+    /**
+     * Method to set the Suitable Referees once created by RefereeList
+     * @param referees - ArrayList containing 2 suitable referees
+     */
+    public void setReferees(ArrayList<Referee> referees)
+    {
+        referees.stream().forEach((ref) -> {
+            suitableReferees.add(ref);
+        });
+    }
+    
+    public ArrayList<Referee> getReferees()
+    {
+        return this.suitableReferees;
+    }
+    
     /** Returns match details
      * @return  */
     public String matchReport() {
 	// TODO this will print to MatchAllocs.txt
 	String match = String.format("%d %s %s %s %s", week, level, area,
-		suitableReferees[1], suitableReferees[2]);
+		suitableReferees.get(0), suitableReferees.get(1));
 	return match;
     }
 
@@ -109,7 +117,7 @@ public class Match {
     public String toString() {
 	// TODO this method seems redundant
 	String match = String.format("%d %s %s %s %s", week, level, area,
-		suitableReferees[1], suitableReferees[2]);
+		suitableReferees.get(0), suitableReferees.get(1));
 	return match;
     }
 }

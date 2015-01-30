@@ -57,11 +57,17 @@ public class JavaBallController {
 
     /**
      * 
-     * @param s
+     * @param week
+     * @param level
+     * @param location
      */
-    public void execAllocate(String s) {
+    public void execAllocate(int week, Match.Level level, Location location) {
+        
         //TODO finish once RefereeList method is complete
-        refList.getSuitableReferees(null);
+        Match match = new Match(week, level, location);
+        season.addMatch(match);
+        
+        //refList.getSuitableReferees(match);
     }
 
     /**

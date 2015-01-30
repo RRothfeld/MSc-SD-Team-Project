@@ -440,16 +440,18 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			top.add(weekNumber);
 			// Create and add JComboBox for selecting match level
 			matchLevel = new JComboBox();
+                        matchLevel.setModel(new DefaultComboBoxModel(Match.Level.values()));
 			matchLevel.setEditable(false);
-			matchLevel.addItem("Junior");
-			matchLevel.addItem("Senior");
+			matchLevel.addItem(Match.Level.JUNIOR);
+			matchLevel.addItem(Match.Level.SENIOR);
 			top.add(matchLevel);
 			// Create and add JComboBox for selecting match location
 			matchArea = new JComboBox();
 			matchArea.setEditable(false);
-			matchArea.addItem("North");
-			matchArea.addItem("Central");
-			matchArea.addItem("South");
+                        matchArea.setModel(new DefaultComboBoxModel(Match.Level.values()));
+			matchArea.addItem(JavaBallController.Location.NORTH);
+			matchArea.addItem(JavaBallController.Location.CENTRAL);
+			matchArea.addItem(JavaBallController.Location.SOUTH);
 			top.add(matchArea);
 			// Add panel 'top' to frame
 			add(top, BorderLayout.NORTH);
@@ -473,13 +475,18 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent ae) {
-			if(ae.getSource() == allocateReferees) {
-				//TODO Filter list of Referees in main GUI to display suitable 
-				// referees for that match.
-                            
-				JOptionPane.showMessageDialog(null, "Referee table ordered by "
-						+ "suitibility for this match.");
-                                orderedBySuitability = true;
+			if(ae.getSource() == allocateReferees) 
+                        {
+                            //TODO Filter list of Referees in main GUI to display suitable 
+                            // referees for that match.
+                            Match.Level level = (Match.Level) matchLevel.getSelectedItem();
+                            JavaBallController.Location area = 
+                                    (JavaBallController.Location) matchArea.getSelectedItem();
+                            controller.execAllocate(Integer.parseInt(weekNumber.getText()), 
+                                    level, area);
+                            JOptionPane.showMessageDialog(null, "Referee table ordered by "
+                                            + "suitibility for this match.");
+                            orderedBySuitability = true;
 			}
 
 			if(ae.getSource() == cancelButton) {
