@@ -72,10 +72,7 @@ public class ChartFrame extends JFrame {
 
 	public void paintComponent(Graphics g) {
 	    int START = 100;
-	    int SCALE = 7;
-	    
-	    int width = 30;
-	    int height = 0;
+	    int SCALE = 20;
 
 	    // Recover Graphics2D
 	    Graphics2D g2 = (Graphics2D) g;
@@ -83,28 +80,14 @@ public class ChartFrame extends JFrame {
 	    // set background colour to be blue
 	    g2.setColor(Color.WHITE);
 	    g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-
-	    int x = START;
-	    int y = START;
 	    // blocks
 	    g2.setColor(Color.GRAY);
-
-	    for (Referee ref : referees) {
-		 g2.fillRect(x, y, width, height);
-		 x += width + SCALE;
-		 y -= ref.getAllocations();
-		 height += ref.getAllocations();
-	    }
-
-	    // text
-	    x = START; // reset x back to start
-	    y = height + START - SCALE; // set y underneath the blocks
-	    
-	    g2.setColor(Color.GRAY);
+	    int i = 1;
 	    g2.setFont(new Font("Monospaced", Font.BOLD, 18));
 	    for (Referee ref : referees) {
-		g2.drawString(ref.getID(), x, y);
-		x += width + SCALE;
+		g2.fillRect(START, (i) * 50 + SCALE, ref.getAllocations() * SCALE, 40);
+		g2.drawString(ref.getID(), START - 2*SCALE, (i) * 50 + 45);
+		i++;
 	    }
 
 	}
