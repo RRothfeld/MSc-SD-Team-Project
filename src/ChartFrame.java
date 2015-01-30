@@ -67,8 +67,7 @@ public class ChartFrame extends JFrame {
 	/**
 	 * Constructor for RectangleComponent object
 	 */
-	public RectangleComponent() {
-	}
+	public RectangleComponent() {}
 
 	public void paintComponent(Graphics g) {
 	    int START = 100;

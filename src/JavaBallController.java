@@ -149,10 +149,8 @@ public class JavaBallController {
         } else {
             homeLocal = "South";
         }
-
         refList.add(new Referee(refList.createID(fname, sname), fname, 
                 sname, qualification, allocations, homeLocal, travel));
-        
     }  
         
     /**
