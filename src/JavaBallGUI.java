@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableModel;
 
 /**
  * Team Foxtrot JavaBall Referees - JavaBallGUI.java Defines JavaBall GUI that
@@ -187,6 +188,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		} else if (ae.getSource() == searchButton) {
 			// If search button is pressed
 			Referee ref = controller.getReferee(searchField.getText());
+			firstNameField.setText(ref.getForename());
+			lastNameField.setText(ref.getSurname());
+			
 			if (ref != null) {
 				RefereeFrame serachRef = new RefereeFrame(ref);
 				serachRef.setVisible(true);
@@ -506,7 +510,12 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 				// Update table display to show referees sorted by
 				// suitability
-				updateTable(suitableReferees);
+				String[] columnNames = {"ID", "First Name", "Last Name", 
+						"Qualification", "Match Allocations", "Home Region", 
+						"Travel Locations"};
+				 table = new JTable(controller.updateTable(suitableReferees), columnNames);
+				
+			
 
 				// Close RefereeFrame
 				dispose();
