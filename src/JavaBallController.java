@@ -48,39 +48,6 @@ public class JavaBallController {
 	}
 
 	/**
-	 * 
-	 * @param week
-	 * @param level
-	 * @param location
-	 */
-	public ArrayList<Referee> allocateReferees(int week, Match.Level level,
-			Location location) {
-		// Create new match without referees
-		Match match = new Match(week, level, location);
-
-		// Check if match ID is already in use
-		if (season.getMatch(week) != null) {
-			//  Return indication of unsuccessful referee allocations
-			return null;
-		} else {
-			// Retrieve all suitable Referees for that match
-			ArrayList<Referee> availableReferees = refList
-					.getSuitableReferees(match);
-
-			// Select the two most suitable referees and pass them to the match
-			Referee[] suitableReferees = { availableReferees.get(0),
-					availableReferees.get(1) };
-			match.setReferees(suitableReferees);
-
-			// Add the fully filled in match to the current season
-			season.addMatch(match);
-			
-			// Return indication of successful referee allocation
-			return availableReferees;
-		}
-	}
-
-	/**
      * 
      */
 	public void openChart() {
@@ -150,19 +117,44 @@ public class JavaBallController {
 		refList.remove(ref);
 	}
 	
+	/**
+	 * 
+	 * @param week
+	 * @param level
+	 * @param location
+	 */
+	public ArrayList<Referee> allocateReferees(int week, Match.Level level,
+			Location location) {
+		// Create new match without referees
+		Match match = new Match(week, level, location);
+
+		// Check if match ID is already in use
+		if (season.getMatch(week) != null) {
+			//  Return indication of unsuccessful referee allocations
+			return null;
+		} else {
+			// Retrieve all suitable Referees for that match
+			ArrayList<Referee> availableReferees = refList
+					.getSuitableReferees(match);
+
+			// Select the two most suitable referees and pass them to the match
+			Referee[] suitableReferees = { availableReferees.get(0),
+					availableReferees.get(1) };
+			match.setReferees(suitableReferees);
+
+			// Add the fully filled in match to the current season
+			season.addMatch(match);
+			
+			// Return indication of successful referee allocation
+			return availableReferees;
+		}
+	}
+	
     /**
      *
      * @return
      */
-    public String[][] updateTable(ArrayList<Referee> suitableReferees) {
-    	
-    	if (suitableReferees != null) {
-    		
-    	}
-    	else {
-    		
-    	}
-    	
+    public String[][] updateTable() {
         String[] refDetails = new String[TABLE_FIELDS];
         String[][] table = new String[refList.size()][TABLE_FIELDS];
         
