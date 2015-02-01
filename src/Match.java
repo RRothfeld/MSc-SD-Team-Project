@@ -73,12 +73,14 @@ public class Match {
     
     /** Set the week number which is also match ID
      * @param week */
-    public void setWeek(int week) {
-	if ((week >= MIN_WEEK) && (week <= MAX_WEEK)){
+    public boolean setWeek(int week) {
+	if (week >= MIN_WEEK && week <= MAX_WEEK) {
 	    this.week = week;
+	    return true;
 	}
+	return false;
     }
-    
+
     /** Set the area where match is held
      * @param area */
     public void setArea(JavaBallController.Location area) {

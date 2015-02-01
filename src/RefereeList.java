@@ -28,7 +28,7 @@ public class RefereeList implements Iterable<Referee> {
 	public static final String INPUT_FILE = "RefereesIn.txt";
 	
 	/** maximum number of listed referees */
-	private final static int MAX_REFEREES = 12;
+	public final static int MAX_REFEREES = 12;
 	
 	/** list of all registered referees */
 	private final ArrayList<Referee> listedReferees;
