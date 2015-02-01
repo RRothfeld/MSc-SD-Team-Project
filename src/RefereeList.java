@@ -150,37 +150,27 @@ public class RefereeList implements Iterable<Referee> {
 	 * @param home the desired home location
 	 * @return ArrayList with matching referees
 	 */
-	public ArrayList<Referee> getRefereesByHome(
-			JavaBallController.Location home) {
-		// list to hold referees after filtering
+	public ArrayList<Referee> getReferees(JavaBallController.Location location,
+			boolean home) {
+		// List to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<>();
 
-		// add all referees with the home location
-                // Can you do .equals() on different enums?
-		for (Referee ref : listedReferees) {
-			if (ref.getHomeLocation().equals(home))
-				filteredReferees.add(ref);
+		// Check whether provided is asking for home or travel locations
+		if (home) {
+			// Add all referees with the home location
+			for (Referee ref : listedReferees) {
+				if (ref.getHomeLocation().equals(location))
+					filteredReferees.add(ref);
+			}
+		} else {
+			// Add all referees with the desired travel preference
+			for (Referee ref : listedReferees) {
+				if (ref.getTravelLocation(location))
+					filteredReferees.add(ref);
+			}
 		}
 
-		return filteredReferees;
-	}
-	
-	/**
-	 * Returns a list of referees with matching travel preferences
-	 * @param travel the desired travel location
-	 * @return ArrayList with matching referees
-	 */
-	public ArrayList<Referee> getRefereesByTravel(
-			JavaBallController.Location travel) {
-		// list to hold referees after filtering
-		ArrayList<Referee> filteredReferees = new ArrayList<>();
-
-		// add all referees with the desired travel preference
-		for (Referee ref : listedReferees) {
-			if (ref.getTravelLocation(travel))
-				filteredReferees.add(ref);
-		}
-
+		// Return ArrayList with referees having the desired properties
 		return filteredReferees;
 	}
     
@@ -190,18 +180,18 @@ public class RefereeList implements Iterable<Referee> {
 	 * @return an array of the two most suitable referees
 	 */
 	public ArrayList<Referee> getSuitableReferees(Match match) {
-		// TODO
-		ArrayList<Referee> suitableReferees = getRefereesByTravel(match.getArea());
+		// Get all referees which travel to the match area
+		ArrayList<Referee> suitableReferees = getReferees(match
+				.getArea(), false);
 		
-		// least important: least # of allocs of all refs who trave there
+		// Least important: least # of allocs of all refs who trave there
 		// if senior dann min lvl 2 and go to the area
 		if (match.getLevel().equals(Match.Level.SENIOR)) {
 			for (Referee ref : suitableReferees) {
 				if (ref.getQualificationLevel() < 2) // TODO Magic number?
 					suitableReferees.remove(ref);
 			}
-		}
-		
+		}	
 		
 		// FIXME TEST; DELETE!!!!!!
 		for (Referee ref : suitableReferees) {
@@ -210,9 +200,10 @@ public class RefereeList implements Iterable<Referee> {
 			System.err.println("------------");
 		}
 		
+		// Initial counter for latter sorting in segments
 		int adjacentReferees = 0, localReferees = 0;
 		
-		// after that: least # of allocs of all refs who live adjacent there
+		// After that: least # of allocs of all refs who live adjacent there
 		// skip first one!
 		if (!match.getArea().equals(JavaBallController.Location.CENTRAL)) {
 			for (Referee ref : suitableReferees) {
@@ -224,7 +215,7 @@ public class RefereeList implements Iterable<Referee> {
 			}
 		}
 		
-		// least number of allocations of all refs living in match area
+		// Least number of allocations of all refs living in match area
 		for (Referee ref : suitableReferees) {
 			if (ref.getHomeLocation().equals(match.getArea())) {
 				suitableReferees.set(0, ref);
@@ -232,14 +223,14 @@ public class RefereeList implements Iterable<Referee> {
 			}
 		}
 
-		// sort by allocations ascending for local referees (home in match area)
+		// Sort by allocations ascending for local referees (home in match area)
 		Collections.sort(suitableReferees.subList(0, localReferees - 1));
 
-		// sort by allocations ascending for adjacent referees only
+		// Sort by allocations ascending for adjacent referees only
 		Collections.sort(suitableReferees.subList(localReferees,
 				adjacentReferees - 1));
 
-		// sort by allocations ascending for non-adjacent, non-local referees
+		// Sort by allocations ascending for non-adjacent, non-local referees
 		Collections.sort(suitableReferees.subList(adjacentReferees,
 				suitableReferees.size() - 1));
 
@@ -267,66 +258,76 @@ public class RefereeList implements Iterable<Referee> {
 		return suitableReferees;
 	}
 	
-        /**
-         *
-         * @param index
-         * @return
-         */
-        public Referee get(int index)
-        {            
-            return listedReferees.get(index);
-        }
-        
-        public String createID(String fname, String sname)
-        {
-            char id  = fname.toUpperCase().charAt(0);
-            char id2 = sname.toUpperCase().charAt(0);
-            String refID = String.format("%c%c", id, id2);
-            int idNumber = 1;
-            for (Referee ref : listedReferees)
-            {
-                if (ref.getID().substring(0, 2).equals(refID))
-                {
-                    idNumber++;
-                }
-            }
-            String refereeID = String.format("%s%d",refID,idNumber);
-            return refereeID;
-        }
+	/**
+	 *
+	 * @param index
+	 * @return
+	 */
+	public Referee get(int index) {
+		return listedReferees.get(index);
+	}
+	
+	/**
+	 * 
+	 * @param fname
+	 * @param sname
+	 * @return
+	 */
+	public String createID(String fname, String sname) {
+		// Retrieve first characters of first and last name
+		char id = fname.toUpperCase().charAt(0);
+		char id2 = sname.toUpperCase().charAt(0);
+		String refID = String.format("%c%c", id, id2);
+		
+		// Add number to ID according to previous occurrences of same initials
+		int idNumber = 1;
+		for (Referee ref : listedReferees) {
+			if (ref.getID().substring(0, 2).equals(refID)) {
+				idNumber++;
+			}
+		}
+		
+		// Combine initials with number for referee ID
+		String refereeID = String.format("%s%d", refID, idNumber);
+		return refereeID;
+	}
         
 	/**
 	 * Reads in provided file and populates RefereeList
 	 * @param refList the RefereeList to be populated
 	 */
 	private static void initFromFile(ArrayList<Referee> refList) {
-            
-            try {
-                    // set scope of FileReader
-                    FileReader refereeFile = null;
-                    try {
-                            // initialise FileReader with input file and initialise scanner
-                            refereeFile = new FileReader(INPUT_FILE);
-                            Scanner refScanner = new Scanner(refereeFile);
+		try {
+			// Set scope of FileReader
+			FileReader refereeFile = null;
+			try {
+				// Initialise FileReader with input file and initialise scanner
+				refereeFile = new FileReader(INPUT_FILE);
+				Scanner refScanner = new Scanner(refereeFile);
 
-                            // read every line of input file and create referees
-                            while (refScanner.hasNextLine()) {
-                                    String newReferee = refScanner.nextLine();
-                                    if (newReferee != null) {
-                                            Referee referee = new Referee(newReferee);
-                                            refList.add(referee);
-                                    }
-                            }
-                            // close scanner after usage
-                            refScanner.close();
-                    } finally {
-                            // close input file if it has been opened
-                            if (refereeFile != null) {
-                                    refereeFile.close();
-                            }
-                    }
-            } catch (IOException e) {} // do nothing if file not found
-        }
-	@Override
+				// Read every line of input file and create referees
+				while (refScanner.hasNextLine()) {
+					String newReferee = refScanner.nextLine();
+					if (newReferee != null) {
+						Referee referee = new Referee(newReferee);
+						refList.add(referee);
+					}
+				}
+				// Close scanner after usage
+				refScanner.close();
+			} finally {
+				// Close input file if it has been opened
+				if (refereeFile != null) {
+					refereeFile.close();
+				}
+			}
+		} catch (IOException e) {
+		} // Do nothing if file not found
+	}
+
+	/**
+	 * 
+	 */
 	public Iterator<Referee> iterator() {
 		return listedReferees.iterator();
 	}
