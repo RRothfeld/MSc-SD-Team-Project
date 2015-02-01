@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -143,7 +144,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		// Column Names for table (Referee attributes)
 		String[] columnNames = {"ID", "First Name", "Last Name", "Qualification", "Match Allocations", "Home Region", "Travel Locations"};
-		String[][] dataTable = controller.execTable();
+		String[][] dataTable = controller.updateTable();
 
 		table = new JTable(dataTable, columnNames);
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
@@ -178,12 +179,12 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 			// If chart button is pressed
 		} else if (ae.getSource() == chartButton) {
-			controller.execChart();
+			controller.openChart();
 
 			// If search button is pressed
 		} else if (ae.getSource() == searchButton) {
 
-			Referee ref = controller.execSearch(searchField.getText());
+			Referee ref = controller.getReferee(searchField.getText());
 			if (ref != null)
 			{
 				RefereeFrame serachRef = new RefereeFrame(ref);
@@ -200,26 +201,12 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
-			resetDisplay();
+			// TODO update referee table
 
 		} else if (ae.getSource() == exitButton) {
-			controller.execSaveExit();
+			controller.saveExit();
 		}
 	}
-
-	/**
-	 * A method to reset the table view of the main GUI after a match is
-	 * allocated.
-	 */
-	public void resetDisplay() 
-	{
-		if (orderedBySuitability)
-		{
-			controller.orderByID();
-			orderedBySuitability = false;
-		}   
-	}
-
 
 	/**TODO 
 	 * Subclass that contains the frame and components for the add/edit/remove 
@@ -397,7 +384,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				dispose();
 			}
 			if(ae.getSource() == removeButton) {
-				controller.execRemoveReferee(idField.getText());
+				controller.removeReferee(controller.getReferee((idField.getText())));
 
 				// Close window
 				dispose();
@@ -420,14 +407,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				else {
 					controller.editReferee(id);
 				}
-//				controller.addReferee(firstNameField.getText(), 
-//						surnameField.getText(), 
-//						//qualificationField.getText(), 
-//						Integer.parseInt(matchesField.getText()), 
-//						//JavaBallController.Location.valueOf(homeField.getText().toUpperCase()), 
-//						visitAreasField.getText()); 
 
-				controller.updateRefereeList();
+				// TODO update referee table
 			}
 
 		}
@@ -498,32 +479,36 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				add(bottom, BorderLayout.CENTER);
 			}
 
-			@Override
+			/**
+			 * 
+			 */
 			public void actionPerformed(ActionEvent ae) {
-				if(ae.getSource() == allocateReferees) 
-				{
-					//TODO Filter list of Referees in main GUI to display suitable 
+				if (ae.getSource() == allocateReferees) {
+					// TODO Filter list of Referees in main GUI to display
+					// suitable
 					// referees for that match.
-					Match.Level level = (Match.Level) matchLevel.getSelectedItem();
-					JavaBallController.Location area = 
-							(JavaBallController.Location) matchArea.getSelectedItem();
+					Match.Level level = (Match.Level) matchLevel
+							.getSelectedItem();
+					JavaBallController.Location area = (JavaBallController.Location) matchArea
+							.getSelectedItem();
 
-					controller.execAllocate(Integer.parseInt(weekNumber.getText()), 
-							level, area);
-					JOptionPane.showMessageDialog(null, "Referee table ordered by "
-							+ "suitibility for this match.");
-					orderedBySuitability = true;
+					// TODO WHAT IF WEEK NUMBER IS NO NUMBER
+					ArrayList<Referee> suitableReferees = controller
+							.allocateReferees(
+									Integer.parseInt(weekNumber.getText()),
+									level, area);
+
+					// Update table display to show referees sorted by
+					// suitability
+					updateTable(suitableReferees);
+
+					// Close RefereeFrame
 					dispose();
-
 				}
-
-				if(ae.getSource() == cancelButton) {
-
+				if (ae.getSource() == cancelButton) {
 					// Close window
 					dispose();
-
 				}
-
 			}
 		}
 	}
