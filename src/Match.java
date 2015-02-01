@@ -91,12 +91,12 @@ public class Match {
      * Method to set the Suitable Referees once created by RefereeList
      * @param referees - ArrayList containing 2 suitable referees
      */
-    public void setReferees(ArrayList<Referee> referees)
+    /*public void setReferees(ArrayList<Referee> referees)
     {
         referees.stream().forEach((ref) -> {
             suitableReferees.add(ref);
         });
-    }
+    }*/
     
     public ArrayList<Referee> getReferees()
     {
