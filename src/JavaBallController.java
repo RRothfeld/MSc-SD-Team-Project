@@ -121,7 +121,7 @@ public class JavaBallController {
 		Match match = new Match(week, level, location);
 
 		// Check if match ID is already in use
-		if (season.getMatch(week) != null) {
+		if (season.getMatch(week) == null) {
 			//  Return indication of unsuccessful referee allocations
 			return null;
 		} else {
