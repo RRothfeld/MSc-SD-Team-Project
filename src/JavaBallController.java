@@ -44,30 +44,39 @@ public class JavaBallController {
 		this.season = season;
 		this.refList = refList;
 	}
-	
-    /**
-     * 
-     * @param s
-     */
-    public void execAdd(String s) {
-        //need to discuss the String going into this
-        refList.add(new Referee(s));
-    }
 
-    /**
-     * 
-     * @param week
-     * @param level
-     * @param location
-     */
-    public void execAllocate(int week, Match.Level level, Location location) {
-        
-        //TODO finish once RefereeList method is complete
-        Match match = new Match(week, level, location);
-        season.addMatch(match);
-        
-        //refList.getSuitableReferees(match);
-    }
+	/**
+	 * 
+	 * @param week
+	 * @param level
+	 * @param location
+	 */
+	public boolean allocateReferees(int week, Match.Level level,
+			Location location) {
+		// Create new match without referees
+		Match match = new Match(week, level, location);
+
+		// Check if match ID is already in use
+		if (season.getMatch(week) != null) {
+			//  Return indication of unsuccessful referee allocations
+			return false;
+		} else {
+			// Retrieve all suitable Referees for that match
+			ArrayList<Referee> availableReferees = refList
+					.getSuitableReferees(match);
+
+			// Select the two most suitable referees and pass them to the match
+			Referee[] suitableReferees = { availableReferees.get(0),
+					availableReferees.get(1) };
+			match.setReferees(suitableReferees);
+
+			// Add the fully filled in match to the current season
+			season.addMatch(match);
+			
+			// Return indication of successful referee allocation
+			return true;
+		}
+	}
 
     /**
      * 
