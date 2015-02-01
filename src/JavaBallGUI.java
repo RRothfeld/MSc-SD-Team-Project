@@ -187,16 +187,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		} else if (ae.getSource() == searchButton) {
 			// If search button is pressed
 			Referee ref = controller.getReferee(searchField.getText());
-			if (ref != null)
-			{
+			if (ref != null) {
 				RefereeFrame serachRef = new RefereeFrame(ref);
 				serachRef.setVisible(true);
 				firstNameField.setEditable(false);
 				lastNameField.setEditable(false);
 				matchesField.setEditable(false);
 			}
-			else if (ref==null)
-			{
+			else {
 				JOptionPane.showMessageDialog(null, "Referee not found");
 			}
 			
@@ -387,7 +385,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				dispose();
 			}
 			if(ae.getSource() == removeButton) {
-				controller.removeReferee(controller.getReferee((idField.getText())));
+				controller.removeReferee(referee);
 
 				// Close window
 				dispose();
