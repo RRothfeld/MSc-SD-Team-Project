@@ -121,7 +121,7 @@ public class JavaBallController {
 		Match match = new Match(week, level, location);
 
 		// Check if match ID is already in use
-		if (season.getMatch(week) != null) {
+		if (season.getMatch(week) == null) {
 			//  Return indication of unsuccessful referee allocations
 			return null;
 		} else {
@@ -163,7 +163,7 @@ public class JavaBallController {
     	// TODO CREATE THE String[][]
     	// Referee.report() inside a for loop @mickey
     	
-    	/* String[] refDetails = new String[TABLE_FIELDS];
+    	 String[] refDetails = new String[TABLE_FIELDS];
         String[][] table = new String[RefereeList.MAX_REFEREES][TABLE_FIELDS];
         int row = 0;
         for (Referee referee : refList) {
@@ -178,7 +178,8 @@ public class JavaBallController {
             System.arraycopy(refDetails, 0, table[row], 0, TABLE_FIELDS);
             row++;
         }
-        return table; */
+        return table; 
+
     }
     
 	/**
