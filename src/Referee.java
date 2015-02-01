@@ -27,6 +27,11 @@ public class Referee implements Comparable<Referee> {
 	private String qualification, travelLocations;
 
 	private JavaBallController.Location homeLocation;
+	
+    /** TODO */
+    public enum Qualifications {
+    	NJB, IJB
+    }
 
 	/**
 	 * boolean values that represent whether or not Referee will visit this

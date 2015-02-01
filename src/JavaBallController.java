@@ -74,40 +74,32 @@ public class JavaBallController {
 		return refList.getReferee(id);
 	}
 
-    /**
-     *
-     * @param fname
-     * @param sname
-     * @param qual
-     * @param allocations
-     * @param home
-     * @param travel
-     */
-	public void addReferee(String fname, String sname, String qual, 
-              int allocations, Location home, String travel) {
-            
-        /* String qualification = qual;
-        String homeLocal;
-        if (home == Location.NORTH)
-        {
-            homeLocal = "North";
-        } else if (home == Location.CENTRAL) {
-            homeLocal = "Central";
-        } else {
-            homeLocal = "South";
-        }
-        refList.add(new Referee(refList.createID(fname, sname), fname, 
-                sname, qualification, allocations, homeLocal, travel)); */
-    }
-    
-    /**
-     * Method to edit fields of Referee
-     * @param id - ID of referee to edit
-     * @param info - Info being edited.
-     */
-    public void editReferee(String id, String info) {
-    /*    Referee referee = refList.getReferee(id); */
-    }
+	/**
+	 *
+	 * @param fname
+	 * @param sname
+	 * @param qual
+	 * @param allocations
+	 * @param home
+	 * @param travel
+	 */
+	public void addReferee(String fname, String sname,
+			Referee.Qualifications qualification, int qualLevel,
+			int allocations, Location home, String travel) {
+
+	}
+
+	/**
+	 * Method to edit fields of Referee
+	 * 
+	 * @param id of referee to edit
+	 * @param info being edited.
+	 */
+	public void editReferee(Referee referee,
+			Referee.Qualifications qualification, int qualLevel, Location home,
+			String travel) {
+
+	}
         
     /**
      *
