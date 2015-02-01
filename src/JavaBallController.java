@@ -159,26 +159,14 @@ public class JavaBallController {
      * @return
      */
     public String[][] updateTable(ArrayList<Referee> refereeList) {
-       
-    	// TODO CREATE THE String[][]
-    	// Referee.report() inside a for loop @mickey
-    	
-    	/* String[] refDetails = new String[TABLE_FIELDS];
-        String[][] table = new String[RefereeList.MAX_REFEREES][TABLE_FIELDS];
-        int row = 0;
-        for (Referee referee : refList) {
-            refDetails[0] = referee.getID();
-            refDetails[1] = referee.getForename();
-            refDetails[2] = referee.getSurname();
-            refDetails[3] = referee.getQualifications();
-            refDetails[4] = Integer.toString(referee.getAllocations());
-            refDetails[5] = referee.getHomeLocation().toString();
-            refDetails[6] = referee.getTravelLocations(); 
-            
-            System.arraycopy(refDetails, 0, table[row], 0, TABLE_FIELDS);
-            row++;
-        }
-        return table; */
+	String[][] table = new String[RefereeList.MAX_REFEREES][TABLE_FIELDS];
+	int row = 0;
+	
+	for (Referee ref : refList) {
+	    System.arraycopy(ref.report(), 0, table[row], 0, TABLE_FIELDS);
+	    row++;
+	}
+	return table;
     }
     
 	/**
