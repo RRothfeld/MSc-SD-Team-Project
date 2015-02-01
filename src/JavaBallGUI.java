@@ -172,18 +172,20 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			addRef.setVisible(true);
 			removeButton.setEnabled(false);
 
-			// If allocate referee to matches button is pressed
+			
 		} else if (ae.getSource() == allocateButton) {
+			// If allocate referee to matches button is pressed
 		//	AllocateMatches allocateRef = new AllocateMatches();
 		//	allocateRef.setVisible(true);
 
-			// If chart button is pressed
+			
 		} else if (ae.getSource() == chartButton) {
+			// If chart button is pressed
 			controller.openChart();
 
-			// If search button is pressed
+			
 		} else if (ae.getSource() == searchButton) {
-
+			// If search button is pressed
 			Referee ref = controller.getReferee(searchField.getText());
 			if (ref != null)
 			{
@@ -197,13 +199,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			{
 				JOptionPane.showMessageDialog(null, "Referee not found");
 			}
-			// If save and exit button is pressed
+			
 		} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
 			// TODO update referee table
 
 		} else if (ae.getSource() == exitButton) {
+			// If save and exit button is pressed
 			controller.saveExit();
 		}
 	}
@@ -325,8 +328,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			inputPanel.add(lastNameField);
 
 			qualificationField = new JComboBox();
-			qualificationField.addItem("NJB");
-			qualificationField.addItem("IJB");
+			qualificationField.addItem(Referee.Qualifications.NJB.name());
+			qualificationField.addItem(Referee.Qualifications.IJB.name());
 			inputPanel.add(qualificationField);
 
 			qualificationLevel = new JComboBox();
@@ -340,9 +343,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			inputPanel.add(matchesField);
 
 			homeLocation = new JComboBox();
-			homeLocation.addItem("North");
-			homeLocation.addItem("Central");
-			homeLocation.addItem("South");
+			homeLocation.addItem(JavaBallController.Location.NORTH.name());
+			homeLocation.addItem(JavaBallController.Location.CENTRAL.name());
+			homeLocation.addItem(JavaBallController.Location.SOUTH.name());
 			inputPanel.add(homeLocation);
 			
 			
@@ -390,22 +393,29 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				dispose();
 			}
 			if(ae.getSource() == saveButton) {
+				
+				// Get travel locations for referee
+				String north = visitNorth.isSelected() ? "Y" : "N";
+				String central = visitCentral.isSelected() ? "Y" : "N";
+				String south = visitSouth.isSelected() ? "Y" : "N";
+				String travel = north + central + south;
 
 				if (this.referee == null) {
 					
 					controller.addReferee(firstNameField.getText(),
 							lastNameField.getText(), 
 							qualificationField.getSelectedItem(), 
-							qualificationLevel.getSelectedItem(),
-							matchesField.getText(), 
-							homeLocation.getSelectedItem(), 
-							visitNorth.getSelectedObjects(),
-							visitCentral.getSelectedObjects(),
-							visitSouth.getSelectedObjects());
+							Integer.parseInt(String.valueOf(qualificationLevel.getSelectedItem())),
+							Integer.parseInt(matchesField.getText()), 
+							homeLocation.getSelectedItem(),
+							travel);
 				}
 				
 				else {
-					controller.editReferee(id);
+					controller.editReferee(referee,
+							qualificationField.getSelectedItem(), 
+							Integer.parseInt(String.valueOf(qualificationLevel.getSelectedItem())),
+							homeLocation.getSelectedItem(), travel);
 				}
 
 				// TODO update referee table
