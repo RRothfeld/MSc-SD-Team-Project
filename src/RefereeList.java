@@ -71,6 +71,14 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Referee> getReferees() {
+		return listedReferees;
+	}
+	
+	/**
 	 * Returns the referee given a specific ID
 	 * @param id the ID of the desired referee
 	 * @return the referee if found (otherwise null)
@@ -108,41 +116,20 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
-	 * Returns a list of referees with matching forename/surname
-	 * @param name the forename or surname of a referee
-	 * @return ArrayList of matching referees
+	 * 
+	 * @param fname
+	 * @param sname
+	 * @return
 	 */
-	public ArrayList<Referee> getReferees(String name) {
-		// list to hold referees after filtering
-		ArrayList<Referee> filteredReferees = new ArrayList<>();
-
-		// add all referees with either the desired fore- or surname
-		for (Referee ref : listedReferees) {
-			if (ref.getForename().equals(name) || ref.getSurname().equals(name))
-				filteredReferees.add(ref);
-		}
-
-		return filteredReferees;
-	}
-	
-	/**
-	 * Returns a list of referees with matching full name
-	 * @param fname the forename of a referee
-	 * @param sname the surname of a referee
-	 * @return ArrayList with matching referees
-	 */
-	public ArrayList<Referee> getReferees(String fname, String sname) {
-		// list to hold referees after filtering
-		ArrayList<Referee> filteredReferees = new ArrayList<>();
-
-		// add all referees with either the desired fore- and surname
+	public Referee getReferee(String fname, String sname) {
+		// Add all referees with either the desired fore- and surname
 		for (Referee ref : listedReferees) {
 			if (ref.getForename().equals(fname)
 					&& ref.getSurname().equals(sname))
-				filteredReferees.add(ref);
+				return ref;
 		}
 
-		return filteredReferees;
+		return null;
 	}
 
 	/**
