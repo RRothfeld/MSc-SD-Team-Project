@@ -142,11 +142,20 @@ public class JavaBallController {
 		}
 	}
 	
+	/**
+	 * 
+	 */
+	public String[][] updateTable() {
+		
+		ArrayList<Referee> refereesByID = 
+		updateTable(refereesByID);
+	}
+	
     /**
      *
      * @return
      */
-    public String[][] updateTable() {
+    public String[][] updateTable(ArrayList<Referee> refereeList) {
         String[] refDetails = new String[TABLE_FIELDS];
         String[][] table = new String[RefereeList.MAX_REFEREES][TABLE_FIELDS];
         int row = 0;
@@ -164,7 +173,7 @@ public class JavaBallController {
         }
         return table;
     }
-
+    
 	/**
 	 * Write report Files
 	 */
@@ -188,7 +197,7 @@ public class JavaBallController {
 				}
 				int counter = 0;
 				for (Match match : season) {
-					matches[counter] = (match.matchReport());
+					matches[counter] = (match.report());
 				}
 				for (String s : referees) {
 					refereeFile.write(s);
