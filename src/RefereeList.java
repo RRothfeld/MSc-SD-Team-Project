@@ -324,6 +324,13 @@ public class RefereeList implements Iterable<Referee> {
 		} catch (IOException e) {
 		} // Do nothing if file not found
 	}
+	
+	/**
+	 * 
+	 */
+	public void sort() {
+		Collections.sort(listedReferees);
+	}
 
 	/**
 	 * 

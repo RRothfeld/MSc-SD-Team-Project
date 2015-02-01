@@ -1,8 +1,10 @@
 import javax.swing.WindowConstants;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -51,7 +53,7 @@ public class JavaBallController {
 	 * @param level
 	 * @param location
 	 */
-	public boolean allocateReferees(int week, Match.Level level,
+	public ArrayList<Referee> allocateReferees(int week, Match.Level level,
 			Location location) {
 		// Create new match without referees
 		Match match = new Match(week, level, location);
@@ -59,7 +61,7 @@ public class JavaBallController {
 		// Check if match ID is already in use
 		if (season.getMatch(week) != null) {
 			//  Return indication of unsuccessful referee allocations
-			return false;
+			return null;
 		} else {
 			// Retrieve all suitable Referees for that match
 			ArrayList<Referee> availableReferees = refList
@@ -74,53 +76,26 @@ public class JavaBallController {
 			season.addMatch(match);
 			
 			// Return indication of successful referee allocation
-			return true;
+			return availableReferees;
 		}
+	}
+
+	/**
+     * 
+     */
+	public void openChart() {
+		chart = new ChartFrame(refList);
+		chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		chart.setVisible(true);
 	}
 
     /**
      * 
      */
-    public void execChart() {
-            chart = new ChartFrame(refList);
-            chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            chart.setVisible(true);
-    }
-
-    /**
-     * Method to edit fields of Referee
-     * @param id - ID of referee to edit
-     * @param info - Info being edited.
-     */
-    public void editReferee(String id, String info) {
-        Referee referee = refList.getReferee(id);
-    }
-
-    /**
-     * Method to return a Referee to be displayed in Ref Window from Search
-     * @param input - User provided String referring to the Referee 
-     * @return Referee required or null if not found
-     */
-    public Referee execSearch(String input) {
-
-        // Assuming full name...
-        for (Referee ref : refList)
-        {
-            if ((ref.getForename()+" "+ref.getSurname()).equals(input))
-            {
-                // Always returns first Referee with that name
-                return ref;
-            } 
-        }
-        return null;
-    }
-
-    /**
-     * 
-     */
-    public void execSaveExit() {
-        writeOutputFile();
-        System.exit(0);		
+    public void saveExit() {
+    	// Exit programme if data has been successfully saved
+        if (writeOutputFile())
+        	System.exit(0);
     }
         
     /**
@@ -128,11 +103,10 @@ public class JavaBallController {
      * @param id
      * @return
      */
-    public Referee getReferee(String id)
-        {
-            return refList.getReferee(id);
-        }
-        
+	public Referee getReferee(String id) {
+		return refList.getReferee(id);
+	}
+
     /**
      *
      * @param fname
@@ -142,10 +116,10 @@ public class JavaBallController {
      * @param home
      * @param travel
      */
-    public void addReferee(String fname, String sname, String qual, 
-                int allocations, Location home, String travel) {
+	public void addReferee(String fname, String sname, String qual, 
+              int allocations, Location home, String travel) {
             
-        String qualification = qual;
+        /* String qualification = qual;
         String homeLocal;
         if (home == Location.NORTH)
         {
@@ -156,51 +130,43 @@ public class JavaBallController {
             homeLocal = "South";
         }
         refList.add(new Referee(refList.createID(fname, sname), fname, 
-                sname, qualification, allocations, homeLocal, travel));
-    }  
-        
+                sname, qualification, allocations, homeLocal, travel)); */
+    }
+    
     /**
-     *
-     * @param id
+     * Method to edit fields of Referee
+     * @param id - ID of referee to edit
+     * @param info - Info being edited.
      */
-    public void execRemoveReferee(String id)
-        {
-            refList.remove(refList.getReferee(id));
-        }
-        
-    /**
-     *
-     * @param id
-     */
-    public void editReferee(String id) 
-        {
-            // TODO
-            // (b/c passed object via getReferee can directly edit data)
-        }
-        
-        //openChartFrame() --> returns void
-        
-        //addMatch(int week, Match.Level level, Controller.Location area) --> returns void
-        
-    /**
-     *
-     */
-    public void updateRefereeList() {
-        orderByID();
+    public void editReferee(String id, String info) {
+    /*    Referee referee = refList.getReferee(id); */
     }
         
     /**
      *
+     * @param id
+     */
+	public void removeReferee(Referee ref) {
+		refList.remove(ref);
+	}
+	
+    /**
+     *
      * @return
      */
-    public String[][] execTable()
-    {
-        orderByID();
+    public String[][] updateTable(ArrayList<Referee> suitableReferees) {
+    	
+    	if (suitableReferees != null) {
+    		
+    	}
+    	else {
+    		
+    	}
+    	
         String[] refDetails = new String[TABLE_FIELDS];
         String[][] table = new String[refList.size()][TABLE_FIELDS];
         
-        for (int row = 0; row < refList.size(); row++)
-        {
+        for (int row = 0; row < refList.size(); row++) {
             Referee referee = refList.get(row);
             
             refDetails[0] = referee.getID();
@@ -216,35 +182,18 @@ public class JavaBallController {
         return table;
     }
 
-    /**
-     *
-     * @return
-     */
-    public ArrayList<Referee> orderByID() 
-    {
-        ArrayList<Referee> sorted = new ArrayList();
-        for (Referee ref : refList)
-        {
-            sorted.add(ref);
-        }
-        Collections.sort(sorted);
-        return sorted;
-    }
-
 	/**
 	 * Write report Files
 	 */
-	private void writeOutputFile() {
+	private boolean writeOutputFile() {
 		try {
 			FileWriter matchFile;
 			try (FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
 
 				matchFile = new FileWriter(MATCH_FILE);
 				String[] referees = new String[refList.size()];
-				// Throws null pointer
 				String[] matches = new String[season.getNumMatches()];
 				int refCounter = 0;
-				updateRefereeList();
 				for (Referee ref : refList) {
 					String details = String.format("%s %s %s %s%d %d %s %s\n",
 							ref.getID(), ref.getForename(), ref.getSurname(),
@@ -266,8 +215,10 @@ public class JavaBallController {
 				}
 			}
 			matchFile.close();
+			return true;
 		} catch (IOException ex) {
 			// TODO
+			return false;
 		}
 	}
 }
