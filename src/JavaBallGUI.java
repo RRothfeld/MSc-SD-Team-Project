@@ -511,7 +511,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				// Close RefereeFrame
 				dispose();
 			}
-			if (ae.getSource() == cancelButton) {
+			else  {
 				// Close window
 				dispose();
 			}
