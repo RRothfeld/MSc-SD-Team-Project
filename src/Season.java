@@ -34,7 +34,7 @@ public class Season implements Iterable<Match> {
     }
     
     /** 
-     * Returns all t
+     * Returns all matches
      * @return  
      */
     public ArrayList<Match> getMatches() {

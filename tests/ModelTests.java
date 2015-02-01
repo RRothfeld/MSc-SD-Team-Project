@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import JavaBallController.Location;
+
 
 public class ModelTests {
     
@@ -11,11 +13,10 @@ public class ModelTests {
     private Match match;
     private RefereeList listedReferees;
     
-    
     @Before
     public void setUp() {
 	season = new Season();
-	match = new Match(0, null, null, null);
+	match = new Match();
 	System.out.println("@Before - setUp");
     }
     
@@ -26,7 +27,8 @@ public class ModelTests {
 
     @Test
     public void tesCreatingASeason() {
-	Season season = new Season();
+	match.setWeek(32);
+	season.addMatch(match);
 	System.out.println("@Test - testEmptyCollection");
     }
     

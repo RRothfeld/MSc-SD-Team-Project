@@ -35,7 +35,10 @@ public class Match {
     private Level level;
     
     /** Suitable referees for the match */
-    private final ArrayList<Referee> suitableReferees = new ArrayList<>();
+    private Referee[] suitableReferees;
+    
+    // TODO delete
+    public Match() {}
 
     /**
      * Instantiates a new Match given a calendar week, area the match is held
@@ -48,6 +51,7 @@ public class Match {
 	this.week = week;
 	this.level = level;
 	this.area = area;
+	this.suitableReferees = new Referee[2];
     }
     
     /** Returns the week number which is also match ID */
@@ -91,15 +95,11 @@ public class Match {
      * Method to set the Suitable Referees once created by RefereeList
      * @param referees - ArrayList containing 2 suitable referees
      */
-    /*public void setReferees(ArrayList<Referee> referees)
-    {
-        referees.stream().forEach((ref) -> {
-            suitableReferees.add(ref);
-        });
-    }*/
+    public void setReferees(Referee[] referees){
+	suitableReferees = referees;
+    }
     
-    public ArrayList<Referee> getReferees()
-    {
+    public Referee[] getReferees() {
         return this.suitableReferees;
     }
     
@@ -108,7 +108,7 @@ public class Match {
     public String matchReport() {
 	// TODO this will print to MatchAllocs.txt
 	String match = String.format("%d %s %s %s %s", week, level, area,
-		suitableReferees.get(0), suitableReferees.get(1));
+		suitableReferees[0], suitableReferees[1]);
 	return match;
     }
 
@@ -117,7 +117,7 @@ public class Match {
     public String toString() {
 	// TODO this method seems redundant
 	String match = String.format("%d %s %s %s %s", week, level, area,
-		suitableReferees.get(0), suitableReferees.get(1));
+		suitableReferees[0], suitableReferees[1]);
 	return match;
     }
 }
