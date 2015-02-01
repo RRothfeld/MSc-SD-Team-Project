@@ -107,7 +107,7 @@ public class Match {
     
     /** Returns match details
      * @return  */
-    public String matchReport() {
+    public String report() {
 	// TODO this will print to MatchAllocs.txt
 	String match = String.format("%d %s %s %s %s", week, level, area,
 		suitableReferees[0], suitableReferees[1]);
