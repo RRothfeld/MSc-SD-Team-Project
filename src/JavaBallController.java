@@ -146,9 +146,12 @@ public class JavaBallController {
 	 * 
 	 */
 	public String[][] updateTable() {
+		// Retrieve all referees ordered by ID
+		refList.sort();
+		ArrayList<Referee> refereesByID = refList.getReferees();
 		
-		ArrayList<Referee> refereesByID = 
-		updateTable(refereesByID);
+		// Update table with ID sorting
+		return updateTable(refereesByID);
 	}
 	
     /**
@@ -156,7 +159,11 @@ public class JavaBallController {
      * @return
      */
     public String[][] updateTable(ArrayList<Referee> refereeList) {
-        String[] refDetails = new String[TABLE_FIELDS];
+       
+    	// TODO CREATE THE String[][]
+    	// Referee.report() inside a for loop @mickey
+    	
+    	/* String[] refDetails = new String[TABLE_FIELDS];
         String[][] table = new String[RefereeList.MAX_REFEREES][TABLE_FIELDS];
         int row = 0;
         for (Referee referee : refList) {
@@ -171,7 +178,7 @@ public class JavaBallController {
             System.arraycopy(refDetails, 0, table[row], 0, TABLE_FIELDS);
             row++;
         }
-        return table;
+        return table; */
     }
     
 	/**

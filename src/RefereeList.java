@@ -71,6 +71,14 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Referee> getReferees() {
+		return listedReferees;
+	}
+	
+	/**
 	 * Returns the referee given a specific ID
 	 * @param id the ID of the desired referee
 	 * @return the referee if found (otherwise null)
