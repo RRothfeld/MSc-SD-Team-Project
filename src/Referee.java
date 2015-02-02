@@ -299,22 +299,22 @@ public class Referee implements Comparable<Referee> {
 	}
     }
 
-    /** Returns the referee details */
-    public String[] report() {
+	/** Returns the referee details */
+	public String[] report() {
 
-	String ID = this.uniqueID;
-	String forename = this.forename;
-	String surname = this.surname;
-	String qualification = this.qualification;
-	String allocations = Integer.toString(getAllocations());
-	String homeLocation = getHomeLocation().toString();
-	String travelLocations = getTravelLocations();
+		String ID = this.uniqueID;
+		String forename = this.forename;
+		String surname = this.surname;
+		String qualification = this.qualification;
+		String allocations = Integer.toString(getAllocations());
+		String homeLocation = getHomeLocation().toString();
+		String travelLocations = getTravelLocations();
 
-	String[] details = { ID, forename, surname, qualification, allocations,
-		travelLocations };
+		String[] details = { ID, forename, surname, qualification, allocations,
+				homeLocation, travelLocations };
 
-	return details;
-    }
+		return details;
+	}
 
     /**
      * Method to update all three locations in one step Referee can change

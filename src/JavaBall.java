@@ -1,4 +1,3 @@
-
 /**
  * Team Foxtrot - JavaBall Referees
  * The main class

@@ -162,7 +162,7 @@ public class JavaBallController {
 	String[][] table = new String[RefereeList.MAX_REFEREES][TABLE_FIELDS];
 	int row = 0;
 	
-	for (Referee ref : refList) {
+	for (Referee ref : refereeList) {
 	    System.arraycopy(ref.report(), 0, table[row], 0, TABLE_FIELDS);
 	    row++;
 	}

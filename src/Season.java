@@ -54,8 +54,8 @@ public class Season implements Iterable<Match> {
      * @param week
      * @return  
      */
-    public Match getReferee(int week) {
-	// find referee with desired ID
+    public Match getMatch(int week) {
+	// find match with desired ID
 	for (Match match : matches) {
 	    if (match.getWeek() == week)
 		return match;	
