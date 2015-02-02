@@ -188,15 +188,15 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		} else if (ae.getSource() == searchButton) {
 			// If search button is pressed
 			Referee ref = controller.getReferee(searchField.getText());
-			firstNameField.setText(ref.getForename());
-			lastNameField.setText(ref.getSurname());
-			
 			if (ref != null) {
-				RefereeFrame serachRef = new RefereeFrame(ref);
-				serachRef.setVisible(true);
-				firstNameField.setEditable(false);
-				lastNameField.setEditable(false);
-				matchesField.setEditable(false);
+                            firstNameField.setText(ref.getForename());
+                            lastNameField.setText(ref.getSurname());
+                            
+                            RefereeFrame serachRef = new RefereeFrame(ref);
+                            serachRef.setVisible(true);
+                            firstNameField.setEditable(false);
+                            lastNameField.setEditable(false);
+                            matchesField.setEditable(false);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Referee not found");
@@ -330,6 +330,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			inputPanel.add(lastNameField);
 
 			qualificationField = new JComboBox();
+                        qualificationField.setModel(new DefaultComboBoxModel(Referee.Qualifications.values()));
 			qualificationField.addItem(Referee.Qualifications.NJB.name());
 			qualificationField.addItem(Referee.Qualifications.IJB.name());
 			inputPanel.add(qualificationField);
@@ -345,6 +346,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			inputPanel.add(matchesField);
 
 			homeLocation = new JComboBox();
+                        homeLocation.setModel(new DefaultComboBoxModel(JavaBallController.Location.values()));
 			homeLocation.addItem(JavaBallController.Location.NORTH.name());
 			homeLocation.addItem(JavaBallController.Location.CENTRAL.name());
 			homeLocation.addItem(JavaBallController.Location.SOUTH.name());
@@ -454,7 +456,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			bottomLayout();
 		}
 
-		public void topLayout() {
+		private void topLayout() {
 
 			JPanel top = new JPanel();
 			// Creates and add text field for match week number
@@ -475,7 +477,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		}
 
-		public void bottomLayout() {
+		private void bottomLayout() {
 
 			JPanel bottom = new JPanel();
 			// Create and add 'create match and allocate referees' button
@@ -494,6 +496,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		/**
 		 * 
 		 */
+                @Override
 		public void actionPerformed(ActionEvent ae) {
 			if (ae.getSource() == allocateReferees) {
 				// referees for that match.

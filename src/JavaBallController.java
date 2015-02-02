@@ -3,8 +3,6 @@ import javax.swing.WindowConstants;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -34,7 +32,13 @@ public class JavaBallController {
 	
     /** TODO */
     public enum Location {
-    	NORTH, CENTRAL, SOUTH
+        NORTH("North"), CENTRAL("Central"), SOUTH("South");
+        private final String LocationString;
+        private Location(final String s) { 
+            LocationString = s; 
+        }
+        @Override
+        public String toString() { return LocationString; }
     }
 	
     /**
@@ -47,10 +51,10 @@ public class JavaBallController {
 		this.refList = refList;
 	}
 
-	/**
-     * 
+    /**
+     *
      */
-	public void openChart() {
+    public void openChart() {
 		chart = new ChartFrame(refList);
 		chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		chart.setVisible(true);
@@ -78,7 +82,8 @@ public class JavaBallController {
 	 *
 	 * @param fname
 	 * @param sname
-	 * @param qual
+     * @param qualification
+     * @param qualLevel
 	 * @param allocations
 	 * @param home
 	 * @param travel
@@ -92,8 +97,11 @@ public class JavaBallController {
 	/**
 	 * Method to edit fields of Referee
 	 * 
-	 * @param id of referee to edit
-	 * @param info being edited.
+     * @param referee
+     * @param travel
+     * @param qualification
+     * @param qualLevel
+     * @param home
 	 */
 	public void editReferee(Referee referee,
 			Referee.Qualifications qualification, int qualLevel, Location home,
@@ -103,7 +111,7 @@ public class JavaBallController {
         
     /**
      *
-     * @param id
+     * @param ref
      */
 	public void removeReferee(Referee ref) {
 		refList.remove(ref);
@@ -114,6 +122,7 @@ public class JavaBallController {
 	 * @param week
 	 * @param level
 	 * @param location
+     * @return 
 	 */
 	public ArrayList<Referee> allocateReferees(int week, Match.Level level,
 			Location location) {
@@ -144,6 +153,7 @@ public class JavaBallController {
 	
 	/**
 	 * 
+        * @return 
 	 */
 	public String[][] updateTable() {
 		// Retrieve all referees ordered by ID
@@ -156,6 +166,7 @@ public class JavaBallController {
 	
     /**
      *
+     * @param refereeList
      * @return
      */
     public String[][] updateTable(ArrayList<Referee> refereeList) {
@@ -173,39 +184,39 @@ public class JavaBallController {
 	 * Write report Files
 	 */
 	private boolean writeOutputFile() {
-		try {
-			FileWriter matchFile;
-			try (FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
+            try {
+                FileWriter matchFile;
+                try (FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
 
-				matchFile = new FileWriter(MATCH_FILE);
-				String[] referees = new String[refList.size()];
-				String[] matches = new String[season.getNumMatches()];
-				int refCounter = 0;
-				for (Referee ref : refList) {
-					String details = String.format("%s %s %s %s%d %d %s %s\n",
-							ref.getID(), ref.getForename(), ref.getSurname(),
-							ref.getQualifications(),
-							ref.getQualificationLevel(), ref.getAllocations(),
-							ref.getHomeLocation(), ref.getTravelLocations());
-					referees[refCounter] = details;
-					refCounter++;
-				}
-				int counter = 0;
-				for (Match match : season) {
-					matches[counter] = (match.report());
-				}
-				for (String s : referees) {
-					refereeFile.write(s);
-				}
-				for (String s : matches) {
-					matchFile.write(s + "\n");
-				}
-			}
-			matchFile.close();
-			return true;
-		} catch (IOException ex) {
-			// TODO
-			return false;
-		}
+                    matchFile = new FileWriter(MATCH_FILE);
+                    String[] referees = new String[refList.size()];
+                    String[] matches = new String[season.getNumMatches()];
+                    int refCounter = 0;
+                    for (Referee ref : refList) {
+                        String details = String.format("%s %s %s %s%d %d %s %s\n",
+                                    ref.getID(), ref.getForename(), ref.getSurname(),
+                                    ref.getQualifications(),
+                                    ref.getQualificationLevel(), ref.getAllocations(),
+                                    ref.getHomeLocation(), ref.getTravelLocations());
+                        referees[refCounter] = details;
+                        refCounter++;
+                    }
+                    int counter = 0;
+                    for (Match match : season) {
+                            matches[counter] = (match.report());
+                    }
+                    for (String s : referees) {
+                            refereeFile.write(s);                                        
+                    }
+                    for (String s : matches) {
+                            matchFile.write(s + "\n");
+                    }
+                }
+                matchFile.close();
+                return true;
+            } catch (IOException ex) {
+                    // TODO
+                    return false;
+            }
 	}
 }

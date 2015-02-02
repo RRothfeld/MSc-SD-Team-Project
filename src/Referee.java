@@ -30,7 +30,7 @@ public class Referee implements Comparable<Referee> {
 
     /** TODO */
     public enum Qualifications {
-	NJB, IJB
+        NJB, IJB
     }
 
     /**
@@ -94,19 +94,13 @@ public class Referee implements Comparable<Referee> {
      * when adding new ref, or if ReadLine splits details up before creating a
      * Referee object.
      * 
-     * @param id
-     *            - Referee ID, format XY1
-     * @param forename
-     *            - Referee forename
-     * @param surname
-     *            - Referee surname
-     * @param qual
-     * @param allocCount
-     *            - amount of matches allocated to referee
-     * @param homeLocality
-     *            - home area for referee
-     * @param travel
-     *            - string Y/N for areas Referee will travel too
+     * @param id - Referee ID, format XY1
+     * @param forename - Referee forename
+     * @param surname - Referee surname
+     * @param qual - 
+     * @param allocCount - amount of matches allocated to referee
+     * @param homeLocality - home area for referee
+     * @param travel - string Y/N for areas Referee will travel too
      */
     public Referee(String id, String forename, String surname, String qual,
 	    int allocCount, String homeLocality, String travel) {
@@ -115,10 +109,8 @@ public class Referee implements Comparable<Referee> {
     }
 
     /**
-     * Method to convert Referee Area Options to boolean
-     * 
-     * @param travel
-     *            - the three character String eg. 'YYY'
+     * Method to convert Referee Area Options to boolean     
+     * @param travel - the three character String eg. 'YYY'
      */
     private void setTravelLocations(String travel) {
 
@@ -261,6 +253,10 @@ public class Referee implements Comparable<Referee> {
 	setTravelLocations(travel);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTravelLocations() {
 	return travelLocations;
     }
@@ -299,7 +295,8 @@ public class Referee implements Comparable<Referee> {
 	}
     }
 
-	/** Returns the referee details */
+	/** Returns the referee details
+     * @return  */
 	public String[] report() {
 
 		String ID = this.uniqueID;

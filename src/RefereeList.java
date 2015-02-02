@@ -29,7 +29,7 @@ public class RefereeList implements Iterable<Referee> {
 	
 	/** maximum number of listed referees */
 	public final static int MAX_REFEREES = 12;
-	
+	private final int JUNIOR_LEVEL = 1;
 	/** list of all registered referees */
 	private final ArrayList<Referee> listedReferees;
 
@@ -134,6 +134,7 @@ public class RefereeList implements Iterable<Referee> {
 
 	/**
 	 * Returns a list of referees with matching home location
+     * @param location
 	 * @param home the desired home location
 	 * @return ArrayList with matching referees
 	 */
@@ -175,7 +176,7 @@ public class RefereeList implements Iterable<Referee> {
 		// if senior dann min lvl 2 and go to the area
 		if (match.getLevel().equals(Match.Level.SENIOR)) {
 			for (Referee ref : suitableReferees) {
-				if (ref.getQualificationLevel() < 2) // TODO Magic number?
+				if (ref.getQualificationLevel() == JUNIOR_LEVEL)
 					suitableReferees.remove(ref);
 			}
 		}	
@@ -190,7 +191,7 @@ public class RefereeList implements Iterable<Referee> {
 		// Initial counter for latter sorting in segments
 		int adjacentReferees = 0, localReferees = 0;
 		
-		// After that: least # of allocs of all refs who live adjacent there
+		// After that: least # of allocs of all refs who live adjacent thered
 		// skip first one!
 		if (!match.getArea().equals(JavaBallController.Location.CENTRAL)) {
 			for (Referee ref : suitableReferees) {
@@ -221,8 +222,9 @@ public class RefereeList implements Iterable<Referee> {
 		Collections.sort(suitableReferees.subList(adjacentReferees,
 				suitableReferees.size() - 1));
 
-		// @Override sorting to sort according to the number of allocations
+                //sorting to sort according to the number of allocations
 		Collections.sort(suitableReferees , new Comparator<Referee>() {
+                        @Override
 			public int compare(Referee ref1, Referee ref2) {
 				int allocRef1 = ref1.getAllocations();
 				int allocRef2 = ref2.getAllocations();
@@ -322,6 +324,7 @@ public class RefereeList implements Iterable<Referee> {
 	/**
 	 * 
 	 */
+        @Override
 	public Iterator<Referee> iterator() {
 		return listedReferees.iterator();
 	}

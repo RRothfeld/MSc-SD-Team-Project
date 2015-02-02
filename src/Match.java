@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 /**
  * Team Foxtrot JavaBall Referees 
@@ -19,7 +18,13 @@ import java.util.ArrayList;
 public class Match {
     /** The level of play in a match */
     public enum Level {
-	JUNIOR, SENIOR
+        JUNIOR("Junior"), SENIOR("Senior");
+        private final String LevelString;
+        private Level(final String levels) { 
+            LevelString = levels; 
+        }
+        @Override
+        public String toString() { return LevelString; }
     }
     
     private final int MIN_WEEK = 1;
@@ -38,6 +43,9 @@ public class Match {
     private Referee[] suitableReferees;
     
     // TODO delete
+    /**
+     *
+     */
     public Match() {}
 
     /**
@@ -56,7 +64,8 @@ public class Match {
 		this.suitableReferees = new Referee[2];
     }
     
-    /** Returns the week number which is also match ID */
+    /** Returns the week number which is also match ID
+     * @return  */
     public int getWeek() {
 	return week;
     }
@@ -74,7 +83,8 @@ public class Match {
     }
     
     /** Set the week number which is also match ID
-     * @param week */
+     * @param week
+     * @return  */
     public boolean setWeek(int week) {
 	if (week >= MIN_WEEK && week <= MAX_WEEK) {
 	    this.week = week;
@@ -103,6 +113,10 @@ public class Match {
 	suitableReferees = referees;
     }
     
+    /**
+     *
+     * @return
+     */
     public Referee[] getReferees() {
         return this.suitableReferees;
     }
@@ -116,7 +130,8 @@ public class Match {
 	return match;
     }
 
-    /**  */
+    /**
+     * @return   */
     @Override
     public String toString() {
 	// TODO this method seems redundant
