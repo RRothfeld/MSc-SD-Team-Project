@@ -48,10 +48,12 @@ public class Match {
      * @param area that the match is held in
      */
     public Match(int week, Level level, JavaBallController.Location area) {
-	this.week = week;
-	this.level = level;
-	this.area = area;
-	this.suitableReferees = new Referee[2];
+    	if (week >= MIN_WEEK && week <= MAX_WEEK) {
+    		this.week = week;
+    	}
+		this.level = level;
+		this.area = area;
+		this.suitableReferees = new Referee[2];
     }
     
     /** Returns the week number which is also match ID */
