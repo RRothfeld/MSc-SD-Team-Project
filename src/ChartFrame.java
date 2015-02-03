@@ -2,14 +2,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
-
 /**
- * Team Foxtrot JavaBall Referees XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ * Team Foxtrot - JavaBall Referees Shows a bar chart of all referees and the
+ * number of allocations per referee
  * <p>
  * University of Glasgow MSc/PGDip Information Technology/Software Development
  * Team Project 2014/15
@@ -19,75 +20,58 @@ import javax.swing.JScrollPane;
  * @author Marco Cook, 2152599C
  * @author Raoul Rothfeld, 2164502R
  * 
- * @version 1.0
- * @since 14-01-2015
+ * @version 1.1
+ * @since 03-02-2015
  */
 
 public class ChartFrame extends JFrame {
+	/** RefereeList Object with all Referees to be displayed */
+	private final RefereeList refList;
 
-    private final RefereeList referees;
+	/** Dimensions of the chart frame */
+	private static final int FRAME_WIDTH = 500;
+	private static final int FRAME_HEIGHT = 400;
+	
+	/** Dimensions of each bar */
+	private static final int BAR_WIDTH = 50;
+	private static final int SPACING = 10;
 
-    // Dimensions of the frame
-    private static final int FRAME_WIDTH = 400;
-    private static final int FRAME_HEIGHT = 400;
-
-    /**
-     * A constructor with a FitnessProgram parameter used to initialise the
-     * FitnessProgram instance variable and add the JTextArea component to the
-     * window.
-     * @param referees - 
-     */
-    public ChartFrame(RefereeList referees) {
-	this.referees = referees;
-
-	// JScrollPane scrollPane = addScrollPane();
-	// add(scrollPane, BorderLayout.CENTER);
-	RectangleComponent component = new RectangleComponent();
-	add(component);
-	setTitle("Barchart of Referee Allocations");
-	setSize(FRAME_WIDTH, FRAME_HEIGHT);
-
-    }
-
-    /** 
-     * A method to build the scroll pane
-     * @return - hypothetical...
-     */
-    public JScrollPane addScrollPane() {
-	JScrollPane scrollPane = new JScrollPane(this);
-	return scrollPane;
-    }
-
-    /**
-     * A component that draws some shapes and displays a message
-     */
-    private class RectangleComponent extends JComponent {
 	/**
-	 * Constructor for RectangleComponent object
+	 * Opens a JFrame showing the bar chart with the number of allocations per
+	 * referee
+	 * @param refList the RefereeList Object containing all referees
 	 */
-	public RectangleComponent() {}
+	public ChartFrame(RefereeList refList) {
+		// Instantiate referee list
+		this.refList = refList;
 
-        @Override
-	public void paintComponent(Graphics g) {
-	    int START = 100;
-	    int SCALE = 20;
-
-	    // Recover Graphics2D
-	    Graphics2D g2 = (Graphics2D) g;
-
-	    // set background colour to be blue
-	    g2.setColor(Color.WHITE);
-	    g2.fillRect(0, 0, this.getWidth(), this.getHeight());
-	    // blocks
-	    g2.setColor(Color.GRAY);
-	    int i = 1;
-	    g2.setFont(new Font("Monospaced", Font.BOLD, 18));
-	    for (Referee ref : referees) {
-		g2.fillRect(START, (i) * 50 + SCALE, ref.getAllocations() * SCALE, 40);
-		g2.drawString(ref.getID(), START - 2*SCALE, (i) * 50 + 45);
-		i++;
-	    }
-
+		// Set chart JFrame properties
+		setTitle("Barchart of Referee Allocations");
+		setBounds(30, 30, FRAME_WIDTH, FRAME_HEIGHT);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		// Create content
+		add(new RectangleComponent());
 	}
-    }
+
+	/**
+	 * A component that draws some shapes and displays a message
+	 */
+	private class RectangleComponent extends JComponent {
+		/** @Override */
+		public void paint(Graphics g) {
+			g.drawLine(10, 10, 10, 300);
+			g.drawLine(10, 300, 300, 300);
+			g.setColor(Color.GRAY);
+			g.setFont(new Font("Verdana", Font.BOLD, 12));
+			
+			int x = 20, y = 300, height;
+			for (Referee ref : refList) {
+				g.drawString(ref.getID(), x+12, y+15);
+				height = ref.getAllocations() * 5;
+				g.fillRect(x, y-height, BAR_WIDTH, height);
+				x += BAR_WIDTH + SPACING;
+			}
+		}
+	}
 }
