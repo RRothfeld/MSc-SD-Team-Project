@@ -536,15 +536,15 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                             Match.Level level = (Match.Level) matchLevel.getSelectedItem();
                             JavaBallController.Location area = 
                                     (JavaBallController.Location) matchArea.getSelectedItem();
-
-                            // TODO WHAT IF WEEK NUMBER IS NO NUMBER
-                            ArrayList<Referee> suitableReferees = controller.allocateReferees(
-                                                            Integer.parseInt(weekNumber.getText()),
-                                                            level, area);			
-
-                            Match newMatch = new Match(Integer.parseInt(weekNumber.getText()), level, area);
-
-                            // Close RefereeFrame
+                            
+                            boolean repeatTest = controller.allocateReferees(week, level, area);			
+                            if (!repeatTest)
+                            {
+                                JOptionPane.showMessageDialog(null, "That week is already in use!");
+                                weekNumber.setText("");
+                            }
+                            
+                        // Close RefereeFrame
                         dispose();
                         }
                     } catch(NumberFormatException ex){

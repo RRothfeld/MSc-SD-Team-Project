@@ -128,13 +128,12 @@ public class RefereeList implements Iterable<Referee> {
 					&& ref.getSurname().equals(sname))
 				return ref;
 		}
-
 		return null;
 	}
 
 	/**
 	 * Returns a list of referees with matching home location
-     * @param location
+         * @param location 
 	 * @param home the desired home location
 	 * @return ArrayList with matching referees
 	 */
@@ -171,27 +170,35 @@ public class RefereeList implements Iterable<Referee> {
 		// Get all referees which travel to the match area
 		ArrayList<Referee> suitableReferees = getReferees(match
 				.getArea(), false);
-		
-		// Least important: least # of allocs of all refs who trave there
+                
+		// Least important: least # of allocs of all refs who travel there
 		// if senior dann min lvl 2 and go to the area
 		if (match.getLevel().equals(Match.Level.SENIOR)) {
-			for (Referee ref : suitableReferees) {
-				if (ref.getQualificationLevel() == JUNIOR_LEVEL)
-					suitableReferees.remove(ref);
-			}
+                    for (int i = 0; i < suitableReferees.size(); i++)
+                    {
+                        if (suitableReferees.get(i).getQualificationLevel() ==
+                                JUNIOR_LEVEL){
+                            suitableReferees.remove(i);
+                        }
+                    }
+//                      THIS WAS PRODUCING A CONCURRENT MODIFICATION EXCEPTION?
+//			for (Referee ref : suitableReferees) {
+//				if (ref.getQualificationLevel() == JUNIOR_LEVEL)
+//					suitableReferees.remove(ref);
+//			}
 		}	
 		
 		// FIXME TEST; DELETE!!!!!!
-		for (Referee ref : suitableReferees) {
-			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
-					+ ref.getHomeLocation());
-			System.err.println("------------");
-		}
+//		for (Referee ref : suitableReferees) {
+//			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
+//					+ ref.getHomeLocation());
+//			System.err.println("------------");
+//		}
 		
 		// Initial counter for latter sorting in segments
 		int adjacentReferees = 0, localReferees = 0;
 		
-		// After that: least # of allocs of all refs who live adjacent thered
+		// After that: least # of allocs of all refs who live adjacent there
 		// skip first one!
 		if (!match.getArea().equals(JavaBallController.Location.CENTRAL)) {
 			for (Referee ref : suitableReferees) {
@@ -210,7 +217,8 @@ public class RefereeList implements Iterable<Referee> {
 				localReferees++;
 			}
 		}
-
+                System.out.println("Local Referees Counter:" + localReferees);
+                System.out.println("Adjacent Referees Counter:" + adjacentReferees);
 		// Sort by allocations ascending for local referees (home in match area)
 		Collections.sort(suitableReferees.subList(0, localReferees - 1));
 
@@ -242,6 +250,7 @@ public class RefereeList implements Iterable<Referee> {
 		for (Referee ref : suitableReferees) {
 			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
 					+ ref.getHomeLocation());
+                        System.err.println("------------");
 		}
 		
 		return suitableReferees;
@@ -257,16 +266,16 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
-	 * 
-	 * @param fname
-	 * @param sname
-	 * @return
+	 * Creates an ID for a new Referee
+	 * @param fname - First Name of Referee
+	 * @param sname - Surname of Referee 
+	 * @return - UniqueID as 3 character String
 	 */
 	public String createID(String fname, String sname) {
 		// Retrieve first characters of first and last name
-		char id = fname.toUpperCase().charAt(0);
+		char id1 = fname.toUpperCase().charAt(0);
 		char id2 = sname.toUpperCase().charAt(0);
-		String refID = String.format("%c%c", id, id2);
+		String refID = String.format("%c%c", id1, id2);
 		
 		// Add number to ID according to previous occurrences of same initials
 		int idNumber = 1;

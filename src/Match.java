@@ -42,12 +42,6 @@ public class Match {
     /** Suitable referees for the match */
     private Referee[] suitableReferees;
     
-    // TODO delete
-    /**
-     *
-     */
-    public Match() {}
-
     /**
      * Instantiates a new Match given a calendar week, area the match is held
      * in, level of the match
