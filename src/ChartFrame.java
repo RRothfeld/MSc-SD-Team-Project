@@ -34,7 +34,7 @@ public class ChartFrame extends JFrame {
 	
 	/** Dimensions of each bar */
 	private static final int BAR_WIDTH = 50;
-	private static final int SPACING = 20;
+	private static final int SPACING = 30;
 
 	/**
 	 * Opens a JFrame showing the bar chart with the number of allocations per
@@ -50,7 +50,7 @@ public class ChartFrame extends JFrame {
 
 		// Set chart JFrame properties
 		setTitle("Chart of Allocations per Referee (by ID)");
-		setSize(frame_width, FRAME_HEIGHT);
+		setSize(Math.max(frame_width,150), FRAME_HEIGHT);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		
@@ -64,27 +64,45 @@ public class ChartFrame extends JFrame {
 	private class RectangleComponent extends JComponent {
 		/** @Override */
 		public void paint(Graphics g) {
-			
+
 			g.setFont(new Font("Verdana", Font.BOLD, 12));
-			
-			((Graphics2D) g).rotate(-Math.PI/2);
-			g.drawString("Number of Allocations", (FRAME_HEIGHT+100)/-2, 15);
-			((Graphics2D) g).rotate(Math.PI/2);
-			
-			g.drawString("Referees by ID", (frame_width-100)/2, FRAME_HEIGHT-30);
-			
-			g.drawLine(SPACING*2, SPACING, SPACING*2, (FRAME_HEIGHT - 75));
-			g.drawLine(SPACING*2, (FRAME_HEIGHT - 75),
+
+			((Graphics2D) g).rotate(-Math.PI / 2);
+			g.drawString("Number of Allocations", (FRAME_HEIGHT + 100) / -2, 15);
+			((Graphics2D) g).rotate(Math.PI / 2);
+
+			g.drawString("Referees by ID", (frame_width - 100) / 2,
+					FRAME_HEIGHT - 30);
+
+			g.drawLine(SPACING * 2, SPACING, SPACING * 2, (FRAME_HEIGHT - 75));
+			g.drawLine(SPACING * 2, (FRAME_HEIGHT - 75),
 					(frame_width - SPACING), (FRAME_HEIGHT - 75));
-			
+
 			g.setFont(new Font("Verdana", Font.PLAIN, 12));
-			g.setColor(Color.GRAY);
 			
-			int x = (SPACING*2)+1, y = FRAME_HEIGHT-75, height;
+			int max = refList.getMaxAllocation();
+			int n = SPACING+5, m = FRAME_HEIGHT - 75;
+			for (int i = 0; i <= max; i++) {
+				g.setColor(Color.BLACK);
+				g.drawString(""+i, n, m);
+				g.drawLine(n * 2 - 15,m, SPACING * 2, m);
+				if(i != 0) {
+				g.setColor(Color.LIGHT_GRAY);
+				g.drawLine(SPACING * 2,m, (frame_width - SPACING), m);
+				}
+				m -= ((FRAME_HEIGHT - 75 - SPACING) / max)*2;
+				if(i % 4 == 0) {m--;}
+				i++;
+			}
+			
+			int x = (SPACING * 2) + 1, y = FRAME_HEIGHT - 75, height;
 			for (Referee ref : refList) {
-				g.drawString(ref.getID(), x+12, y+15);
-				height = ref.getAllocations() * (FRAME_HEIGHT-75-SPACING)/refList.getMaxAllocation();
-				g.fillRect(x, y-height, BAR_WIDTH, height);
+				g.setColor(Color.BLACK);
+				g.drawString(ref.getID(), x + 12, y + 15);
+				height = ref.getAllocations() * (FRAME_HEIGHT - 75 - SPACING)
+						/ max;
+				g.setColor(Color.GRAY);
+				g.fillRect(x, y - height, BAR_WIDTH, height);
 				x += BAR_WIDTH + SPACING;
 			}
 		}
