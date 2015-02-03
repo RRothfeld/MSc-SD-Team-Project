@@ -232,22 +232,24 @@ public class RefereeList implements Iterable<Referee> {
                 
 		// Sort by allocations ascending for non-adjacent, non-local referees
 		Collections.sort(suitableReferees.subList((localReferees + adjacentReferees),
-				suitableReferees.size() - 1));
-                System.err.println("3. Sorting index: "+ (localReferees + adjacentReferees) + " - "+(suitableReferees.size() - 1));
+				suitableReferees.size()));
+                System.err.println("3. Sorting index: "+ (localReferees + adjacentReferees) + " - "+ suitableReferees.size());
                 //sorting to sort according to the number of allocations
-		Collections.sort(suitableReferees , new Comparator<Referee>() {
-                        @Override
-			public int compare(Referee ref1, Referee ref2) {
-				int allocRef1 = ref1.getAllocations();
-				int allocRef2 = ref2.getAllocations();
-				
-				if (allocRef1 < allocRef2)
-					return -1;
-				else if (allocRef1 == allocRef2)
-					return 0;
-				else
-					return 1;
-			}
+		Collections.sort(suitableReferees , new Comparator<Referee>() 
+                {
+                    @Override
+                    public int compare(Referee ref1, Referee ref2) 
+                    {
+                        int allocRef1 = ref1.getAllocations();
+                        int allocRef2 = ref2.getAllocations();
+
+                        if (allocRef1 < allocRef2)
+                            return -1;
+                        else if (allocRef1 == allocRef2)
+                            return 0;
+                        else
+                            return 1;
+                    }
 		});
 		
 		// FIXME TEST; DELETE!!!!!!
