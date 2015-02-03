@@ -31,6 +31,8 @@ public class JavaBallController {
     private final String REFEREE_FILE = "RefereesOut.txt";
     private final String MATCH_FILE   = "MatchAllocs.txt";
 	
+    private TableModel tableData;
+    
     public enum Location {
         NORTH("North"), CENTRAL("Central"), SOUTH("South");
         private final String LocationString;
@@ -150,7 +152,7 @@ public class JavaBallController {
      * @param location
      * @return 
      */
-    public boolean allocateReferees(int week, Match.Level level,
+    public ArrayList<Referee> allocateReferees(int week, Match.Level level,
                     Location location) {
         // Create new match without referees
         Match match = new Match(week, level, location);
@@ -169,10 +171,10 @@ public class JavaBallController {
             availableReferees.get(0).addMatch(match);
             availableReferees.get(1).addMatch(match);
             // Return indication of successful referee allocation
-            return true;
+            return availableReferees;
         }
         else {
-            return false;
+            return null;
         }
     }
 
@@ -226,10 +228,10 @@ public class JavaBallController {
      */
     public TableModel getTableData()
     {
-        TableModel tableData = new RefereeTableModel(refList.getReferees());
+        tableData = new RefereeTableModel(refList.getReferees());
         return tableData;
     }
-        
+            
     /**
      *
      * @return

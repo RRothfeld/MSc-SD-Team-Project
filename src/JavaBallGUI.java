@@ -210,14 +210,17 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                                     JavaBallController.Location.CENTRAL));
                             visitSouth.setSelected(controller.refTravel(ref, 
                                     JavaBallController.Location.SOUTH));
+                            searchField.setText("Enter referee name or ID ...");
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Referee not found");
+                                searchField.setText("Enter referee name or ID ...");
 			}
 
 		} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
+                        searchField.setText("Enter referee name or ID ...");
 			// TODO update referee table
 
 		} else if (ae.getSource() == exitButton) {
@@ -537,15 +540,15 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                             JavaBallController.Location area = 
                                     (JavaBallController.Location) matchArea.getSelectedItem();
                             
-                            boolean repeatTest = controller.allocateReferees(week, level, area);			
-                            if (!repeatTest)
+                            ArrayList<Referee> suitableRefs = controller.
+                                    allocateReferees(week, level, area);			
+                            if (suitableRefs == null)
                             {
                                 JOptionPane.showMessageDialog(null, "That week is already in use!");
                                 weekNumber.setText("");
                             }
                             
-                        // Close RefereeFrame
-                        dispose();
+                            dispose();
                         }
                     } catch(NumberFormatException ex){
                         JOptionPane.showMessageDialog(null, "Please Enter a Number");
@@ -553,8 +556,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                     }
                 }
                 else  {
-                        // Close window
-                        dispose();
+                    // Close window
+                    dispose();
                 }
             }
 	}
