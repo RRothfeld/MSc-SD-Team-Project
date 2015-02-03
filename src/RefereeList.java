@@ -217,19 +217,23 @@ public class RefereeList implements Iterable<Referee> {
 				localReferees++;
 			}
 		}
-                System.out.println("Local Referees Counter:" + localReferees);
-                System.out.println("Adjacent Referees Counter:" + adjacentReferees);
 		// Sort by allocations ascending for local referees (home in match area)
-		Collections.sort(suitableReferees.subList(0, localReferees - 1));
-
+                if (localReferees > 0) {
+                    Collections.sort(suitableReferees.subList(0, localReferees - 1));
+                    System.err.println("1. Sorting index: "+ 0 + " - "+(localReferees - 1));
+                }
+		
 		// Sort by allocations ascending for adjacent referees only
-		Collections.sort(suitableReferees.subList(localReferees,
-				adjacentReferees - 1));
-
+		if (adjacentReferees > 0) {
+                    Collections.sort(suitableReferees.subList(localReferees,
+				(localReferees + adjacentReferees) - 1));
+                    System.err.println("2. Sorting index: "+ localReferees + " - "+((localReferees + adjacentReferees) - 1));
+                }
+                
 		// Sort by allocations ascending for non-adjacent, non-local referees
-		Collections.sort(suitableReferees.subList(adjacentReferees,
+		Collections.sort(suitableReferees.subList((localReferees + adjacentReferees),
 				suitableReferees.size() - 1));
-
+                System.err.println("3. Sorting index: "+ (localReferees + adjacentReferees) + " - "+(suitableReferees.size() - 1));
                 //sorting to sort according to the number of allocations
 		Collections.sort(suitableReferees , new Comparator<Referee>() {
                         @Override

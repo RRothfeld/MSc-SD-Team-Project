@@ -148,6 +148,7 @@ public class JavaBallController {
      * @param week
      * @param level
      * @param location
+     * @return 
      */
     public boolean allocateReferees(int week, Match.Level level,
                     Location location) {
@@ -158,7 +159,6 @@ public class JavaBallController {
         if (season.getMatch(week) == null) {
             // Retrieve all suitable Referees for that match
             ArrayList<Referee> availableReferees = refList.getSuitableReferees(match);
-            System.out.println(availableReferees.size());
             // Select the two most suitable referees and pass them to the match
             Referee[] suitableReferees = { availableReferees.get(0),
                             availableReferees.get(1) };
@@ -166,7 +166,8 @@ public class JavaBallController {
 
             // Add the fully filled in match to the current season
             season.addMatch(match);
-
+            availableReferees.get(0).addMatch(match);
+            availableReferees.get(1).addMatch(match);
             // Return indication of successful referee allocation
             return true;
         }
