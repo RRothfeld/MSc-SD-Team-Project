@@ -337,6 +337,16 @@ public class RefereeList implements Iterable<Referee> {
 	/**
 	 * 
 	 */
+	public int getMaxAllocation() {
+		int max = 0;
+		for (Referee ref : listedReferees)
+			max = ref.getAllocations() > max ? ref.getAllocations() : max;
+		return max;
+	}
+	
+	/**
+	 * 
+	 */
         @Override
 	public Iterator<Referee> iterator() {
 		return listedReferees.iterator();
