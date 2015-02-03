@@ -193,12 +193,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		} else if (ae.getSource() == searchButton) {
 			// If search button is pressed
-			Referee ref = controller.getReferee(searchField.getText());
+			Referee ref = controller.getReferee(searchField.getText().trim());
 			if (ref != null) {
-                            firstNameField.setText(ref.getForename());
-                            lastNameField.setText(ref.getSurname());
                             
                             RefereeFrame serachRef = new RefereeFrame(ref);
+                            firstNameField.setText(ref.getForename());
+                            lastNameField.setText(ref.getSurname());
+                            matchesField.setText(Integer.toString(ref.getAllocations()));
                             serachRef.setVisible(true);
                             firstNameField.setEditable(false);
                             lastNameField.setEditable(false);
