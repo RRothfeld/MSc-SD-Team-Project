@@ -104,8 +104,9 @@ public class Referee implements Comparable<Referee> {
      * @param travel - string Y/N for areas Referee will travel too
      */
     public Referee(String id, String forename, String surname, String qual,
-	    int allocCount, String homeLocality, String travel) {
-	this(id + " " + forename + " " + surname + " " + qual + " "
+	    int allocCount, String homeLocality, String travel) 
+    {
+        this(id + " " + forename + " " + surname + " " + qual + " "
 		+ allocCount + " " + homeLocality + " " + travel);
     }
 
@@ -191,7 +192,6 @@ public class Referee implements Comparable<Referee> {
     }
     
     //Methods used by TableModel to place referees
-    
     /**
      *
      * @param index

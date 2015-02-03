@@ -150,13 +150,15 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		navPanel.add(allocateButton);
 		navPanel.add(resetSearchButton);
 		navPanel.add(exitButton);
-
+                
+                
 		table = new JTable(controller.getTableData());
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
                 table.setAutoCreateRowSorter(true);
 		// Set table dimensions
 		table.setPreferredScrollableViewportSize(new Dimension(400, 100));
 		table.setFillsViewportHeight(true);
+                table.getModel().addTableModelListener(table);
 
 		// Create new JPane for table view
 		tablePane = new JScrollPane(table);

@@ -3,6 +3,8 @@ import javax.swing.WindowConstants;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -92,8 +94,11 @@ public class JavaBallController {
 	 */
 	public void addReferee(String fname, String sname,
 			Referee.Qualifications qualification, int qualLevel,
-			int allocations, Location home, String travel) {
-
+			int allocations, Location home, String travel) 
+        {
+            refList.add(new Referee(refList.createID(fname, sname),fname, sname, 
+                    qualification.toString()+qualLevel,
+			 allocations,  home.toString(), travel));
 	}
 
     /**
@@ -249,7 +254,7 @@ public class JavaBallController {
             }
 	}
         
-        private class RefereeTableModel extends AbstractTableModel {
+        private class RefereeTableModel extends AbstractTableModel implements TableModelListener {
             
             private final static int COLUMN_ID     = 0;
             private final static int COLUMN_FNAME  = 1;
@@ -348,6 +353,11 @@ public class JavaBallController {
                     referee.setIndex((int) value);
                 }
             }
+
+        @Override
+        public void tableChanged(TableModelEvent e) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
 
         }
         
