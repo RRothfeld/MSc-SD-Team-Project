@@ -82,6 +82,10 @@ public class JavaBallController {
 		return refList.getReferee(id);
 	}
 
+        public boolean refTravel(Referee referee, Location location)
+        {
+            return (referee.getTravelLocation(location));
+        }
 	/**
 	 *
 	 * @param fname
