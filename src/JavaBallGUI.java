@@ -321,7 +321,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			labelPanel.add(visitAreasLabel);
 
 			// Adds components to panel 'top'
-
 			add(labelPanel, BorderLayout.WEST);
 
 		}
@@ -361,14 +360,12 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                         homeLocation.setModel(new DefaultComboBoxModel(JavaBallController.Location.values()));
 			inputPanel.add(homeLocation);
 
-
 			visitNorth = new JCheckBox("North");
 			visitSouth = new JCheckBox("South");
 			visitCentral = new JCheckBox("Central");
 			inputPanel.add(visitNorth);
 			inputPanel.add(visitCentral);
 			inputPanel.add(visitSouth);
-
 
 			add(inputPanel, BorderLayout.EAST);
 
@@ -389,7 +386,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 			// Add components to panel
 			add(bottom, BorderLayout.SOUTH);
-
 		}
 
 		@Override
@@ -406,7 +402,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				dispose();
 			}
 			if(ae.getSource() == saveButton) {
-
+                            
+                            if (controller.indexCounter() == 12){
+                                JOptionPane.showMessageDialog(null, "Sorry.\n"
+                                        + "The Referee List is full!");
+                            } else {
 				// Get travel locations for referee
 				String north = visitNorth.isSelected() ? "Y" : "N";
 				String central = visitCentral.isSelected() ? "Y" : "N";
@@ -432,8 +432,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 							(JavaBallController.Location) homeLocation.getSelectedItem(), travel);
                                         dispose();
 				}
-
-                                controller.addRow();
+                            }
 			}
 
 		}
@@ -453,91 +452,110 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 	private class AllocateMatches extends JFrame implements ActionListener {
 
-		private JTextField weekNumber;
-		private JComboBox matchLevel, matchArea;
-		private JButton allocateReferees, cancelButton;
+            private JTextField weekNumber;
+            private JComboBox matchLevel, matchArea;
+            private JButton allocateReferees, cancelButton;
+            private JLabel weekLabel,levelLabel, locationLabel;
 
-		public AllocateMatches() {
+            public AllocateMatches() {
 
-			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-			setTitle("Add Match");
-			setSize(500, 200);
-			setLocation(200, 200);
-			topLayout();
-			bottomLayout();
-		}
+                    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                    setTitle("Add Match");
+                    setSize(500, 150);
+                    setLocation(200, 200);
+                    layoutTop();
+                    layoutMiddle();
+                    layoutBottom();
+            }
 
-		private void topLayout() {
+            // This needs to be altered, but I wanted a label.
+            private void layoutTop() {
+                JPanel top = new JPanel();
+                
+                weekLabel = new JLabel("Week No.  ");
+                levelLabel = new JLabel("Match Level  ");
+                locationLabel = new JLabel("Location  ");
+                top.add(weekLabel);
+                top.add(levelLabel);
+                top.add(locationLabel);
+                add(top,BorderLayout.NORTH);
+            }
+            
+            private void layoutMiddle() {
 
-			JPanel top = new JPanel();
-			// Creates and add text field for match week number
-			weekNumber = new JTextField(5);
-			top.add(weekNumber);
-			// Creates and add JComboBox for selecting match level
-			matchLevel = new JComboBox();
-			matchLevel.setModel(new DefaultComboBoxModel(Match.Level.values()));
-			matchLevel.setEditable(false);
-			top.add(matchLevel);
-			// Creates and add JComboBox for selecting match location
-			matchArea = new JComboBox();
-			matchArea.setEditable(false);
-			matchArea.setModel(new DefaultComboBoxModel(JavaBallController.Location.values()));
-			top.add(matchArea);
-			// Adds panel 'top' to frame
-			add(top, BorderLayout.NORTH);
+                    JPanel middle = new JPanel();
+                    // Creates and add text field for match week number
+                    weekNumber = new JTextField(5);
+                    middle.add(weekNumber);
+                    // Creates and add JComboBox for selecting match level
+                    matchLevel = new JComboBox();
+                    matchLevel.setModel(new DefaultComboBoxModel(Match.Level.values()));
+                    matchLevel.setEditable(false);
+                    middle.add(matchLevel);
+                    // Creates and add JComboBox for selecting match location
+                    matchArea = new JComboBox();
+                    matchArea.setEditable(false);
+                    matchArea.setModel(new DefaultComboBoxModel(JavaBallController.Location.values()));
+                    middle.add(matchArea);
+                    // Adds panel 'top' to frame
+                    add(middle, BorderLayout.CENTER);
+
+            }
+
+            private void layoutBottom() {
+
+                    JPanel bottom = new JPanel();
+                    // Create and add 'create match and allocate referees' button
+                    bottom.setBackground(Color.gray);
+                    allocateReferees = new JButton("Allocate Referees");
+                    allocateReferees.addActionListener(this);
+                    bottom.add(allocateReferees);
+                    // Creates and add back button
+                    cancelButton = new JButton("Cancel");
+                    cancelButton.addActionListener(this);
+                    bottom.add(cancelButton);
+                    // Adds panel to frame
+                    add(bottom, BorderLayout.SOUTH);
+            }
+
+            /**
+             * 
+             */
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (ae.getSource() == allocateReferees) {
+                    // referees for that match.
+                    try {
                         
-		}
+                        int week = Integer.parseInt(weekNumber.getText());
+                        if (week < 1 || week > 52)
+                        {
+                            JOptionPane.showMessageDialog(null, "Invalid Week Number");
+                            weekNumber.setText("");
+                        } else {
+                            Match.Level level = (Match.Level) matchLevel.getSelectedItem();
+                            JavaBallController.Location area = 
+                                    (JavaBallController.Location) matchArea.getSelectedItem();
 
-		private void bottomLayout() {
+                            // TODO WHAT IF WEEK NUMBER IS NO NUMBER
+                            ArrayList<Referee> suitableReferees = controller.allocateReferees(
+                                                            Integer.parseInt(weekNumber.getText()),
+                                                            level, area);			
 
-			JPanel bottom = new JPanel();
-			// Create and add 'create match and allocate referees' button
-			bottom.setBackground(Color.gray);
-			allocateReferees = new JButton("Allocate Referees");
-			allocateReferees.addActionListener(this);
-			bottom.add(allocateReferees);
-			// Creates and add back button
-			cancelButton = new JButton("Cancel");
-			cancelButton.addActionListener(this);
-			bottom.add(cancelButton);
-			// Adds panel to frame
-			add(bottom, BorderLayout.CENTER);
-		}
+                            Match newMatch = new Match(Integer.parseInt(weekNumber.getText()), level, area);
 
-		/**
-		 * 
-		 */
-                @Override
-		public void actionPerformed(ActionEvent ae) {
-			if (ae.getSource() == allocateReferees) {
-				// referees for that match.
-				Match.Level level = (Match.Level) matchLevel
-						.getSelectedItem();
-				JavaBallController.Location area = (JavaBallController.Location) matchArea
-						.getSelectedItem();
-
-				// TODO WHAT IF WEEK NUMBER IS NO NUMBER
-				ArrayList<Referee> suitableReferees = controller
-						.allocateReferees(
-								Integer.parseInt(weekNumber.getText()),
-								level, area);
-
-				// Update table display to show referees sorted by
-				// suitability
-//				String[] columnNames = {"ID", "First Name", "Last Name", 
-//						"Qualification", "Match Allocations", "Home Region", 
-//						"Travel Locations"};
-				 //table = new JTable(controller.updateTable(suitableReferees), columnNames);
-				
-			
-
-				// Close RefereeFrame
-				dispose();
-			}
-			else  {
-				// Close window
-				dispose();
-			}
-		}
+                            // Close RefereeFrame
+                        dispose();
+                        }
+                    } catch(NumberFormatException ex){
+                        JOptionPane.showMessageDialog(null, "Please Enter a Number");
+                        weekNumber.setText("");
+                    }
+                }
+                else  {
+                        // Close window
+                        dispose();
+                }
+            }
 	}
 }

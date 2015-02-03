@@ -3,8 +3,6 @@ import javax.swing.WindowConstants;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -32,9 +30,7 @@ public class JavaBallController {
 
     private final String REFEREE_FILE = "RefereesOut.txt";
     private final String MATCH_FILE   = "MatchAllocs.txt";
-    private final int TABLE_FIELDS = 7;
 	
-    /** TODO */
     public enum Location {
         NORTH("North"), CENTRAL("Central"), SOUTH("South");
         private final String LocationString;
@@ -78,101 +74,100 @@ public class JavaBallController {
      * @param id
      * @return
      */
-	public Referee getReferee(String id) {
-		return refList.getReferee(id);
-	}
-
-        public boolean refTravel(Referee referee, Location location)
-        {
-            return (referee.getTravelLocation(location));
-        }
-	/**
-	 *
-	 * @param fname
-	 * @param sname
-     * @param qualification
-     * @param qualLevel
-	 * @param allocations
-	 * @param home
-	 * @param travel
-	 */
-	public void addReferee(String fname, String sname,
-			Referee.Qualifications qualification, int qualLevel,
-			int allocations, Location home, String travel) 
-        {
-            refList.add(new Referee(refList.createID(fname, sname),fname, sname, 
-                    qualification.toString()+qualLevel,
-			 allocations,  home.toString(), travel));
-	}
+    public Referee getReferee(String id) {
+            return refList.getReferee(id);
+    }
 
     /**
-     *
+     * Method to return 
+     * @param referee - The Referee We Want to Know about
+     * @param location - The location we want to know if they travel to
+     * @return - whether or not referee travels to Location
      */
-    public void addRow()
-        {
-            
-        }
-        
-	/**
-	 * Method to edit fields of Referee
-	 * 
+    public boolean refTravel(Referee referee, Location location)
+    {
+        return (referee.getTravelLocation(location));
+    }
+
+    /**
+     * Add a new Referee
+     * @param fname
+     * @param sname
+     * @param qualification
+     * @param qualLevel
+     * @param allocations
+     * @param home
+     * @param travel
+     */
+    public void addReferee(String fname, String sname,
+                    Referee.Qualifications qualification, int qualLevel,
+                    int allocations, Location home, String travel) 
+    {
+        refList.add(new Referee(refList.createID(fname, sname),fname, sname, 
+                qualification.toString()+qualLevel,
+                     allocations,  home.toString(), travel));
+    }
+
+    /**
+     * Method to edit fields of Referee
+     * 
      * @param referee
      * @param travel
      * @param qualification
      * @param qualLevel
      * @param home
-	 */
-	public void editReferee(Referee referee,
-			Referee.Qualifications qualification, int qualLevel, Location home,
-			String travel) {
-
-	}
-        
-    /**
-     *
-     * @param ref
      */
-	public void removeReferee(Referee ref) {
-		refList.remove(ref);
-	}
-	
-	/**
-	 * 
-	 * @param week
-	 * @param level
-	 * @param location
-         * @return 
-	 */
-	public ArrayList<Referee> allocateReferees(int week, Match.Level level,
-			Location location) {
-		// Create new match without referees
-		Match match = new Match(week, level, location);
+    public void editReferee(Referee referee,
+                    Referee.Qualifications qualification, int qualLevel, Location home,
+                    String travel) {
 
-		// Check if match ID is already in use
-		if (season.getMatch(week) == null) {
-			//  Return indication of unsuccessful referee allocations
-			return null;
-		} else {
-			// Retrieve all suitable Referees for that match
-			ArrayList<Referee> availableReferees = refList
-					.getSuitableReferees(match);
+    }
 
-			// Select the two most suitable referees and pass them to the match
-			Referee[] suitableReferees = { availableReferees.get(0),
-					availableReferees.get(1) };
-			match.setReferees(suitableReferees);
+    /**
+     * Removes referee for RefereeList
+     * @param ref - Referee to be removed
+     */
+    public void removeReferee(Referee ref) {
+            refList.remove(ref);
+    }
 
-			// Add the fully filled in match to the current season
-			season.addMatch(match);
-			
-			// Return indication of successful referee allocation
-			return availableReferees;
-		}
+    /**
+     * 
+     * @param week
+     * @param level
+     * @param location
+     * @return 
+     */
+    public ArrayList<Referee> allocateReferees(int week, Match.Level level,
+                    Location location) {
+            // Create new match without referees
+            Match match = new Match(week, level, location);
+
+            // Check if match ID is already in use
+            if (season.getMatch(week) == null) {
+                    //  Return indication of unsuccessful referee allocations
+                    return null;
+            } else {
+                    // Retrieve all suitable Referees for that match
+                    ArrayList<Referee> availableReferees = refList
+                                    .getSuitableReferees(match);
+
+                    // Select the two most suitable referees and pass them to the match
+                    Referee[] suitableReferees = { availableReferees.get(0),
+                                    availableReferees.get(1) };
+                    match.setReferees(suitableReferees);
+
+                    // Add the fully filled in match to the current season
+                    season.addMatch(match);
+
+                    // Return indication of successful referee allocation
+                    return availableReferees;
+            }
 	}
 	
     /**
-     *
-     * @return
+     * Method to create TableModel object for refList and return it to the GUI
+     * @return - Full TableModel
      */
     public TableModel getTableData()
         {
@@ -185,38 +180,38 @@ public class JavaBallController {
      * @return
      */
     public int indexCounter()
-        {
-            return refList.size();
-        }
-        
+    {
+        return refList.size();
+    }
+
     //Old updateTable methods that are no longer used.
 	/**
 	 * 
         * @return 
 	 */
-//	public String[][] updateTable() {
-//		// Retrieve all referees ordered by ID
-//		refList.sort();
-//		ArrayList<Referee> refereesByID = refList.getReferees();
-//		// Update table with ID sorting
-//		return updateTable(refereesByID);
-//	}
-//	
-//    /**
-//     *
-//     * @param refereeList
-//     * @return
-//     */
-//    public String[][] updateTable(ArrayList<Referee> refereeList) {
-//	String[][] table = new String[RefereeList.MAX_REFEREES][TABLE_FIELDS];
-//	int row = 0;
-//	
-//	for (Referee ref : refereeList) {
-//	    System.arraycopy(ref.report(), 0, table[row], 0, TABLE_FIELDS);
-//	    row++;
-//	}
-//	return table;
-//    }
+    //	public String[][] updateTable() {
+    //		// Retrieve all referees ordered by ID
+    //		refList.sort();
+    //		ArrayList<Referee> refereesByID = refList.getReferees();
+    //		// Update table with ID sorting
+    //		return updateTable(refereesByID);
+    //	}
+    //	
+    //    /**
+    //     *
+    //     * @param refereeList
+    //     * @return
+    //     */
+    //    public String[][] updateTable(ArrayList<Referee> refereeList) {
+    //	String[][] table = new String[RefereeList.MAX_REFEREES][TABLE_FIELDS];
+    //	int row = 0;
+    //	
+    //	for (Referee ref : refereeList) {
+    //	    System.arraycopy(ref.report(), 0, table[row], 0, TABLE_FIELDS);
+    //	    row++;
+    //	}
+    //	return table;
+    //    }
     
 	/**
 	 * Write report Files
@@ -258,7 +253,7 @@ public class JavaBallController {
             }
 	}
         
-        private class RefereeTableModel extends AbstractTableModel implements TableModelListener {
+        private class RefereeTableModel extends AbstractTableModel {
             
             private final static int COLUMN_ID     = 0;
             private final static int COLUMN_FNAME  = 1;
@@ -282,7 +277,6 @@ public class JavaBallController {
                 {
                     referee.setIndex(index++);
                 }
-            
             }
             
             @Override
@@ -346,7 +340,6 @@ public class JavaBallController {
                 }
 
                 return returnValue;
-                
             }
 
             @Override
@@ -357,12 +350,6 @@ public class JavaBallController {
                     referee.setIndex((int) value);
                 }
             }
-
-        @Override
-        public void tableChanged(TableModelEvent e) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
         }
         
 }
