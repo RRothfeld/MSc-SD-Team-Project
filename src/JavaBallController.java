@@ -64,7 +64,14 @@ public class JavaBallController {
      */
     
     
-
+    /**
+     *
+     */
+    public void openChart() {
+		chart = new ChartFrame(refList);
+		chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		chart.setVisible(true);
+    }
     /**
      * 
      */
@@ -173,14 +180,6 @@ public class JavaBallController {
     /**
      * STATISTICS SECTION.
      */
-    /**
-     *
-     */
-    public void openChart() {
-		chart = new ChartFrame(refList);
-		chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		chart.setVisible(true);
-    }
     /**
      * Write report Files
      */
