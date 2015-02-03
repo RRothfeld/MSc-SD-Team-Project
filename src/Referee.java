@@ -98,7 +98,7 @@ public class Referee implements Comparable<Referee> {
      * @param id - Referee ID, format XY1
      * @param forename - Referee forename
      * @param surname - Referee surname
-     * @param qual - 
+     * @param qual - Qualification type and level
      * @param allocCount - amount of matches allocated to referee
      * @param homeLocality - home area for referee
      * @param travel - string Y/N for areas Referee will travel too
@@ -184,8 +184,7 @@ public class Referee implements Comparable<Referee> {
 
     /**
      * Method to return Qualification Type
-     * 
-     * @return
+     * @return - Three character qualification type
      */
     public String getQualifications() {
 	return qualification;
@@ -219,8 +218,7 @@ public class Referee implements Comparable<Referee> {
 
     /**
      * Pass back refereeID
-     * 
-     * @return
+     * @return - ID For This Referee
      */
     public String getID() {
 	return this.uniqueID;
@@ -236,8 +234,8 @@ public class Referee implements Comparable<Referee> {
     }
 
     /**
-     *
-     * @return
+     * 
+     * @return Home Location as Location enum
      */
     public JavaBallController.Location getHomeLocation() {
 	return homeLocation;
@@ -284,8 +282,7 @@ public class Referee implements Comparable<Referee> {
      * Returns a boolean value referring to whether the referee will travel to
      * that area or not.
      * 
-     * @param location
-     *            - location required.
+     * @param location - location required.
      * @return - boolean for particular location
      */
     public boolean getTravelLocation(JavaBallController.Location location) {
@@ -300,9 +297,7 @@ public class Referee implements Comparable<Referee> {
 
     /**
      * Method to Change whether a Referee will travel to an Area
-     * 
-     * @param location
-     *            the location to be flipped
+     * @param location - the location to be flipped
      */
     private void flipTravel(JavaBallController.Location location) {
 	if (location.equals(JavaBallController.Location.NORTH)) {

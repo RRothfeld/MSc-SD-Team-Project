@@ -204,6 +204,12 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                             firstNameField.setEditable(false);
                             lastNameField.setEditable(false);
                             matchesField.setEditable(false);
+                            visitNorth.setSelected(controller.refTravel(ref, 
+                                    JavaBallController.Location.NORTH));
+                            visitCentral.setSelected(controller.refTravel(ref, 
+                                    JavaBallController.Location.CENTRAL));
+                            visitSouth.setSelected(controller.refTravel(ref, 
+                                    JavaBallController.Location.SOUTH));
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Referee not found");
@@ -264,7 +270,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			// Calls the default constructor
 			this();
 			this.referee = referee;
-
 		}
 
 		/**
@@ -340,8 +345,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 			qualificationField = new JComboBox();
                         qualificationField.setModel(new DefaultComboBoxModel(Referee.Qualifications.values()));
-			qualificationField.addItem(Referee.Qualifications.NJB.name());
-			qualificationField.addItem(Referee.Qualifications.IJB.name());
 			inputPanel.add(qualificationField);
 
 			qualificationLevel = new JComboBox();
@@ -356,9 +359,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 			homeLocation = new JComboBox();
                         homeLocation.setModel(new DefaultComboBoxModel(JavaBallController.Location.values()));
-			homeLocation.addItem(JavaBallController.Location.NORTH.name());
-			homeLocation.addItem(JavaBallController.Location.CENTRAL.name());
-			homeLocation.addItem(JavaBallController.Location.SOUTH.name());
 			inputPanel.add(homeLocation);
 
 
