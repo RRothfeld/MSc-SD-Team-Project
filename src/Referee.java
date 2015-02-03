@@ -44,6 +44,7 @@ public class Referee implements Comparable<Referee> {
     // List of matches by matchID referee has been allocated to
     private ArrayList<Match> allocatedMatchesList;
 
+    private int index;
     private int preSeasonAllocations;
     private final int MAX_QUAL_LENGTH = 4;
 
@@ -188,7 +189,25 @@ public class Referee implements Comparable<Referee> {
     public String getQualifications() {
 	return qualification;
     }
+    
+    //Methods used by TableModel to place referees
+    
+    /**
+     *
+     * @param index
+     */
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
+    /**
+     * 
+     * @return
+     */
+    public int getIndex()
+    {
+        return this.index;
+    }
     /**
      * Integer value for qualification level independent of other info.
      * 
@@ -204,7 +223,7 @@ public class Referee implements Comparable<Referee> {
      * @return
      */
     public String getID() {
-	return uniqueID;
+	return this.uniqueID;
     }
 
     /**
@@ -295,23 +314,19 @@ public class Referee implements Comparable<Referee> {
 	}
     }
 
-	/** Returns the referee details
-     * @return  */
-	public String[] report() {
-
-		String ID = this.uniqueID;
-		String forename = this.forename;
-		String surname = this.surname;
-		String qualification = this.qualification;
-		String allocations = Integer.toString(getAllocations());
-		String homeLocation = getHomeLocation().toString();
-		String travelLocations = getTravelLocations();
-
-		String[] details = { ID, forename, surname, qualification, allocations,
-				homeLocation, travelLocations };
-
-		return details;
-	}
+    /** 
+     * NO LONGER USED
+     * Returns the referee details
+     * @return  
+     */
+//    public String[] report() {
+//
+//        String[] details = { this.uniqueID, this.forename, this.surname,
+//            this.qualification, Integer.toString(getAllocations()),
+//                    getHomeLocation().toString(), getTravelLocations() };
+//
+//            return details;
+//    }
 
     /**
      * Method to update all three locations in one step Referee can change

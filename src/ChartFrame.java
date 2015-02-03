@@ -1,18 +1,12 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import java.awt.*;
-
-import javax.swing.*;
 
 /**
  * Team Foxtrot JavaBall Referees XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -31,7 +25,7 @@ import javax.swing.*;
 
 public class ChartFrame extends JFrame {
 
-    private RefereeList referees;
+    private final RefereeList referees;
 
     // Dimensions of the frame
     private static final int FRAME_WIDTH = 400;
@@ -41,6 +35,7 @@ public class ChartFrame extends JFrame {
      * A constructor with a FitnessProgram parameter used to initialise the
      * FitnessProgram instance variable and add the JTextArea component to the
      * window.
+     * @param referees - 
      */
     public ChartFrame(RefereeList referees) {
 	this.referees = referees;
@@ -54,7 +49,10 @@ public class ChartFrame extends JFrame {
 
     }
 
-    /** A method to build the scroll pane */
+    /** 
+     * A method to build the scroll pane
+     * @return - hypothetical...
+     */
     public JScrollPane addScrollPane() {
 	JScrollPane scrollPane = new JScrollPane(this);
 	return scrollPane;
@@ -69,6 +67,7 @@ public class ChartFrame extends JFrame {
 	 */
 	public RectangleComponent() {}
 
+        @Override
 	public void paintComponent(Graphics g) {
 	    int START = 100;
 	    int SCALE = 20;

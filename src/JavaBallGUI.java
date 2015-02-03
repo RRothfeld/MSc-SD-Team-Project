@@ -1,19 +1,29 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.*;
 import java.util.ArrayList;
 
-import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.TableModel;
 
 /**
  * Team Foxtrot JavaBall Referees - JavaBallGUI.java Defines JavaBall GUI that
@@ -100,13 +110,12 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		searchField.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent event) {
-				if (searchField.getText()
-						.equals("Enter referee name or ID ...")) {
-					searchField.setText("");
-				}
+                            if (searchField.getText()
+                                    .equals("Enter referee name or ID ...")) {
+                                searchField.setText("");
+                            }
 			}
 		});
-
 
 		// create JButtons
 		addButton = new JButton("Add Referee");
@@ -142,13 +151,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		navPanel.add(resetSearchButton);
 		navPanel.add(exitButton);
 
-
-		// Column Names for table (Referee attributes)
-		String[] columnNames = {"ID", "First Name", "Last Name", "Qualification", "Match Allocations", "Home Region", "Travel Locations"};
-		String[][] dataTable = controller.updateTable();
-
-		table = new JTable(dataTable, columnNames);
+		table = new JTable(controller.getTableData());
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
+                table.setAutoCreateRowSorter(true);
 		// Set table dimensions
 		table.setPreferredScrollableViewportSize(new Dimension(400, 100));
 		table.setFillsViewportHeight(true);
@@ -158,7 +163,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		// Add tablePane to main GUI frame
 		centrePanel.add(tablePane);
 	}
-
 
 	/**
 	 * TODO
@@ -212,6 +216,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			controller.saveExit();
 		}
 	}
+
+        
 
 	/**TODO 
 	 * Subclass that contains the frame and components for the add/edit/remove 
@@ -413,6 +419,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 							Integer.parseInt(matchesField.getText()), 
 							(JavaBallController.Location) homeLocation.getSelectedItem(),
 							travel);
+                                        dispose();
 				}
 
 				else {
@@ -420,9 +427,10 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 							(Referee.Qualifications) qualificationField.getSelectedItem(), 
 							Integer.parseInt(String.valueOf(qualificationLevel.getSelectedItem())),
 							(JavaBallController.Location) homeLocation.getSelectedItem(), travel);
+                                        dispose();
 				}
 
-				// TODO update referee table
+                                controller.addRow();
 			}
 
 		}
@@ -474,7 +482,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			top.add(matchArea);
 			// Adds panel 'top' to frame
 			add(top, BorderLayout.NORTH);
-
+                        
 		}
 
 		private void bottomLayout() {
@@ -513,10 +521,10 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 				// Update table display to show referees sorted by
 				// suitability
-				String[] columnNames = {"ID", "First Name", "Last Name", 
-						"Qualification", "Match Allocations", "Home Region", 
-						"Travel Locations"};
-				 table = new JTable(controller.updateTable(suitableReferees), columnNames);
+//				String[] columnNames = {"ID", "First Name", "Last Name", 
+//						"Qualification", "Match Allocations", "Home Region", 
+//						"Travel Locations"};
+				 //table = new JTable(controller.updateTable(suitableReferees), columnNames);
 				
 			
 
