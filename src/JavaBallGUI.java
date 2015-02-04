@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * Team Foxtrot JavaBall Referees - JavaBallGUI.java Defines JavaBall GUI that
@@ -159,6 +160,10 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		table.setPreferredScrollableViewportSize(new Dimension(400, 100));
 		table.setFillsViewportHeight(true);
                 table.getModel().addTableModelListener(table);
+                
+                DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
+                leftRender.setHorizontalAlignment( JLabel.LEFT );
+                table.getColumnModel().getColumn(4).setCellRenderer(leftRender);
 
 		// Create new JPane for table view
 		tablePane = new JScrollPane(table);
@@ -197,6 +202,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			if (ref != null) {
                             
                             RefereeFrame serachRef = new RefereeFrame(ref);
+                            idField.setText(ref.getID());
                             firstNameField.setText(ref.getForename());
                             lastNameField.setText(ref.getSurname());
                             matchesField.setText(Integer.toString(ref.getAllocations()));
@@ -230,8 +236,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	}
 
         
-
-	/**TODO 
+        /**TODO 
 	 * Subclass that contains the frame and components for the add/edit/remove 
 	 * referee display.
 	 * create one JFrame that is used for both adding, editing and deleting 

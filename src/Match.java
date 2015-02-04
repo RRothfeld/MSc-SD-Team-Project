@@ -130,7 +130,7 @@ public class Match {
     public String toString() {
 	// TODO this method seems redundant
 	String match = String.format("%d %s %s %s %s", week, level, area,
-		suitableReferees[0], suitableReferees[1]);
+		suitableReferees[0].getID(), suitableReferees[1].getID());
 	return match;
     }
 }

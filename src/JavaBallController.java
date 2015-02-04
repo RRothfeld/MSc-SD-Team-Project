@@ -1,9 +1,11 @@
+import java.awt.Component;
 import javax.swing.WindowConstants;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
@@ -207,6 +209,7 @@ public class JavaBallController {
                 int counter = 0;
                 for (Match match : season) {
                         matches[counter] = (match.report());
+                        counter++;
                 }
                 for (String s : referees) {
                         refereeFile.write(s);                                        
@@ -214,13 +217,15 @@ public class JavaBallController {
                 for (String s : matches) {
                         matchFile.write(s + "\n");
                 }
+                refereeFile.close();
             }
             matchFile.close();
+            
             return true;
         } catch (IOException ex) {
                 // TODO
                 return false;
-        }
+        } 
     }
     /**
      * Method to create TableModel object for refList and return it to the GUI
