@@ -119,8 +119,9 @@ public class Match {
      * @return  */
     public String report() {
 	// TODO this will print to MatchAllocs.txt
-	String match = String.format("%d %s %s %s %s", week, level, area,
-		suitableReferees[0], suitableReferees[1]);
+	String match = String.format("%d %s %s %s %s %s %s", week, level, area,
+		suitableReferees[0].getForename(), suitableReferees[0].getName_last(), 
+                suitableReferees[1].getForename(),suitableReferees[1].getName_last());
 	return match;
     }
 

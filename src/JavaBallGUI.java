@@ -202,14 +202,16 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			if (ref != null) {
                             
                             RefereeFrame serachRef = new RefereeFrame(ref);
+                            
                             idField.setText(ref.getID());
                             firstNameField.setText(ref.getForename());
-                            lastNameField.setText(ref.getSurname());
+                            lastNameField.setText(ref.getName_last());
                             matchesField.setText(Integer.toString(ref.getAllocations()));
                             serachRef.setVisible(true);
                             firstNameField.setEditable(false);
                             lastNameField.setEditable(false);
                             matchesField.setEditable(false);
+                            idField.setEditable(false);
                             visitNorth.setSelected(controller.refTravel(ref, 
                                     JavaBallController.Location.NORTH));
                             visitCentral.setSelected(controller.refTravel(ref, 
@@ -249,7 +251,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private final class RefereeFrame extends JFrame implements ActionListener {
 
 		// GUI labels for viewRefereeFrame
-		private JLabel idLabel, firstNameLabel, surnameLabel, 
+		private JLabel idLabel, firstNameLabel, lastNameLabel, 
 		qualificationLabel, matchesLabel, homeLabel, visitAreasLabel;
 		private Referee referee;
 		private JPanel labelPanel, inputPanel;
@@ -303,10 +305,10 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			firstNameLabel.setBorder(border);
 			labelPanel.add(firstNameLabel);
 			// Creates and adds first name Label
-			surnameLabel = new JLabel();
-			surnameLabel.setText("Surname Name");
-			surnameLabel.setBorder(border);
-			labelPanel.add(surnameLabel);
+			lastNameLabel = new JLabel();
+			lastNameLabel.setText("Surname Name");
+			lastNameLabel.setBorder(border);
+			labelPanel.add(lastNameLabel);
 			// Creates and adds qualification Label
 			qualificationLabel = new JLabel();
 			qualificationLabel.setText("Qualification");
@@ -420,7 +422,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				String central = visitCentral.isSelected() ? "Y" : "N";
 				String south = visitSouth.isSelected() ? "Y" : "N";
 				String travel = north + central + south;
-
+                                
 				if (this.referee == null) {
 
 					controller.addReferee(firstNameField.getText(),
@@ -552,6 +554,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                                 JOptionPane.showMessageDialog(null, "That week is already in use!");
                                 weekNumber.setText("");
                             }
+                            table = new JTable(controller.allocatedTableData(suitableRefs));
                             
                             dispose();
                         }

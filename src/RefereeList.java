@@ -125,7 +125,7 @@ public class RefereeList implements Iterable<Referee> {
 		// Add all referees with either the desired fore- and surname
 		for (Referee ref : listedReferees) {
 			if (ref.getForename().equals(fname)
-					&& ref.getSurname().equals(sname))
+					&& ref.getName_last().equals(sname))
 				return ref;
 		}
 		return null;

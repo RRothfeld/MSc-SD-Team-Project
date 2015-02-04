@@ -19,8 +19,8 @@ import java.util.ArrayList;
 public class Referee implements Comparable<Referee> {
 
     // Basic information about Referee from the input file/user.
-    private String forename;
-    private String surname;
+    private String name_first;
+    private String name_last;
     private String uniqueID;
 
     private int qualificationLevel;
@@ -53,8 +53,8 @@ public class Referee implements Comparable<Referee> {
      */
     public Referee() {
 	this.uniqueID = "";
-	this.forename = "";
-	this.surname = "";
+	this.name_first = "";
+	this.name_last = "";
 
 	this.qualification = "";
 
@@ -76,8 +76,8 @@ public class Referee implements Comparable<Referee> {
 	// Check to make sure line split properly and has adequate items
 	if (refereeDetails != null && refereeDetails.length == 7) {
 	    this.uniqueID = refereeDetails[0];
-	    this.forename = refereeDetails[1];
-	    this.surname = refereeDetails[2];
+	    this.name_first = refereeDetails[1];
+	    this.name_last = refereeDetails[2];
 
 	    setHomeLocation(refereeDetails[5]);
 
@@ -96,8 +96,8 @@ public class Referee implements Comparable<Referee> {
      * Referee object.
      * 
      * @param id - Referee ID, format XY1
-     * @param forename - Referee forename
-     * @param surname - Referee surname
+     * @param forename - Referee name_first
+     * @param surname - Referee name_last
      * @param qual - Qualification type and level
      * @param allocCount - amount of matches allocated to referee
      * @param homeLocality - home area for referee
@@ -131,10 +131,10 @@ public class Referee implements Comparable<Referee> {
     /**
      * Method to return Forename of Referee
      * 
-     * @return - forename
+     * @return - name_first
      */
     public String getForename() {
-	return this.forename;
+	return this.name_first;
     }
 
     /**
@@ -142,8 +142,8 @@ public class Referee implements Comparable<Referee> {
      * 
      * @return - Surname
      */
-    public String getSurname() {
-	return this.surname;
+    public String getName_last() {
+	return this.name_last;
     }
 
     /**
@@ -316,7 +316,7 @@ public class Referee implements Comparable<Referee> {
      */
 //    public String[] report() {
 //
-//        String[] details = { this.uniqueID, this.forename, this.surname,
+//        String[] details = { this.uniqueID, this.name_first, this.name_last,
 //            this.qualification, Integer.toString(getAllocations()),
 //                    getHomeLocation().toString(), getTravelLocations() };
 //

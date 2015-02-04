@@ -76,6 +76,7 @@ public class JavaBallController {
 		chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		chart.setVisible(true);
     }
+    
     /**
      * 
      */
@@ -199,7 +200,7 @@ public class JavaBallController {
                 int refCounter = 0;
                 for (Referee ref : refList) {
                     String details = String.format("%s %s %s %s%d %d %s %s\n",
-                                ref.getID(), ref.getForename(), ref.getSurname(),
+                                ref.getID(), ref.getForename(), ref.getName_last(),
                                 ref.getQualifications(),
                                 ref.getQualificationLevel(), ref.getAllocations(),
                                 ref.getHomeLocation(), ref.getTravelLocations());
@@ -236,6 +237,12 @@ public class JavaBallController {
         tableData = new RefereeTableModel(refList.getReferees());
         return tableData;
     }
+    
+    public TableModel allocatedTableData(ArrayList<Referee> allocated)
+    {
+        tableData = new RefereeTableModel(allocated);
+        return tableData;         
+    }
             
     /**
      *
@@ -262,7 +269,7 @@ public class JavaBallController {
 
         public RefereeTableModel(ArrayList<Referee> referees) {
             this.listReferees = referees;
-            this.columnNames  = new String[]{"ID", "Forename", "Surname", 
+            this.columnNames  = new String[]{"ID", "First Name", "Last Name", 
                 "Qualification", "Allocations", "Home", "Travel Areas"};     
 
             int index = 1;
@@ -314,7 +321,7 @@ public class JavaBallController {
                 returnValue = referee.getForename();
                 break;
             case COLUMN_SNAME:
-                returnValue = referee.getSurname();
+                returnValue = referee.getName_last();
                 break;
             case COLUMN_QUAL:
                 returnValue = referee.getQualifications()+referee.getQualificationLevel();
@@ -331,7 +338,6 @@ public class JavaBallController {
             default:
                 throw new IllegalArgumentException("Invalid column index");
             }
-
             return returnValue;
         }
 
@@ -344,5 +350,4 @@ public class JavaBallController {
             }
         }
     }
-        
 }
