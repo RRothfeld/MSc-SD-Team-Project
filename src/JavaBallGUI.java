@@ -188,6 +188,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		// If add button is pressed
 		if (ae.getSource() == addButton) {
 			RefereeFrame addRef = new RefereeFrame();
+			addRef.setTitle("Add Referee");
 			addReferee = true;
 			addRef.setVisible(true);
 			removeButton.setEnabled(false);
@@ -209,17 +210,20 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			Referee ref = controller.getReferee(searchField.getText().trim());
 			if (ref != null) {
                             
-                            RefereeFrame serachRef = new RefereeFrame(ref);
+                            RefereeFrame editRef = new RefereeFrame(ref);
+                            editRef.setVisible(true);
+                            editRef.setTitle("Edit Referee");
                             
                             idField.setText(ref.getID());
                             firstNameField.setText(ref.getFirstName());
                             lastNameField.setText(ref.getLastName());
                             matchesField.setText(Integer.toString(ref.getAllocations()));
-                            serachRef.setVisible(true);
+                            
                             firstNameField.setEditable(false);
                             lastNameField.setEditable(false);
                             matchesField.setEditable(false);
                             idField.setEditable(false);
+                            
                             visitNorth.setSelected(controller.refTravel(ref, 
                                     JavaBallController.Location.NORTH));
                             visitCentral.setSelected(controller.refTravel(ref, 
@@ -271,9 +275,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		public RefereeFrame() {
 
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-			setTitle("Add/Edit/Remove Referee");
+			//setTitle("Add/Edit/Remove Referee");
 			setSize(400, 350);
 			setLocation(200, 200);
+			setResizable(false);
+			
 			// Adds top GUI components
 			layoutTop();
 			// Adds central GUI components
@@ -360,8 +366,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			lastNameField.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseExited(MouseEvent event) {
-				    String firstName = firstNameField.getText();
-				    String lastName = lastNameField.getText();
+				    String firstName = firstNameField.getText().trim();
+				    String lastName = lastNameField.getText().trim();
 	                            if (!(firstName.equals("") && lastName.equals(""))) {
 	                        	RefereeList refList = new RefereeList();
 	                        	String ID = refList.createID(firstName, lastName);
@@ -495,6 +501,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
                     setTitle("Add Match");
                     setSize(500, 150);
+                    setResizable(false);
                     setLocation(200, 200);
                     layoutTop();
                     layoutMiddle();
