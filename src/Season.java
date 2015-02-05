@@ -21,9 +21,9 @@ import java.util.Iterator;
 public class Season implements Iterable<Match> {
     
     /** Total number of matches per season */
-    public static final int MAX_MATCHES = 52;
-    // TODO think about the relationship
-    // between MAX_WEEKS and MAX_MATCHES
+    //public static final int MAX_MATCHES = 52;
+    protected static final int MIN_WEEK = 1;
+    protected static final int MAX_WEEK = 52; // represents max matches
     
     /** Matches to be played this season */
     public ArrayList<Match> matches;

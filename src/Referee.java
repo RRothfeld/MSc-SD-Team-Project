@@ -46,7 +46,7 @@ public class Referee implements Comparable<Referee> {
 
     private int index;
     private int preSeasonAllocations;
-    private final int MAX_QUAL_LENGTH = 4;
+    protected static final int MAX_QUAL_LENGTH = 4;
 
     /**
      * Default Constructor.

@@ -26,9 +26,6 @@ public class Match {
         @Override
         public String toString() { return LevelString; }
     }
-    
-    private final int MIN_WEEK = 1;
-    private final int MAX_WEEK = 52;
 
     /** The week when a match is held also serves as an ID */
     private int week; // week when the match is held 1-52
@@ -50,12 +47,10 @@ public class Match {
      * @param area that the match is held in
      */
     public Match(int week, Level level, JavaBallController.Location area) {
-    	if (week >= MIN_WEEK && week <= MAX_WEEK) {
-    		this.week = week;
-    	}
-		this.level = level;
-		this.area = area;
-		this.suitableReferees = new Referee[2];
+	setWeek(week);
+	this.level = level;
+	this.area = area;
+	this.suitableReferees = new Referee[2];
     }
     
     /** Returns the week number which is also match ID
@@ -80,7 +75,7 @@ public class Match {
      * @param week
      * @return  */
     public boolean setWeek(int week) {
-	if (week >= MIN_WEEK && week <= MAX_WEEK) {
+	if (week >= Season.MIN_WEEK && week <= Season.MAX_WEEK) {
 	    this.week = week;
 	    return true;
 	}
