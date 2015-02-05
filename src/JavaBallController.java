@@ -200,7 +200,7 @@ public class JavaBallController {
                 int refCounter = 0;
                 for (Referee ref : refList) {
                     String details = String.format("%s %s %s %s%d %d %s %s\n",
-                                ref.getID(), ref.getForename(), ref.getName_last(),
+                                ref.getID(), ref.getFirstName(), ref.getLastName(),
                                 ref.getQualifications(),
                                 ref.getQualificationLevel(), ref.getAllocations(),
                                 ref.getHomeLocation(), ref.getTravelLocations());
@@ -318,10 +318,10 @@ public class JavaBallController {
                 returnValue = referee.getID();
                 break;
             case COLUMN_FNAME:
-                returnValue = referee.getForename();
+                returnValue = referee.getFirstName();
                 break;
             case COLUMN_SNAME:
-                returnValue = referee.getName_last();
+                returnValue = referee.getLastName();
                 break;
             case COLUMN_QUAL:
                 returnValue = referee.getQualifications()+referee.getQualificationLevel();

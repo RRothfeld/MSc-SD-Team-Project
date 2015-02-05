@@ -212,8 +212,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                             RefereeFrame serachRef = new RefereeFrame(ref);
                             
                             idField.setText(ref.getID());
-                            firstNameField.setText(ref.getForename());
-                            lastNameField.setText(ref.getName_last());
+                            firstNameField.setText(ref.getFirstName());
+                            lastNameField.setText(ref.getLastName());
                             matchesField.setText(Integer.toString(ref.getAllocations()));
                             serachRef.setVisible(true);
                             firstNameField.setEditable(false);
