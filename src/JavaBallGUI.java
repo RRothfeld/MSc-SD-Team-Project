@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -14,13 +15,16 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 import javax.swing.border.EmptyBorder;
@@ -62,6 +66,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	// TODO
 	private final JavaBallController controller;
 	private boolean orderedBySuitability, addReferee;
+	
+	private final int FRAME_WIDTH = 800;
+	private final int FRAME_HEIGHT = 500;
 
 	/**
 	 * Constructor for JavaBallGUI
@@ -75,7 +82,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("JavaBall Referees");
-		setSize(800, 500);
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		layoutComponents();
 
 	}
@@ -99,8 +106,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		add(centrePanel, BorderLayout.CENTER);
 		centrePanel.add(searchPanel, BorderLayout.NORTH);
 		centrePanel.add(listPanel, BorderLayout.SOUTH);
-
-
 
 		// create JTextField
 		// length of JTextField measured in amount of visible 'm' characters
@@ -141,28 +146,31 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		searchPanel.add(searchField);
 		searchPanel.add(searchButton);
 
-
 		tableLabel = new JLabel();
 		searchPanel.add(tableLabel);
 
 		// add navigation components to panelNavigation
 		navPanel.add(addButton);
-		navPanel.add(chartButton);
 		navPanel.add(allocateButton);
+		navPanel.add(chartButton);
+		// TODO remove button and place somewhere else
 		navPanel.add(resetSearchButton);
-		navPanel.add(exitButton);
-                
-                
+		//navPanel.add(exitButton);
+		// FIXME Place at the bottom of navPanel
+		navPanel.add(exitButton, BorderLayout.SOUTH); 
+		
 		table = new JTable(controller.getTableData());
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
                 table.setAutoCreateRowSorter(true);
 		// Set table dimensions
-		table.setPreferredScrollableViewportSize(new Dimension(400, 100));
+                // TODO make it relative to the frame dimensions
+		table.setPreferredScrollableViewportSize(new Dimension(400, 100)); 
 		table.setFillsViewportHeight(true);
                 table.getModel().addTableModelListener(table);
                 
                 DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
                 leftRender.setHorizontalAlignment( JLabel.LEFT );
+                // FIXME what is this 4?
                 table.getColumnModel().getColumn(4).setCellRenderer(leftRender);
 
 		// Create new JPane for table view
@@ -172,7 +180,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * TODO
+	 * The main action performed class
 	 * @param ae
 	 */
 	@Override
@@ -293,7 +301,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			EmptyBorder border = new EmptyBorder(8, 40, 8, 40);
 			EmptyBorder space = new EmptyBorder(16,40,16,40);
 
-
 			// Creates and adds ID Label
 			idLabel = new JLabel();
 			idLabel.setText("ID");
@@ -357,10 +364,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			inputPanel.add(qualificationField);
 
 			qualificationLevel = new JComboBox();
-			qualificationLevel.addItem("1");
-			qualificationLevel.addItem("2");
-			qualificationLevel.addItem("3");
-			qualificationLevel.addItem("4");
+			for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++){
+			    qualificationLevel.addItem(i + "");
+			}
 			inputPanel.add(qualificationLevel);
 
 			matchesField = new JTextField(3);
@@ -384,21 +390,25 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 			JPanel bottom = new JPanel();
 
-			backButton = new JButton("Back");
-			backButton.addActionListener(this);
-			bottom.add(backButton);
 			saveButton = new JButton("Save Changes");
 			saveButton.addActionListener(this);
 			bottom.add(saveButton);
 			removeButton = new JButton("Remove Referee");
 			removeButton.addActionListener(this);
 			bottom.add(removeButton);
+			backButton = new JButton("Cancel");
+			backButton.addActionListener(this);
+			bottom.add(backButton);
 
 			// Add components to panel
 			add(bottom, BorderLayout.SOUTH);
 		}
-
-		@Override
+		
+		/**
+		 * This method handles events for the the Referee Frame
+		 * (i.e. adding, editing and removing referee information)
+		 * @param ae
+		 */
 		public void actionPerformed(ActionEvent ae) {
 			if(ae.getSource() == backButton) {
 
@@ -529,16 +539,16 @@ public class JavaBallGUI extends JFrame implements ActionListener {
             }
 
             /**
+             * This method is used to handle events related to allocating matches
              * 
              */
-            @Override
             public void actionPerformed(ActionEvent ae) {
                 if (ae.getSource() == allocateReferees) {
                     // referees for that match.
                     try {
                         
                         int week = Integer.parseInt(weekNumber.getText());
-                        if (week < 1 || week > 52)
+                        if (week < Season.MIN_WEEK || week > Season.MAX_WEEK)
                         {
                             JOptionPane.showMessageDialog(null, "Invalid Week Number");
                             weekNumber.setText("");
