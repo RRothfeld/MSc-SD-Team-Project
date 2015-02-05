@@ -313,7 +313,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			labelPanel.add(firstNameLabel);
 			// Creates and adds first name Label
 			lastNameLabel = new JLabel();
-			lastNameLabel.setText("Surname Name");
+			lastNameLabel.setText("Last Name");
 			lastNameLabel.setBorder(border);
 			labelPanel.add(lastNameLabel);
 			// Creates and adds qualification Label
@@ -357,6 +357,19 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			inputPanel.add(firstNameField);
 
 			lastNameField = new JTextField(10);
+			lastNameField.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseExited(MouseEvent event) {
+				    String firstName = firstNameField.getText();
+				    String lastName = lastNameField.getText();
+	                            if (!(firstName.equals("") && lastName.equals(""))) {
+	                        	RefereeList refList = new RefereeList();
+	                        	String ID = refList.createID(firstName, lastName);
+	                        	idField.setText(ID);
+	                                //TODO 
+	                            }
+				}
+			});
 			inputPanel.add(lastNameField);
 
 			qualificationField = new JComboBox();
