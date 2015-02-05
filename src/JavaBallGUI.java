@@ -161,6 +161,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		
 		table = new JTable(controller.getTableData());
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
+		table.setBackground(Color.LIGHT_GRAY); //FIXME This is just a proof of concept
                 table.setAutoCreateRowSorter(true);
 		// Set table dimensions
                 // TODO make it relative to the frame dimensions
