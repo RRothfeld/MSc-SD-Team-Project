@@ -95,7 +95,7 @@ public class ChartFrame extends JFrame {
 				i++;
 			}
 			
-			int x = (SPACING * 2) + 1, y = FRAME_HEIGHT - 75, height;
+			int x = (SPACING * 2) + 1, y = FRAME_HEIGHT - 75, height = 0;
 			for (Referee ref : refList) {
 				g.setColor(Color.BLACK);
 				g.drawString(ref.getID(), x + 12, y + 15);
@@ -105,6 +105,11 @@ public class ChartFrame extends JFrame {
 				g.fillRect(x, y - height, BAR_WIDTH, height);
 				x += BAR_WIDTH + SPACING;
 			}
+			
+			g.setColor(Color.BLACK);
+			g.setFont(new Font("Verdana", Font.BOLD, 12));
+			g.drawString("Chart of Allocations per Referee (by ID)", (frame_width - 240) / 2,
+				height - SPACING + 10);
 		}
 	}
 }
