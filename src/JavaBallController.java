@@ -1,9 +1,12 @@
 import java.awt.Component;
+
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
@@ -190,11 +193,9 @@ public class JavaBallController {
      * Write report Files
      */
     private boolean writeOutputFile() {
-        try {
-            FileWriter matchFile;
+        try (FileWriter matchFile = new FileWriter(MATCH_FILE)) {
+            
             try (FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
-
-                matchFile = new FileWriter(MATCH_FILE);
                 String[] referees = new String[refList.size()];
                 String[] matches = new String[season.getNumMatches()];
                 int refCounter = 0;
@@ -218,13 +219,12 @@ public class JavaBallController {
                 for (String s : matches) {
                         matchFile.write(s + "\n");
                 }
-                refereeFile.close();
             }
-            matchFile.close();
-            
             return true;
         } catch (IOException ex) {
-                // TODO
+	    JOptionPane.showMessageDialog(null,
+		    "Error writing to file. Check your privileges", "",
+		    JOptionPane.ERROR_MESSAGE);
                 return false;
         } 
     }
@@ -252,7 +252,7 @@ public class JavaBallController {
     {
         return refList.size();
     }
-    
+    // TODO we need to rethink this
     private class RefereeTableModel extends AbstractTableModel {
 
         private final static int COLUMN_ID     = 0;
