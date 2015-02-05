@@ -139,7 +139,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		searchButton = new JButton("Search");
 		searchButton.addActionListener(this);
 
-		resetSearchButton = new JButton("Reset Search");
+		resetSearchButton = new JButton("Show all");
 		resetSearchButton.addActionListener(this); 
 
 		// add center components to center panels
