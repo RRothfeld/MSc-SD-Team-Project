@@ -65,7 +65,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JTable table;
 	// TODO
 	private final JavaBallController controller;
-	private boolean orderedBySuitability, addReferee;
+	private String searchFieldString = "Enter referee name or ID ...";
 	
 	private final int FRAME_WIDTH = 800;
 	private final int FRAME_HEIGHT = 500;
@@ -110,14 +110,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		// create JTextField
 		// length of JTextField measured in amount of visible 'm' characters
 		searchField = new JTextField(40); // length of 40 for String input
-		searchField.setText("Enter referee name or ID ...");
+		searchField.setText(searchFieldString);
 		searchField.addActionListener(this);
 		// Clear the text field if the mouse is clicked in it
 		searchField.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent event) {
                             if (searchField.getText()
-                                    .equals("Enter referee name or ID ...")) {
+                                    .equals("searchFieldString")) {
                                 searchField.setText("");
                             }
 			}
@@ -161,11 +161,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		
 		table = new JTable(controller.getTableData());
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
-		table.setBackground(Color.decode("#EEEEEE")); //FIXME This is just a proof of concept
+		table.setBackground(Color.decode("#EEEEEE"));
                 table.setAutoCreateRowSorter(true);
 		// Set table dimensions
                 // TODO make it relative to the frame dimensions
-		table.setPreferredScrollableViewportSize(new Dimension(400, 100)); 
+		//table.setPreferredScrollableViewportSize(new Dimension(200, 100)); 
 		table.setFillsViewportHeight(true);
                 table.getModel().addTableModelListener(table);
                 
@@ -190,21 +190,17 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		if (ae.getSource() == addButton) {
 			RefereeFrame addRef = new RefereeFrame();
 			addRef.setTitle("Add Referee");
-			addReferee = true;
 			addRef.setVisible(true);
 			removeButton.setEnabled(false);
-
 
 		} else if (ae.getSource() == allocateButton) {
 			// If allocate referee to matches button is pressed
 			AllocateMatches allocateRef = new AllocateMatches();
 			allocateRef.setVisible(true);
 
-
 		} else if (ae.getSource() == chartButton) {
 			// If chart button is pressed
 			controller.openChart();
-
 
 		} else if (ae.getSource() == searchButton) {
 			// If search button is pressed
@@ -231,17 +227,17 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                                     JavaBallController.Location.CENTRAL));
                             visitSouth.setSelected(controller.refTravel(ref, 
                                     JavaBallController.Location.SOUTH));
-                            searchField.setText("Enter referee name or ID ...");
+                            searchField.setText("searchFieldString");
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Referee not found");
-                                searchField.setText("Enter referee name or ID ...");
+                                searchField.setText("searchFieldString");
 			}
 
 		} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
-                        searchField.setText("Enter referee name or ID ...");
+                        searchField.setText("searchFieldString");
 			// TODO update referee table
 
 		} else if (ae.getSource() == exitButton) {
