@@ -231,13 +231,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Referee not found");
-                                searchField.setText("searchFieldString");
+                                searchField.setText(searchFieldString);
 			}
 
 		} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
-                        searchField.setText("searchFieldString");
+                        searchField.setText(searchFieldString);
 			// TODO update referee table
 
 		} else if (ae.getSource() == exitButton) {
