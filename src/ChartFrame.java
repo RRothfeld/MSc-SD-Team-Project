@@ -49,7 +49,7 @@ public class ChartFrame extends JFrame {
 		frame_width = refList.size() * (BAR_WIDTH + SPACING) + SPACING*2;
 
 		// Set chart JFrame properties
-		setTitle("Chart of Allocations per Referee (by ID)");
+		setTitle("Chart");
 		setSize(Math.max(frame_width,150), FRAME_HEIGHT);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -108,7 +108,7 @@ public class ChartFrame extends JFrame {
 			
 			g.setColor(Color.BLACK);
 			g.setFont(new Font("Verdana", Font.BOLD, 12));
-			g.drawString("Chart of Allocations per Referee (by ID)", (frame_width - 240) / 2,
+			g.drawString("Allocations per Referee (by ID)", (frame_width - 220) / 2,
 				height - SPACING + 10);
 		}
 	}
