@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+// http://stackoverflow.com/questions/22066387/how-to-search-an-element-in-a-jtable-java
+
 public class TestTableSortFilter extends JPanel {
 
     private String[] columnNames
