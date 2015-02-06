@@ -60,7 +60,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JTable table;
 	// TODO
 	private final JavaBallController controller;
-	private String searchFieldString = "Enter referee name or ID ...";
+	private String searchFieldString = "Enter referee name or ID...";
 	
 	private final int FRAME_WIDTH = 800;
 	private final int FRAME_HEIGHT = 500;
@@ -112,7 +112,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent event) {
                             if (searchField.getText()
-                                    .equals("searchFieldString")) {
+                                    .equals(searchFieldString)) {
                                 searchField.setText("");
                             }
 			}
@@ -222,17 +222,17 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                                     JavaBallController.Location.CENTRAL));
                             visitSouth.setSelected(controller.refTravel(ref, 
                                     JavaBallController.Location.SOUTH));
-                            searchField.setText("searchFieldString");
+                            searchField.setText(searchFieldString);
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "Referee not found");
-                                searchField.setText("searchFieldString");
+                                searchField.setText(searchFieldString);
 			}
 
 		} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
-                        searchField.setText("searchFieldString");
+                        searchField.setText(searchFieldString);
 			// TODO update referee table
 
 		} else if (ae.getSource() == exitButton) {
