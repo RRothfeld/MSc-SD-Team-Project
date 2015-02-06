@@ -108,7 +108,7 @@ public class ChartFrame extends JFrame {
 			
 			g.setColor(Color.BLACK);
 			g.setFont(new Font("Verdana", Font.BOLD, 12));
-			g.drawString("Allocations per Referee (by ID)", (frame_width - 220) / 2,
+			g.drawString("Allocations per Referee (by ID)", (frame_width - 240) / 2,
 				height - SPACING + 10);
 		}
 	}
