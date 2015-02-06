@@ -198,6 +198,8 @@ public class JavaBallController {
             try (FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
                 String[] referees = new String[refList.size()];
                 String[] matches = new String[season.getNumMatches()];
+                
+                String matchHeader = "Week\tLevel\tArea\tReferee 1\tReferee 2\n";
                 int refCounter = 0;
                 for (Referee ref : refList) {
                     String details = String.format("%s %s %s %s%d %d %s %s\n",
@@ -216,6 +218,7 @@ public class JavaBallController {
                 for (String s : referees) {
                         refereeFile.write(s);                                        
                 }
+                matchFile.write(matchHeader);
                 for (String s : matches) {
                         matchFile.write(s + "\n");
                 }
@@ -253,7 +256,7 @@ public class JavaBallController {
         return refList.size();
     }
     // TODO we need to rethink this
-    private class RefereeTableModel extends AbstractTableModel {
+    private static class RefereeTableModel extends AbstractTableModel {
 
         private final static int COLUMN_ID     = 0;
         private final static int COLUMN_FNAME  = 1;

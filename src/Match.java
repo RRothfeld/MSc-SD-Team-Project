@@ -107,6 +107,12 @@ public class Match {
      * @return
      */
     public Referee[] getReferees() {
+        
+        String match = String.format("%d %s %s %s %s %s %s", week, level, area,
+            suitableReferees[0].getFirstName(), suitableReferees[0].getLastName(), 
+            suitableReferees[1].getFirstName(), suitableReferees[1].getLastName());
+	
+        System.out.println(match);
         return this.suitableReferees;
     }
     
@@ -114,7 +120,7 @@ public class Match {
      * @return  */
     public String report() {
 	// TODO this will print to MatchAllocs.txt
-	String match = String.format("%d %s %s %s %s %s %s", week, level, area,
+	String match = String.format("%d\t%s\t%s\t%s %s\t%s %s", week, level, area,
 		suitableReferees[0].getFirstName(), suitableReferees[0].getLastName(), 
                 suitableReferees[1].getFirstName(),suitableReferees[1].getLastName());
 	return match;
