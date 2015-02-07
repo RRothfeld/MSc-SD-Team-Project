@@ -94,6 +94,22 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
+	 * Linear search for a referee which has a matching first and last name
+	 * @param fname the first name of the desired referee
+	 * @param lname the last name of the desired referee
+	 * @return the desired referee if existent
+	 */
+	public Referee getReferee(String fname, String lname) {
+		// Add all referees with either the desired fore- and surname
+		for (Referee ref : listedReferees) {
+			if (ref.getFirstName().equals(fname.toLowerCase())
+					&& ref.getLastName().equals(lname.toLowerCase()))
+				return ref;
+		}
+		return null;
+	}
+	
+	/**
 	 * Returns a list of referees given a qualification level
 	 * @param level the desired qualification
 	 * @return ArrayList of matching referees TODO DELETE THIS METHOD?!
@@ -114,22 +130,6 @@ public class RefereeList implements Iterable<Referee> {
 		}
 		// return filtered list
 		return filteredReferees;
-	}
-	
-	/**
-	 * Linear search for a referee which has a matching first and last name
-	 * @param fname the first name of the desired referee
-	 * @param lname the last name of the desired referee
-	 * @return the desired referee if existent
-	 */
-	public Referee getReferee(String fname, String lname) {
-		// Add all referees with either the desired fore- and surname
-		for (Referee ref : listedReferees) {
-			if (ref.getFirstName().equals(fname)
-					&& ref.getLastName().equals(lname))
-				return ref;
-		}
-		return null;
 	}
 
 	/**
@@ -169,7 +169,7 @@ public class RefereeList implements Iterable<Referee> {
 	 */
 	public ArrayList<Referee> getSuitableReferees(Match match) {
 		// Get all referees which travel to the match area
-		ArrayList<Referee> suitableReferees = getReferees(match.getArea(),
+		ArrayList<Referee> availableReferees = getReferees(match.getArea(),
 				false);
 
 		// Least important: least # of allocs of all refs who travel there
@@ -179,13 +179,13 @@ public class RefereeList implements Iterable<Referee> {
 			int unsuitableQualLevel = 1;
 			
 			// Remove unqualified referees
-			for (int i = 0; i < suitableReferees.size();) {
+			for (int i = 0; i < availableReferees.size();) {
 				// Retrieve next referee
-				Referee ref = suitableReferees.get(i);
+				Referee ref = availableReferees.get(i);
 				
 				// Check the referee's qualification level for suitability
 				if (ref.getQualificationLevel() == unsuitableQualLevel) {
-					suitableReferees.remove(i);
+					availableReferees.remove(i);
 				}
 				else
 					// Progress counter only if the current referee has not been
@@ -194,59 +194,36 @@ public class RefereeList implements Iterable<Referee> {
 					i++;
 			}
 		}
-
-		// FIXME TEST; DELETE!!!!!!
-		for (Referee ref : suitableReferees) {
-			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
-					+ ref.getHomeLocation());
-			System.err.println("------------");
-		}
-
-		// Initial counter for latter sorting in segments
-		int adjacentReferees = 0, localReferees = 0;
-
-		// After that: least # of allocs of all refs who live adjacent there
-		// skip first one!
-		if (!match.getArea().equals(JavaBallController.Location.CENTRAL)) {
-			for (Referee ref : suitableReferees) {
-				if (ref.getHomeLocation().equals(
-						JavaBallController.Location.CENTRAL)) {
-					suitableReferees.set(0, ref);
-					adjacentReferees++;
-				}
-			}
-		}
-
-		// Least number of allocations of all refs living in match area
-		for (Referee ref : suitableReferees) {
+		
+		// LOCAL
+		ArrayList<Referee> localReferees = new ArrayList<Referee>();
+		for (int i = 0; i < availableReferees.size();) {
+			Referee ref = availableReferees.get(i);
 			if (ref.getHomeLocation().equals(match.getArea())) {
-				suitableReferees.set(0, ref);
-				localReferees++;
+				availableReferees.remove(i);
+				localReferees.add(ref);
+			} else {
+				i++;
 			}
 		}
-		// Sort by allocations ascending for local referees (home in match area)
-		if (localReferees > 0) {
-			Collections.sort(suitableReferees.subList(0, localReferees - 1));
-			System.err.println("1. Sorting index: " + 0 + " - "
-					+ (localReferees - 1));
+
+		// ADJACENT
+		ArrayList<Referee> adjacentReferees = new ArrayList<Referee>();
+		for (int i = 0; i < availableReferees.size();) {
+			Referee ref = availableReferees.get(i);
+			if ((match.getArea().equals(JavaBallController.Location.CENTRAL) && !ref
+					.getHomeLocation().equals(Locations.CENTRAL))
+					|| (!match.getArea().equals(Locations.CENTRAL) && ref
+							.getHomeLocation().equals(
+									JavaBallController.Location.CENTRAL))) {
+				availableReferees.remove(i);
+				adjacentReferees.add(ref);
+			} else {
+				i++;
+			}
 		}
 
-		// Sort by allocations ascending for adjacent referees only
-		if (adjacentReferees > 0) {
-			Collections.sort(suitableReferees.subList(localReferees,
-					(localReferees + adjacentReferees) - 1));
-			System.err.println("2. Sorting index: " + localReferees + " - "
-					+ ((localReferees + adjacentReferees) - 1));
-		}
-
-		// Sort by allocations ascending for non-adjacent, non-local referees
-		Collections.sort(suitableReferees.subList(
-				(localReferees + adjacentReferees), suitableReferees.size()));
-		System.err.println("3. Sorting index: "
-				+ (localReferees + adjacentReferees) + " - "
-				+ suitableReferees.size());
-		// sorting to sort according to the number of allocations
-		Collections.sort(suitableReferees, new Comparator<Referee>() {
+		Comparator<Referee> byAllocations = new Comparator<Referee>() {
 			@Override
 			public int compare(Referee ref1, Referee ref2) {
 				int allocRef1 = ref1.getAllocations();
@@ -259,14 +236,18 @@ public class RefereeList implements Iterable<Referee> {
 				else
 					return 1;
 			}
-		});
+		};
+		
+		// Sort by allocations ascending for local referees (home in match area)
+		Collections.sort(localReferees, byAllocations);
+		Collections.sort(adjacentReferees, byAllocations);
+		Collections.sort(availableReferees, byAllocations);
 
-		// FIXME TEST; DELETE!!!!!!
-		for (Referee ref : suitableReferees) {
-			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
-					+ ref.getHomeLocation());
-			System.err.println("------------");
-		}
+		// COMBINE
+		ArrayList<Referee> suitableReferees = new ArrayList<Referee>();
+		suitableReferees.addAll(localReferees);
+		suitableReferees.addAll(adjacentReferees);
+		suitableReferees.addAll(availableReferees);
 
 		return suitableReferees;
 	}
@@ -339,7 +320,7 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
-	 * 
+	 * Sorts the the referee list by ID
 	 */
 	public void sort() {
 		Collections.sort(listedReferees);
@@ -356,8 +337,9 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
-	 * @Override
+	 * Returns an iterator of elements of type Referee
 	 */
+	@Override
 	public Iterator<Referee> iterator() {
 		return listedReferees.iterator();
 	}
