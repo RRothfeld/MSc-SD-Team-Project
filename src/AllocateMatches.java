@@ -31,7 +31,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
     private JTextField weekNumber;
     private JComboBox matchLevel, matchArea;
     private JButton allocateReferees, cancelButton;
-    private JLabel weekLabel, levelLabel, locationLabel;
+    private JLabel weekLabel, levelLabel, locationLabel, confirmationLabel;
     
     private JTable table;
     private final JavaBallController controller;
@@ -84,6 +84,11 @@ public class AllocateMatches extends JFrame implements ActionListener {
 	matchArea.setModel(new DefaultComboBoxModel(JavaBallController.Location
 		.values()));
 	middle.add(matchArea);
+	
+	// TODO DELETE LATER? DISCUSS
+	confirmationLabel = new JLabel("");
+	middle.add(confirmationLabel);
+	
 	// Adds panel 'top' to frame
 	add(middle, BorderLayout.CENTER);
 
@@ -98,52 +103,60 @@ public class AllocateMatches extends JFrame implements ActionListener {
 	allocateReferees.addActionListener(this);
 	bottom.add(allocateReferees);
 	// Creates and add back button
-	cancelButton = new JButton("Cancel");
+	cancelButton = new JButton("OK");
 	cancelButton.addActionListener(this);
 	bottom.add(cancelButton);
+
 	// Adds panel to frame
 	add(bottom, BorderLayout.SOUTH);
     }
 
-    /**
-     * This method is used to handle events related to allocating matches
-     * 
-     * @param ae
-     */
-    public void actionPerformed(ActionEvent ae) {
-	if (ae.getSource() == allocateReferees) {
-	    // referees for that match.
-	    try {
+	/**
+	 * This method is used to handle events related to allocating matches
+	 * 
+	 * @param ae
+	 */
+	public void actionPerformed(ActionEvent ae) {
+		if (ae.getSource() == allocateReferees) {
+			// referees for that match.
+			try {
 
-		int week = Integer.parseInt(weekNumber.getText());
-		if (week < Season.MIN_WEEK || week > Season.MAX_WEEK) {
-		    JOptionPane.showMessageDialog(null, "Invalid Week Number");
-		    weekNumber.setText("");
+				int week = Integer.parseInt(weekNumber.getText());
+				if (week < Season.MIN_WEEK || week > Season.MAX_WEEK) {
+					JOptionPane.showMessageDialog(null, "Invalid Week Number");
+					weekNumber.setText("");
+				} else if (false) {
+					// TODO test if week number already taken 
+				} else {
+					Match.Level level = (Match.Level) matchLevel
+							.getSelectedItem();
+					JavaBallController.Location area = (JavaBallController.Location) matchArea
+							.getSelectedItem();
+
+					ArrayList<Referee> suitableRefs = controller
+							.allocateReferees(week, level, area);
+					if (suitableRefs == null) {
+						JOptionPane.showMessageDialog(null,
+								"No suitable referees available!");
+					} else if (suitableRefs.size() < 2) {
+						JOptionPane.showMessageDialog(null,
+								"Not enough suitable referees available!");
+					} else {
+					table = new JTable(
+							controller.allocatedTableData(suitableRefs));
+
+					confirmationLabel.setText("Successfully allocated: " + suitableRefs.get(0).getID() + " " + suitableRefs.get(1).getID());
+					
+					allocateReferees.setEnabled(false);
+					}
+				}
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(null, "Please Enter a Number");
+				weekNumber.setText("");
+			}
 		} else {
-		    Match.Level level = (Match.Level) matchLevel
-			    .getSelectedItem();
-		    JavaBallController.Location area = (JavaBallController.Location) matchArea
-			    .getSelectedItem();
-
-		    ArrayList<Referee> suitableRefs = controller
-			    .allocateReferees(week, level, area);
-		    if (suitableRefs == null) {
-			JOptionPane.showMessageDialog(null,
-				"That week is already in use!");
-			weekNumber.setText("");
-		    }
-		    table = new JTable(
-			    controller.allocatedTableData(suitableRefs));
-
-		    dispose();
+			// Close window
+			dispose();
 		}
-	    } catch (NumberFormatException ex) {
-		JOptionPane.showMessageDialog(null, "Please Enter a Number");
-		weekNumber.setText("");
-	    }
-	} else {
-	    // Close window
-	    dispose();
 	}
-    }
 }
