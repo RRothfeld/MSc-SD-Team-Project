@@ -214,13 +214,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                             editRef.setVisible(true);
                             editRef.setTitle("Edit Referee");
                             
-                            editRef.setID(ref.getID());
-                            editRef.setFirstName(ref.getFirstName());
-                            editRef.setLastName(ref.getLastName());
-                            editRef.setAllocations(ref.getAllocations());
-                            editRef.setNorth();
-                            editRef.setCentral();                  
-                            editRef.setSouth();
+                            editRef.setDetails(ref.getID(), ref.getFirstName(),
+                                      ref.getLastName(), ref.getAllocations());
+                            editRef.setLocations();
                                     
                             searchField.setText(searchFieldString);
 			}

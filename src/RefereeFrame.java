@@ -238,33 +238,26 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	removeButton.setEnabled(state);
     }
                             
-    public void setID(String id){
+    public void setDetails(String id,String firstName, String lastName, int allocations){
+        
         idField.setText(id);
-        idField.setEditable(false);
-    }
-    public void setFirstName(String firstName){
         firstNameField.setText(firstName);
-        firstNameField.setEditable(false);
-    }
-    public void setLastName(String lastName){
         lastNameField.setText(lastName);
-        lastNameField.setEditable(false);
-    }
-    
-    public void setAllocations(int allocations){
         matchesField.setText(Integer.toString(allocations));
+        
+        idField.setEditable(false);
+        firstNameField.setEditable(false);
+        lastNameField.setEditable(false);
         matchesField.setEditable(false);
+    
     }
     
-    public void setNorth(){
+    public void setLocations(){
         visitNorth.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
-    }
-    public void setCentral(){
         visitCentral.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
-    }
-    public void setSouth(){
         visitSouth.setSelected(controller.refTravel(referee, JavaBallController.Location.SOUTH));
     }
+    
                             
     /**
      * This method handles events for the the Referee Frame (i.e. adding,
