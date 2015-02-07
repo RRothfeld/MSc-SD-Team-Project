@@ -45,7 +45,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
     private JCheckBox visitNorth, visitCentral, visitSouth;
     private JButton backButton, saveButton, removeButton;
     
-    private static JavaBallController controller;
+    private final JavaBallController controller;
 
     /**
      * Constructor to add components and create frame.
@@ -69,10 +69,14 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
     }
 
-    public RefereeFrame(Referee referee) {
-
-	// Calls the default constructor
-	this(controller);
+//    public RefereeFrame(Referee referee) {
+//
+//	// Calls the default constructor
+//	this(controller);
+//	this.referee = referee;
+//    }
+    
+    public void setReferee(Referee referee) {
 	this.referee = referee;
     }
 
@@ -150,7 +154,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		String lastName = lastNameField.getText().trim();
 		if ((firstName != null && lastName != null)) {
 		    if (!(firstName.equals("") && lastName.equals(""))) {
-			RefereeList refList = new RefereeList();
+			RefereeList refList = new RefereeList(); // FIXME 
 			    String ID = refList.createID(firstName, lastName);
 			    idField.setText(ID);
 		    }
