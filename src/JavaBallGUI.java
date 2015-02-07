@@ -222,22 +222,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                             editRef.setCentral();                  
                             editRef.setSouth();
                                     
-//                            idField.setText(ref.getID());
-//                            firstNameField.setText(ref.getFirstName());
-//                            lastNameField.setText(ref.getLastName());
-//                            matchesField.setText(Integer.toString(ref.getAllocations()));
-//                            
-//                            firstNameField.setEditable(false);
-//                            lastNameField.setEditable(false);
-//                            matchesField.setEditable(false);
-//                            idField.setEditable(false);
-                            
-//                            visitNorth.setSelected(controller.refTravel(ref, 
-//                                    JavaBallController.Location.NORTH));
-//                            visitCentral.setSelected(controller.refTravel(ref, 
-//                                    JavaBallController.Location.CENTRAL));
-//                            visitSouth.setSelected(controller.refTravel(ref, 
-//                                    JavaBallController.Location.SOUTH));
                             searchField.setText(searchFieldString);
 			}
 			else {
