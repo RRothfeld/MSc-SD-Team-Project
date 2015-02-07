@@ -79,6 +79,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
     
     public void setReferee(Referee referee) {
 	this.referee = referee;
+	setDetails();
     }
 
     /**
@@ -238,12 +239,12 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	removeButton.setEnabled(state);
     }
                             
-    public void setDetails(String id,String firstName, String lastName, int allocations){
+    private void setDetails(){
         
-        idField.setText(id);
-        firstNameField.setText(firstName);
-        lastNameField.setText(lastName);
-        matchesField.setText(Integer.toString(allocations));
+        idField.setText(referee.getID());
+        firstNameField.setText(referee.getFirstName());
+        lastNameField.setText(referee.getLastName());
+        matchesField.setText(Integer.toString(referee.getAllocations()));
         
         idField.setEditable(false);
         firstNameField.setEditable(false);
