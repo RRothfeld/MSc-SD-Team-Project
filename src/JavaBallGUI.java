@@ -204,28 +204,28 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			// If chart button is pressed
 			controller.openChart();
 
-		} else if (ae.getSource() == searchButton) {
-			// If search button is pressed
-			Referee ref = controller.getReferee(searchField.getText().trim());
-			if (ref != null) {
-                            
-                            RefereeFrame editRef = new RefereeFrame(controller, ref);
-                            editRef.setReferee(ref);
-                            editRef.setVisible(true);
-                            editRef.setTitle("Edit Referee");
-                            
-                            editRef.setDetails(ref.getID(), ref.getFirstName(),
-                                      ref.getLastName(), ref.getAllocations());
-                            editRef.setLocations();
-                                    
-                            searchField.setText(searchFieldString);
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "Referee not found");
-                                searchField.setText(searchFieldString);
-			}
+	} else if (ae.getSource() == searchButton) {
+	    // If search button is pressed
+	    String refInfo = searchField.getText().toLowerCase().trim();
+	    Referee ref = controller.getReferee(refInfo);
+	    if (ref != null) {
 
-		} else if (ae.getSource() == resetSearchButton) {
+		RefereeFrame editRef = new RefereeFrame(controller, ref);
+		editRef.setReferee(ref);
+		editRef.setVisible(true);
+		editRef.setTitle("Edit Referee");
+
+		editRef.setDetails(ref.getID(), ref.getFirstName(),
+			ref.getLastName(), ref.getAllocations());
+		editRef.setLocations();
+
+		searchField.setText(searchFieldString);
+	    } else {
+		JOptionPane.showMessageDialog(null, "Referee not found");
+		searchField.setText(searchFieldString);
+	    }
+
+	} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
                         searchField.setText(searchFieldString);
