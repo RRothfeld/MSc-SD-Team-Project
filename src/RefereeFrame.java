@@ -6,8 +6,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -70,6 +68,11 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
     }
 
+    /**
+     *
+     * @param controller
+     * @param referee
+     */
     public RefereeFrame(JavaBallController controller, Referee referee) {
 
 	// Calls the default constructor
@@ -77,6 +80,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	this.referee = referee;
     }
     
+    /**
+     *
+     * @param referee
+     */
     public void setReferee(Referee referee) {
 	this.referee = referee;
     }
@@ -133,6 +140,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
     }
 
+    /**
+     *
+     */
     public void layoutMiddle() {
 
 	inputPanel = new JPanel();
@@ -212,9 +222,11 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	inputPanel.add(visitSouth);
 
 	add(inputPanel, BorderLayout.EAST);
-
     }
 
+    /**
+     *
+     */
     public void layoutBottom() {
 
 	JPanel bottom = new JPanel();
@@ -233,11 +245,20 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	add(bottom, BorderLayout.SOUTH);
     }
     
-    /** Helper method to set the Remove referee button state */
+    /** 
+     * Helper method to set the Remove referee button state
+     * @param state */
     public void setRemoveButtonEnabled(boolean state) {
 	removeButton.setEnabled(state);
     }
                             
+    /**
+     *
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param allocations
+     */
     public void setDetails(String id,String firstName, String lastName, int allocations){
         
         idField.setText(id);
@@ -252,6 +273,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
     
     }
     
+    /**
+     *
+     */
     public void setLocations(){
         visitNorth.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
         visitCentral.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
