@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -12,7 +14,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -43,7 +44,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class JavaBallGUI extends JFrame implements ActionListener {
 	// GUI components as instance variables
-	private JPanel navPanel, centrePanel, searchPanel, listPanel;
+	private JPanel menuPanel, navPanel, centrePanel, searchPanel, listPanel;
 	private JButton addButton, chartButton, allocateButton, exitButton,
 	searchButton, resetSearchButton;
 	private JTextField searchField;
@@ -84,8 +85,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 	private void layoutComponents() {
 		// create JPanels
+	    
+	    	menuPanel = new JPanel(new GridLayout(5, 1, 1, 5));
+	    	menuPanel.setBackground(Color.GRAY);
+	    	
 		navPanel = new JPanel();
-		navPanel.setLayout(new BoxLayout(navPanel, BoxLayout.PAGE_AXIS));
+		navPanel.setLayout(new BorderLayout());
+		
 		centrePanel = new JPanel(new BorderLayout());
 		searchPanel = new JPanel();
 		listPanel = new JPanel();
@@ -145,14 +151,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		searchPanel.add(tableLabel);
 
 		// add navigation components to panelNavigation
-		navPanel.add(addButton);
-		navPanel.add(allocateButton);
-		navPanel.add(chartButton);
+		menuPanel.add(addButton);
+		menuPanel.add(allocateButton);
+		menuPanel.add(chartButton);
 		// TODO remove button and place somewhere else
-		navPanel.add(resetSearchButton);
-		//navPanel.add(exitButton);
+		menuPanel.add(resetSearchButton);
+		navPanel.add(menuPanel, BorderLayout.NORTH);
+		navPanel.add(exitButton, BorderLayout.SOUTH);
 		// FIXME Place at the bottom of navPanel
-		navPanel.add(exitButton, BorderLayout.SOUTH); 
 		
 		table = new JTable(controller.getTableData());
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
@@ -161,7 +167,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		// Set table dimensions
                 // TODO make it relative to the frame dimensions
 		//table.setPreferredScrollableViewportSize(new Dimension(200, 100)); 
-		table.setFillsViewportHeight(true);
+		table.setFillsViewportHeight(false);
                 table.getModel().addTableModelListener(table);
                 
                 DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
@@ -171,6 +177,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		// Create new JPane for table view
 		tablePane = new JScrollPane(table);
+		table.setSize(centrePanel.getWidth(), centrePanel.getHeight());
 		// Add tablePane to main GUI frame
 		centrePanel.add(tablePane);
 	}
@@ -186,6 +193,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			RefereeFrame addRef = new RefereeFrame(controller);
 			addRef.setTitle("Add Referee");
 			addRef.setVisible(true);
+			addRef.setRemoveButtonEnabled(false);
 			// FIXME removeButton.setEnabled(false);
 
 		} else if (ae.getSource() == allocateButton) {
