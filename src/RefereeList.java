@@ -29,7 +29,7 @@ public class RefereeList implements Iterable<Referee> {
 	
 	/** maximum number of listed referees */
 	public final static int MAX_REFEREES = 12;
-	private final int JUNIOR_LEVEL = 1;
+	
 	/** list of all registered referees */
 	private final ArrayList<Referee> listedReferees;
 
@@ -117,10 +117,10 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
-	 * 
-	 * @param fname
-	 * @param lname
-	 * @return
+	 * Linear search for a referee which has a matching first and last name
+	 * @param fname the first name of the desired referee
+	 * @param lname the last name of the desired referee
+	 * @return the desired referee if existent
 	 */
 	public Referee getReferee(String fname, String lname) {
 		// Add all referees with either the desired fore- and surname
@@ -169,36 +169,42 @@ public class RefereeList implements Iterable<Referee> {
 	 */
 	public ArrayList<Referee> getSuitableReferees(Match match) {
 		// Get all referees which travel to the match area
-		ArrayList<Referee> suitableReferees = getReferees(match
-				.getArea(), false);
-                
+		ArrayList<Referee> suitableReferees = getReferees(match.getArea(),
+				false);
+
 		// Least important: least # of allocs of all refs who travel there
-		// if senior dann min lvl 2 and go to the area
+		// if senior then minimum level 2 and go to the area
 		if (match.getLevel().equals(Match.Level.SENIOR)) {
-                    for (int i = 0; i < suitableReferees.size(); i++)
-                    {
-                        if (suitableReferees.get(i).getQualificationLevel() ==
-                                JUNIOR_LEVEL){
-                            suitableReferees.remove(i);
-                        }
-                    }
-//                      THIS WAS PRODUCING A CONCURRENT MODIFICATION EXCEPTION?
-//			for (Referee ref : suitableReferees) {
-//				if (ref.getQualificationLevel() == JUNIOR_LEVEL)
-//					suitableReferees.remove(ref);
-//			}
-		}	
-		
+			// Define unsuitable qualification level
+			int unsuitableQualLevel = 1;
+			
+			// Remove unqualified referees
+			for (int i = 0; i < suitableReferees.size();) {
+				// Retrieve next referee
+				Referee ref = suitableReferees.get(i);
+				
+				// Check the referee's qualification level for suitability
+				if (ref.getQualificationLevel() == unsuitableQualLevel) {
+					suitableReferees.remove(i);
+				}
+				else
+					// Progress counter only if the current referee has not been
+					// removed, otherwise referees will be skipped as the
+					// ArrayList of suitable referees has been shortened
+					i++;
+			}
+		}
+
 		// FIXME TEST; DELETE!!!!!!
-//		for (Referee ref : suitableReferees) {
-//			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
-//					+ ref.getHomeLocation());
-//			System.err.println("------------");
-//		}
-		
+		for (Referee ref : suitableReferees) {
+			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
+					+ ref.getHomeLocation());
+			System.err.println("------------");
+		}
+
 		// Initial counter for latter sorting in segments
 		int adjacentReferees = 0, localReferees = 0;
-		
+
 		// After that: least # of allocs of all refs who live adjacent there
 		// skip first one!
 		if (!match.getArea().equals(JavaBallController.Location.CENTRAL)) {
@@ -210,7 +216,7 @@ public class RefereeList implements Iterable<Referee> {
 				}
 			}
 		}
-		
+
 		// Least number of allocations of all refs living in match area
 		for (Referee ref : suitableReferees) {
 			if (ref.getHomeLocation().equals(match.getArea())) {
@@ -219,47 +225,49 @@ public class RefereeList implements Iterable<Referee> {
 			}
 		}
 		// Sort by allocations ascending for local referees (home in match area)
-                if (localReferees > 0) {
-                    Collections.sort(suitableReferees.subList(0, localReferees - 1));
-                    System.err.println("1. Sorting index: "+ 0 + " - "+(localReferees - 1));
-                }
-		
+		if (localReferees > 0) {
+			Collections.sort(suitableReferees.subList(0, localReferees - 1));
+			System.err.println("1. Sorting index: " + 0 + " - "
+					+ (localReferees - 1));
+		}
+
 		// Sort by allocations ascending for adjacent referees only
 		if (adjacentReferees > 0) {
-                    Collections.sort(suitableReferees.subList(localReferees,
-				(localReferees + adjacentReferees) - 1));
-                    System.err.println("2. Sorting index: "+ localReferees + " - "+((localReferees + adjacentReferees) - 1));
-                }
-                
-		// Sort by allocations ascending for non-adjacent, non-local referees
-		Collections.sort(suitableReferees.subList((localReferees + adjacentReferees),
-				suitableReferees.size()));
-                System.err.println("3. Sorting index: "+ (localReferees + adjacentReferees) + " - "+ suitableReferees.size());
-                //sorting to sort according to the number of allocations
-		Collections.sort(suitableReferees , new Comparator<Referee>() 
-                {
-                    @Override
-                    public int compare(Referee ref1, Referee ref2) 
-                    {
-                        int allocRef1 = ref1.getAllocations();
-                        int allocRef2 = ref2.getAllocations();
+			Collections.sort(suitableReferees.subList(localReferees,
+					(localReferees + adjacentReferees) - 1));
+			System.err.println("2. Sorting index: " + localReferees + " - "
+					+ ((localReferees + adjacentReferees) - 1));
+		}
 
-                        if (allocRef1 < allocRef2)
-                            return -1;
-                        else if (allocRef1 == allocRef2)
-                            return 0;
-                        else
-                            return 1;
-                    }
+		// Sort by allocations ascending for non-adjacent, non-local referees
+		Collections.sort(suitableReferees.subList(
+				(localReferees + adjacentReferees), suitableReferees.size()));
+		System.err.println("3. Sorting index: "
+				+ (localReferees + adjacentReferees) + " - "
+				+ suitableReferees.size());
+		// sorting to sort according to the number of allocations
+		Collections.sort(suitableReferees, new Comparator<Referee>() {
+			@Override
+			public int compare(Referee ref1, Referee ref2) {
+				int allocRef1 = ref1.getAllocations();
+				int allocRef2 = ref2.getAllocations();
+
+				if (allocRef1 < allocRef2)
+					return -1;
+				else if (allocRef1 == allocRef2)
+					return 0;
+				else
+					return 1;
+			}
 		});
-		
+
 		// FIXME TEST; DELETE!!!!!!
 		for (Referee ref : suitableReferees) {
 			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
 					+ ref.getHomeLocation());
-                        System.err.println("------------");
+			System.err.println("------------");
 		}
-		
+
 		return suitableReferees;
 	}
 	
@@ -348,9 +356,8 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
-	 * 
+	 * @Override
 	 */
-        @Override
 	public Iterator<Referee> iterator() {
 		return listedReferees.iterator();
 	}
