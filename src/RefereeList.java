@@ -172,27 +172,9 @@ public class RefereeList implements Iterable<Referee> {
 		ArrayList<Referee> availableReferees = getReferees(match.getArea(),
 				false);
 
-		// Least important: least # of allocs of all refs who travel there
-		// if senior then minimum level 2 and go to the area
+		// Remove non-senior referees if the match requires senior qualification
 		if (match.getLevel().equals(Match.Level.SENIOR)) {
-			// Define unsuitable qualification level
-			int unsuitableQualLevel = 1;
-			
-			// Remove unqualified referees
-			for (int i = 0; i < availableReferees.size();) {
-				// Retrieve next referee
-				Referee ref = availableReferees.get(i);
-				
-				// Check the referee's qualification level for suitability
-				if (ref.getQualificationLevel() == unsuitableQualLevel) {
-					availableReferees.remove(i);
-				}
-				else
-					// Progress counter only if the current referee has not been
-					// removed, otherwise referees will be skipped as the
-					// ArrayList of suitable referees has been shortened
-					i++;
-			}
+			seniorRefereesOnly(availableReferees);
 		}
 		
 		// LOCAL
@@ -212,12 +194,9 @@ public class RefereeList implements Iterable<Referee> {
 		for (int i = 0; i < availableReferees.size();) {
 			Referee ref = availableReferees.get(i);
 			if ((match.getArea().equals(JavaBallController.Location.CENTRAL) && !ref
-					.getHomeLocation().equals(
-							JavaBallController.Location.CENTRAL))
-					|| (!match.getArea().equals(
-							JavaBallController.Location.CENTRAL) && ref
-							.getHomeLocation().equals(
-									JavaBallController.Location.CENTRAL))) {
+					.getHomeLocation().equals(JavaBallController.Location.CENTRAL))
+					|| (!match.getArea().equals(JavaBallController.Location.CENTRAL) && ref
+					.getHomeLocation().equals(JavaBallController.Location.CENTRAL))) {
 				availableReferees.remove(i);
 				adjacentReferees.add(ref);
 			} else {
@@ -250,8 +229,32 @@ public class RefereeList implements Iterable<Referee> {
 		suitableReferees.addAll(localReferees);
 		suitableReferees.addAll(adjacentReferees);
 		suitableReferees.addAll(availableReferees);
-
+		
 		return suitableReferees;
+	}
+	
+	/**
+	 * 
+	 * @param referees
+	 */
+	private void seniorRefereesOnly(ArrayList<Referee> referees) {
+		// Define unsuitable qualification level
+		int unsuitableQualLevel = 1;
+
+		// Remove unqualified referees
+		for (int i = 0; i < referees.size();) {
+			// Retrieve next referee
+			Referee ref = referees.get(i);
+
+			// Check the referee's qualification level for suitability
+			if (ref.getQualificationLevel() == unsuitableQualLevel) {
+				referees.remove(i);
+			} else
+				// Progress counter only if the current referee has not been
+				// removed, otherwise referees will be skipped as the
+				// ArrayList of suitable referees has been shortened
+				i++;
+		}
 	}
 	
 	/**
