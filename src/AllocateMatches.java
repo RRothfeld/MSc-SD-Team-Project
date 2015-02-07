@@ -36,6 +36,10 @@ public class AllocateMatches extends JFrame implements ActionListener {
     private JTable table;
     private final JavaBallController controller;
 
+    /**
+     *
+     * @param controller
+     */
     public AllocateMatches(JavaBallController controller) {
 	
 	this.controller = controller;
@@ -104,6 +108,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
     /**
      * This method is used to handle events related to allocating matches
      * 
+     * @param ae
      */
     public void actionPerformed(ActionEvent ae) {
 	if (ae.getSource() == allocateReferees) {

@@ -1,5 +1,3 @@
-import java.awt.Component;
-
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
@@ -8,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
@@ -200,6 +197,11 @@ public class JavaBallController {
                 String[] matches = new String[season.getNumMatches()];
                 
                 String matchHeader = "Week\tLevel\tArea\tReferee 1\tReferee 2\n";
+//                String header = " Week "
+//                              + "Level "
+//                              + "Area  "
+//                              + "Referee 1  "
+//                              + "Referee 2\n";
                 int refCounter = 0;
                 for (Referee ref : refList) {
                     String details = String.format("%s %s %s %s%d %d %s %s\n",
@@ -241,6 +243,11 @@ public class JavaBallController {
         return tableData;
     }
     
+    /**
+     *
+     * @param allocated
+     * @return
+     */
     public TableModel allocatedTableData(ArrayList<Referee> allocated)
     {
         tableData = new RefereeTableModel(allocated);
