@@ -6,8 +6,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -49,6 +47,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
     /**
      * Constructor to add components and create frame.
+     * @param controller
      */
     public RefereeFrame(JavaBallController controller) {
 	
@@ -69,15 +68,25 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
     }
 
-//    public RefereeFrame(Referee referee) {
-//
-//	// Calls the default constructor
-//	this(controller);
-//	this.referee = referee;
-//    }
+    /**
+     *
+     * @param controller
+     * @param referee
+     */
+    public RefereeFrame(JavaBallController controller, Referee referee) {
+
+	// Calls the default constructor
+	this(controller);
+	this.referee = referee;
+    }
     
+    /**
+     *
+     * @param referee
+     */
     public void setReferee(Referee referee) {
 	this.referee = referee;
+	setDetails();
     }
 
     /**
@@ -132,6 +141,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
     }
 
+    /**
+     *
+     */
     public void layoutMiddle() {
 
 	inputPanel = new JPanel();
@@ -211,9 +223,11 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	inputPanel.add(visitSouth);
 
 	add(inputPanel, BorderLayout.EAST);
-
     }
 
+    /**
+     *
+     */
     public void layoutBottom() {
 
 	JPanel bottom = new JPanel();
@@ -232,11 +246,40 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	add(bottom, BorderLayout.SOUTH);
     }
     
-    /** Helper method to set the Remove referee button state */
+    /** 
+     * Helper method to set the Remove referee button state
+     * @param state */
     public void setRemoveButtonEnabled(boolean state) {
 	removeButton.setEnabled(state);
     }
-
+                            
+    /**
+     * 
+     */
+    private void setDetails(){
+        
+        idField.setText(referee.getID());
+        firstNameField.setText(referee.getFirstName());
+        lastNameField.setText(referee.getLastName());
+        matchesField.setText(Integer.toString(referee.getAllocations()));
+        
+        idField.setEditable(false);
+        firstNameField.setEditable(false);
+        lastNameField.setEditable(false);
+        matchesField.setEditable(false);
+    
+    }
+    
+    /**
+     *
+     */
+    public void setLocations(){
+        visitNorth.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
+        visitCentral.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
+        visitSouth.setSelected(controller.refTravel(referee, JavaBallController.Location.SOUTH));
+    }
+    
+                            
     /**
      * This method handles events for the the Referee Frame (i.e. adding,
      * editing and removing referee information)
@@ -257,7 +300,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 	if (ae.getSource() == saveButton) {
 
-	    if (controller.indexCounter() == 12) {
+	    if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
 		JOptionPane.showMessageDialog(null, "Sorry.\n"
 			+ "The Referee List is full!");
 	    } else {

@@ -28,7 +28,7 @@ public class ChartFrame extends JFrame {
 
 	/** Dimensions of the chart frame */
 	private static final int FRAME_HEIGHT = 300;
-	private int frame_width; // Flexible width according to number of referees
+	private final int frame_width;
 
 	/** Dimensions of each bar */
 	private static final int BAR_WIDTH = 50;

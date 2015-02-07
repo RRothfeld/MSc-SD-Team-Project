@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,9 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
-
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -45,20 +41,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JButton addButton, chartButton, allocateButton, exitButton,
 	searchButton, resetSearchButton;
 	private JTextField searchField;
-	private JLabel tableLabel;
-
-	// GUI buttons and textFields for viewRefereeFrame
-	// FIXME private JButton backButton, saveButton, removeButton;
-	private JTextField idField, firstNameField, lastNameField, matchesField;
-	// FIXME private JComboBox qualificationField, qualificationLevel, homeLocation;
-	private JCheckBox visitNorth, visitCentral, visitSouth;
+	private JLabel titleLabel,tableLabel;
 
 	// GUI components for Table
 	private JScrollPane tablePane;
 	private JTable table;
 	// TODO
 	private final JavaBallController controller;
-	private String searchFieldString = "Enter referee name or ID...";
+	private final String searchFieldString = "Enter referee name or ID...";
 	
 	private final int FRAME_WIDTH = 800;
 	private final int FRAME_HEIGHT = 500;
@@ -83,7 +73,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private void layoutComponents() {
 		// create JPanels
 	    
-	    	menuPanel = new JPanel(new GridLayout(5, 1, 1, 5));
+	    	menuPanel = new JPanel(new GridLayout(6, 1, 1, 5));
 	    	menuPanel.setBackground(Color.GRAY);
 	    	
 		navPanel = new JPanel();
@@ -121,8 +111,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			}
 		});
 
+                titleLabel = new JLabel("JavaBall");
+                titleLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
+                
 		// create JButtons
-		addButton = new JButton("Add Referee");
+                addButton = new JButton("Add Referee");
 		addButton.addActionListener(this);
 
 		chartButton = new JButton("Show Chart");
@@ -148,7 +141,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		searchPanel.add(tableLabel);
 
 		// add navigation components to panelNavigation
-		menuPanel.add(addButton);
+		menuPanel.add(titleLabel);
+                menuPanel.add(addButton);
 		menuPanel.add(allocateButton);
 		menuPanel.add(chartButton);
 		// TODO remove button and place somewhere else
@@ -205,40 +199,26 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			// If chart button is pressed
 			controller.openChart();
 
-		} else if (ae.getSource() == searchButton) {
-			// If search button is pressed
-			Referee ref = controller.getReferee(searchField.getText().trim());
-			if (ref != null) {
-                            
-                            RefereeFrame editRef = new RefereeFrame(controller);
-                            editRef.setReferee(ref);
-                            editRef.setVisible(true);
-                            editRef.setTitle("Edit Referee");
-                            
-                            idField.setText(ref.getID());
-                            firstNameField.setText(ref.getFirstName());
-                            lastNameField.setText(ref.getLastName());
-                            matchesField.setText(Integer.toString(ref.getAllocations()));
-                            
-                            firstNameField.setEditable(false);
-                            lastNameField.setEditable(false);
-                            matchesField.setEditable(false);
-                            idField.setEditable(false);
-                            
-                            visitNorth.setSelected(controller.refTravel(ref, 
-                                    JavaBallController.Location.NORTH));
-                            visitCentral.setSelected(controller.refTravel(ref, 
-                                    JavaBallController.Location.CENTRAL));
-                            visitSouth.setSelected(controller.refTravel(ref, 
-                                    JavaBallController.Location.SOUTH));
-                            searchField.setText(searchFieldString);
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "Referee not found");
-                                searchField.setText(searchFieldString);
-			}
+	} else if (ae.getSource() == searchButton) {
+	    // If search button is pressed
+	    String refInfo = searchField.getText().toLowerCase().trim();
+	    Referee ref = controller.getReferee(refInfo);
+	    if (ref != null) {
 
-		} else if (ae.getSource() == resetSearchButton) {
+		RefereeFrame editRef = new RefereeFrame(controller, ref);
+		editRef.setReferee(ref);
+		editRef.setVisible(true);
+		editRef.setTitle("Edit Referee");
+
+		editRef.setLocations();
+
+		searchField.setText(searchFieldString);
+	    } else {
+		JOptionPane.showMessageDialog(null, "Referee not found");
+		searchField.setText(searchFieldString);
+	    }
+
+	} else if (ae.getSource() == resetSearchButton) {
 			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
                         searchField.setText(searchFieldString);

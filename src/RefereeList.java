@@ -86,7 +86,8 @@ public class RefereeList implements Iterable<Referee> {
 	public Referee getReferee(String id) {
 		// find referee with desired ID
 		for (Referee ref : listedReferees) {
-			if (ref.getID().equals(id))
+		    String refID = ref.getID().toLowerCase();
+			if (refID.equals(id))
 				return ref;
 		}
 		return null;
