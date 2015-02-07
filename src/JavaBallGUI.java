@@ -8,11 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -164,16 +161,20 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
 		table.setBackground(Color.decode("#EEEEEE"));
                 table.setAutoCreateRowSorter(true);
-		// Set table dimensions
+		// Setting scroll area
+                
                 // TODO make it relative to the frame dimensions
-		//table.setPreferredScrollableViewportSize(new Dimension(200, 100)); 
+		table.setPreferredScrollableViewportSize(new Dimension(400, 100)); 
 		table.setFillsViewportHeight(false);
                 table.getModel().addTableModelListener(table);
                 
                 DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
                 leftRender.setHorizontalAlignment( JLabel.LEFT );
-                // FIXME what is this 4?
                 table.getColumnModel().getColumn(4).setCellRenderer(leftRender);
+                
+//                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+//                centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+//                table.setDefaultRenderer(int.class, centerRenderer);
 
 		// Create new JPane for table view
 		tablePane = new JScrollPane(table);
@@ -194,7 +195,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			addRef.setTitle("Add Referee");
 			addRef.setVisible(true);
 			addRef.setRemoveButtonEnabled(false);
-			// FIXME removeButton.setEnabled(false);
 
 		} else if (ae.getSource() == allocateButton) {
 			// If allocate referee to matches button is pressed
@@ -210,7 +210,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			Referee ref = controller.getReferee(searchField.getText().trim());
 			if (ref != null) {
                             
-                            RefereeFrame editRef = new RefereeFrame(ref);
+                            RefereeFrame editRef = new RefereeFrame(controller);
+                            editRef.setReferee(ref);
                             editRef.setVisible(true);
                             editRef.setTitle("Edit Referee");
                             
