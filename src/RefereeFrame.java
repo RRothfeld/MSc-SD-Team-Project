@@ -49,6 +49,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
     /**
      * Constructor to add components and create frame.
+     * @param controller
      */
     public RefereeFrame(JavaBallController controller) {
 	
@@ -69,12 +70,12 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
     }
 
-//    public RefereeFrame(Referee referee) {
-//
-//	// Calls the default constructor
-//	this(controller);
-//	this.referee = referee;
-//    }
+    public RefereeFrame(JavaBallController controller, Referee referee) {
+
+	// Calls the default constructor
+	this(controller);
+	this.referee = referee;
+    }
     
     public void setReferee(Referee referee) {
 	this.referee = referee;
@@ -236,7 +237,35 @@ public final class RefereeFrame extends JFrame implements ActionListener {
     public void setRemoveButtonEnabled(boolean state) {
 	removeButton.setEnabled(state);
     }
-
+                            
+    public void setID(String id){
+        idField.setText(id);
+        idField.setEditable(false);
+    }
+    public void setFirstName(String firstName){
+        firstNameField.setText(firstName);
+        firstNameField.setEditable(false);
+    }
+    public void setLastName(String lastName){
+        lastNameField.setText(lastName);
+        lastNameField.setEditable(false);
+    }
+    
+    public void setAllocations(int allocations){
+        matchesField.setText(Integer.toString(allocations));
+        matchesField.setEditable(false);
+    }
+    
+    public void setNorth(){
+        visitNorth.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
+    }
+    public void setCentral(){
+        visitCentral.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
+    }
+    public void setSouth(){
+        visitSouth.setSelected(controller.refTravel(referee, JavaBallController.Location.SOUTH));
+    }
+                            
     /**
      * This method handles events for the the Referee Frame (i.e. adding,
      * editing and removing referee information)
