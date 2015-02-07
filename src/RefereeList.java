@@ -102,8 +102,8 @@ public class RefereeList implements Iterable<Referee> {
 	public Referee getReferee(String fname, String lname) {
 		// Add all referees with either the desired fore- and surname
 		for (Referee ref : listedReferees) {
-			if (ref.getFirstName().equals(fname.toLowerCase())
-					&& ref.getLastName().equals(lname.toLowerCase()))
+			if (ref.getFirstName().toLowerCase().equals(fname)
+					&& ref.getLastName().toLowerCase().equals(lname))
 				return ref;
 		}
 		return null;
@@ -212,8 +212,10 @@ public class RefereeList implements Iterable<Referee> {
 		for (int i = 0; i < availableReferees.size();) {
 			Referee ref = availableReferees.get(i);
 			if ((match.getArea().equals(JavaBallController.Location.CENTRAL) && !ref
-					.getHomeLocation().equals(Locations.CENTRAL))
-					|| (!match.getArea().equals(Locations.CENTRAL) && ref
+					.getHomeLocation().equals(
+							JavaBallController.Location.CENTRAL))
+					|| (!match.getArea().equals(
+							JavaBallController.Location.CENTRAL) && ref
 							.getHomeLocation().equals(
 									JavaBallController.Location.CENTRAL))) {
 				availableReferees.remove(i);
