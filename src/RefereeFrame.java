@@ -2,6 +2,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -133,25 +137,29 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 	idField = new JTextField(5);
 	idField.setEditable(false);
-	inputPanel.add(idField);
+	
 
 	firstNameField = new JTextField(10);
-	inputPanel.add(firstNameField);
+	
 
 	lastNameField = new JTextField(10);
-	lastNameField.addMouseListener(new MouseAdapter() {
+	lastNameField.addFocusListener(new FocusAdapter() {
 	    @Override
-	    public void mouseExited(MouseEvent event) {
+	    public void focusLost(FocusEvent e) {
 		String firstName = firstNameField.getText().trim();
 		String lastName = lastNameField.getText().trim();
-		if (!(firstName.equals("") && lastName.equals(""))) {
-		    RefereeList refList = new RefereeList();
-		    String ID = refList.createID(firstName, lastName);
-		    idField.setText(ID);
-		    // TODO
+		if ((firstName != null && lastName != null)) {
+		    if (!(firstName.equals("") && lastName.equals(""))) {
+			RefereeList refList = new RefereeList();
+			    String ID = refList.createID(firstName, lastName);
+			    idField.setText(ID);
+		    }
 		}
 	    }
 	});
+	
+	inputPanel.add(idField);
+	inputPanel.add(firstNameField);
 	inputPanel.add(lastNameField);
 
 	qualificationField = new JComboBox();
@@ -160,6 +168,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	inputPanel.add(qualificationField);
 
 	qualificationLevel = new JComboBox();
+	
 	for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++) {
 	    qualificationLevel.addItem(i + "");
 	}
@@ -169,13 +178,30 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	inputPanel.add(matchesField);
 
 	homeLocation = new JComboBox();
-	homeLocation.setModel(new DefaultComboBoxModel(
-		JavaBallController.Location.values()));
-	inputPanel.add(homeLocation);
-
 	visitNorth = new JCheckBox("North");
 	visitSouth = new JCheckBox("South");
 	visitCentral = new JCheckBox("Central");
+	
+	homeLocation.setModel(new DefaultComboBoxModel(
+		JavaBallController.Location.values()));
+	
+	homeLocation.addItemListener(new ItemListener() {
+	    @Override
+	    public void itemStateChanged(ItemEvent e) {
+		JavaBallController.Location selectedLocation = 
+			(JavaBallController.Location) homeLocation
+			.getSelectedItem();
+		if (selectedLocation.equals(homeLocation.getItemAt(0))) {
+		    visitNorth.setSelected(true);
+		} else if ((selectedLocation.equals(homeLocation.getItemAt(1)))) {
+		    visitCentral.setSelected(true);
+		} else {
+		    visitSouth.setSelected(true);
+		}
+	    }
+	});
+	
+	inputPanel.add(homeLocation);
 	inputPanel.add(visitNorth);
 	inputPanel.add(visitCentral);
 	inputPanel.add(visitSouth);
@@ -200,6 +226,11 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 	// Add components to panel
 	add(bottom, BorderLayout.SOUTH);
+    }
+    
+    /** Helper method to set the Remove referee button state */
+    public void setRemoveButtonEnabled(boolean state) {
+	removeButton.setEnabled(state);
     }
 
     /**
