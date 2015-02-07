@@ -119,14 +119,14 @@ public class RefereeList implements Iterable<Referee> {
 	/**
 	 * 
 	 * @param fname
-	 * @param sname
+	 * @param lname
 	 * @return
 	 */
-	public Referee getReferee(String fname, String sname) {
+	public Referee getReferee(String fname, String lname) {
 		// Add all referees with either the desired fore- and surname
 		for (Referee ref : listedReferees) {
 			if (ref.getFirstName().equals(fname)
-					&& ref.getLastName().equals(sname))
+					&& ref.getLastName().equals(lname))
 				return ref;
 		}
 		return null;

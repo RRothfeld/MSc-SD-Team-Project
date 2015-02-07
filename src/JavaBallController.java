@@ -87,12 +87,27 @@ public class JavaBallController {
     }
         
     /**
-     *
-     * @param id
-     * @return
+     * Retrieves a referee based on a search query for an ID or full name
+     * @param search the user input for searching a referee
+     * @return referee with matching ID or first and last name
      */
-    public Referee getReferee(String id) {
-            return refList.getReferee(id);
+    public Referee getReferee(String search) {
+    	// If search query resembles an ID, retrieve referee per ID
+    	if (search.length() == 3)    	
+            return refList.getReferee(search);
+    	
+    	// Else divide search query into first and last name, retrieve referee
+    	// per first and last name
+    	else {
+    		String[] names = search.split("[ ]+");
+    		
+    		// If input does not resemble a first and last name, return null
+    		if (names.length != 2)
+    			return null;
+    		
+    		// Retrieve referee by first and last name
+    		return refList.getReferee(names[0], names[1]);
+    	}
     }
 
     /**
