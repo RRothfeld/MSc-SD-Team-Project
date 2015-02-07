@@ -271,7 +271,7 @@ public class Referee implements Comparable<Referee> {
     }
 
     /**
-     *
+     * Return preferences related to travel.
      * @return
      */
     public String getTravelLocations() {
@@ -295,32 +295,18 @@ public class Referee implements Comparable<Referee> {
 	}
     }
 
-    /**
-     * Method to Change whether a Referee will travel to an Area
-     * @param location - the location to be flipped
-     */
-    private void flipTravel(JavaBallController.Location location) {
-	if (location.equals(JavaBallController.Location.NORTH)) {
-	    this.visitNorth = !visitNorth;
-	} else if (location.equals(JavaBallController.Location.CENTRAL)) {
-	    this.visitCentre = !visitCentre;
-	} else if (location.equals(JavaBallController.Location.SOUTH)) {
-	    this.visitSouth = !visitSouth;
-	}
-    }
-
-    /** 
-     * NO LONGER USED
-     * Returns the referee details
-     * @return  
-     */
-//    public String[] report() {
-//
-//        String[] details = { this.uniqueID, this.firstName, this.lastName,
-//            this.qualification, Integer.toString(getAllocations()),
-//                    getHomeLocation().toString(), getTravelLocations() };
-//
-//            return details;
+//    /** FIXME This method seems unused?
+//     * Method to Change whether a Referee will travel to an Area
+//     * @param location - the location to be flipped
+//     */
+//    private void flipTravel(JavaBallController.Location location) {
+//	if (location.equals(JavaBallController.Location.NORTH)) {
+//	    this.visitNorth = !visitNorth;
+//	} else if (location.equals(JavaBallController.Location.CENTRAL)) {
+//	    this.visitCentre = !visitCentre;
+//	} else if (location.equals(JavaBallController.Location.SOUTH)) {
+//	    this.visitSouth = !visitSouth;
+//	}
 //    }
 
     /**
@@ -336,10 +322,29 @@ public class Referee implements Comparable<Referee> {
 	setTravelLocations(travel);
     }
 
+    /**
+     * Compares two referees by ID.
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
     @Override
     public int compareTo(Referee ref) {
-	// this has not been tested but StackOverflow said it would work
-	// Will test in a separate programme.
 	return this.getID().compareTo(ref.getID());
+    }
+    
+    /**
+     * Returns referee details.
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	String id = "ID: " + uniqueID;
+	String name = "Name: " + firstName +" "+ lastName;
+	String qual = "Qualification: " + qualification;
+	String alloc = "Allocations: " + getAllocations();
+	String home = "Home: " + getHomeLocation();
+	String travel = "Travel: " + getTravelLocations();
+	
+	String report = String.format("%s%n%s%n%s%n%s%n%s%n%s%n", id, name, qual, alloc, home, travel);
+	return report;
     }
 }
