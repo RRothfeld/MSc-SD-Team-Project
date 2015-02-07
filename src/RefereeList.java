@@ -197,9 +197,7 @@ public class RefereeList implements Iterable<Referee> {
 
 		// FIXME TEST; DELETE!!!!!!
 		for (Referee ref : suitableReferees) {
-			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
-					+ ref.getHomeLocation());
-			System.err.println("------------");
+			System.out.println(ref);
 		}
 
 		// Initial counter for latter sorting in segments
@@ -227,7 +225,7 @@ public class RefereeList implements Iterable<Referee> {
 		// Sort by allocations ascending for local referees (home in match area)
 		if (localReferees > 0) {
 			Collections.sort(suitableReferees.subList(0, localReferees - 1));
-			System.err.println("1. Sorting index: " + 0 + " - "
+			System.out.println("1. Sorting index: " + 0 + " - "
 					+ (localReferees - 1));
 		}
 
@@ -235,14 +233,14 @@ public class RefereeList implements Iterable<Referee> {
 		if (adjacentReferees > 0) {
 			Collections.sort(suitableReferees.subList(localReferees,
 					(localReferees + adjacentReferees) - 1));
-			System.err.println("2. Sorting index: " + localReferees + " - "
+			System.out.println("2. Sorting index: " + localReferees + " - "
 					+ ((localReferees + adjacentReferees) - 1));
 		}
 
 		// Sort by allocations ascending for non-adjacent, non-local referees
 		Collections.sort(suitableReferees.subList(
 				(localReferees + adjacentReferees), suitableReferees.size()));
-		System.err.println("3. Sorting index: "
+		System.out.println("3. Sorting index: "
 				+ (localReferees + adjacentReferees) + " - "
 				+ suitableReferees.size());
 		// sorting to sort according to the number of allocations
@@ -263,9 +261,7 @@ public class RefereeList implements Iterable<Referee> {
 
 		// FIXME TEST; DELETE!!!!!!
 		for (Referee ref : suitableReferees) {
-			System.err.println(ref.getID() + " " + ref.getAllocations() + " "
-					+ ref.getHomeLocation());
-			System.err.println("------------");
+		    System.out.println(ref);
 		}
 
 		return suitableReferees;
@@ -278,6 +274,16 @@ public class RefereeList implements Iterable<Referee> {
 	 */
 	public Referee get(int index) {
 		return listedReferees.get(index);
+	}
+	
+	/**
+	 * Returns the maximum number of allocations
+	 */
+	public int getMaxAllocation() {
+		int max = 0;
+		for (Referee ref : listedReferees)
+			max = ref.getAllocations() > max ? ref.getAllocations() : max;
+		return max;
 	}
 	
 	/**
@@ -339,25 +345,16 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
-	 * 
+	 * Sorts the the referee list by ID
 	 */
 	public void sort() {
 		Collections.sort(listedReferees);
 	}
-
-	/**
-	 * 
-	 */
-	public int getMaxAllocation() {
-		int max = 0;
-		for (Referee ref : listedReferees)
-			max = ref.getAllocations() > max ? ref.getAllocations() : max;
-		return max;
-	}
 	
 	/**
-	 * @Override
+	 * Returns an iterator of elements of type Referee
 	 */
+	@Override
 	public Iterator<Referee> iterator() {
 		return listedReferees.iterator();
 	}
