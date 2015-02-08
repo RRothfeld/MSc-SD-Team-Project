@@ -3,8 +3,10 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -28,7 +30,7 @@ public class ChartFrame extends JFrame {
 
 	/** Dimensions of the chart frame */
 	private static final int FRAME_HEIGHT = 300;
-	private final int frame_width;
+	private int frame_width;
 
 	/** Dimensions of each bar */
 	private static final int BAR_WIDTH = 50;
@@ -45,8 +47,9 @@ public class ChartFrame extends JFrame {
 	public ChartFrame(RefereeList refList) {
 		// Store passed referee list
 		this.refList = refList;
-
-		// Calculate JFrame width according to the number of referees and the
+		
+		if (this.refList.size() != 0) {
+			// Calculate JFrame width according to the number of referees and the
 		// necessary margins (left and right); minimum width of 150 pixels
 		int widthPerReferee = BAR_WIDTH + SPACING;
 		int margins =  SPACING * 2;
@@ -60,6 +63,9 @@ public class ChartFrame extends JFrame {
 
 		// Display column chart
 		add(new ChartComponent());
+		} else {
+			JOptionPane.showMessageDialog(null, "No referees!");
+		}
 	}
 
 	/**
