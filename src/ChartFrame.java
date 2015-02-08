@@ -50,7 +50,7 @@ public class ChartFrame extends JFrame {
 		// necessary margins (left and right); minimum width of 150 pixels
 		int widthPerReferee = BAR_WIDTH + SPACING;
 		int margins =  SPACING * 2;
-		frame_width = Math.max(refList.size() * widthPerReferee + margins, 150);
+		frame_width = Math.max(refList.size() * widthPerReferee + margins, 300);
 
 		// Set JFrame properties
 		setTitle("Referee Chart");

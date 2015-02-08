@@ -137,7 +137,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
                                         .allocateReferees(week, level, area);
                         if (suitableRefs == null) {
                                 JOptionPane.showMessageDialog(null,
-                                                "No suitable referees available!");
+                                                "Week already taken!");
                         } else if (suitableRefs.size() < 2) {
                                 JOptionPane.showMessageDialog(null,
                                                 "Not enough suitable referees available!");
