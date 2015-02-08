@@ -321,6 +321,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				    .parseInt(matchesField.getText()),
 			    (JavaBallController.Location) homeLocation
 				    .getSelectedItem(), travel);
+                    controller.updateTable();
 		    dispose();
 		}
 
@@ -332,6 +333,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 					    .getSelectedItem())),
 			    (JavaBallController.Location) homeLocation
 				    .getSelectedItem(), travel);
+                    controller.updateTable();
 		    dispose();
 		}
 	    }

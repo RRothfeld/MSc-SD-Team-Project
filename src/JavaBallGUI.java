@@ -45,7 +45,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 	// GUI components for Table
 	private JScrollPane tablePane;
-	private JTable table;
+	private JTable table, allocatedTable;
 	// TODO
 	private final JavaBallController controller;
 	private final String searchFieldString = "Enter referee name or ID...";
@@ -67,13 +67,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		setTitle("JavaBall Referees");
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		layoutComponents();
+                setResizable(false);
 
 	}
 
 	private void layoutComponents() {
 		// create JPanels
 	    
-	    	menuPanel = new JPanel(new GridLayout(6, 1, 1, 5));
+	    	menuPanel = new JPanel(new GridLayout(5, 1, 1, 5));
 	    	menuPanel.setBackground(Color.GRAY);
 	    	
 		navPanel = new JPanel();
@@ -110,6 +111,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                             }
 			}
 		});
+                
 
                 titleLabel = new JLabel("JavaBall");
                 titleLabel.setFont(new Font("Helvetica", Font.BOLD, 16));
@@ -151,8 +153,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		navPanel.add(exitButton, BorderLayout.SOUTH);
 		// FIXME Place at the bottom of navPanel
 		
-		table = new JTable(controller.getTableData());
-		table.setFont(new Font("San-Serif", Font.PLAIN, 14));
+		table = controller.getTable();
+                table.setFont(new Font("San-Serif", Font.PLAIN, 14));
 		table.setBackground(Color.decode("#EEEEEE"));
                 table.setAutoCreateRowSorter(true);
 		// Setting scroll area
@@ -165,7 +167,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                 DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
                 leftRender.setHorizontalAlignment( JLabel.LEFT );
                 table.getColumnModel().getColumn(4).setCellRenderer(leftRender);
-                
+               
 //                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 //                centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 //                table.setDefaultRenderer(int.class, centerRenderer);
@@ -194,7 +196,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			// If allocate referee to matches button is pressed
 			AllocateMatches allocateRef = new AllocateMatches(controller);
 			allocateRef.setVisible(true);
-
 		} else if (ae.getSource() == chartButton) {
 			// If chart button is pressed
 			controller.openChart();
@@ -219,10 +220,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	    }
 
 	} else if (ae.getSource() == resetSearchButton) {
-			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
+			controller.updateTable();
+                        JOptionPane.showMessageDialog(null, "Referee table now ordered by "
 					+ "referee ID.");
                         searchField.setText(searchFieldString);
-			// TODO update referee table
+			
 
 		} else if (ae.getSource() == exitButton) {
 			// If save and exit button is pressed

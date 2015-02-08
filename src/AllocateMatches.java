@@ -103,7 +103,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
 	allocateReferees.addActionListener(this);
 	bottom.add(allocateReferees);
 	// Creates and add back button
-	cancelButton = new JButton("OK");
+	cancelButton = new JButton("Cancel");
 	cancelButton.addActionListener(this);
 	bottom.add(cancelButton);
 
@@ -142,12 +142,11 @@ public class AllocateMatches extends JFrame implements ActionListener {
 						JOptionPane.showMessageDialog(null,
 								"Not enough suitable referees available!");
 					} else {
-					table = new JTable(
-							controller.allocatedTableData(suitableRefs));
-
-					confirmationLabel.setText("Successfully allocated: " + suitableRefs.get(0).getID() + " " + suitableRefs.get(1).getID());
 					
+                                        confirmationLabel.setText("Successfully allocated: " + suitableRefs.get(0).getID() + " " + suitableRefs.get(1).getID());
+                                        cancelButton.setText("OK");
 					allocateReferees.setEnabled(false);
+                                        controller.allocatedTableData(suitableRefs);
 					}
 				}
 			} catch (NumberFormatException ex) {

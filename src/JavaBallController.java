@@ -4,6 +4,7 @@ import javax.swing.WindowConstants;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JTable;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
@@ -32,8 +33,10 @@ public class JavaBallController {
 
     private final String REFEREE_FILE = "RefereesOut.txt";
     private final String MATCH_FILE   = "MatchAllocs.txt";
-	
+    	
     private TableModel tableData;
+    
+    private JTable table;
     
     public enum Location {
         NORTH("North"), CENTRAL("Central"), SOUTH("South");
@@ -252,7 +255,7 @@ public class JavaBallController {
      * Method to create TableModel object for refList and return it to the GUI
      * @return - Full TableModel
      */
-    public TableModel getTableData()
+    public TableModel refereeTableModel()
     {
         tableData = new RefereeTableModel(refList.getReferees());
         return tableData;
@@ -260,15 +263,24 @@ public class JavaBallController {
     
     /**
      *
-     * @param allocated
+     * @param allocatedReferees
      * @return
      */
-    public TableModel allocatedTableData(ArrayList<Referee> allocated)
+    public void allocatedTableData(ArrayList<Referee> allocatedReferees)
     {
-        tableData = new RefereeTableModel(allocated);
-        return tableData;         
+        table.setModel(new RefereeTableModel(allocatedReferees));
     }
             
+    public JTable getTable()
+    {
+        table = new JTable(refereeTableModel());                
+        return table;
+    }
+    
+    public void updateTable()
+    {
+        table.setModel(refereeTableModel());
+    }
     /**
      *
      * @return
