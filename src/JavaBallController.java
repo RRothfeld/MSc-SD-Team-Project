@@ -4,10 +4,14 @@ import javax.swing.WindowConstants;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.DefaultRowSorter;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -258,28 +262,45 @@ public class JavaBallController {
     public TableModel refereeTableModel()
     {
         tableData = new RefereeTableModel(refList.getReferees());
+        
         return tableData;
     }
     
     /**
      *
      * @param allocatedReferees
-     * @return
      */
     public void allocatedTableData(ArrayList<Referee> allocatedReferees)
     {
         table.setModel(new RefereeTableModel(allocatedReferees));
     }
             
+    /**
+     * Method to create table.
+     * Brought to this class to add update logic.
+     * @return table with default TableModel
+     */
     public JTable getTable()
     {
         table = new JTable(refereeTableModel());                
         return table;
     }
     
+    /**
+     * Method to set Table Model to RefereeList if it isn't already
+     * and to sort by Referee ID.
+     */
     public void updateTable()
     {
-        table.setModel(refereeTableModel());
+        table.setModel(refereeTableModel());  
+        table.setAutoCreateRowSorter(true);
+        
+        DefaultRowSorter sorter = ((DefaultRowSorter)table.getRowSorter()); 
+        ArrayList list = new ArrayList();
+        System.err.println(tableData.getColumnCount());
+        list.add( new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorter.setSortKeys(list);
+        sorter.sort();
     }
     /**
      *
