@@ -248,7 +248,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
     
     /** 
      * Helper method to set the Remove referee button state
-     * @param state */
+     * @param state 
+     */
     public void setRemoveButtonEnabled(boolean state) {
 	removeButton.setEnabled(state);
     }

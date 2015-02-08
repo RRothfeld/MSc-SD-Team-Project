@@ -35,7 +35,7 @@ public class RefereeList implements Iterable<Referee> {
 
 	/** Default constructor */
 	public RefereeList() {
-		this.listedReferees = new ArrayList<>();
+		this.listedReferees = new ArrayList<Referee>();
 		initFromFile(listedReferees);
 	}
 	
@@ -121,7 +121,7 @@ public class RefereeList implements Iterable<Referee> {
 		
 		// otherwise filter non-applicable referees out
 		// list to hold referees after filtering
-		ArrayList<Referee> filteredReferees = new ArrayList<>();
+		ArrayList<Referee> filteredReferees = new ArrayList<Referee>();
 		
 		// add all referees with minimum qualification level two
 		for (Referee ref : listedReferees) {
@@ -141,7 +141,7 @@ public class RefereeList implements Iterable<Referee> {
 	public ArrayList<Referee> getReferees(JavaBallController.Location location,
 			boolean home) {
 		// List to hold referees after filtering
-		ArrayList<Referee> filteredReferees = new ArrayList<>();
+		ArrayList<Referee> filteredReferees = new ArrayList<Referee>();
 
 		// Check whether provided is asking for home or travel locations
 		if (home) {

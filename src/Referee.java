@@ -44,7 +44,7 @@ public class Referee implements Comparable<Referee> {
     // List of matches by matchID referee has been allocated to
     private ArrayList<Match> allocatedMatchesList;
 
-    private int index;
+    private int index; // Integer used by TableModel in Controller
     private int preSeasonAllocations;
     protected static final int MAX_QUAL_LENGTH = 4;
 
@@ -131,7 +131,7 @@ public class Referee implements Comparable<Referee> {
     /**
      * Method to return first name of Referee
      * 
-     * @return - first name
+     * @return - first name of this Referee
      */
     public String getFirstName() {
 	return this.firstName;
@@ -140,16 +140,17 @@ public class Referee implements Comparable<Referee> {
     /**
      * Method to return last name of Referee
      * 
-     * @return - last name
+     * @return - last name of this Referee
      */
     public String getLastName() {
 	return this.lastName;
     }
 
     /**
-     * Method to set Qualification
+     * Method to set Qualification for Referee
      * 
-     * @param qualifications
+     * @param qualifications - String value of qualification type, 
+     *                         qualification level or both
      */
     private void setQualifications(String qualifications) {
 	if (qualifications.length() < MAX_QUAL_LENGTH) {
@@ -193,7 +194,7 @@ public class Referee implements Comparable<Referee> {
     //Methods used by TableModel to place referees
     /**
      *
-     * @param index
+     * @param index 
      */
     public void setIndex(int index) {
         this.index = index;
@@ -201,7 +202,7 @@ public class Referee implements Comparable<Referee> {
 
     /**
      * 
-     * @return
+     * @return - Integer value for this Referee used by TableModel
      */
     public int getIndex()
     {
@@ -324,6 +325,7 @@ public class Referee implements Comparable<Referee> {
 
     /**
      * Compares two referees by ID.
+     * @param ref
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override

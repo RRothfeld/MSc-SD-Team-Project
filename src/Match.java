@@ -118,35 +118,7 @@ public class Match {
     
     /** Returns match details
      * @return  */
-    public String report() 
-    {
-        // For Columns...isn't good enough to push yet
-//        String matchReport = "";
-//        int columWidth = 5;
-//        if (suitableReferees!=null)
-//        {
-//            String[] reportItems = new String[5];
-//                      
-//                  reportItems[0] = Integer.toString(week);
-//                  reportItems[1] = level.toString();
-//                  reportItems[2] = area.toString();
-//                  reportItems[3] = suitableReferees[0].getFirstName() + " " 
-//                                 + suitableReferees[0].getLastName(); 
-//                  reportItems[4] = suitableReferees[1].getFirstName() + " "
-//                                 + suitableReferees[1].getLastName();
-//                  
-//            for (String s : reportItems)
-//            {
-//                matchReport+=s;
-//                for  (int i=0; i < columWidth-s.length(); i++)
-//                {
-//                    matchReport+=" ";
-//                }
-//            } 
-//
-//        } 
-//	return matchReport;
-        
+    public String report() {   
         String match = String.format("%d\t%s\t%s\t%s %s\t%s %s", week, level, area,
 		suitableReferees[0].getFirstName(), suitableReferees[0].getLastName(), 
                 suitableReferees[1].getFirstName(),suitableReferees[1].getLastName());

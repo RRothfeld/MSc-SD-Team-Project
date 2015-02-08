@@ -167,10 +167,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                 DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
                 leftRender.setHorizontalAlignment( JLabel.LEFT );
                 table.getColumnModel().getColumn(4).setCellRenderer(leftRender);
-               
-//                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-//                centerRenderer.setHorizontalAlignment( JLabel.CENTER );
-//                table.setDefaultRenderer(int.class, centerRenderer);
 
 		// Create new JPane for table view
 		tablePane = new JScrollPane(table);

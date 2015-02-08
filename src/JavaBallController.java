@@ -11,7 +11,6 @@ import javax.swing.SortOrder;
 
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  * Team Foxtrot - JavaBall Referees
@@ -63,35 +62,17 @@ public class JavaBallController {
     }
 
     /**
-     * SEASON SECTION.
-     */
-    
-    /**
-     * REFEREE SECTION.
-     */
-    
-    /**
-     * REFEREE SECTION.
-     */
-    
-    
-    /**
      *
      */
     public void openChart() {
-		chart = new ChartFrame(refList);
-		chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		chart.setVisible(true);
+            chart = new ChartFrame(refList);
+            chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            chart.setVisible(true);
     }
     
     /**
-     * 
+     * REFEREE OPERATION SECTION.
      */
-    public void saveExit() {
-    	// Exit programme if data has been successfully saved
-        if (writeOutputFile())
-        	System.exit(0);
-    }
         
     /**
      * Retrieves a referee based on a search query for an ID or full name
@@ -116,7 +97,7 @@ public class JavaBallController {
     		return refList.getReferee(names[0], names[1]);
     	}
     }
-
+    
     /**
      * Method to return 
      * @param referee - The Referee We Want to Know about
@@ -203,13 +184,22 @@ public class JavaBallController {
         }
     }
 
-    
 
     /**
-     * STATISTICS SECTION.
+     * PROGRAM CLOSE SECTION.
      */
+    
     /**
-     * Write report Files
+     * Method to write output file and quit the program.
+     */
+    public void saveExit() {
+    	// Exit programme if data has been successfully saved
+        if (writeOutputFile())
+        	System.exit(0);
+    }
+    
+    /**
+     * Write report and return if it worked or not.
      */
     private boolean writeOutputFile() {
         try (FileWriter matchFile = new FileWriter(MATCH_FILE)) {
@@ -219,11 +209,6 @@ public class JavaBallController {
                 String[] matches = new String[season.getNumMatches()];
                 
                 String matchHeader = "Week\tLevel\tArea\tReferee 1\tReferee 2\n";
-//                String header = " Week "
-//                              + "Level "
-//                              + "Area  "
-//                              + "Referee 1  "
-//                              + "Referee 2\n";
                 int refCounter = 0;
                 for (Referee ref : refList) {
                     String details = String.format("%s %s %s %s%d %d %s %s\n",
@@ -255,6 +240,22 @@ public class JavaBallController {
                 return false;
         } 
     }
+    
+    /**
+     * TABLE SECTION.
+     */
+    
+    /**
+     * Method to create table.
+     * Brought to this class to add update logic.
+     * @return table with default TableModel
+     */
+    public JTable getTable()
+    {
+        table = new JTable(refereeTableModel());                
+        return table;
+    }
+    
     /**
      * Method to create TableModel object for refList and return it to the GUI
      * @return - Full TableModel
@@ -272,18 +273,7 @@ public class JavaBallController {
      */
     public void allocatedTableData(ArrayList<Referee> allocatedReferees)
     {
-        table.setModel(new RefereeTableModel(allocatedReferees));
-    }
-            
-    /**
-     * Method to create table.
-     * Brought to this class to add update logic.
-     * @return table with default TableModel
-     */
-    public JTable getTable()
-    {
-        table = new JTable(refereeTableModel());                
-        return table;
+        table.setModel(new RefereeTableModel(allocatedReferees));   
     }
     
     /**
@@ -302,6 +292,7 @@ public class JavaBallController {
         sorter.setSortKeys(list);
         sorter.sort();
     }
+    
     /**
      *
      * @return

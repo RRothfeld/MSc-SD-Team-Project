@@ -117,45 +117,47 @@ public class AllocateMatches extends JFrame implements ActionListener {
 	 * @param ae
 	 */
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == allocateReferees) {
-			// referees for that match.
-			try {
+            if (ae.getSource() == allocateReferees) {
+                // referees for that match.
+                try {
 
-				int week = Integer.parseInt(weekNumber.getText());
-				if (week < Season.MIN_WEEK || week > Season.MAX_WEEK) {
-					JOptionPane.showMessageDialog(null, "Invalid Week Number");
-					weekNumber.setText("");
-				} else if (false) {
-					// TODO test if week number already taken 
-				} else {
-					Match.Level level = (Match.Level) matchLevel
-							.getSelectedItem();
-					JavaBallController.Location area = (JavaBallController.Location) matchArea
-							.getSelectedItem();
+                    int week = Integer.parseInt(weekNumber.getText());
+                    if (week < Season.MIN_WEEK || week > Season.MAX_WEEK) {
+                            JOptionPane.showMessageDialog(null, "Invalid Week Number");
+                            weekNumber.setText("");
+                    } else if (false) {
+                            // TODO test if week number already taken 
+                    } else {
+                        Match.Level level = (Match.Level) matchLevel
+                                        .getSelectedItem();
+                        JavaBallController.Location area = (JavaBallController.Location) matchArea
+                                        .getSelectedItem();
 
-					ArrayList<Referee> suitableRefs = controller
-							.allocateReferees(week, level, area);
-					if (suitableRefs == null) {
-						JOptionPane.showMessageDialog(null,
-								"No suitable referees available!");
-					} else if (suitableRefs.size() < 2) {
-						JOptionPane.showMessageDialog(null,
-								"Not enough suitable referees available!");
-					} else {
-					
-                                        confirmationLabel.setText("Successfully allocated: " + suitableRefs.get(0).getID() + " " + suitableRefs.get(1).getID());
-                                        cancelButton.setText("OK");
-					allocateReferees.setEnabled(false);
-                                        controller.allocatedTableData(suitableRefs);
-					}
-				}
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "Please Enter a Number");
-				weekNumber.setText("");
-			}
-		} else {
-			// Close window
-			dispose();
-		}
+                        ArrayList<Referee> suitableRefs = controller
+                                        .allocateReferees(week, level, area);
+                        if (suitableRefs == null) {
+                                JOptionPane.showMessageDialog(null,
+                                                "No suitable referees available!");
+                        } else if (suitableRefs.size() < 2) {
+                                JOptionPane.showMessageDialog(null,
+                                                "Not enough suitable referees available!");
+                        } else {
+
+                        confirmationLabel.setText("Successfully allocated: " + 
+                                        suitableRefs.get(0).getID() + " " + 
+                                        suitableRefs.get(1).getID());
+                        cancelButton.setText("OK");
+                        allocateReferees.setEnabled(false);
+                        controller.allocatedTableData(suitableRefs);
+                        }
+                    }
+                } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Please Enter a Number");
+                        weekNumber.setText("");
+                }
+            } else {
+                    // Close window
+                    dispose();
+            }
 	}
 }
