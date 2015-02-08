@@ -365,31 +365,34 @@ public class JavaBallController {
         public Object getValueAt(int rowIndex, int columnIndex) {
             Referee referee = listReferees.get(rowIndex);
             Object returnValue = null;
-
-            switch (columnIndex) {
-            case COLUMN_ID:
-                returnValue = referee.getID();
-                break;
-            case COLUMN_FNAME:
-                returnValue = referee.getFirstName();
-                break;
-            case COLUMN_SNAME:
-                returnValue = referee.getLastName();
-                break;
-            case COLUMN_QUAL:
-                returnValue = referee.getQualifications()+referee.getQualificationLevel();
-                break;
-            case COLUMN_ALLOC:
-                returnValue = referee.getAllocations();
-                break;
-            case COLUMN_HOME:
-                returnValue = referee.getHomeLocation();
-                break;
-            case COLUMN_TRAVEL:
-                returnValue = referee.getTravelLocations();
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid column index");
+            if (referee != null)
+            {    
+                switch (columnIndex) {
+                case COLUMN_ID:
+                    returnValue = referee.getID();
+                    break;
+                case COLUMN_FNAME:
+                    returnValue = referee.getFirstName();
+                    break;
+                case COLUMN_SNAME:
+                    returnValue = referee.getLastName();
+                    break;
+                case COLUMN_QUAL:
+                    returnValue = referee.getQualifications()+referee.getQualificationLevel();
+                    break;
+                case COLUMN_ALLOC:
+                    returnValue = referee.getAllocations();
+                    break;
+                case COLUMN_HOME:
+                    returnValue = referee.getHomeLocation();
+                    break;
+                case COLUMN_TRAVEL:
+                    returnValue = referee.getTravelLocations();
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid column index");
+                }     
+            return returnValue;
             }
             return returnValue;
         }
