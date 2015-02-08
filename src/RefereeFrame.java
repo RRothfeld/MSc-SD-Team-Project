@@ -295,8 +295,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 	if (ae.getSource() == removeButton) {
 	    controller.removeReferee(referee);
-
-	    // Close window
 	    dispose();
 	}
 	if (ae.getSource() == saveButton) {
