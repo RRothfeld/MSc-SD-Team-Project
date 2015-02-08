@@ -168,15 +168,19 @@ public class JavaBallController {
             // Retrieve all suitable Referees for that match
             ArrayList<Referee> availableReferees = refList.getSuitableReferees(match);
             // Select the two most suitable referees and pass them to the match
-            Referee[] suitableReferees = { availableReferees.get(0),
+            if (availableReferees.size() > 1)
+            {
+                Referee[] suitableReferees = { availableReferees.get(0),
                             availableReferees.get(1) };
-            match.setReferees(suitableReferees);
-
-            // Add the fully filled in match to the current season
-            season.addMatch(match);
-            availableReferees.get(0).addMatch(match);
-            availableReferees.get(1).addMatch(match);
-            // Return indication of successful referee allocation
+                match.setReferees(suitableReferees);
+                season.addMatch(match);
+                // Add the fully filled in match to the current season
+            
+                availableReferees.get(0).addMatch(match);
+                availableReferees.get(1).addMatch(match);
+                // Return indication of successful referee allocation
+            }
+            
             return availableReferees;
         }
         else {
