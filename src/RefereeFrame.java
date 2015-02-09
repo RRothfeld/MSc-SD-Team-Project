@@ -10,7 +10,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -22,7 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 /**TODO 
  * Subclass that contains the frame and components for the add/edit/remove 
@@ -154,15 +152,15 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		JPanel levelPanel = new JPanel();
 		JPanel qualPanel = new JPanel();
 		
-		njb = new JRadioButton("NJB");
-		ijb = new JRadioButton("IJB");
+		njb = new JRadioButton(Referee.Qualifications.NJB.toString());
+		ijb = new JRadioButton(Referee.Qualifications.IJB.toString());
 		qualification = new ButtonGroup();
 		qualification.add(njb);
 		qualification.add(njb);
 		
 		level = new JLabel("Level");
 		qualLevel = new JComboBox<Integer>();
-
+                
 		ButtonGroup qualButtons = new ButtonGroup();
 		qualButtons.add(njb);
 		qualButtons.add(ijb);
@@ -211,6 +209,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		save = new JButton("Save");
 		remove = new JButton("Remove");
 		cancel = new JButton("Cancel");
+                
+                save.addActionListener(this);
+                remove.addActionListener(this);
+                cancel.addActionListener(this);
 
 		homeLoc.setModel(new DefaultComboBoxModel(
 				JavaBallController.Location.values()));
@@ -316,8 +318,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 					controller.addReferee(refFname.getText(),
 							refSname.getText(),
-							(Referee.Qualifications) qualification
-							.getSelectedItem(), Integer.parseInt(String
+							Referee.Qualifications.IJB,
+                                                        Integer.parseInt(String
 									.valueOf(qualLevel
 											.getSelectedItem())), Integer
 											.parseInt(refMatches.getText()),
@@ -329,8 +331,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 				else {
 					controller.editReferee(referee,
-							(Referee.Qualifications) qualification
-							.getSelectedItem(), Integer.parseInt(String
+							Referee.Qualifications.IJB,
+                                                        Integer.parseInt(String
 									.valueOf(qualLevel
 											.getSelectedItem())),
 											(JavaBallController.Location) homeLoc
