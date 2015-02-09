@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
+import java.awt.CheckboxGroup;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -7,7 +9,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -32,312 +37,311 @@ import javax.swing.border.EmptyBorder;
 
 public final class RefereeFrame extends JFrame implements ActionListener {
 
-    // GUI labels for viewRefereeFrame
-    private JLabel idLabel, firstNameLabel, lastNameLabel, qualificationLabel,
-	    matchesLabel, homeLabel, visitAreasLabel;
-    private Referee referee;
-    private JPanel labelPanel, inputPanel;
+	// GUI components for referee frame
+	private JPanel main, refereePanel, qualificationsPanel, locationsPanel;
+	private JLabel id,refID,fname,sname,matches,level,home;
+	private JTextField refFname, refSname, refMatches;
+	private JComboBox qualLevel;
+	private JComboBox homeLoc;
+	private JRadioButton njb, ijb;
+	private CheckboxGroup travel;
+	private JCheckBox north, central, south;
+	private JButton save, remove, cancel;
+	private ButtonGroup qualification;
 
-    private JTextField idField, firstNameField, lastNameField, matchesField;
-    private JComboBox qualificationField, qualificationLevel, homeLocation;
-    private JCheckBox visitNorth, visitCentral, visitSouth;
-    private JButton backButton, saveButton, removeButton;
-    
-    private final JavaBallController controller;
+	private Referee referee;
+	private final JavaBallController controller;
 
-    /**
-     * Constructor to add components and create frame.
-     * @param controller
-     */
-    public RefereeFrame(JavaBallController controller) {
-	
-	this.controller = controller;
+	/**
+	 * Constructor to add components and create frame.
+	 * @param controller
+	 */
+	public RefereeFrame(JavaBallController controller) {
 
-	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	// setTitle("Add/Edit/Remove Referee");
-	setSize(400, 350);
-	setLocation(200, 200);
-	setResizable(false);
+		this.controller = controller;
 
-	// Adds top GUI components
-	layoutTop();
-	// Adds central GUI components
-	layoutMiddle();
-	// Adds bottom GUI components
-	layoutBottom();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		// setTitle("Add/Edit/Remove Referee");
+		setSize(400, 300);
+		setLocation(200, 200);
+		setResizable(false);
+		main = new JPanel(new BorderLayout());
+		// Adds top GUI components
+		refLayout();
+		qualificationsLayout();
+		locationsLayout();
 
-    }
-
-    /**
-     *
-     * @param controller
-     * @param referee
-     */
-    public RefereeFrame(JavaBallController controller, Referee referee) {
-
-	// Calls the default constructor
-	this(controller);
-	this.referee = referee;
-    }
-    
-    /**
-     *
-     * @param referee
-     */
-    public void setReferee(Referee referee) {
-	this.referee = referee;
-	setDetails();
-    }
-
-    /**
-     * Method to add labels to GUI.
-     */
-    public void layoutTop() {
-
-	labelPanel = new JPanel();
-	labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.PAGE_AXIS));
-	// Creates a border around the labels so they are spaced apart
-	EmptyBorder border = new EmptyBorder(8, 40, 8, 40);
-	EmptyBorder space = new EmptyBorder(16, 40, 16, 40);
-
-	// Creates and adds ID Label
-	idLabel = new JLabel();
-	idLabel.setText("ID");
-	idLabel.setBorder(border);
-	labelPanel.add(idLabel);
-	// Creates and adds first name Label
-	firstNameLabel = new JLabel();
-	firstNameLabel.setText("First Name");
-	firstNameLabel.setBorder(border);
-	labelPanel.add(firstNameLabel);
-	// Creates and adds first name Label
-	lastNameLabel = new JLabel();
-	lastNameLabel.setText("Last Name");
-	lastNameLabel.setBorder(border);
-	labelPanel.add(lastNameLabel);
-	// Creates and adds qualification Label
-	qualificationLabel = new JLabel();
-	qualificationLabel.setText("Qualification");
-	qualificationLabel.setBorder(space);
-	labelPanel.add(qualificationLabel);
-	// Creates and adds matches allocated Label
-	matchesLabel = new JLabel();
-	matchesLabel.setText("Matches Allocated");
-	matchesLabel.setBorder(border);
-	labelPanel.add(matchesLabel);
-	// Creates and adds referees home location Label
-	homeLabel = new JLabel();
-	homeLabel.setText("Home Location");
-	homeLabel.setBorder(space);
-	labelPanel.add(homeLabel);
-	// Creates and adds visit areas Label
-	visitAreasLabel = new JLabel();
-	visitAreasLabel.setText("Visitable Areas");
-	visitAreasLabel.setBorder(border);
-	labelPanel.add(visitAreasLabel);
-
-	// Adds components to panel 'top'
-	add(labelPanel, BorderLayout.WEST);
-
-    }
-
-    /**
-     *
-     */
-    public void layoutMiddle() {
-
-	inputPanel = new JPanel();
-	inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.PAGE_AXIS));
-
-	inputPanel.setBackground(Color.gray);
-
-	idField = new JTextField(5);
-	idField.setEditable(false);
-	
-
-	firstNameField = new JTextField(10);
-	
-
-	lastNameField = new JTextField(10);
-	lastNameField.addFocusListener(new FocusAdapter() {
-	    @Override
-	    public void focusLost(FocusEvent e) {
-		String firstName = firstNameField.getText().trim();
-		String lastName = lastNameField.getText().trim();
-		if ((firstName != null && lastName != null)) {
-		    if (!(firstName.equals("") && lastName.equals(""))) {
-			RefereeList refList = new RefereeList(); // FIXME 
-			    String ID = refList.createID(firstName, lastName);
-			    idField.setText(ID);
-		    }
-		}
-	    }
-	});
-	
-	inputPanel.add(idField);
-	inputPanel.add(firstNameField);
-	inputPanel.add(lastNameField);
-
-	qualificationField = new JComboBox();
-	qualificationField.setModel(new DefaultComboBoxModel(
-		Referee.Qualifications.values()));
-	inputPanel.add(qualificationField);
-
-	qualificationLevel = new JComboBox();
-	
-	for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++) {
-	    qualificationLevel.addItem(i + "");
-	}
-	inputPanel.add(qualificationLevel);
-
-	matchesField = new JTextField(3);
-	inputPanel.add(matchesField);
-
-	homeLocation = new JComboBox();
-	visitNorth = new JCheckBox("North");
-	visitSouth = new JCheckBox("South");
-	visitCentral = new JCheckBox("Central");
-	
-	homeLocation.setModel(new DefaultComboBoxModel(
-		JavaBallController.Location.values()));
-	
-	homeLocation.addItemListener(new ItemListener() {
-	    @Override
-	    public void itemStateChanged(ItemEvent e) {
-		JavaBallController.Location selectedLocation = 
-			(JavaBallController.Location) homeLocation
-			.getSelectedItem();
-		if (selectedLocation.equals(homeLocation.getItemAt(0))) {
-		    visitNorth.setSelected(true);
-		} else if ((selectedLocation.equals(homeLocation.getItemAt(1)))) {
-		    visitCentral.setSelected(true);
-		} else {
-		    visitSouth.setSelected(true);
-		}
-	    }
-	});
-	
-	inputPanel.add(homeLocation);
-	inputPanel.add(visitNorth);
-	inputPanel.add(visitCentral);
-	inputPanel.add(visitSouth);
-
-	add(inputPanel, BorderLayout.EAST);
-    }
-
-    /**
-     *
-     */
-    public void layoutBottom() {
-
-	JPanel bottom = new JPanel();
-
-	saveButton = new JButton("Save Changes");
-	saveButton.addActionListener(this);
-	bottom.add(saveButton);
-	removeButton = new JButton("Remove Referee");
-	removeButton.addActionListener(this);
-	bottom.add(removeButton);
-	backButton = new JButton("Cancel");
-	backButton.addActionListener(this);
-	bottom.add(backButton);
-
-	// Add components to panel
-	add(bottom, BorderLayout.SOUTH);
-    }
-    
-    /** 
-     * Helper method to set the Remove referee button state
-     * @param state 
-     */
-    public void setRemoveButtonEnabled(boolean state) {
-	removeButton.setEnabled(state);
-    }
-                            
-    /**
-     * 
-     */
-    private void setDetails(){
-        
-        idField.setText(referee.getID());
-        firstNameField.setText(referee.getFirstName());
-        lastNameField.setText(referee.getLastName());
-        matchesField.setText(Integer.toString(referee.getAllocations()));
-        
-        idField.setEditable(false);
-        firstNameField.setEditable(false);
-        lastNameField.setEditable(false);
-        matchesField.setEditable(false);
-    
-    }
-    
-    /**
-     *
-     */
-    public void setLocations(){
-        visitNorth.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
-        visitCentral.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
-        visitSouth.setSelected(controller.refTravel(referee, JavaBallController.Location.SOUTH));
-    }
-    
-                            
-    /**
-     * This method handles events for the the Referee Frame (i.e. adding,
-     * editing and removing referee information)
-     * 
-     * @param ae
-     */
-    public void actionPerformed(ActionEvent ae) {
-	if (ae.getSource() == backButton) {
-
-	    // Close window
-	    dispose();
-	}
-	if (ae.getSource() == removeButton) {
-	    controller.removeReferee(referee);
-	    dispose();
-	}
-	if (ae.getSource() == saveButton) {
-
-	    if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
-		JOptionPane.showMessageDialog(null, "Sorry.\n"
-			+ "The Referee List is full!");
-	    } else {
-		// Get travel locations for referee
-		String north = visitNorth.isSelected() ? "Y" : "N";
-		String central = visitCentral.isSelected() ? "Y" : "N";
-		String south = visitSouth.isSelected() ? "Y" : "N";
-		String travel = north + central + south;
-
-		if (this.referee == null) {
-
-		    controller.addReferee(firstNameField.getText(),
-			    lastNameField.getText(),
-			    (Referee.Qualifications) qualificationField
-				    .getSelectedItem(), Integer.parseInt(String
-				    .valueOf(qualificationLevel
-					    .getSelectedItem())), Integer
-				    .parseInt(matchesField.getText()),
-			    (JavaBallController.Location) homeLocation
-				    .getSelectedItem(), travel);
-                    controller.updateTable();
-		    dispose();
-		}
-
-		else {
-		    controller.editReferee(referee,
-			    (Referee.Qualifications) qualificationField
-				    .getSelectedItem(), Integer.parseInt(String
-				    .valueOf(qualificationLevel
-					    .getSelectedItem())),
-			    (JavaBallController.Location) homeLocation
-				    .getSelectedItem(), travel);
-                    controller.updateTable();
-		    dispose();
-		}
-	    }
 	}
 
-    }
+	/**
+	 *
+	 * @param controller
+	 * @param referee
+	 */
+	public RefereeFrame(JavaBallController controller, Referee referee) {
+
+		// Calls the default constructor
+		this(controller);
+		this.referee = referee;
+	}
+
+	/**
+	 *
+	 * @param referee
+	 */
+	public void setReferee(Referee referee) {
+		this.referee = referee;
+		setDetails();
+	}
+
+	/**
+	 * Method to add labels to GUI.
+	 */
+	public void refLayout() {
+
+
+		refereePanel = new JPanel(new GridLayout(3,2));
+
+		id = new JLabel();
+		id.setText("ID:");
+		fname = new JLabel();
+		fname.setText("First Name:");
+		sname = new JLabel();
+		sname.setText("Second Name:");
+		matches = new JLabel("Match Allocations:");
+		
+
+		refID = new JLabel();
+		refFname = new JTextField(5);
+		refSname = new JTextField(5);
+		refMatches = new JTextField(5);
+
+		refSname.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				String firstName = refFname.getText().trim();
+				String lastName = refSname.getText().trim();
+				if ((firstName != null && lastName != null)) {
+					if (!(firstName.equals("") && lastName.equals(""))) {
+						RefereeList refList = new RefereeList(); // FIXME 
+						String ID = refList.createID(firstName, lastName);
+						refID.setText(ID);
+					}
+				}
+			}
+		});
+
+		refereePanel.add(id);
+		refereePanel.add(refID);
+		refereePanel.add(fname);
+		refereePanel.add(refFname);
+		refereePanel.add(sname);
+		refereePanel.add(refSname);
+
+		refereePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		add(refereePanel, BorderLayout.NORTH);
+	}
+
+	/**
+	 *
+	 */
+	public void qualificationsLayout() {
+
+		qualificationsPanel = new JPanel(new BorderLayout());
+		JPanel levelPanel = new JPanel();
+		JPanel qualPanel = new JPanel();
+		
+		njb = new JRadioButton("NJB");
+		ijb = new JRadioButton("IJB");
+		qualification = new ButtonGroup();
+		qualification.add(njb);
+		qualification.add(njb);
+		
+		level = new JLabel("Level");
+		qualLevel = new JComboBox();
+		qualLevel.addItem("1");
+		qualLevel.addItem("2");
+		qualLevel.addItem("3");
+		qualLevel.addItem("4");
+
+		ButtonGroup qualButtons = new ButtonGroup();
+		qualButtons.add(njb);
+		qualButtons.add(ijb);
+
+
+		for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++) {
+			qualLevel.addItem(i + "");
+		}
+
+
+		qualPanel.add(njb);
+		qualPanel.add(ijb);
+		levelPanel.add(level);
+		levelPanel.add(qualLevel);
+
+
+
+		qualificationsPanel.add(levelPanel, BorderLayout.NORTH);
+		qualificationsPanel.add(qualPanel, BorderLayout.SOUTH);
+
+		qualificationsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		add(qualificationsPanel, BorderLayout.CENTER);
+	}
+
+
+	/**
+	 *
+	 */
+	public void locationsLayout() {
+
+		locationsPanel = new JPanel(new BorderLayout());
+		JPanel homePanel = new JPanel();
+		JPanel visitPanel = new JPanel();
+		JPanel buttonPanel = new JPanel();
+
+		home = new JLabel("Home");
+		homeLoc = new JComboBox();
+		homeLoc.addItem("North");
+		homeLoc.addItem("Central");
+		homeLoc.addItem("South");
+		
+		north = new JCheckBox("North");
+		central = new JCheckBox("Central");
+		south = new JCheckBox("South");
+
+		save = new JButton("Save");
+		remove = new JButton("Remove");
+		cancel = new JButton("Cancel");
+
+		homeLoc.setModel(new DefaultComboBoxModel(
+				JavaBallController.Location.values()));
+
+		homeLoc.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				JavaBallController.Location selectedLocation = 
+						(JavaBallController.Location) homeLoc
+						.getSelectedItem();
+				if (selectedLocation.equals(homeLoc.getItemAt(0))) {
+					north.setSelected(true);
+				} else if ((selectedLocation.equals(homeLoc.getItemAt(1)))) {
+					central.setSelected(true);
+				} else {
+					south.setSelected(true);
+				}
+			}
+		});
+
+		homePanel.add(home);
+		homePanel.add(homeLoc);
+		visitPanel.add(north);
+		visitPanel.add(central);
+		visitPanel.add(south);
+		buttonPanel.add(save);
+		buttonPanel.add(remove);
+		buttonPanel.add(cancel);
+
+		locationsPanel.add(homePanel, BorderLayout.NORTH);
+		locationsPanel.add(visitPanel, BorderLayout.CENTER);
+		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		locationsPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+		locationsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		add(locationsPanel, BorderLayout.SOUTH);
+
+	}
+
+	/** 
+	 * Helper method to set the Remove referee button state
+	 * @param state 
+	 */
+	public void setRemoveButtonEnabled(boolean state) {
+		remove.setEnabled(state);
+	}
+
+	/**
+	 * 
+	 */
+	private void setDetails(){
+
+		refID.setText(referee.getID());
+		refFname.setText(referee.getFirstName());
+		refSname.setText(referee.getLastName());
+		refMatches.setText(Integer.toString(referee.getAllocations()));
+
+		refFname.setEditable(false);
+		refSname.setEditable(false);
+		refMatches.setEditable(false);
+
+	}
+
+	/**
+	 *
+	 */
+	public void setLocations(){
+		north.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
+		central.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
+		south.setSelected(controller.refTravel(referee, JavaBallController.Location.SOUTH));
+	}
+
+
+	/**
+	 * This method handles events for the the Referee Frame (i.e. adding,
+	 * editing and removing referee information)
+	 * 
+	 * @param ae
+	 */
+	public void actionPerformed(ActionEvent ae) {
+		if (ae.getSource() == cancel) {
+
+			// Close window
+			dispose();
+		}
+		if (ae.getSource() == remove) {
+			controller.removeReferee(referee);
+			dispose();
+		}
+		if (ae.getSource() == save) {
+
+			if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
+				JOptionPane.showMessageDialog(null, "Sorry.\n"
+						+ "The Referee List is full!");
+			} else {
+				// Get travel locations for referee
+				String n = north.isSelected() ? "Y" : "N";
+				String c = central.isSelected() ? "Y" : "N";
+				String s = south.isSelected() ? "Y" : "N";
+				String travel = n + c + s;
+
+				if (this.referee == null) {
+
+					controller.addReferee(refFname.getText(),
+							refSname.getText(),
+							(Referee.Qualifications) qualification
+							.getSelectedItem(), Integer.parseInt(String
+									.valueOf(qualLevel
+											.getSelectedItem())), Integer
+											.parseInt(refMatches.getText()),
+											(JavaBallController.Location) homeLoc
+											.getSelectedItem(), travel);
+					controller.updateTable();
+					dispose();
+				}
+
+				else {
+					controller.editReferee(referee,
+							(Referee.Qualifications) qualification
+							.getSelectedItem(), Integer.parseInt(String
+									.valueOf(qualLevel
+											.getSelectedItem())),
+											(JavaBallController.Location) homeLoc
+											.getSelectedItem(), travel);
+					controller.updateTable();
+					dispose();
+				}
+			}
+		}
+
+	}
 
 }
