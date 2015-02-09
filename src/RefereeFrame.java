@@ -51,6 +51,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 	private Referee referee;
 	private final JavaBallController controller;
+	
+	private final int FRAME_WIDTH = 400;
+	private final int FRAME_HEIGHT = 300;
 
 	/**
 	 * Constructor to add components and create frame.
@@ -62,7 +65,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		// setTitle("Add/Edit/Remove Referee");
-		setSize(400, 300);
+		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setLocation(200, 200);
 		setResizable(false);
 		main = new JPanel(new BorderLayout());
@@ -158,11 +161,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		qualification.add(njb);
 		
 		level = new JLabel("Level");
-		qualLevel = new JComboBox();
-		qualLevel.addItem("1");
-		qualLevel.addItem("2");
-		qualLevel.addItem("3");
-		qualLevel.addItem("4");
+		qualLevel = new JComboBox<Integer>();
 
 		ButtonGroup qualButtons = new ButtonGroup();
 		qualButtons.add(njb);
