@@ -277,7 +277,7 @@ public class JavaBallController {
      */
     public void allocatedTableData(ArrayList<Referee> allocatedReferees)
     {
-        table.setModel(new RefereeTableModel(allocatedReferees));   
+        table.setModel(new RefereeTableModel(allocatedReferees)); 
     }
     
     /**
@@ -291,8 +291,7 @@ public class JavaBallController {
         
         DefaultRowSorter sorter = ((DefaultRowSorter)table.getRowSorter()); 
         ArrayList list = new ArrayList();
-        System.err.println(tableData.getColumnCount());
-        list.add( new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(list);
         sorter.sort();
     }
