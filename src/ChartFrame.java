@@ -66,6 +66,7 @@ public class ChartFrame extends JFrame {
 			add(new ChartComponent());
 		} else {
 			JOptionPane.showMessageDialog(null, "No referees!");
+			dispose();
 		}
 	}
 
