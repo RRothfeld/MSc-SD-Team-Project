@@ -158,6 +158,7 @@ public class JavaBallController {
      */
     public void removeReferee(Referee ref) {
             refList.remove(ref);
+            updateTable();
     }
 
     /**
@@ -296,7 +297,7 @@ public class JavaBallController {
     public void updateTable()
     {
         table.setModel(refereeTableModel());  
-        table.setAutoCreateRowSorter(true);
+//        table.setAutoCreateRowSorter(true);
         
         DefaultRowSorter sorter = ((DefaultRowSorter)table.getRowSorter()); 
         ArrayList list = new ArrayList();
