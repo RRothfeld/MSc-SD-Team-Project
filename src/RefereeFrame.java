@@ -125,9 +125,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				String firstName = refFname.getText().trim();
 				String lastName = refSname.getText().trim();
 				if ((firstName != null && lastName != null)) {
-					if (!(firstName.equals("") && lastName.equals(""))) {
-						RefereeList refList = new RefereeList(); // FIXME 
-						String ID = refList.createID(firstName, lastName);
+					if (!(firstName.equals("") || lastName.equals(""))) {
+						String ID = controller.createID(firstName, lastName);
 						refIDLabel.setText(ID);
 					}
 				}

@@ -98,6 +98,11 @@ public class JavaBallController {
     	}
     }
     
+    public String createID(String firstName, String lastName)
+    {
+        return refList.createID(firstName,lastName);
+    }
+    
     public boolean inputTooLarge()
     {
         return refList.getFileSize();
