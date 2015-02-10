@@ -310,7 +310,21 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 			if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
 				JOptionPane.showMessageDialog(null, "Sorry.\n"
 						+ "The Referee List is full!");
+                                
 			} else {
+                            
+                            if (refFname.getText() == null || refFname.getText().equals(""))
+                            {
+                                fnameLabel.setForeground(Color.red);
+                            }  
+                            if (refSname.getText() == null || refSname.getText().equals(""))
+                            {
+                                lnameLabel.setForeground(Color.red);
+                            }
+                            if (refMatches.getText() == null || refMatches.getText().equals(""))
+                            {
+                                allocationLabel.setForeground(Color.red);
+                            }
 				// Get travel locations for referee
 				String n = north.isSelected() ? "Y" : "N";
 				String c = central.isSelected() ? "Y" : "N";
@@ -320,15 +334,11 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 						ijb.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
 
 				if (this.referee == null) {
-
 					controller.addReferee(refFname.getText(),
-							refSname.getText(),
-							qual,Integer.parseInt(String
-									.valueOf(qualLevel
-											.getSelectedItem())), Integer
-											.parseInt(refMatches.getText()),
-											(JavaBallController.Location) homeLoc
-											.getSelectedItem(), travel);
+                                                    refSname.getText(),qual,
+                                                    Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
+                                                    Integer.parseInt(refMatches.getText()),
+                                                    (JavaBallController.Location) homeLoc.getSelectedItem(), travel);
 					controller.updateTable();
 					dispose();
 				}
