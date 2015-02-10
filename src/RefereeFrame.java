@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -47,11 +48,13 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	private JButton save, remove, cancel;
 	private ButtonGroup qualification;
 
+	private String refFrameTitle;
+
 	private Referee referee;
 	private final JavaBallController controller;
 
 	private final int FRAME_WIDTH = 400;
-	private final int FRAME_HEIGHT = 325;
+	private final int FRAME_HEIGHT = 400;
 
 	/**
 	 * Constructor to add components and create frame.
@@ -62,7 +65,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		this.controller = controller;
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		// setTitle("Add/Edit/Remove Referee");
+		setTitle(refFrameTitle);
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setLocation(200, 200);
 		setResizable(false);
@@ -70,7 +73,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		// Adds top GUI components
 		refLayout();
 		qualificationsLayout();
-		locationsLayout();
+		locationsAndButtonsLayout();
+		add(main);
+
 	}
 
 	/**
@@ -100,7 +105,12 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	public void refLayout() {
 
 
-		refereePanel = new JPanel(new GridLayout(4,2));
+		refereePanel = new JPanel(new BorderLayout());
+		JPanel refereeSubPanel = new JPanel(new GridLayout(4,2)); 
+		refereeSubPanel.setBackground(Color.lightGray);
+		JPanel east = new JPanel();
+		JPanel west = new JPanel();
+		JPanel south = new JPanel();
 
 		idLabel = new JLabel();
 		idLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -133,16 +143,29 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 			}
 		});
 
-		refereePanel.add(idLabel);
-		refereePanel.add(refIDLabel);
-		refereePanel.add(fnameLabel);
-		refereePanel.add(refFname);
-		refereePanel.add(lnameLabel);
-		refereePanel.add(refSname);
-		refereePanel.add(allocationLabel);
-		refereePanel.add(refMatches);
+		refereeSubPanel.add(idLabel);
+		refereeSubPanel.add(refIDLabel);
+		refereeSubPanel.add(fnameLabel);
+		refereeSubPanel.add(refFname);
+		refereeSubPanel.add(lnameLabel);
+		refereeSubPanel.add(refSname);
+		refereeSubPanel.add(allocationLabel);
+		refereeSubPanel.add(refMatches);
 
-		refereePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		// Creates panel for panel title
+		JPanel titlePanel = new JPanel();
+		// Creates label for title panel
+		JLabel title = new JLabel("Referee Details");
+		// Adds label to panel
+		titlePanel.add(title);
+
+
+		refereeSubPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		refereePanel.add(east, BorderLayout.EAST);
+		refereePanel.add(west, BorderLayout.WEST);
+		refereePanel.add(south, BorderLayout.SOUTH);
+		refereePanel.add(titlePanel, BorderLayout.NORTH);
+		refereePanel.add(refereeSubPanel, BorderLayout.CENTER);
 		add(refereePanel, BorderLayout.NORTH);
 	}
 
@@ -151,7 +174,12 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 */
 	public void qualificationsLayout() {
 
-		qualificationsPanel = new JPanel(new GridLayout(2,2));
+		qualificationsPanel = new JPanel(new BorderLayout());
+		JPanel qualSubPanel = new JPanel(new GridLayout(2,2)); 
+		qualSubPanel.setBackground(Color.lightGray);
+		JPanel east = new JPanel();
+		JPanel west = new JPanel();
+		JPanel south = new JPanel();
 
 		njb = new JRadioButton(Referee.Qualifications.NJB.toString());
 		ijb = new JRadioButton(Referee.Qualifications.IJB.toString());
@@ -160,11 +188,11 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		qualification.add(njb);
 
 		njb.setHorizontalAlignment(SwingConstants.RIGHT);
-                njb.setFont(new Font("Monospaced",Font.PLAIN,14));
-                
+		njb.setFont(new Font("Monospaced",Font.PLAIN,14));
+
 		ijb.setHorizontalAlignment(SwingConstants.RIGHT);
-                ijb.setFont(new Font("Monospaced",Font.PLAIN,14));
-                
+		ijb.setFont(new Font("Monospaced",Font.PLAIN,14));
+
 		qualLevelLabel = new JLabel("Level");
 		qualLevel = new JComboBox<Integer>();
 
@@ -173,30 +201,49 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		ButtonGroup qualButtons = new ButtonGroup();
 		qualButtons.add(njb);
 		qualButtons.add(ijb);
-                //qualificationsPanel.setFontFamily(, "Monospaced");
+
 		for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++) {
 			qualLevel.addItem(i + "");
 		}
 
-		qualificationsPanel.add(njb);
-		qualificationsPanel.add(qualLevelLabel);
-		qualificationsPanel.add(ijb);
-		qualificationsPanel.add(qualLevel);
 
-		qualificationsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		add(qualificationsPanel, BorderLayout.CENTER);
+		qualSubPanel.add(njb);
+		qualSubPanel.add(qualLevelLabel);
+		qualSubPanel.add(ijb);
+		qualSubPanel.add(qualLevel);
+
+		// Creates panel for panel title
+		JPanel titlePanel = new JPanel();
+		// Creates label for title panel
+		JLabel title = new JLabel("Qualification Details");
+		// Adds label to panel
+		titlePanel.add(title);
+
+		qualSubPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		qualificationsPanel.add(east, BorderLayout.EAST);
+		qualificationsPanel.add(west, BorderLayout.WEST);
+		qualificationsPanel.add(south, BorderLayout.SOUTH);
+		qualificationsPanel.add(titlePanel, BorderLayout.NORTH);
+		qualificationsPanel.add(qualSubPanel, BorderLayout.CENTER);
+		main.add(qualificationsPanel, BorderLayout.CENTER);
 	}
 
 
 	/**
 	 *
 	 */
-	public void locationsLayout() {
+	public void locationsAndButtonsLayout() {
 
 		locationsPanel = new JPanel(new BorderLayout());
+		JPanel locationSubPanel = new JPanel(new BorderLayout());
+
 		JPanel homePanel = new JPanel();
 		JPanel visitPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
+
+		JPanel eastPanel = new JPanel();
+		JPanel westPanel = new JPanel();
+		JPanel southPanel = new JPanel();
 
 		homeLabel = new JLabel("Home");
 		homeLoc = new JComboBox();
@@ -245,15 +292,33 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		buttonPanel.add(remove);
 		buttonPanel.add(cancel);
 
-		locationsPanel.add(homePanel, BorderLayout.NORTH);
-		locationsPanel.add(visitPanel, BorderLayout.CENTER);
-		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		locationsPanel.add(buttonPanel, BorderLayout.SOUTH);
+		// Creates panel for panel title
+		JPanel titlePanel = new JPanel();
+		// Creates label for title panel
+		JLabel title = new JLabel("Location Details");
+		// Adds label to panel
+		titlePanel.add(title);
+		
+		homePanel.setBackground(Color.lightGray);
+		visitPanel.setBackground(Color.lightGray);
+		buttonPanel.setBackground(Color.lightGray);
 
-		locationsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		add(locationsPanel, BorderLayout.SOUTH);
+		locationSubPanel.add(homePanel, BorderLayout.NORTH);
+		locationSubPanel.add(visitPanel, BorderLayout.CENTER);
+		buttonPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		locationSubPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+		locationsPanel.add(titlePanel, BorderLayout.NORTH);
+		locationsPanel.add(eastPanel, BorderLayout.EAST);
+		locationsPanel.add(westPanel, BorderLayout.WEST);
+		locationsPanel.add(southPanel, BorderLayout.SOUTH);
+
+		locationSubPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		locationsPanel.add(locationSubPanel, BorderLayout.CENTER);
+		main.add(locationsPanel, BorderLayout.SOUTH);
 
 	}
+
 
 	/** 
 	 * Helper method to set the Remove referee button state
@@ -282,7 +347,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	/**
 	 *
 	 */
-	public void setLocations(){
+	public void setLocations() {
 		north.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
 		central.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
 		south.setSelected(controller.refTravel(referee, JavaBallController.Location.SOUTH));
@@ -310,21 +375,21 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 			if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
 				JOptionPane.showMessageDialog(null, "Sorry.\n"
 						+ "The Referee List is full!");
-                                
+
 			} else {
-                            
-                            if (refFname.getText() == null || refFname.getText().equals(""))
-                            {
-                                fnameLabel.setForeground(Color.red);
-                            }  
-                            if (refSname.getText() == null || refSname.getText().equals(""))
-                            {
-                                lnameLabel.setForeground(Color.red);
-                            }
-                            if (refMatches.getText() == null || refMatches.getText().equals(""))
-                            {
-                                allocationLabel.setForeground(Color.red);
-                            }
+
+				if (refFname.getText() == null || refFname.getText().equals(""))
+				{
+					fnameLabel.setForeground(Color.red);
+				}  
+				if (refSname.getText() == null || refSname.getText().equals(""))
+				{
+					lnameLabel.setForeground(Color.red);
+				}
+				if (refMatches.getText() == null || refMatches.getText().equals(""))
+				{
+					allocationLabel.setForeground(Color.red);
+				}
 				// Get travel locations for referee
 				String n = north.isSelected() ? "Y" : "N";
 				String c = central.isSelected() ? "Y" : "N";
@@ -334,22 +399,22 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 						ijb.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
 
 				if (this.referee == null) 
-                                {
-                                    if (!(refFname.getText().equals("")) && !(refSname.getText().equals("")))
-                                    {
-                                        controller.addReferee(refFname.getText(),
-                                                refSname.getText(),qual,
-                                                Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
-                                                Integer.parseInt(refMatches.getText()),
-                                                (JavaBallController.Location) homeLoc.getSelectedItem(), travel);
-					controller.updateTable();
-                                        System.err.println("Success");
-					dispose();
-                                        
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
-                                    }
-					
+				{
+					if (!(refFname.getText().equals("")) && !(refSname.getText().equals("")))
+					{
+						controller.addReferee(refFname.getText(),
+								refSname.getText(),qual,
+								Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
+								Integer.parseInt(refMatches.getText()),
+								(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
+						controller.updateTable();
+						System.err.println("Success");
+						dispose();
+
+					} else {
+						JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
+					}
+
 				}
 
 				else {
@@ -358,7 +423,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 							(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
 
 					controller.updateTable();
-                                        System.err.println("Success");
+					System.err.println("Success");
 					dispose();
 				}
 			}

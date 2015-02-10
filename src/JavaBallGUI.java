@@ -213,6 +213,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			addRef.setTitle("Add Referee");
 			addRef.setVisible(true);
 			addRef.setRemoveButtonEnabled(false);
+			
 
 		} else if (ae.getSource() == allocateButton) {
 			// If allocate referee to matches button is pressed
