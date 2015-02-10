@@ -333,14 +333,23 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				Referee.Qualifications qual = 
 						ijb.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
 
-				if (this.referee == null) {
-					controller.addReferee(refFname.getText(),
-                                                    refSname.getText(),qual,
-                                                    Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
-                                                    Integer.parseInt(refMatches.getText()),
-                                                    (JavaBallController.Location) homeLoc.getSelectedItem(), travel);
+				if (this.referee == null) 
+                                {
+                                    if (!(refFname.getText().equals("")) && !(refSname.getText().equals("")))
+                                    {
+                                        controller.addReferee(refFname.getText(),
+                                                refSname.getText(),qual,
+                                                Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
+                                                Integer.parseInt(refMatches.getText()),
+                                                (JavaBallController.Location) homeLoc.getSelectedItem(), travel);
 					controller.updateTable();
+                                        System.err.println("Success");
 					dispose();
+                                        
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
+                                    }
+					
 				}
 
 				else {
@@ -349,6 +358,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 							(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
 
 					controller.updateTable();
+                                        System.err.println("Success");
 					dispose();
 				}
 			}
