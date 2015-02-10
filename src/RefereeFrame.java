@@ -156,6 +156,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		JPanel titlePanel = new JPanel();
 		// Creates label for title panel
 		JLabel title = new JLabel("Referee Details");
+		title.setFont(new Font("Monospaced",Font.BOLD,14));
 		// Adds label to panel
 		titlePanel.add(title);
 
@@ -216,6 +217,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		JPanel titlePanel = new JPanel();
 		// Creates label for title panel
 		JLabel title = new JLabel("Qualification Details");
+		title.setFont(new Font("Monospaced",Font.BOLD,14));
 		// Adds label to panel
 		titlePanel.add(title);
 
@@ -296,12 +298,13 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		JPanel titlePanel = new JPanel();
 		// Creates label for title panel
 		JLabel title = new JLabel("Location Details");
+		title.setFont(new Font("Monospaced",Font.BOLD,14));
 		// Adds label to panel
 		titlePanel.add(title);
 		
 		homePanel.setBackground(Color.lightGray);
 		visitPanel.setBackground(Color.lightGray);
-		buttonPanel.setBackground(Color.lightGray);
+		//buttonPanel.setBackground(Color.lightGray);
 
 		locationSubPanel.add(homePanel, BorderLayout.NORTH);
 		locationSubPanel.add(visitPanel, BorderLayout.CENTER);

@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.GridLayout;
@@ -37,84 +38,115 @@ public class AllocateMatches extends JFrame implements ActionListener {
 	private JComboBox matchLevel;
 	private JComboBox matchLocation;
 	private JButton allocateButton, cancelButton;
-    
-    private JTable table;
-    private final JavaBallController controller;
 
-    /**
-     *
-     * @param controller
-     */
-    public AllocateMatches(JavaBallController controller) {
-	
-	this.controller = controller;
-	
-	setTitle("Add Match");
-	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-	// setTitle("Add/Edit/Remove Referee");
-	setSize(400, 150);
-	setLocation(200, 200);
-	setResizable(false);
-	main = new JPanel(new BorderLayout());
-	// Adds top GUI components
-	topLayout();
-	matchDetailsLayout();
-	buttonLayout();
-	
-    }
-    
-    private void topLayout() {
-    	
-    	top = new JPanel();
-    	titleLabel = new JLabel("Add Match");
-    	titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-    	
-    	add(top, BorderLayout.NORTH);
-    	
-    }
-    
-    private void matchDetailsLayout() {
+	private JTable table;
+	private final JavaBallController controller;
 
-		match = new JPanel(new GridLayout(3,2));
+	/**
+	 *
+	 * @param controller
+	 */
+	public AllocateMatches(JavaBallController controller) {
+
+		this.controller = controller;
+
+		setTitle("Add Match");
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		// setTitle("Add/Edit/Remove Referee");
+		setSize(400, 220);
+		setLocation(200, 200);
+		setResizable(false);
+		main = new JPanel(new BorderLayout());
+		add(main);
+		// Adds top GUI components
+		topLayout();
+		matchDetailsLayout();
+		buttonLayout();
+
+	}
+
+	private void topLayout() {
+
+		top = new JPanel();
+		titleLabel = new JLabel("Add Match");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setFont(new Font("Monospaced",Font.BOLD,14));
+		top.add(titleLabel);
+
+		main.add(top, BorderLayout.NORTH);
+
+	}
+
+	private void matchDetailsLayout() {
+
+		match = new JPanel(new BorderLayout());
+		JPanel matchSubPanel = new JPanel(new BorderLayout());
+		JPanel weekPanel = new JPanel();
+		JPanel levelPanel = new JPanel();
+		JPanel locationPanel = new JPanel();
+		JPanel eastPanel = new JPanel();
+		JPanel westPanel = new JPanel();
+
+		// Set Panel backgrounds
+		weekPanel.setBackground(Color.lightGray);
+		levelPanel.setBackground(Color.lightGray);
+		locationPanel.setBackground(Color.lightGray);
+
 
 		week = new JLabel("Week Number:");
 		level = new JLabel("Match Level:");
 		location = new JLabel("Match Location:");
-		weekNumber = new JTextField();
+		weekNumber = new JTextField(5);
 		matchLevel = new JComboBox();
 		matchLevel.setModel(new DefaultComboBoxModel(Match.Level.values()));
 		matchLocation = new JComboBox();
 		matchLocation.setModel(new DefaultComboBoxModel(JavaBallController.Location
-		.values()));
-		
-		confirmationLabel = new JLabel("");
+				.values()));
 
-		match.add(week);
-		match.add(weekNumber);
-		match.add(level);
-		match.add(matchLevel);
-		match.add(location);
-		match.add(matchLocation);
-		match.add(confirmationLabel);
 
-		match.setBorder(BorderFactory.createLineBorder(Color.black));
-		add(match, BorderLayout.CENTER);
+
+		weekPanel.add(week);
+		weekPanel.add(weekNumber);
+		levelPanel.add(level);
+		levelPanel.add(matchLevel);
+		locationPanel.add(location);
+		locationPanel.add(matchLocation);
+
+		matchSubPanel.add(weekPanel, BorderLayout.NORTH);
+		matchSubPanel.add(levelPanel, BorderLayout.CENTER);
+		matchSubPanel.add(locationPanel, BorderLayout.SOUTH);
+		matchSubPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+		match.add(matchSubPanel, BorderLayout.CENTER);
+		match.add(eastPanel, BorderLayout.EAST);
+		match.add(westPanel, BorderLayout.WEST);
+
+		main.add(match, BorderLayout.CENTER);
 
 	}
 
-    public void buttonLayout() {
+	public void buttonLayout() {
 
-		buttons = new JPanel(new GridLayout(1,2));
+		buttons = new JPanel(new BorderLayout());
+		JPanel confirmationPanel = new JPanel();
+		JPanel buttonSubPanel = new JPanel();
+
+		confirmationLabel = new JLabel("");
+		confirmationLabel.setForeground(Color.red);
 
 		allocateButton = new JButton("Allocate");
 		allocateButton.addActionListener(this);
 		cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(this);
 
-		buttons.add(allocateButton);
-		buttons.add(cancelButton);
+		confirmationPanel.add(confirmationLabel);
+		buttonSubPanel.add(allocateButton);
+		buttonSubPanel.add(cancelButton);
 
-		add(buttons, BorderLayout.SOUTH);
+		buttons.add(confirmationPanel, BorderLayout.NORTH);
+		buttons.add(buttonSubPanel, BorderLayout.CENTER);
+
+		main.add(buttons, BorderLayout.SOUTH);
 	}
 
 	/**
@@ -123,47 +155,47 @@ public class AllocateMatches extends JFrame implements ActionListener {
 	 * @param ae
 	 */
 	public void actionPerformed(ActionEvent ae) {
-            if (ae.getSource() == allocateButton) {
-                // referees for that match.
-                try {
+		if (ae.getSource() == allocateButton) {
+			// referees for that match.
+			try {
 
-                    int week = Integer.parseInt(weekNumber.getText());
-                    if (week < Season.MIN_WEEK || week > Season.MAX_WEEK) {
-                            JOptionPane.showMessageDialog(null, "Invalid Week Number");
-                            weekNumber.setText("");
-                    } else if (false) {
-                            // TODO test if week number already taken 
-                    } else {
-                        Match.Level level = (Match.Level) matchLevel
-                                        .getSelectedItem();
-                        JavaBallController.Location area = (JavaBallController.Location) matchLocation
-                                        .getSelectedItem();
+				int week = Integer.parseInt(weekNumber.getText());
+				if (week < Season.MIN_WEEK || week > Season.MAX_WEEK) {
+					JOptionPane.showMessageDialog(null, "Invalid Week Number");
+					weekNumber.setText("");
+				} else if (false) {
+					// TODO test if week number already taken 
+				} else {
+					Match.Level level = (Match.Level) matchLevel
+							.getSelectedItem();
+					JavaBallController.Location area = (JavaBallController.Location) matchLocation
+							.getSelectedItem();
 
-                        ArrayList<Referee> suitableRefs = controller
-                                        .allocateReferees(week, level, area);
-                        if (suitableRefs == null) {
-                                JOptionPane.showMessageDialog(null,
-                                                "Week already taken!");
-                        } else if (suitableRefs.size() < 2) {
-                                JOptionPane.showMessageDialog(null,
-                                                "Not enough suitable referees available!");
-                        } else {
+					ArrayList<Referee> suitableRefs = controller
+							.allocateReferees(week, level, area);
+					if (suitableRefs == null) {
+						JOptionPane.showMessageDialog(null,
+								"Week already taken!");
+					} else if (suitableRefs.size() < 2) {
+						JOptionPane.showMessageDialog(null,
+								"Not enough suitable referees available!");
+					} else {
 
-                        confirmationLabel.setText("Successfully allocated: " + 
-                                        suitableRefs.get(0).getID() + " " + 
-                                        suitableRefs.get(1).getID());
-                        cancelButton.setText("OK");
-                        allocateButton.setEnabled(false);
-                        controller.allocatedTableData(suitableRefs);
-                        }
-                    }
-                } catch (NumberFormatException ex) {
-                        JOptionPane.showMessageDialog(null, "Please Enter a Number");
-                        weekNumber.setText("");
-                }
-            } else {
-                    // Close window
-                    dispose();
-            }
+						confirmationLabel.setText("Successfully allocated referees: " + 
+								suitableRefs.get(0).getID() + " " + 
+								suitableRefs.get(1).getID());
+						cancelButton.setText("OK");
+						allocateButton.setEnabled(false);
+						controller.allocatedTableData(suitableRefs);
+					}
+				}
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(null, "Please Enter a Number");
+				weekNumber.setText("");
+			}
+		} else {
+			// Close window
+			dispose();
+		}
 	}
 }
