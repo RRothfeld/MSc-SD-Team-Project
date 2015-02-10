@@ -2,8 +2,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  * TODO Upon clicking the allocate button, a new small JFrame comes up
@@ -28,10 +31,12 @@ import javax.swing.JTextField;
 
 public class AllocateMatches extends JFrame implements ActionListener {
 
-    private JTextField weekNumber;
-    private JComboBox matchLevel, matchArea;
-    private JButton allocateReferees, cancelButton;
-    private JLabel weekLabel, levelLabel, locationLabel, confirmationLabel;
+	private JPanel main, top, match, buttons;
+	private JLabel week, level, location, confirmationLabel, titleLabel;
+	private JTextField weekNumber;
+	private JComboBox matchLevel;
+	private JComboBox matchLocation;
+	private JButton allocateButton, cancelButton;
     
     private JTable table;
     private final JavaBallController controller;
@@ -43,73 +48,74 @@ public class AllocateMatches extends JFrame implements ActionListener {
     public AllocateMatches(JavaBallController controller) {
 	
 	this.controller = controller;
-
-	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	
 	setTitle("Add Match");
-	setSize(500, 150);
-	setResizable(false);
+	setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	// setTitle("Add/Edit/Remove Referee");
+	setSize(400, 150);
 	setLocation(200, 200);
-	layoutTop();
-	layoutMiddle();
-	layoutBottom();
+	setResizable(false);
+	main = new JPanel(new BorderLayout());
+	// Adds top GUI components
+	topLayout();
+	matchDetailsLayout();
+	buttonLayout();
+	
     }
-
-    // This needs to be altered, but I wanted a label.
-    private void layoutTop() {
-	JPanel top = new JPanel();
-
-	weekLabel = new JLabel("Week No.  ");
-	levelLabel = new JLabel("Match Level  ");
-	locationLabel = new JLabel("Location  ");
-	top.add(weekLabel);
-	top.add(levelLabel);
-	top.add(locationLabel);
-	add(top, BorderLayout.NORTH);
+    
+    private void topLayout() {
+    	
+    	top = new JPanel();
+    	titleLabel = new JLabel("Add Match");
+    	titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+    	
+    	add(top, BorderLayout.NORTH);
+    	
     }
+    
+    private void matchDetailsLayout() {
 
-    private void layoutMiddle() {
+		match = new JPanel(new GridLayout(3,2));
 
-	JPanel middle = new JPanel();
-	// Creates and add text field for match week number
-	weekNumber = new JTextField(5);
-	middle.add(weekNumber);
-	// Creates and add JComboBox for selecting match level
-	matchLevel = new JComboBox();
-	matchLevel.setModel(new DefaultComboBoxModel(Match.Level.values()));
-	matchLevel.setEditable(false);
-	middle.add(matchLevel);
-	// Creates and add JComboBox for selecting match location
-	matchArea = new JComboBox();
-	matchArea.setEditable(false);
-	matchArea.setModel(new DefaultComboBoxModel(JavaBallController.Location
+		week = new JLabel("Week Number:");
+		level = new JLabel("Match Level:");
+		location = new JLabel("Match Location:");
+		weekNumber = new JTextField();
+		matchLevel = new JComboBox();
+		matchLevel.setModel(new DefaultComboBoxModel(Match.Level.values()));
+		matchLocation = new JComboBox();
+		matchLocation.setModel(new DefaultComboBoxModel(JavaBallController.Location
 		.values()));
-	middle.add(matchArea);
-	
-	// TODO DELETE LATER? DISCUSS
-	confirmationLabel = new JLabel("");
-	middle.add(confirmationLabel);
-	
-	// Adds panel 'top' to frame
-	add(middle, BorderLayout.CENTER);
+		
+		confirmationLabel = new JLabel("");
 
-    }
+		match.add(week);
+		match.add(weekNumber);
+		match.add(level);
+		match.add(matchLevel);
+		match.add(location);
+		match.add(matchLocation);
+		match.add(confirmationLabel);
 
-    private void layoutBottom() {
+		match.setBorder(BorderFactory.createLineBorder(Color.black));
+		add(match, BorderLayout.CENTER);
 
-	JPanel bottom = new JPanel();
-	// Create and add 'create match and allocate referees' button
-	bottom.setBackground(Color.gray);
-	allocateReferees = new JButton("Allocate Referees");
-	allocateReferees.addActionListener(this);
-	bottom.add(allocateReferees);
-	// Creates and add back button
-	cancelButton = new JButton("Cancel");
-	cancelButton.addActionListener(this);
-	bottom.add(cancelButton);
+	}
 
-	// Adds panel to frame
-	add(bottom, BorderLayout.SOUTH);
-    }
+    public void buttonLayout() {
+
+		buttons = new JPanel(new GridLayout(1,2));
+
+		allocateButton = new JButton("Allocate");
+		allocateButton.addActionListener(this);
+		cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(this);
+
+		buttons.add(allocateButton);
+		buttons.add(cancelButton);
+
+		add(buttons, BorderLayout.SOUTH);
+	}
 
 	/**
 	 * This method is used to handle events related to allocating matches
@@ -117,7 +123,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
 	 * @param ae
 	 */
 	public void actionPerformed(ActionEvent ae) {
-            if (ae.getSource() == allocateReferees) {
+            if (ae.getSource() == allocateButton) {
                 // referees for that match.
                 try {
 
@@ -130,7 +136,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
                     } else {
                         Match.Level level = (Match.Level) matchLevel
                                         .getSelectedItem();
-                        JavaBallController.Location area = (JavaBallController.Location) matchArea
+                        JavaBallController.Location area = (JavaBallController.Location) matchLocation
                                         .getSelectedItem();
 
                         ArrayList<Referee> suitableRefs = controller
@@ -147,7 +153,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
                                         suitableRefs.get(0).getID() + " " + 
                                         suitableRefs.get(1).getID());
                         cancelButton.setText("OK");
-                        allocateReferees.setEnabled(false);
+                        allocateButton.setEnabled(false);
                         controller.allocatedTableData(suitableRefs);
                         }
                     }

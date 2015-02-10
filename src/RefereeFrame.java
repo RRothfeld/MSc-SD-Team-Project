@@ -49,7 +49,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 	private Referee referee;
 	private final JavaBallController controller;
-	
+
 	private final int FRAME_WIDTH = 400;
 	private final int FRAME_HEIGHT = 325;
 
@@ -103,17 +103,17 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		refereePanel = new JPanel(new GridLayout(4,2));
 
 		idLabel = new JLabel();
-                idLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		idLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		idLabel.setText("ID:");
 		fnameLabel = new JLabel();
 		fnameLabel.setText("First Name:");
-                fnameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		fnameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lnameLabel = new JLabel();
-                lnameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		lnameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lnameLabel.setText("Second Name:");
 		allocationLabel = new JLabel("Match Allocations:");
-                allocationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-                
+		allocationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+
 		refIDLabel = new JLabel();
 		refFname = new JTextField(5);
 		refSname = new JTextField(5);
@@ -140,8 +140,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		refereePanel.add(refFname);
 		refereePanel.add(lnameLabel);
 		refereePanel.add(refSname);
-                refereePanel.add(allocationLabel);
-                refereePanel.add(refMatches);
+		refereePanel.add(allocationLabel);
+		refereePanel.add(refMatches);
 
 		refereePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(refereePanel, BorderLayout.NORTH);
@@ -153,32 +153,32 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	public void qualificationsLayout() {
 
 		qualificationsPanel = new JPanel(new GridLayout(2,2));
-		
+
 		njb = new JRadioButton(Referee.Qualifications.NJB.toString());
 		ijb = new JRadioButton(Referee.Qualifications.IJB.toString());
 		qualification = new ButtonGroup();
 		qualification.add(njb);
 		qualification.add(njb);
-		
-                njb.setHorizontalAlignment(SwingConstants.RIGHT);
-                ijb.setHorizontalAlignment(SwingConstants.RIGHT);
-                
+
+		njb.setHorizontalAlignment(SwingConstants.RIGHT);
+		ijb.setHorizontalAlignment(SwingConstants.RIGHT);
+
 		qualLevelLabel = new JLabel("Level");
 		qualLevel = new JComboBox<Integer>();
-                
-                qualLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                
+
+		qualLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
 		ButtonGroup qualButtons = new ButtonGroup();
 		qualButtons.add(njb);
 		qualButtons.add(ijb);
-                
+
 		for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++) {
 			qualLevel.addItem(i + "");
 		}
 
 		qualificationsPanel.add(njb);
 		qualificationsPanel.add(qualLevelLabel);
-                qualificationsPanel.add(ijb);
+		qualificationsPanel.add(ijb);
 		qualificationsPanel.add(qualLevel);
 
 		qualificationsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -201,8 +201,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		homeLoc.addItem("North");
 		homeLoc.addItem("Central");
 		homeLoc.addItem("South");
-		
-                
+
+
 		north = new JCheckBox("North");
 		central = new JCheckBox("Central");
 		south = new JCheckBox("South");
@@ -210,10 +210,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		save = new JButton("Save");
 		remove = new JButton("Remove");
 		cancel = new JButton("Cancel");
-                
-                save.addActionListener(this);
-                remove.addActionListener(this);
-                cancel.addActionListener(this);
+
+		save.addActionListener(this);
+		remove.addActionListener(this);
+		cancel.addActionListener(this);
 
 		homeLoc.setModel(new DefaultComboBoxModel(
 				JavaBallController.Location.values()));
@@ -294,50 +294,50 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * @param ae
 	 */
 	public void actionPerformed(ActionEvent ae) {
-            if (ae.getSource() == cancel) {
+		if (ae.getSource() == cancel) {
 
-                    // Close window
-                    dispose();
-            }
-            if (ae.getSource() == remove) {
-                    controller.removeReferee(referee);
-                    dispose();
-            }
-            if (ae.getSource() == save) {
+			// Close window
+			dispose();
+		}
+		if (ae.getSource() == remove) {
+			controller.removeReferee(referee);
+			dispose();
+		}
+		if (ae.getSource() == save) {
 
-                    if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
-                            JOptionPane.showMessageDialog(null, "Sorry.\n"
-                                            + "The Referee List is full!");
-                    } else {
-                            // Get travel locations for referee
-                        String n = north.isSelected() ? "Y" : "N";
-                        String c = central.isSelected() ? "Y" : "N";
-                        String s = south.isSelected() ? "Y" : "N";
-                        String travel = n + c + s;
-                        Referee.Qualifications qual = 
-                                    ijb.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
-                        
-                        if (this.referee == null) {
-                            
-                            controller.addReferee(refFname.getText(),
-                                refSname.getText(),
-                                qual,Integer.parseInt(String
-                                                .valueOf(qualLevel
-                                                .getSelectedItem())), Integer
-                                                .parseInt(refMatches.getText()),
-                                                (JavaBallController.Location) homeLoc
-                                                .getSelectedItem(), travel);
-                            controller.updateTable();
-                            dispose();
-                        }
+			if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
+				JOptionPane.showMessageDialog(null, "Sorry.\n"
+						+ "The Referee List is full!");
+			} else {
+				// Get travel locations for referee
+				String n = north.isSelected() ? "Y" : "N";
+				String c = central.isSelected() ? "Y" : "N";
+				String s = south.isSelected() ? "Y" : "N";
+				String travel = n + c + s;
+				Referee.Qualifications qual = 
+						ijb.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
 
-                            else {
-                                    controller.editReferee(referee, qual,
-                                        Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())),
-                                        (JavaBallController.Location) homeLoc.getSelectedItem(), travel);
-					
-                                    controller.updateTable();
-                                    dispose();
+				if (this.referee == null) {
+
+					controller.addReferee(refFname.getText(),
+							refSname.getText(),
+							qual,Integer.parseInt(String
+									.valueOf(qualLevel
+											.getSelectedItem())), Integer
+											.parseInt(refMatches.getText()),
+											(JavaBallController.Location) homeLoc
+											.getSelectedItem(), travel);
+					controller.updateTable();
+					dispose();
+				}
+
+				else {
+					controller.editReferee(referee, qual,
+							Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())),
+							(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
+
+					controller.updateTable();
+					dispose();
 				}
 			}
 		}
