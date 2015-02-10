@@ -194,6 +194,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		table.setSize(centrePanel.getWidth(), centrePanel.getHeight());
 		// Add tablePane to main GUI frame
 		centrePanel.add(tablePane);
+                if (controller.inputTooLarge())
+                {
+                    JOptionPane.showMessageDialog(null, "Your Refere List was too large.\n"
+                            + "Only the first 12 Referees will be shown.");
+                }
 	}
 
 	/**

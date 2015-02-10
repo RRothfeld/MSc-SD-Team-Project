@@ -25,13 +25,14 @@ import java.util.Iterator;
 
 public class RefereeList implements Iterable<Referee> {
 	/** The name of the referee input file */
-	public static final String INPUT_FILE = "RefereesIn.txt";
+	private static final String INPUT_FILE = "RefereesIn.txt";
 	
 	/** maximum number of listed referees */
 	public final static int MAX_REFEREES = 12;
 	
 	/** list of all registered referees */
 	private final ArrayList<Referee> listedReferees;
+        private boolean inputFileTooLarge;
 
 	/** Default constructor */
 	public RefereeList() {
@@ -295,7 +296,7 @@ public class RefereeList implements Iterable<Referee> {
 	 * Reads in provided file and populates RefereeList
 	 * @param refList the RefereeList to be populated
 	 */
-	private static void initFromFile(ArrayList<Referee> refList) {
+	private void initFromFile(ArrayList<Referee> refList) {
 		try {
 			// Set scope of FileReader
 			FileReader refereeFile = null;
@@ -303,13 +304,22 @@ public class RefereeList implements Iterable<Referee> {
 				// Initialise FileReader with input file and initialise scanner
 				refereeFile = new FileReader(INPUT_FILE);
 				Scanner refScanner = new Scanner(refereeFile);
-
+                                
 				// Read every line of input file and create referees
+                                int counter = 1;
 				while (refScanner.hasNextLine()) {
 					String newReferee = refScanner.nextLine();
 					if (newReferee != null) {
-						Referee referee = new Referee(newReferee);
+                                            if (counter < MAX_REFEREES)
+                                            {
+                                                Referee referee = new Referee(newReferee);
 						refList.add(referee);
+                                                counter++;
+                                            }
+                                            else {
+                                                inputFileTooLarge = true;
+                                                break;
+                                            }
 					}
 				}
 				// Close scanner after usage
@@ -341,6 +351,10 @@ public class RefereeList implements Iterable<Referee> {
 		return max;
 	}
 	
+        public boolean getFileSize()
+        {
+            return inputFileTooLarge;
+        }
 	/**
 	 * Returns an iterator of elements of type Referee
 	 */

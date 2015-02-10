@@ -98,6 +98,10 @@ public class JavaBallController {
     	}
     }
     
+    public boolean inputTooLarge()
+    {
+        return refList.getFileSize();
+    }
     /**
      * Method to return 
      * @param referee - The Referee We Want to Know about
