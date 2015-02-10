@@ -1,6 +1,6 @@
 import java.awt.BorderLayout;
-import java.awt.CheckboxGroup;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -161,8 +161,11 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		qualification.add(njb);
 
 		njb.setHorizontalAlignment(SwingConstants.RIGHT);
+                njb.setFont(new Font("Monospaced",Font.PLAIN,14));
+                
 		ijb.setHorizontalAlignment(SwingConstants.RIGHT);
-
+                ijb.setFont(new Font("Monospaced",Font.PLAIN,14));
+                
 		qualLevelLabel = new JLabel("Level");
 		qualLevel = new JComboBox<Integer>();
 
@@ -171,7 +174,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		ButtonGroup qualButtons = new ButtonGroup();
 		qualButtons.add(njb);
 		qualButtons.add(ijb);
-
+                //qualificationsPanel.setFontFamily(, "Monospaced");
 		for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++) {
 			qualLevel.addItem(i + "");
 		}
