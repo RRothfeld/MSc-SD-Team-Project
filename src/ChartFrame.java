@@ -48,27 +48,21 @@ public class ChartFrame extends JFrame {
 		// Store passed referee list
 		this.refList = refList;
 
-		if (this.refList.size() != 0) {
-			// Calculate JFrame width according to the number of referees and
-			// the necessary margins (left and right); minimum width of 150 px
-			int widthPerReferee = BAR_WIDTH + SPACING;
-			int margins = SPACING * 2;
-			frame_width = Math.max(refList.size() * widthPerReferee + margins,
-					300);
+		// Calculate JFrame width according to the number of referees and
+		// the necessary margins (left and right); minimum width of 150 px
+		int widthPerReferee = BAR_WIDTH + SPACING;
+		int margins = SPACING * 2;
+		frame_width = Math.max(refList.size() * widthPerReferee + margins, 300);
 
-			// Set JFrame properties
-			setTitle("Referee Chart");
-			setSize(frame_width, FRAME_HEIGHT);
-			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-			setResizable(false);
-			setLocationRelativeTo(null); // centres JFrame on desktop
+		// Set JFrame properties
+		setTitle("Referee Chart");
+		setSize(frame_width, FRAME_HEIGHT);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		setResizable(false);
+		setLocationRelativeTo(null); // centres JFrame on desktop
 
-			// Display column chart
-			add(new ChartComponent());
-		} else {
-			JOptionPane.showMessageDialog(null, "No referees!");
-			dispose();
-		}
+		// Display column chart
+		add(new ChartComponent());
 	}
 
 	/**

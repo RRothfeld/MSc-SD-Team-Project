@@ -67,11 +67,15 @@ public class JavaBallController {
     /**
      *
      */
-    public void openChart() {
-            chart = new ChartFrame(refList);
-            chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            chart.setVisible(true);
-    }
+	public void openChart() {
+		if (refList.size() > 0) {
+			chart = new ChartFrame(refList);
+			chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			chart.setVisible(true);
+		} else {
+			JOptionPane.showMessageDialog(null, "No referees!");
+		}
+	}
     
     /**
      * REFEREE OPERATION SECTION.

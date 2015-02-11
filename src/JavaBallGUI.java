@@ -55,8 +55,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JButton btnSearch, btnShowAll;
 	private JTable refereesTable;
 	private JLabel lblTableHeader;
-	private Component headerSpacerLeft, tableHeaderSpacer, tableSpacerLeft,
-			tableSpacerRight, tableSpacerBottom, tableSpacerTop;
+	private Component headerSpacerLeft, tableHeaderSpacerLeft, tableSpacerLeft,
+			tableSpacerRight, tableSpacerBottom, tableHeaderSpacerBottom;
 	private JPanel buttonPanel;
 	private Component navSpacerLeft;
 	private Component navSpacerRight;
@@ -67,8 +67,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private Component navSpacerTop;
 	private Component navSpacerBottom;
 	private JLabel lblNavigation;
-	private Component horizontalStrut_2;
-	private Component verticalStrut_2;
+	private Component tableHeaderSpacerRight;
+	private Component tableHeaderSpacerTop;
 	private JPanel headerTextPanel;
 	private JLabel lblHeader;
 	private JLabel lblSubHeader;
@@ -204,17 +204,17 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		btnShowAll.setEnabled(false);
 		tableResetPanel.add(btnShowAll);
 
-		horizontalStrut_2 = Box.createHorizontalStrut(5);
-		tableResetPanel.add(horizontalStrut_2);
+		tableHeaderSpacerRight = Box.createHorizontalStrut(5);
+		tableResetPanel.add(tableHeaderSpacerRight);
 
-		tableHeaderSpacer = Box.createHorizontalStrut(5);
-		tableHeaderPanel.add(tableHeaderSpacer, BorderLayout.WEST);
+		tableHeaderSpacerLeft = Box.createHorizontalStrut(5);
+		tableHeaderPanel.add(tableHeaderSpacerLeft, BorderLayout.WEST);
 
-		tableSpacerTop = Box.createVerticalStrut(5);
-		tableHeaderPanel.add(tableSpacerTop, BorderLayout.SOUTH);
+		tableHeaderSpacerBottom = Box.createVerticalStrut(5);
+		tableHeaderPanel.add(tableHeaderSpacerBottom, BorderLayout.SOUTH);
 
-		verticalStrut_2 = Box.createVerticalStrut(5);
-		tableHeaderPanel.add(verticalStrut_2, BorderLayout.NORTH);
+		tableHeaderSpacerTop = Box.createVerticalStrut(5);
+		tableHeaderPanel.add(tableHeaderSpacerTop, BorderLayout.NORTH);
 
 		refereesTable = controller.getTable();
 		refereesTable.setBackground(UIManager.getColor("menu"));
