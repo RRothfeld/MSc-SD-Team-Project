@@ -367,8 +367,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 			ijbButton.setSelected(true);
 			njbButton.setSelected(false);
 		} else {
-			ijbButton.setSelected(true);
-			njbButton.setSelected(false);
+			ijbButton.setSelected(false);
+			njbButton.setSelected(true);
 		}
 
 		refFnameField.setEditable(false);
