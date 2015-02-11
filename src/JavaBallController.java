@@ -5,11 +5,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.DefaultRowSorter;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
@@ -149,6 +151,7 @@ public class JavaBallController {
     public void editReferee(Referee referee,
                     Referee.Qualifications qualification, int qualLevel, Location home,
                     String travel) {
+        referee.updateTravelLocations(travel);
 
     }
 
@@ -296,7 +299,10 @@ public class JavaBallController {
      */
     public void updateTable()
     {
-        table.setModel(refereeTableModel());  
+        table.setModel(refereeTableModel());
+        DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
+        leftRender.setHorizontalAlignment( JLabel.LEFT );
+        table.getColumnModel().getColumn(4).setCellRenderer(leftRender);
 //        table.setAutoCreateRowSorter(true);
         
         DefaultRowSorter sorter = ((DefaultRowSorter)table.getRowSorter()); 
