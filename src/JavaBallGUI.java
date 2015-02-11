@@ -319,14 +319,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * 
 	 * @param label
 	 */
-	public void activateSuitabilityView(String label) {
+	public void setTableHeader(String label) {
 		btnShowAll.setEnabled(true);
 		lblTableHeader.setText(label);
 	}
 
 	/**
 	 * 
-	 * @param label
 	 */
 	public void resetTableHeader() {
 		lblTableHeader.setText(tableHeaderString);

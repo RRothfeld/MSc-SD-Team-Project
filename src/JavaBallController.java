@@ -199,7 +199,7 @@ public class JavaBallController {
     }
     
 	public void displaySuitableReferees(String label) {
-		view.activateSuitabilityView(label);
+		view.setTableHeader(label);
 	}
 	
 	public void setView(JavaBallGUI view) {
