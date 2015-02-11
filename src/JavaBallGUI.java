@@ -24,6 +24,7 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.FlowLayout;
 
 /**
  * Team Foxtrot JavaBall Referees - JavaBallGUI.java Defines JavaBall GUI that
@@ -47,13 +48,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private final String searchFieldString = "Enter name or ID...", tableHeaderString = "Referees ordered by ID";
 
 	private final int FRAME_WIDTH = 800;
-	private final int FRAME_HEIGHT = 500;
+	private final int FRAME_HEIGHT = 400;
 	private JPanel headerPanel, navPanel, searchPanel, tablePanel,
 			tableHeaderPanel, tableResetPanel;
 	private JTextField fldSearch;
 	private JButton btnSearch, btnShowAll;
 	private JTable refereesTable;
-	private JLabel lblLogo, lblTableHeader;
+	private JLabel lblTableHeader;
 	private Component headerSpacer, tableHeaderSpacer, tableSpacerLeft, tableSpacerRight, tableSpacerBottom, tableSpacerTop;
 	private JPanel innerNavPanel;
 	private Component horizontalStrut;
@@ -67,6 +68,13 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JLabel lblNavigation;
 	private Component horizontalStrut_2;
 	private Component verticalStrut_2;
+	private JPanel panel;
+	private JLabel lblJavaball;
+	private JLabel lblRefereeAllocationSystem;
+	private Component verticalGlue;
+	private Component verticalStrut_4;
+	private Component verticalStrut_5;
+	private Component verticalStrut_6;
 
 	/**
 	 * Constructor for JavaBallGUI
@@ -91,12 +99,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		getContentPane().add(headerPanel, BorderLayout.NORTH);
 		headerPanel.setLayout(new BorderLayout(0, 0));
 
-		lblLogo = new JLabel("JavaBall");
-		lblLogo.setFont(new Font("Dialog", Font.BOLD, 18));
-		lblLogo.setForeground(Color.WHITE);
-		headerPanel.add(lblLogo);
-
 		searchPanel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) searchPanel.getLayout();
+		flowLayout.setVgap(10);
 		searchPanel.setBackground(Color.DARK_GRAY);
 		headerPanel.add(searchPanel, BorderLayout.EAST);
 
@@ -110,6 +115,21 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		headerSpacer = Box.createHorizontalStrut(10);
 		headerPanel.add(headerSpacer, BorderLayout.WEST);
+		
+		panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
+		headerPanel.add(panel, BorderLayout.CENTER);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		
+		lblJavaball = new JLabel("JavaBall ");
+		lblJavaball.setForeground(Color.WHITE);
+		lblJavaball.setFont(new Font("Dialog", Font.BOLD, 18));
+		panel.add(lblJavaball);
+		
+		lblRefereeAllocationSystem = new JLabel("Referee Allocation System");
+		lblRefereeAllocationSystem.setFont(new Font("Dialog", Font.PLAIN, 18));
+		lblRefereeAllocationSystem.setForeground(Color.WHITE);
+		panel.add(lblRefereeAllocationSystem);
 
 		navPanel = new JPanel();
 		navPanel.setBackground(Color.LIGHT_GRAY);
@@ -117,53 +137,36 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		navPanel.setLayout(new BorderLayout(0, 0));
 		
 		innerNavPanel = new JPanel();
-		innerNavPanel.setBackground(Color.RED);
+		innerNavPanel.setBackground(Color.LIGHT_GRAY);
 		navPanel.add(innerNavPanel, BorderLayout.CENTER);
-		GridBagLayout gbl_innerNavPanel = new GridBagLayout();
-		gbl_innerNavPanel.columnWidths = new int[] {5, 0};
-		gbl_innerNavPanel.rowHeights = new int[]{86, 86, 86, 86, 86, 0};
-		gbl_innerNavPanel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_innerNavPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		innerNavPanel.setLayout(gbl_innerNavPanel);
+		innerNavPanel.setLayout(new BoxLayout(innerNavPanel, BoxLayout.Y_AXIS));
 		
 		lblNavigation = new JLabel("Navigation");
-		GridBagConstraints gbc_lblNavigation = new GridBagConstraints();
-		gbc_lblNavigation.fill = GridBagConstraints.BOTH;
-		gbc_lblNavigation.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNavigation.gridx = 0;
-		gbc_lblNavigation.gridy = 0;
-		innerNavPanel.add(lblNavigation, gbc_lblNavigation);
+		innerNavPanel.add(lblNavigation);
+		
+		verticalStrut_4 = Box.createVerticalStrut(5);
+		innerNavPanel.add(verticalStrut_4);
 		
 		button = new JButton("Add Referee");
-		GridBagConstraints gbc_button = new GridBagConstraints();
-		gbc_button.fill = GridBagConstraints.HORIZONTAL;
-		gbc_button.insets = new Insets(0, 0, 5, 0);
-		gbc_button.gridx = 0;
-		gbc_button.gridy = 1;
-		innerNavPanel.add(button, gbc_button);
+		innerNavPanel.add(button);
+		
+		verticalStrut_5 = Box.createVerticalStrut(5);
+		innerNavPanel.add(verticalStrut_5);
 		
 		button_1 = new JButton("Allocate Referees");
-		GridBagConstraints gbc_button_1 = new GridBagConstraints();
-		gbc_button_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_button_1.insets = new Insets(0, 0, 5, 0);
-		gbc_button_1.gridx = 0;
-		gbc_button_1.gridy = 2;
-		innerNavPanel.add(button_1, gbc_button_1);
+		innerNavPanel.add(button_1);
+		
+		verticalStrut_6 = Box.createVerticalStrut(5);
+		innerNavPanel.add(verticalStrut_6);
 		
 		button_2 = new JButton("Show Chart");
-		GridBagConstraints gbc_button_2 = new GridBagConstraints();
-		gbc_button_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_button_2.insets = new Insets(0, 0, 5, 0);
-		gbc_button_2.gridx = 0;
-		gbc_button_2.gridy = 3;
-		innerNavPanel.add(button_2, gbc_button_2);
+		innerNavPanel.add(button_2);
+		
+		verticalGlue = Box.createVerticalGlue();
+		innerNavPanel.add(verticalGlue);
 		
 		button_3 = new JButton("Save and Exit");
-		GridBagConstraints gbc_button_3 = new GridBagConstraints();
-		gbc_button_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_button_3.gridx = 0;
-		gbc_button_3.gridy = 4;
-		innerNavPanel.add(button_3, gbc_button_3);
+		innerNavPanel.add(button_3);
 		
 		horizontalStrut = Box.createHorizontalStrut(5);
 		navPanel.add(horizontalStrut, BorderLayout.WEST);
