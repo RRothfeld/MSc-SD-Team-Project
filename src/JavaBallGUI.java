@@ -21,6 +21,7 @@ import javax.swing.Box;
 import javax.swing.UIManager;
 
 import net.miginfocom.swing.MigLayout;
+import javax.swing.SwingConstants;
 
 /**
  * Team Foxtrot JavaBall Referees - JavaBallGUI.java Defines JavaBall GUI that
@@ -42,6 +43,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 	private final JavaBallController controller;
 	private final String searchFieldString = "Enter name or ID...";
+	private final String tableHeaderString = "Referees ordered by ID";
 
 	private final int FRAME_WIDTH = 800;
 	private final int FRAME_HEIGHT = 500;
@@ -127,7 +129,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		tablePanel.add(tableHeaderPanel, BorderLayout.NORTH);
 		tableHeaderPanel.setLayout(new BorderLayout(0, 0));
 
-		lblTableHeader = new JLabel("Referees by ID");
+		lblTableHeader = new JLabel(tableHeaderString);
+//		lblTableHeader.setVerticalAlignment(SwingConstants.BOTTOM);
 		tableHeaderPanel.add(lblTableHeader);
 
 		tableResetPanel = new JPanel();
@@ -138,7 +141,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		btnShowAll.setEnabled(false);
 		tableResetPanel.add(btnShowAll);
 
-		tableHeaderSpacer = Box.createHorizontalStrut(10);
+		tableHeaderSpacer = Box.createHorizontalStrut(5);
 		tableHeaderPanel.add(tableHeaderSpacer, BorderLayout.WEST);
 		
 		tableSpacerTop = Box.createVerticalStrut(5);
@@ -165,10 +168,10 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		JScrollPane tablePane = new JScrollPane(refereesTable);
 		tablePanel.add(tablePane);
 		
-		tableSpacerLeft = Box.createHorizontalStrut(10);
+		tableSpacerLeft = Box.createHorizontalStrut(5);
 		tablePanel.add(tableSpacerLeft, BorderLayout.WEST);
 		
-		tableSpacerRight = Box.createHorizontalStrut(10);
+		tableSpacerRight = Box.createHorizontalStrut(4);
 		tablePanel.add(tableSpacerRight, BorderLayout.EAST);
 		
 		tableSpacerBottom = Box.createVerticalStrut(5);
@@ -236,13 +239,21 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				fldSearch.setText(searchFieldString);
 			}
 		} else if (ae.getSource() == btnShowAll) {
+			lblTableHeader.setText(tableHeaderString);
 			controller.updateTable();
-			JOptionPane.showMessageDialog(null, "Referee table now ordered by "
-					+ "referee ID.");
-			fldSearch.setText(searchFieldString);
+			btnShowAll.setEnabled(false);
 		} else if (ae.getSource() == btnSaveAndExit) {
 			// If save and exit button is pressed
 			controller.saveExit();
 		}
+	}
+	
+	/**
+	 * 
+	 * @param label
+	 */
+	public void displaySuitableReferees(String label) {
+		btnShowAll.setEnabled(true);
+		lblTableHeader.setText(label);
 	}
 }

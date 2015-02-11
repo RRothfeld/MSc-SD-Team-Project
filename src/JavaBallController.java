@@ -4,12 +4,12 @@ import javax.swing.WindowConstants;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.swing.DefaultRowSorter;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
-
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
@@ -32,6 +32,7 @@ import javax.swing.table.TableModel;
  */
 public class JavaBallController {
 	
+	private JavaBallGUI view;
     private final Season season;
     private final RefereeList refList;
     private ChartFrame chart;
@@ -59,7 +60,7 @@ public class JavaBallController {
      * @param refList
      */
     public JavaBallController(Season season, RefereeList refList) {
-		this.season = season;
+    	this.season = season;
 		this.refList = refList;
     }
 
@@ -200,6 +201,14 @@ public class JavaBallController {
             return null;
         }
     }
+    
+	public void displaySuitableReferees(String label) {
+		view.displaySuitableReferees(label);
+	}
+	
+	public void setView(JavaBallGUI view) {
+		this.view = view;
+	}
 
 
     /**

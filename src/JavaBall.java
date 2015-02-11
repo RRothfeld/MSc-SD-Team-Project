@@ -29,8 +29,10 @@ public class JavaBall {
 		JavaBallController controller = new JavaBallController(season,
 				refList);
                 
-                // initialise view
+        // initialise view
 		JavaBallGUI view = new JavaBallGUI(controller);
 		view.setVisible(true);
+		
+		controller.setView(view);
 	}
 }

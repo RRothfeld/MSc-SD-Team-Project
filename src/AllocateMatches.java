@@ -163,8 +163,6 @@ public class AllocateMatches extends JFrame implements ActionListener {
 				if (week < Season.MIN_WEEK || week > Season.MAX_WEEK) {
 					JOptionPane.showMessageDialog(null, "Invalid Week Number");
 					weekNumber.setText("");
-				} else if (false) {
-					// TODO test if week number already taken 
 				} else {
 					Match.Level level = (Match.Level) matchLevel
 							.getSelectedItem();
@@ -187,6 +185,8 @@ public class AllocateMatches extends JFrame implements ActionListener {
 						cancelButton.setText("OK");
 						allocateButton.setEnabled(false);
 						controller.allocatedTableData(suitableRefs);
+						
+						controller.displaySuitableReferees("Referees ordered by suitability for Match " + week);
 					}
 				}
 			} catch (NumberFormatException ex) {
