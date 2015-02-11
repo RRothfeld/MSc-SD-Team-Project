@@ -319,7 +319,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * 
 	 * @param label
 	 */
-	public void displaySuitableReferees(String label) {
+	public void activateSuitabilityView(String label) {
 		btnShowAll.setEnabled(true);
 		lblTableHeader.setText(label);
 	}
