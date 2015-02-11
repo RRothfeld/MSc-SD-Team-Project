@@ -38,21 +38,22 @@ import javax.swing.SwingConstants;
 public final class RefereeFrame extends JFrame implements ActionListener {
 
 	// GUI components for referee frame
-	private JPanel main, refereePanel, qualificationsPanel, locationsPanel;
-	private JLabel idLabel,refIDLabel,fnameLabel,lnameLabel,allocationLabel,qualLevelLabel,homeLabel;
-	private JTextField refFname, refSname, refMatches;
+	private JPanel mainPanel, refereePanel, qualificationsPanel, locationsPanel;
+	private JLabel idLabel,refIDLabel,fnameLabel,lnameLabel,allocationLabel,
+	qualLevelLabel,homeLabel;
+	private JTextField refFnameField, refLnameField, refMatchesField;
 	private JComboBox qualLevel;
 	private JComboBox homeLoc;
-	private JRadioButton njb, ijb;
-	private JCheckBox north, central, south;
-	private JButton save, remove, cancel;
-	private ButtonGroup qualification;
-
+	private JRadioButton njbButton, ijbButton;
+	private JCheckBox northCheckbox, centralCheckbox, southCheckbox;
+	private JButton saveButton, removeButton, cancelButton;
+	private ButtonGroup qualificationGroup;
+	// Title for referee frame
 	private String refFrameTitle;
 
 	private Referee referee;
 	private final JavaBallController controller;
-
+	// Dimensions of referee frame
 	private final int FRAME_WIDTH = 400;
 	private final int FRAME_HEIGHT = 400;
 
@@ -69,12 +70,12 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setLocation(200, 200);
 		setResizable(false);
-		main = new JPanel(new BorderLayout());
+		mainPanel = new JPanel(new BorderLayout());
 		// Adds top GUI components
 		refLayout();
 		qualificationsLayout();
 		locationsAndButtonsLayout();
-		add(main);
+		add(mainPanel);
 
 	}
 
@@ -100,10 +101,11 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * Method to add labels to GUI.
+	 * Method to create and add referee detail components to main panel in the 
+	 * RefereeFrame GUI. Details include referee ID, first name, second name,
+	 * and number of match allocations.
 	 */
 	public void refLayout() {
-
 
 		refereePanel = new JPanel(new BorderLayout());
 		JPanel refereeSubPanel = new JPanel(new GridLayout(4,2)); 
@@ -125,15 +127,15 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		allocationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		refIDLabel = new JLabel();
-		refFname = new JTextField(5);
-		refSname = new JTextField(5);
-		refMatches = new JTextField(5);
+		refFnameField = new JTextField(5);
+		refLnameField = new JTextField(5);
+		refMatchesField = new JTextField(5);
 
-		refSname.addFocusListener(new FocusAdapter() {
+		refLnameField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				String firstName = refFname.getText().trim();
-				String lastName = refSname.getText().trim();
+				String firstName = refFnameField.getText().trim();
+				String lastName = refLnameField.getText().trim();
 				if ((firstName != null && lastName != null)) {
 					if (!(firstName.equals("") || lastName.equals(""))) {
 						String ID = controller.createID(firstName, lastName);
@@ -146,11 +148,11 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		refereeSubPanel.add(idLabel);
 		refereeSubPanel.add(refIDLabel);
 		refereeSubPanel.add(fnameLabel);
-		refereeSubPanel.add(refFname);
+		refereeSubPanel.add(refFnameField);
 		refereeSubPanel.add(lnameLabel);
-		refereeSubPanel.add(refSname);
+		refereeSubPanel.add(refLnameField);
 		refereeSubPanel.add(allocationLabel);
-		refereeSubPanel.add(refMatches);
+		refereeSubPanel.add(refMatchesField);
 
 		// Creates panel for panel title
 		JPanel titlePanel = new JPanel();
@@ -171,48 +173,48 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 *
+	 * Method to create and add referee qualification detail components to main
+	 *  panel in the RefereeFrame GUI.
 	 */
 	public void qualificationsLayout() {
 
 		qualificationsPanel = new JPanel(new BorderLayout());
-                qualificationsPanel.setBackground(Color.lightGray);
-                
+		qualificationsPanel.setBackground(Color.lightGray);
+
 		JPanel qualSubPanel = new JPanel(new GridLayout(2,2)); 
 		qualSubPanel.setBackground(Color.lightGray);
 		JPanel east = new JPanel();
 		JPanel west = new JPanel();
 		JPanel south = new JPanel();
 
-		njb = new JRadioButton(Referee.Qualifications.NJB.toString());
-		ijb = new JRadioButton(Referee.Qualifications.IJB.toString());
-		qualification = new ButtonGroup();
-		qualification.add(njb);
-		qualification.add(njb);
+		njbButton = new JRadioButton(Referee.Qualifications.NJB.toString());
+		ijbButton = new JRadioButton(Referee.Qualifications.IJB.toString());
+		qualificationGroup = new ButtonGroup();
+		qualificationGroup.add(njbButton);
+		qualificationGroup.add(njbButton);
 
-		njb.setHorizontalAlignment(SwingConstants.RIGHT);
-		njb.setFont(new Font("Monospaced",Font.PLAIN,14));
+		njbButton.setHorizontalAlignment(SwingConstants.RIGHT);
+		njbButton.setFont(new Font("Monospaced",Font.PLAIN,14));
 
-		ijb.setHorizontalAlignment(SwingConstants.RIGHT);
-		ijb.setFont(new Font("Monospaced",Font.PLAIN,14));
+		ijbButton.setHorizontalAlignment(SwingConstants.RIGHT);
+		ijbButton.setFont(new Font("Monospaced",Font.PLAIN,14));
 
 		qualLevelLabel = new JLabel("Level");
 		qualLevel = new JComboBox<Integer>();
-
-		qualLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-		ButtonGroup qualButtons = new ButtonGroup();
-		qualButtons.add(njb);
-		qualButtons.add(ijb);
-
+		
+		// Adds level values to qualification level JComboBox 
 		for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++) {
 			qualLevel.addItem(i + "");
 		}
+		qualLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
+		ButtonGroup qualButtons = new ButtonGroup();
+		qualButtons.add(njbButton);
+		qualButtons.add(ijbButton);
 
-		qualSubPanel.add(njb);
+		qualSubPanel.add(njbButton);
 		qualSubPanel.add(qualLevelLabel);
-		qualSubPanel.add(ijb);
+		qualSubPanel.add(ijbButton);
 		qualSubPanel.add(qualLevel);
 
 		// Creates panel for panel title
@@ -229,12 +231,13 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		qualificationsPanel.add(south, BorderLayout.SOUTH);
 		qualificationsPanel.add(titlePanel, BorderLayout.NORTH);
 		qualificationsPanel.add(qualSubPanel, BorderLayout.CENTER);
-		main.add(qualificationsPanel, BorderLayout.CENTER);
+		mainPanel.add(qualificationsPanel, BorderLayout.CENTER);
 	}
 
 
 	/**
-	 *
+	 * Method to create and add referee location detail components and the 
+	 * buttons to the main panel in the RefereeFrame GUI.
 	 */
 	public void locationsAndButtonsLayout() {
 
@@ -256,17 +259,17 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		homeLoc.addItem("South");
 
 
-		north = new JCheckBox("North");
-		central = new JCheckBox("Central");
-		south = new JCheckBox("South");
+		northCheckbox = new JCheckBox("North");
+		centralCheckbox = new JCheckBox("Central");
+		southCheckbox = new JCheckBox("South");
 
-		save = new JButton("Save");
-		remove = new JButton("Remove");
-		cancel = new JButton("Cancel");
+		saveButton = new JButton("Save");
+		removeButton = new JButton("Remove");
+		cancelButton = new JButton("Cancel");
 
-		save.addActionListener(this);
-		remove.addActionListener(this);
-		cancel.addActionListener(this);
+		saveButton.addActionListener(this);
+		removeButton.addActionListener(this);
+		cancelButton.addActionListener(this);
 
 		homeLoc.setModel(new DefaultComboBoxModel(
 				JavaBallController.Location.values()));
@@ -278,32 +281,32 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 						(JavaBallController.Location) homeLoc
 						.getSelectedItem();
 				if (selectedLocation.equals(homeLoc.getItemAt(0))) 
-                                {
-                                    north.setSelected(true);
-                                    central.setSelected(false);
-                                    south.setSelected(false);
+				{
+					northCheckbox.setSelected(true);
+					centralCheckbox.setSelected(false);
+					southCheckbox.setSelected(false);
 				} else if ((selectedLocation.equals(homeLoc.getItemAt(1)))) 
-                                {
-                                    north.setSelected(false);
-                                    south.setSelected(false);
-                                    central.setSelected(true);
+				{
+					northCheckbox.setSelected(false);
+					southCheckbox.setSelected(false);
+					centralCheckbox.setSelected(true);
 				} else 
-                                {
-                                    north.setSelected(false);
-                                    central.setSelected(false);
-                                    south.setSelected(true);
+				{
+					northCheckbox.setSelected(false);
+					centralCheckbox.setSelected(false);
+					southCheckbox.setSelected(true);
 				}
 			}
 		});
 
 		homePanel.add(homeLabel);
 		homePanel.add(homeLoc);
-		visitPanel.add(north);
-		visitPanel.add(central);
-		visitPanel.add(south);
-		buttonPanel.add(save);
-		buttonPanel.add(remove);
-		buttonPanel.add(cancel);
+		visitPanel.add(northCheckbox);
+		visitPanel.add(centralCheckbox);
+		visitPanel.add(southCheckbox);
+		buttonPanel.add(saveButton);
+		buttonPanel.add(removeButton);
+		buttonPanel.add(cancelButton);
 
 		// Creates panel for panel title
 		JPanel titlePanel = new JPanel();
@@ -312,7 +315,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		title.setFont(new Font("Monospaced",Font.BOLD,14));
 		// Adds label to panel
 		titlePanel.add(title);
-		
+
 		homePanel.setBackground(Color.lightGray);
 		visitPanel.setBackground(Color.lightGray);
 		//buttonPanel.setBackground(Color.lightGray);
@@ -329,7 +332,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		locationSubPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		locationsPanel.add(locationSubPanel, BorderLayout.CENTER);
-		main.add(locationsPanel, BorderLayout.SOUTH);
+		mainPanel.add(locationsPanel, BorderLayout.SOUTH);
 
 	}
 
@@ -339,7 +342,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * @param state 
 	 */
 	public void setRemoveButtonEnabled(boolean state) {
-		remove.setEnabled(state);
+		removeButton.setEnabled(state);
 	}
 
 	/**
@@ -348,13 +351,13 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	private void setDetails(){
 
 		refIDLabel.setText(referee.getID());
-		refFname.setText(referee.getFirstName());
-		refSname.setText(referee.getLastName());
-		refMatches.setText(Integer.toString(referee.getAllocations()));
+		refFnameField.setText(referee.getFirstName());
+		refLnameField.setText(referee.getLastName());
+		refMatchesField.setText(Integer.toString(referee.getAllocations()));
 
-		refFname.setEditable(false);
-		refSname.setEditable(false);
-		refMatches.setEditable(false);
+		refFnameField.setEditable(false);
+		refLnameField.setEditable(false);
+		refMatchesField.setEditable(false);
 
 	}
 
@@ -362,9 +365,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 *
 	 */
 	public void setLocations() {
-		north.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
-		central.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
-		south.setSelected(controller.refTravel(referee, JavaBallController.Location.SOUTH));
+		northCheckbox.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
+		centralCheckbox.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
+		southCheckbox.setSelected(controller.refTravel(referee, JavaBallController.Location.SOUTH));
 	}
 
 
@@ -375,69 +378,69 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * @param ae
 	 */
 	public void actionPerformed(ActionEvent ae) {
-            if (ae.getSource() == cancel) {
+		if (ae.getSource() == cancelButton) {
 
-                    // Close window
-                    dispose();
-            }
-            if (ae.getSource() == remove) {
-                    controller.removeReferee(referee);
-                    dispose();
-            }
-            if (ae.getSource() == save) {
+			// Close window
+			dispose();
+		}
+		if (ae.getSource() == removeButton) {
+			controller.removeReferee(referee);
+			dispose();
+		}
+		if (ae.getSource() == saveButton) {
 
-                if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
-                        JOptionPane.showMessageDialog(null, "Sorry.\n"
-                                        + "The Referee List is full!");
+			if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
+				JOptionPane.showMessageDialog(null, "Sorry.\n"
+						+ "The Referee List is full!");
 
-                } else {
+			} else {
 
-                    if (refFname.getText() == null || refFname.getText().equals(""))
-                    {
-                        fnameLabel.setForeground(Color.red);
-                    }  
-                    if (refSname.getText() == null || refSname.getText().equals(""))
-                    {
-                        lnameLabel.setForeground(Color.red);
-                    }
-                    if (refMatches.getText() == null || refMatches.getText().equals(""))
-                    {
-                        allocationLabel.setForeground(Color.red);
-                    }
-                    // Get travel locations for referee
-                    String n = north.isSelected() ? "Y" : "N";
-                    String c = central.isSelected() ? "Y" : "N";
-                    String s = south.isSelected() ? "Y" : "N";
-                    String travel = n + c + s;
-                    Referee.Qualifications qual = 
-                                ijb.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
+				if (refFnameField.getText() == null || refFnameField.getText().equals(""))
+				{
+					fnameLabel.setForeground(Color.red);
+				}  
+				if (refLnameField.getText() == null || refLnameField.getText().equals(""))
+				{
+					lnameLabel.setForeground(Color.red);
+				}
+				if (refMatchesField.getText() == null || refMatchesField.getText().equals(""))
+				{
+					allocationLabel.setForeground(Color.red);
+				}
+				// Get travel locations for referee
+				String n = northCheckbox.isSelected() ? "Y" : "N";
+				String c = centralCheckbox.isSelected() ? "Y" : "N";
+				String s = southCheckbox.isSelected() ? "Y" : "N";
+				String travel = n + c + s;
+				Referee.Qualifications qual = 
+						ijbButton.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
 
-                    if (this.referee == null) 
-                    {
-                        if (!(refFname.getText().equals("")) && !(refSname.getText().equals("")))
-                        {
-                            controller.addReferee(refFname.getText(),
-                                    refSname.getText(),qual,
-                                    Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
-                                    Integer.parseInt(refMatches.getText()),
-                                    (JavaBallController.Location) homeLoc.getSelectedItem(), travel);
-                            controller.updateTable();
-                            dispose();
+				if (this.referee == null) 
+				{
+					if (!(refFnameField.getText().equals("")) && !(refLnameField.getText().equals("")))
+					{
+						controller.addReferee(refFnameField.getText(),
+								refLnameField.getText(),qual,
+								Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
+								Integer.parseInt(refMatchesField.getText()),
+								(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
+						controller.updateTable();
+						dispose();
 
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
-                        }				
+					} else {
+						JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
+					}				
 
-                    }
-                    else {
-                        controller.editReferee(referee, qual,
-                            Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())),
-                            (JavaBallController.Location) homeLoc.getSelectedItem(), travel);
+				}
+				else {
+					controller.editReferee(referee, qual,
+							Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())),
+							(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
 
-                        controller.updateTable();
-                        dispose();
-                    }
-                }
-            }
+					controller.updateTable();
+					dispose();
+				}
+			}
+		}
 	}
 }
