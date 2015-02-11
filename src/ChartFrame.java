@@ -6,13 +6,15 @@ import java.awt.Graphics2D;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
- * Team Foxtrot - JavaBall Referees
+ * Team Foxtrot
+ * JavaBall Referee Allocation System
+ * <p>
  * Shows a bar chart of all referees and the number of allocations per referee
  * <p>
- * University of Glasgow MSc/PGDip Information Technology/Software Development
+ * University of Glasgow
+ * MSc/PGDip Information Technology/Software Development
  * Team Project 2014/15
  *
  * @author Miroslav Pashov (1005139p)
@@ -20,10 +22,9 @@ import javax.swing.JOptionPane;
  * @author Marco Cook (2152599c)
  * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.2 - final
- * @since 07-02-2015
+ * @version 1.3 - final
+ * @since 11-02-2015
  */
-
 public class ChartFrame extends JFrame {
 	/** RefereeList Object with all Referees to be displayed */
 	private final RefereeList refList;

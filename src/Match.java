@@ -1,20 +1,21 @@
-
 /**
- * Team Foxtrot JavaBall Referees 
- * Class which holds information relating to ma
+ * Team Foxtrot
+ * JavaBall Referee Allocation System
  * <p>
- * University of Glasgow MSc/PGDip Information Technology/Software Development
+ * Class for storing match related information
+ * <p>
+ * University of Glasgow
+ * MSc/PGDip Information Technology/Software Development
  * Team Project 2014/15
  *
- * @author Miroslav Pashov, 1005139P
- * @author Andrew Lowson, 0800685L
- * @author Marco Cook, 2152599C
- * @author Raoul Rothfeld, 2164502R
+ * @author Miroslav Pashov (1005139p)
+ * @author Andrew Lowson (0800685l)
+ * @author Marco Cook (2152599c)
+ * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.1
- * @since 25-01-2015
+ * @version 1.2
+ * @since 11-02-2015
  */
-
 public class Match {
     /** The level of play in a match */
     public enum Level {

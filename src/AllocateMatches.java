@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -19,17 +18,23 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 /**
- * TODO Upon clicking the allocate button, a new small JFrame comes up
- * which contains areas to input the information of a match (week
- * number, area and level). There is a cancel button, and a get suitable
- * referees upon clicking this button the small JFrame is disposed and
- * the main referee table is filtered to show the listed suitable
- * referees, along with a note saying it is ordered and filtered
- * according to suitability and there is a button to reset the table (No
- * filter, and sort by the default ID).
+ * Team Foxtrot
+ * JavaBall Referee Allocation System
+ * <p>
+ * Window to input match information and request referee allocation
+ * <p>
+ * University of Glasgow
+ * MSc/PGDip Information Technology/Software Development
+ * Team Project 2014/15
+ *
+ * @author Miroslav Pashov (1005139p)
+ * @author Andrew Lowson (0800685l)
+ * @author Marco Cook (2152599c)
+ * @author Raoul Rothfeld (2164502r)
  * 
+ * @version 1.7
+ * @since 11-02-2015
  */
-
 public class AllocateMatches extends JFrame implements ActionListener {
 
 	private JPanel main, top, match, buttons;

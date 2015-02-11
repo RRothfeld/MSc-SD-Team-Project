@@ -1,21 +1,23 @@
 import java.util.ArrayList;
 
 /**
- * Team Foxtrot - JavaBall Referees Aggregation class for all available and
- * registered referees
+ * Team Foxtrot
+ * JavaBall Referee Allocation System
  * <p>
- * University of Glasgow MSc/PGDip Information Technology/Software Development
+ * Class for storing referee related information
+ * <p>
+ * University of Glasgow
+ * MSc/PGDip Information Technology/Software Development
  * Team Project 2014/15
  *
- * @author Miroslav Pashov, 1005139P
- * @author Andrew Lowson, 0800685L
- * @author Marco Cook, 2152599C
- * @author Raoul Rothfeld, 2164502R
+ * @author Miroslav Pashov (1005139p)
+ * @author Andrew Lowson (0800685l)
+ * @author Marco Cook (2152599c)
+ * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.1
- * @since 21-01-2015
+ * @version 1.2
+ * @since 11-02-2015
  */
-
 public class Referee implements Comparable<Referee> {
 
     // Basic information about Referee from the input file/user.
@@ -59,7 +61,7 @@ public class Referee implements Comparable<Referee> {
 	this.qualification = "";
 
 	this.preSeasonAllocations = 0;
-	this.allocatedMatchesList = new ArrayList();
+	this.allocatedMatchesList = new ArrayList<Match>();
     }
 
     /**

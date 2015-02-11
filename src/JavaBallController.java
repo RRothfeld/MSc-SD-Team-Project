@@ -15,20 +15,22 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
- * Team Foxtrot - JavaBall Referees
+ * Team Foxtrot
+ * JavaBall Referee Allocation System
+ * <p>
  * The controller class
  * <p>
  * University of Glasgow
  * MSc/PGDip Information Technology/Software Development
  * Team Project 2014/15
  *
- * @author  Miroslav Pashov, 1005139P
- * @author  Andrew Lowson, 0800685L
- * @author  Marco Cook, 2152599C
- * @author  Raoul Rothfeld, 2164502R
+ * @author Miroslav Pashov (1005139p)
+ * @author Andrew Lowson (0800685l)
+ * @author Marco Cook (2152599c)
+ * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.1
- * @since   01-02-2015
+ * @version 1.2
+ * @since 11-02-2015
  */
 public class JavaBallController {
 	

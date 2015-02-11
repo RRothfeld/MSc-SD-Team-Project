@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,17 +23,24 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-/**TODO 
- * Subclass that contains the frame and components for the add/edit/remove 
- * referee display.
- * create one JFrame that is used for both adding, editing and deleting 
- * referees.
+/**
+ * Team Foxtrot
+ * JavaBall Referee Allocation System
+ * <p>
+ * Window to input or edit referee information; or delete an existing referees
+ * <p>
+ * University of Glasgow
+ * MSc/PGDip Information Technology/Software Development
+ * Team Project 2014/15
+ *
+ * @author Miroslav Pashov (1005139p)
+ * @author Andrew Lowson (0800685l)
+ * @author Marco Cook (2152599c)
+ * @author Raoul Rothfeld (2164502r)
  * 
- * If adding a referee then save button is enabled and delete button is 
- * disabled.If if deleting a referee then save is disabled and delete is 
- * enabled. 
+ * @version 1.2
+ * @since 11-02-2015
  */
-
 public final class RefereeFrame extends JFrame implements ActionListener {
 
 	// GUI components for referee frame

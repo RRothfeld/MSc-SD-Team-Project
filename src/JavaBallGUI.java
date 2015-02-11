@@ -40,7 +40,6 @@ import java.awt.FlowLayout;
  * @version 1.7
  * @since 11-02-2015
  */
-
 public class JavaBallGUI extends JFrame implements ActionListener {
 
 	private final JavaBallController controller;
