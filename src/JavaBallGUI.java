@@ -43,8 +43,8 @@ import java.awt.FlowLayout;
 public class JavaBallGUI extends JFrame implements ActionListener {
 
 	private final JavaBallController controller;
-	private final String searchFieldString = "Enter name or ID...",
-			tableHeaderString = "Referees ordered by ID";
+	private final String searchFieldString = "Enter name or ID...";
+	private final String tableHeaderString = "Referees ordered by ID";
 
 	private final int FRAME_WIDTH = 800;
 	private final int FRAME_HEIGHT = 400;
@@ -203,7 +203,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		btnShowAll.setEnabled(false);
 		tableResetPanel.add(btnShowAll);
 
-		tableHeaderSpacerRight = Box.createHorizontalStrut(5);
+		tableHeaderSpacerRight = Box.createHorizontalStrut(5 + 1);
 		tableResetPanel.add(tableHeaderSpacerRight);
 
 		tableHeaderSpacerLeft = Box.createHorizontalStrut(5);

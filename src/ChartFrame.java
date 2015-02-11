@@ -48,6 +48,7 @@ public class ChartFrame extends JFrame {
 	public ChartFrame(RefereeList refList) {
 		// Store passed referee list
 		this.refList = refList;
+		this.refList.sort();
 
 		// Calculate JFrame width according to the number of referees and
 		// the necessary margins (left and right); minimum width of 150 px
