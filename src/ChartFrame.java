@@ -61,6 +61,7 @@ public class ChartFrame extends JFrame {
 			setSize(frame_width, FRAME_HEIGHT);
 			setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			setResizable(false);
+			setLocationRelativeTo(null); // centres JFrame on desktop
 
 			// Display column chart
 			add(new ChartComponent());
