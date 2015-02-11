@@ -108,9 +108,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		refereePanel = new JPanel(new BorderLayout());
 		JPanel refereeSubPanel = new JPanel(new GridLayout(4,2)); 
 		refereeSubPanel.setBackground(Color.lightGray);
-		JPanel east = new JPanel();
-		JPanel west = new JPanel();
-		JPanel south = new JPanel();
+		JPanel eastPanel = new JPanel();
+		JPanel westPanel = new JPanel();
+		JPanel southPanel = new JPanel();
 
 		idLabel = new JLabel();
 		idLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -120,7 +120,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		fnameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		lnameLabel = new JLabel();
 		lnameLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lnameLabel.setText("Second Name:");
+		lnameLabel.setText("Last Name:");
 		allocationLabel = new JLabel("Match Allocations:");
 		allocationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
@@ -162,9 +162,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 
 		refereeSubPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		refereePanel.add(east, BorderLayout.EAST);
-		refereePanel.add(west, BorderLayout.WEST);
-		refereePanel.add(south, BorderLayout.SOUTH);
+		refereePanel.add(eastPanel, BorderLayout.EAST);
+		refereePanel.add(westPanel, BorderLayout.WEST);
+		refereePanel.add(southPanel, BorderLayout.SOUTH);
 		refereePanel.add(titlePanel, BorderLayout.NORTH);
 		refereePanel.add(refereeSubPanel, BorderLayout.CENTER);
 		add(refereePanel, BorderLayout.NORTH);
@@ -176,6 +176,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	public void qualificationsLayout() {
 
 		qualificationsPanel = new JPanel(new BorderLayout());
+                qualificationsPanel.setBackground(Color.lightGray);
+                
 		JPanel qualSubPanel = new JPanel(new GridLayout(2,2)); 
 		qualSubPanel.setBackground(Color.lightGray);
 		JPanel east = new JPanel();
@@ -275,12 +277,21 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				JavaBallController.Location selectedLocation = 
 						(JavaBallController.Location) homeLoc
 						.getSelectedItem();
-				if (selectedLocation.equals(homeLoc.getItemAt(0))) {
-					north.setSelected(true);
-				} else if ((selectedLocation.equals(homeLoc.getItemAt(1)))) {
-					central.setSelected(true);
-				} else {
-					south.setSelected(true);
+				if (selectedLocation.equals(homeLoc.getItemAt(0))) 
+                                {
+                                    north.setSelected(true);
+                                    central.setSelected(false);
+                                    south.setSelected(false);
+				} else if ((selectedLocation.equals(homeLoc.getItemAt(1)))) 
+                                {
+                                    north.setSelected(false);
+                                    south.setSelected(false);
+                                    central.setSelected(true);
+				} else 
+                                {
+                                    north.setSelected(false);
+                                    central.setSelected(false);
+                                    south.setSelected(true);
 				}
 			}
 		});
@@ -364,72 +375,69 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * @param ae
 	 */
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == cancel) {
+            if (ae.getSource() == cancel) {
 
-			// Close window
-			dispose();
-		}
-		if (ae.getSource() == remove) {
-			controller.removeReferee(referee);
-			dispose();
-		}
-		if (ae.getSource() == save) {
+                    // Close window
+                    dispose();
+            }
+            if (ae.getSource() == remove) {
+                    controller.removeReferee(referee);
+                    dispose();
+            }
+            if (ae.getSource() == save) {
 
-			if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
-				JOptionPane.showMessageDialog(null, "Sorry.\n"
-						+ "The Referee List is full!");
+                if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
+                        JOptionPane.showMessageDialog(null, "Sorry.\n"
+                                        + "The Referee List is full!");
 
-			} else {
+                } else {
 
-				if (refFname.getText() == null || refFname.getText().equals(""))
-				{
-					fnameLabel.setForeground(Color.red);
-				}  
-				if (refSname.getText() == null || refSname.getText().equals(""))
-				{
-					lnameLabel.setForeground(Color.red);
-				}
-				if (refMatches.getText() == null || refMatches.getText().equals(""))
-				{
-					allocationLabel.setForeground(Color.red);
-				}
-				// Get travel locations for referee
-				String n = north.isSelected() ? "Y" : "N";
-				String c = central.isSelected() ? "Y" : "N";
-				String s = south.isSelected() ? "Y" : "N";
-				String travel = n + c + s;
-				Referee.Qualifications qual = 
-						ijb.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
+                    if (refFname.getText() == null || refFname.getText().equals(""))
+                    {
+                        fnameLabel.setForeground(Color.red);
+                    }  
+                    if (refSname.getText() == null || refSname.getText().equals(""))
+                    {
+                        lnameLabel.setForeground(Color.red);
+                    }
+                    if (refMatches.getText() == null || refMatches.getText().equals(""))
+                    {
+                        allocationLabel.setForeground(Color.red);
+                    }
+                    // Get travel locations for referee
+                    String n = north.isSelected() ? "Y" : "N";
+                    String c = central.isSelected() ? "Y" : "N";
+                    String s = south.isSelected() ? "Y" : "N";
+                    String travel = n + c + s;
+                    Referee.Qualifications qual = 
+                                ijb.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
 
-				if (this.referee == null) 
-				{
-					if (!(refFname.getText().equals("")) && !(refSname.getText().equals("")))
-					{
-						controller.addReferee(refFname.getText(),
-								refSname.getText(),qual,
-								Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
-								Integer.parseInt(refMatches.getText()),
-								(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
-						controller.updateTable();
-						System.err.println("Success");
-						dispose();
+                    if (this.referee == null) 
+                    {
+                        if (!(refFname.getText().equals("")) && !(refSname.getText().equals("")))
+                        {
+                            controller.addReferee(refFname.getText(),
+                                    refSname.getText(),qual,
+                                    Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
+                                    Integer.parseInt(refMatches.getText()),
+                                    (JavaBallController.Location) homeLoc.getSelectedItem(), travel);
+                            controller.updateTable();
+                            dispose();
 
-					} else {
-						JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
-					}
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
+                        }				
 
-				}
+                    }
+                    else {
+                        controller.editReferee(referee, qual,
+                            Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())),
+                            (JavaBallController.Location) homeLoc.getSelectedItem(), travel);
 
-				else {
-					controller.editReferee(referee, qual,
-							Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())),
-							(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
-
-					controller.updateTable();
-					System.err.println("Success");
-					dispose();
-				}
-			}
-		}
+                        controller.updateTable();
+                        dispose();
+                    }
+                }
+            }
 	}
 }
