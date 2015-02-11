@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.Box;
 import javax.swing.UIManager;
 
-import net.miginfocom.swing.MigLayout;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
