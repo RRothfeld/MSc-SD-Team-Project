@@ -68,7 +68,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle(refFrameTitle);
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setLocation(200, 200);
+		setLocationRelativeTo(null); //centres JFrame on desktop
 		setResizable(false);
 		mainPanel = new JPanel(new BorderLayout());
 		// Adds top GUI components

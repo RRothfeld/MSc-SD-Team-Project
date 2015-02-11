@@ -54,7 +54,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		// setTitle("Add/Edit/Remove Referee");
 		setSize(400, 220);
-		setLocation(200, 200);
+		setLocationRelativeTo(null); //centres JFrame on desktop
 		setResizable(false);
 		main = new JPanel(new BorderLayout());
 		add(main);
