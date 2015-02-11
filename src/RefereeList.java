@@ -36,8 +36,8 @@ public class RefereeList implements Iterable<Referee> {
 
 	/** Default constructor */
 	public RefereeList() {
-		this.listedReferees = new ArrayList<Referee>();
-		initFromFile(listedReferees);
+            this.listedReferees = new ArrayList<Referee>();
+            initFromFile(listedReferees);
 	}
 	
 	/**
@@ -313,6 +313,8 @@ public class RefereeList implements Iterable<Referee> {
                                             if (counter < MAX_REFEREES)
                                             {
                                                 Referee referee = new Referee(newReferee);
+                                                referee.setID(createID(referee.getFirstName(),
+                                                        referee.getLastName()));
 						refList.add(referee);
                                                 counter++;
                                             }

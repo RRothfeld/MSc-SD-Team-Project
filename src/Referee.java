@@ -200,6 +200,10 @@ public class Referee implements Comparable<Referee> {
         this.index = index;
     }
 
+    public void setID(String ID)
+    {
+        this.uniqueID = ID;
+    }
     /**
      * 
      * @return - Integer value for this Referee used by TableModel
