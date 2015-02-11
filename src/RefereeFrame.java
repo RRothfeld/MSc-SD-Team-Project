@@ -362,6 +362,14 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		refFnameField.setText(referee.getFirstName());
 		refLnameField.setText(referee.getLastName());
 		refMatchesField.setText(Integer.toString(referee.getAllocations()));
+		
+		if (referee.getQualification().equals(RefQualification.IJB)) {
+			ijbButton.setSelected(true);
+			njbButton.setSelected(false);
+		} else {
+			ijbButton.setSelected(true);
+			njbButton.setSelected(false);
+		}
 
 		refFnameField.setEditable(false);
 		refLnameField.setEditable(false);

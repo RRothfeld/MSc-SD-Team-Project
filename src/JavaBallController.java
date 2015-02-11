@@ -127,14 +127,13 @@ public class JavaBallController {
      * @param home
      * @param travel
      */
-    public void addReferee(String fname, String sname,
-                    RefQualification qualification, int qualLevel,
-                    int allocations, Location home, String travel) 
-    {
-        refList.add(new Referee(refList.createID(fname, sname),fname, sname, 
-                qualification.toString()+qualLevel,
-                     allocations,  home.toString(), travel));
-    }
+	public void addReferee(String fname, String sname,
+			RefQualification qualification, int qualLevel, int allocations,
+			Location home, String travel) {
+		refList.add(new Referee(refList.createID(fname, sname), fname, sname,
+				qualification.toString() + qualLevel, allocations, home
+						.toString(), travel));
+	}
 
     /**
      * Method to edit fields of Referee
@@ -145,12 +144,13 @@ public class JavaBallController {
      * @param qualLevel
      * @param home
      */
-    public void editReferee(Referee referee,
-                    RefQualification qualification, int qualLevel, Location home,
-                    String travel) {
-        referee.updateTravelLocations(travel);
-
-    }
+	public void editReferee(Referee referee, RefQualification qualification,
+			int qualLevel, Location home, String travel) {
+		referee.setTravelLocation(travel);
+		referee.setHomeLocation(home);
+		referee.setQualification(qualification);
+		referee.setQualificationLevel(qualLevel);
+	}
 
     /**
      * Removes referee for RefereeList
@@ -233,12 +233,7 @@ public class JavaBallController {
                 String matchHeader = "Week\tLevel\tArea\tReferee 1\tReferee 2\n";
                 int refCounter = 0;
                 for (Referee ref : refList) {
-                    String details = String.format("%s %s %s %s%d %d %s %s\n",
-                                ref.getID(), ref.getFirstName(), ref.getLastName(),
-                                ref.getQualifications(),
-                                ref.getQualificationLevel(), ref.getAllocations(),
-                                ref.getHomeLocation(), ref.getTravelLocations());
-                    referees[refCounter] = details;
+                    referees[refCounter] = ref.toString();
                     refCounter++;
                 }
                 int counter = 0;
@@ -349,11 +344,11 @@ public class JavaBallController {
             this.columnNames  = new String[]{"ID", "First Name", "Last Name", 
                 "Qualification", "Allocations", "Home", "Travel Areas"};     
 
-            int index = 1;
-            for (Referee referee : listReferees)
-            {
-                referee.setIndex(index++);
-            }
+//            int index = 1;
+//            for (Referee referee : listReferees)
+//            {
+//                referee.setIndex(index++);
+//            }
         }
 
         @Override
@@ -402,7 +397,7 @@ public class JavaBallController {
                     returnValue = referee.getLastName();
                     break;
                 case COLUMN_QUAL:
-                    returnValue = referee.getQualifications()+referee.getQualificationLevel();
+                    returnValue = referee.getQualification().toString() + referee.getQualificationLevel();
                     break;
                 case COLUMN_ALLOC:
                     returnValue = referee.getAllocations();
