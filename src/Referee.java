@@ -30,11 +30,6 @@ public class Referee implements Comparable<Referee> {
 
     private Location homeLocation;
 
-    /** TODO */
-    public enum Qualifications {
-        NJB, IJB
-    }
-
     /**
      * boolean values that represent whether or not Referee will visit this
      * location

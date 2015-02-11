@@ -40,7 +40,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
 	private JPanel main, top, match, buttons;
 	private JLabel week, level, location, confirmationLabel, titleLabel;
 	private JTextField weekNumber;
-	private JComboBox<Level> matchLevel;
+	private JComboBox<MatchLevel> matchLevel;
 	private JComboBox<Location> matchLocation;
 	private JButton allocateButton, cancelButton;
 
@@ -102,8 +102,8 @@ public class AllocateMatches extends JFrame implements ActionListener {
 		level = new JLabel("Match Level:");
 		location = new JLabel("Match Location:");
 		weekNumber = new JTextField(5);
-		matchLevel = new JComboBox<Level>();
-		matchLevel.setModel(new DefaultComboBoxModel<Level>(Level.values()));
+		matchLevel = new JComboBox<MatchLevel>();
+		matchLevel.setModel(new DefaultComboBoxModel<MatchLevel>(MatchLevel.values()));
 		matchLocation = new JComboBox<Location>();
 		matchLocation.setModel(new DefaultComboBoxModel<Location>(Location.values()));
 
@@ -168,7 +168,7 @@ public class AllocateMatches extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Invalid Week Number");
 					weekNumber.setText("");
 				} else {
-					Level level = (Level) matchLevel
+					MatchLevel level = (MatchLevel) matchLevel
 							.getSelectedItem();
 					Location area = (Location) matchLocation
 							.getSelectedItem();

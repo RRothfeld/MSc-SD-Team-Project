@@ -24,7 +24,7 @@ public class Match {
     private Location area;
     
     /** The level of the match */
-    private Level level;
+    private MatchLevel level;
     
     /** Suitable referees for the match */
     private Referee[] suitableReferees;
@@ -36,7 +36,7 @@ public class Match {
      * @param level of the match (Junior or Senior)
      * @param area that the match is held in
      */
-    public Match(int week, Level level, Location area) {
+    public Match(int week, MatchLevel level, Location area) {
 	setWeek(week);
 	this.level = level;
 	this.area = area;
@@ -57,7 +57,7 @@ public class Match {
 
     /** Returns match level (i.e. Senior or Junior
      * @return  */
-    public Level getLevel() {
+    public MatchLevel getLevel() {
 	return level;
     }
     
@@ -80,7 +80,7 @@ public class Match {
     
     /** Set match level (i.e. Senior or Junior
      * @param level */
-    public void getLevel(Level level) {
+    public void getLevel(MatchLevel level) {
 	this.level = level;
     }
     

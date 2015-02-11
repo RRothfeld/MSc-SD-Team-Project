@@ -128,7 +128,7 @@ public class JavaBallController {
      * @param travel
      */
     public void addReferee(String fname, String sname,
-                    Referee.Qualifications qualification, int qualLevel,
+                    RefQualification qualification, int qualLevel,
                     int allocations, Location home, String travel) 
     {
         refList.add(new Referee(refList.createID(fname, sname),fname, sname, 
@@ -146,7 +146,7 @@ public class JavaBallController {
      * @param home
      */
     public void editReferee(Referee referee,
-                    Referee.Qualifications qualification, int qualLevel, Location home,
+                    RefQualification qualification, int qualLevel, Location home,
                     String travel) {
         referee.updateTravelLocations(travel);
 
@@ -168,7 +168,7 @@ public class JavaBallController {
      * @param location
      * @return 
      */
-    public ArrayList<Referee> allocateReferees(int week, Level level,
+    public ArrayList<Referee> allocateReferees(int week, MatchLevel level,
                     Location location) {
         // Create new match without referees
         Match match = new Match(week, level, location);

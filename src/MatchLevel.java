@@ -1,9 +1,9 @@
 /** The level of play in a match */
-public enum Level {
+public enum MatchLevel {
 	JUNIOR("Junior"), SENIOR("Senior");
 	private final String LevelString;
 
-	private Level(final String levels) {
+	private MatchLevel(final String levels) {
 		LevelString = levels;
 	}
 

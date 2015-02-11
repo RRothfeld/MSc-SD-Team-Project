@@ -196,8 +196,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		JPanel west = new JPanel();
 		JPanel south = new JPanel();
 
-		njbButton = new JRadioButton(Referee.Qualifications.NJB.toString());
-		ijbButton = new JRadioButton(Referee.Qualifications.IJB.toString());
+		njbButton = new JRadioButton(RefQualification.NJB.toString());
+		ijbButton = new JRadioButton(RefQualification.IJB.toString());
 		qualificationGroup = new ButtonGroup();
 		qualificationGroup.add(njbButton);
 		qualificationGroup.add(njbButton);
@@ -420,8 +420,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				String c = centralCheckbox.isSelected() ? "Y" : "N";
 				String s = southCheckbox.isSelected() ? "Y" : "N";
 				String travel = n + c + s;
-				Referee.Qualifications qual = 
-						ijbButton.isSelected() ? Referee.Qualifications.IJB : Referee.Qualifications.NJB ;
+				RefQualification qual = 
+						ijbButton.isSelected() ? RefQualification.IJB : RefQualification.NJB ;
 
 				if (this.referee == null) 
 				{

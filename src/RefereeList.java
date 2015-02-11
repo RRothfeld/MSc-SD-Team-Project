@@ -116,9 +116,9 @@ public class RefereeList implements Iterable<Referee> {
 	 * @param level the desired qualification
 	 * @return ArrayList of matching referees TODO DELETE THIS METHOD?!
 	 */
-	public ArrayList<Referee> getReferees(Level level) {
+	public ArrayList<Referee> getReferees(MatchLevel level) {
 		// if it is a junior match, all referees are applicable
-		if (level.equals(Level.JUNIOR))
+		if (level.equals(MatchLevel.JUNIOR))
 			return listedReferees;
 		
 		// otherwise filter non-applicable referees out
@@ -175,7 +175,7 @@ public class RefereeList implements Iterable<Referee> {
 				false);
 
 		// Remove non-senior referees if the match requires senior qualification
-		if (match.getLevel().equals(Level.SENIOR)) {
+		if (match.getLevel().equals(MatchLevel.SENIOR)) {
 			seniorRefereesOnly(availableReferees);
 		}
 		
