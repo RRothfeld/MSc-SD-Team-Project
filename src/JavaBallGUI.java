@@ -13,11 +13,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.Box;
 import javax.swing.UIManager;
+
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -51,6 +53,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	private JTable refereesTable;
 	private JLabel lblLogo, lblTableHeader;
 	private Component headerSpacer, tableHeaderSpacer;
+	private Component tableSpacerLeft;
+	private Component tableSpacerRight;
+	private JTable table;
+	private Component tableSpacerBottom;
+	private Component tableSpacerTop;
 
 	/**
 	 * Constructor for JavaBallGUI
@@ -87,15 +94,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		fldSearch.setText(searchFieldString);
 		searchPanel.add(fldSearch);
 		fldSearch.setColumns(15);
-		// Clear the text field if the mouse is clicked in it
-		fldSearch.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent event) {
-				if (fldSearch.getText().equals(searchFieldString)) {
-					fldSearch.setText("");
-				}
-			}
-		});
 
 		btnSearch = new JButton("Search");
 		searchPanel.add(btnSearch);
@@ -109,7 +107,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		btnAddReferee = new JButton("Add Referee");
 		navPanel.setLayout(new MigLayout("", "[121px]",
-				"[25px][][][][][][][][][][][][][][]"));
+				"[25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px]"));
 		navPanel.add(btnAddReferee, "cell 0 0,growx,aligny center");
 
 		btnAllocateReferees = new JButton("Allocate Referees");
@@ -137,20 +135,26 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		btnShowAll = new JButton("Show All");
 		btnShowAll.setFont(new Font("Dialog", Font.BOLD, 10));
+		btnShowAll.setEnabled(false);
 		tableResetPanel.add(btnShowAll);
 
 		tableHeaderSpacer = Box.createHorizontalStrut(10);
 		tableHeaderPanel.add(tableHeaderSpacer, BorderLayout.WEST);
+		
+		tableSpacerTop = Box.createVerticalStrut(5);
+		tableHeaderPanel.add(tableSpacerTop, BorderLayout.SOUTH);
 
 		refereesTable = controller.getTable();
 		refereesTable.setBackground(UIManager.getColor("menu"));
 		refereesTable.setAutoCreateRowSorter(true);
-
-		// TODO make it relative to the frame dimensions
-		refereesTable
-				.setPreferredScrollableViewportSize(new Dimension(400, 100));
-		refereesTable.setFillsViewportHeight(false);
-		refereesTable.getModel().addTableModelListener(refereesTable);
+		refereesTable.setBorder(null);
+		refereesTable.setShowVerticalLines(false);
+		refereesTable.setRowSelectionAllowed(false);
+		refereesTable.setFont(new Font("Dialog", Font.PLAIN, 14));
+		
+//		refereesTable.setPreferredScrollableViewportSize(new Dimension(400, 100)); 	
+//		refereesTable.setFillsViewportHeight(false);
+//		refereesTable.getModel().addTableModelListener(table);
 
 		DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
 		leftRender.setHorizontalAlignment(JLabel.LEFT);
@@ -158,7 +162,17 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		// Create new JPane for table view
 		refereesTable.setSize(tablePanel.getWidth(), tablePanel.getHeight());
-		tablePanel.add(refereesTable, BorderLayout.CENTER);
+		JScrollPane tablePane = new JScrollPane(refereesTable);
+		tablePanel.add(tablePane);
+		
+		tableSpacerLeft = Box.createHorizontalStrut(10);
+		tablePanel.add(tableSpacerLeft, BorderLayout.WEST);
+		
+		tableSpacerRight = Box.createHorizontalStrut(10);
+		tablePanel.add(tableSpacerRight, BorderLayout.EAST);
+		
+		tableSpacerBottom = Box.createVerticalStrut(5);
+		tablePanel.add(tableSpacerBottom, BorderLayout.SOUTH);
 
 		if (controller.inputTooLarge()) {
 			JOptionPane.showMessageDialog(null,
@@ -173,10 +187,17 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		btnShowChart.addActionListener(this);
 		btnSaveAndExit.addActionListener(this);
 		btnShowAll.addActionListener(this);
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		
+		// Clear the text field if the mouse is clicked in it
+		fldSearch.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent event) {
+				if (fldSearch.getText().equals(searchFieldString)) {
+					fldSearch.setText("");
+				}
 			}
 		});
+
 	}
 
 	/**
