@@ -131,7 +131,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		refLnameField = new JTextField(5);
 		refMatchesField = new JTextField(5);
 
-		refLnameField.addFocusListener(new FocusAdapter() {
+		// update ID while writing
+		FocusAdapter idUpdater = new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				String firstName = refFnameField.getText().trim();
@@ -143,7 +144,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 					}
 				}
 			}
-		});
+		};
+		refLnameField.addFocusListener(idUpdater);
+		refFnameField.addFocusListener(idUpdater);
 
 		refereeSubPanel.add(idLabel);
 		refereeSubPanel.add(refIDLabel);
