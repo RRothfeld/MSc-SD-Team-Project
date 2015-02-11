@@ -8,6 +8,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -137,6 +138,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		refLnameField = new JTextField(5);
 		refMatchesField = new JTextField(5);
 
+
 		// update ID while writing
 		FocusAdapter idUpdater = new FocusAdapter() {
 			@Override
@@ -153,6 +155,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		};
 		refLnameField.addFocusListener(idUpdater);
 		refFnameField.addFocusListener(idUpdater);
+
 
 		refereeSubPanel.add(idLabel);
 		refereeSubPanel.add(refIDLabel);
@@ -411,15 +414,20 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 			} else {
 
-				if (refFnameField.getText() == null || refFnameField.getText().equals(""))
+				if (refFnameField.getText() == null || 
+                                        refFnameField.getText().equals("") || 
+                                        Pattern.matches("[\\dA-Z]+", refFnameField.getText()))
 				{
 					fnameLabel.setForeground(Color.red);
 				}  
-				if (refLnameField.getText() == null || refLnameField.getText().equals(""))
+				if (refLnameField.getText() == null || 
+                                        refLnameField.getText().equals("") || 
+                                        Pattern.matches("[\\dA-Z]+", refLnameField.getText()))
 				{
 					lnameLabel.setForeground(Color.red);
 				}
-				if (refMatchesField.getText() == null || refMatchesField.getText().equals(""))
+				if (refMatchesField.getText() == null || 
+                                        refMatchesField.getText().equals(""))
 				{
 					allocationLabel.setForeground(Color.red);
 				}
@@ -433,7 +441,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 				if (this.referee == null) 
 				{
-					if (!(refFnameField.getText().equals("")) && !(refLnameField.getText().equals("")))
+					if (!(refFnameField.getText().equals("")) && 
+                                                !(refLnameField.getText().equals("")) && 
+                                                !(Pattern.matches("[\\dA-Z]+", refFnameField.getText())) && 
+                                                !(Pattern.matches("[\\dA-Z]+", refLnameField.getText())))
 					{
 						controller.addReferee(refFnameField.getText(),
 								refLnameField.getText(),qual,
