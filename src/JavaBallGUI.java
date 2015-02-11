@@ -239,9 +239,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				fldSearch.setText(searchFieldString);
 			}
 		} else if (ae.getSource() == btnShowAll) {
-			lblTableHeader.setText(tableHeaderString);
 			controller.updateTable();
-			btnShowAll.setEnabled(false);
 		} else if (ae.getSource() == btnSaveAndExit) {
 			// If save and exit button is pressed
 			controller.saveExit();
@@ -255,5 +253,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	public void displaySuitableReferees(String label) {
 		btnShowAll.setEnabled(true);
 		lblTableHeader.setText(label);
+	}
+	
+	/**
+	 * 
+	 * @param label
+	 */
+	public void resetTableHeader() {
+		lblTableHeader.setText(tableHeaderString);
+		btnShowAll.setEnabled(false);
 	}
 }

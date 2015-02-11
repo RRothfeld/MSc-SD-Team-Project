@@ -33,6 +33,7 @@ public class JavaBall {
 		JavaBallGUI view = new JavaBallGUI(controller);
 		view.setVisible(true);
 		
+		// hand GUI to controller
 		controller.setView(view);
 	}
 }

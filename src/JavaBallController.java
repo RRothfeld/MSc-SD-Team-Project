@@ -319,6 +319,10 @@ public class JavaBallController {
         list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(list);
         sorter.sort();
+        
+        
+        // reset the table's description
+        view.resetTableHeader();
     }
     
     /**
