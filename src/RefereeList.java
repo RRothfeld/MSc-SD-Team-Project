@@ -116,9 +116,9 @@ public class RefereeList implements Iterable<Referee> {
 	 * @param level the desired qualification
 	 * @return ArrayList of matching referees TODO DELETE THIS METHOD?!
 	 */
-	public ArrayList<Referee> getReferees(Match.Level level) {
+	public ArrayList<Referee> getReferees(Level level) {
 		// if it is a junior match, all referees are applicable
-		if (level.equals(Match.Level.JUNIOR))
+		if (level.equals(Level.JUNIOR))
 			return listedReferees;
 		
 		// otherwise filter non-applicable referees out
@@ -140,7 +140,7 @@ public class RefereeList implements Iterable<Referee> {
 	 * @param home the desired home location
 	 * @return ArrayList with matching referees
 	 */
-	public ArrayList<Referee> getReferees(JavaBallController.Location location,
+	public ArrayList<Referee> getReferees(Location location,
 			boolean home) {
 		// List to hold referees after filtering
 		ArrayList<Referee> filteredReferees = new ArrayList<Referee>();
@@ -175,7 +175,7 @@ public class RefereeList implements Iterable<Referee> {
 				false);
 
 		// Remove non-senior referees if the match requires senior qualification
-		if (match.getLevel().equals(Match.Level.SENIOR)) {
+		if (match.getLevel().equals(Level.SENIOR)) {
 			seniorRefereesOnly(availableReferees);
 		}
 		
@@ -195,10 +195,10 @@ public class RefereeList implements Iterable<Referee> {
 		ArrayList<Referee> adjacentReferees = new ArrayList<Referee>();
 		for (int i = 0; i < availableReferees.size();) {
 			Referee ref = availableReferees.get(i);
-			if ((match.getArea().equals(JavaBallController.Location.CENTRAL) && !ref
-					.getHomeLocation().equals(JavaBallController.Location.CENTRAL))
-					|| (!match.getArea().equals(JavaBallController.Location.CENTRAL) && ref
-					.getHomeLocation().equals(JavaBallController.Location.CENTRAL))) {
+			if ((match.getArea().equals(Location.CENTRAL) && !ref
+					.getHomeLocation().equals(Location.CENTRAL))
+					|| (!match.getArea().equals(Location.CENTRAL) && ref
+					.getHomeLocation().equals(Location.CENTRAL))) {
 				availableReferees.remove(i);
 				adjacentReferees.add(ref);
 			} else {

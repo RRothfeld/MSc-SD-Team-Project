@@ -17,22 +17,11 @@
  * @since 11-02-2015
  */
 public class Match {
-    /** The level of play in a match */
-    public enum Level {
-        JUNIOR("Junior"), SENIOR("Senior");
-        private final String LevelString;
-        private Level(final String levels) { 
-            LevelString = levels; 
-        }
-        @Override
-        public String toString() { return LevelString; }
-    }
-
     /** The week when a match is held also serves as an ID */
     private int week; // week when the match is held 1-52
 
     /** The area where the match is held. */
-    private JavaBallController.Location area;
+    private Location area;
     
     /** The level of the match */
     private Level level;
@@ -47,7 +36,7 @@ public class Match {
      * @param level of the match (Junior or Senior)
      * @param area that the match is held in
      */
-    public Match(int week, Level level, JavaBallController.Location area) {
+    public Match(int week, Level level, Location area) {
 	setWeek(week);
 	this.level = level;
 	this.area = area;
@@ -62,7 +51,7 @@ public class Match {
 
     /** Returns the area where the match is held
      * @return  */
-    public JavaBallController.Location getArea() {
+    public Location getArea() {
 	return area;
     }
 
@@ -85,7 +74,7 @@ public class Match {
 
     /** Set the area where match is held
      * @param area */
-    public void setArea(JavaBallController.Location area) {
+    public void setArea(Location area) {
 	this.area = area;
     }
     

@@ -48,8 +48,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	private JLabel idLabel,refIDLabel,fnameLabel,lnameLabel,allocationLabel,
 	qualLevelLabel,homeLabel;
 	private JTextField refFnameField, refLnameField, refMatchesField;
-	private JComboBox qualLevel;
-	private JComboBox homeLoc;
+	private JComboBox<Integer> qualLevel;
+	private JComboBox<Location> homeLoc;
 	private JRadioButton njbButton, ijbButton;
 	private JCheckBox northCheckbox, centralCheckbox, southCheckbox;
 	private JButton saveButton, removeButton, cancelButton;
@@ -213,7 +213,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		
 		// Adds level values to qualification level JComboBox 
 		for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++) {
-			qualLevel.addItem(i + "");
+			qualLevel.addItem(i);
 		}
 		qualLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -262,10 +262,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		JPanel southPanel = new JPanel();
 
 		homeLabel = new JLabel("Home");
-		homeLoc = new JComboBox();
-		homeLoc.addItem("North");
-		homeLoc.addItem("Central");
-		homeLoc.addItem("South");
+		homeLoc = new JComboBox<Location>();
+		homeLoc.addItem(Location.NORTH);
+		homeLoc.addItem(Location.CENTRAL);
+		homeLoc.addItem(Location.SOUTH);
 
 
 		northCheckbox = new JCheckBox("North");
@@ -280,14 +280,13 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		removeButton.addActionListener(this);
 		cancelButton.addActionListener(this);
 
-		homeLoc.setModel(new DefaultComboBoxModel(
-				JavaBallController.Location.values()));
+		homeLoc.setModel(new DefaultComboBoxModel<Location>(Location.values()));
 
 		homeLoc.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				JavaBallController.Location selectedLocation = 
-						(JavaBallController.Location) homeLoc
+				Location selectedLocation = 
+						(Location) homeLoc
 						.getSelectedItem();
 				if (selectedLocation.equals(homeLoc.getItemAt(0))) 
 				{
@@ -374,9 +373,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 *
 	 */
 	public void setLocations() {
-		northCheckbox.setSelected(controller.refTravel(referee, JavaBallController.Location.NORTH));
-		centralCheckbox.setSelected(controller.refTravel(referee, JavaBallController.Location.CENTRAL));
-		southCheckbox.setSelected(controller.refTravel(referee, JavaBallController.Location.SOUTH));
+		northCheckbox.setSelected(controller.refTravel(referee, Location.NORTH));
+		centralCheckbox.setSelected(controller.refTravel(referee, Location.CENTRAL));
+		southCheckbox.setSelected(controller.refTravel(referee, Location.SOUTH));
 	}
 
 
@@ -432,7 +431,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 								refLnameField.getText(),qual,
 								Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
 								Integer.parseInt(refMatchesField.getText()),
-								(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
+								(Location) homeLoc.getSelectedItem(), travel);
 						controller.updateTable();
 						dispose();
 
@@ -444,7 +443,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				else {
 					controller.editReferee(referee, qual,
 							Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())),
-							(JavaBallController.Location) homeLoc.getSelectedItem(), travel);
+							(Location) homeLoc.getSelectedItem(), travel);
 
 					controller.updateTable();
 					dispose();

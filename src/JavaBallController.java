@@ -45,16 +45,6 @@ public class JavaBallController {
     private TableModel tableData;
     
     private JTable table;
-    
-    public enum Location {
-        NORTH("North"), CENTRAL("Central"), SOUTH("South");
-        private final String LocationString;
-        private Location(final String s) { 
-            LocationString = s; 
-        }
-        @Override
-        public String toString() { return LocationString; }
-    }
 	
     /**
      *
@@ -178,7 +168,7 @@ public class JavaBallController {
      * @param location
      * @return 
      */
-    public ArrayList<Referee> allocateReferees(int week, Match.Level level,
+    public ArrayList<Referee> allocateReferees(int week, Level level,
                     Location location) {
         // Create new match without referees
         Match match = new Match(week, level, location);
