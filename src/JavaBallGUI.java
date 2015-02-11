@@ -22,6 +22,8 @@ import javax.swing.UIManager;
 
 import net.miginfocom.swing.MigLayout;
 import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
 
 /**
  * Team Foxtrot JavaBall Referees - JavaBallGUI.java Defines JavaBall GUI that
@@ -106,20 +108,19 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		navPanel = new JPanel();
 		navPanel.setBackground(Color.LIGHT_GRAY);
 		getContentPane().add(navPanel, BorderLayout.WEST);
+		navPanel.setLayout(new BoxLayout(navPanel, BoxLayout.Y_AXIS));
 
 		btnAddReferee = new JButton("Add Referee");
-		navPanel.setLayout(new MigLayout("", "[121px]",
-				"[25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px][25px]"));
-		navPanel.add(btnAddReferee, "cell 0 0,growx,aligny center");
+		navPanel.add(btnAddReferee);
 
 		btnAllocateReferees = new JButton("Allocate Referees");
-		navPanel.add(btnAllocateReferees, "cell 0 1,alignx left,aligny top");
+		navPanel.add(btnAllocateReferees);
 
 		btnShowChart = new JButton("Show Chart");
-		navPanel.add(btnShowChart, "cell 0 2,growx");
+		navPanel.add(btnShowChart);
 
 		btnSaveAndExit = new JButton("Save and Exit");
-		navPanel.add(btnSaveAndExit, "cell 0 14,growx");
+		navPanel.add(btnSaveAndExit);
 
 		tablePanel = new JPanel();
 		getContentPane().add(tablePanel, BorderLayout.CENTER);
