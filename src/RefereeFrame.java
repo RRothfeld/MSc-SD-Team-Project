@@ -405,8 +405,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
                 dispose();
             }
             if (ae.getSource() == saveButton) {
-
-                if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
+                if (controller.indexCounter() == RefereeList.MAX_REFEREES
+                        && referee == null) {
                     JOptionPane.showMessageDialog(null, "Sorry.\n"
                             + "The Referee List is full!");
 
