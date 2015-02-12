@@ -82,7 +82,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		qualificationsLayout();
 		locationsAndButtonsLayout();
 		add(mainPanel);
-
 	}
 
 	/**
@@ -95,6 +94,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		// Calls the default constructor
 		this(controller);
 		this.referee = referee;
+                setHomeLocation();
 	}
 
 	/**
@@ -263,6 +263,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		for (Location area : Location.values()) {
 		    homeLoc.addItem(area);
 		}
+                
 
 		northCheckbox = new JCheckBox("North");
 		centralCheckbox = new JCheckBox("Central");
@@ -279,28 +280,33 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		homeLoc.setModel(new DefaultComboBoxModel<Location>(Location.values()));
 
 		homeLoc.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				Location selectedLocation = 
-						(Location) homeLoc
-						.getSelectedItem();
-				if (selectedLocation.equals(homeLoc.getItemAt(0))) 
-				{
-					northCheckbox.setSelected(true);
-					centralCheckbox.setSelected(false);
-					southCheckbox.setSelected(false);
-				} else if ((selectedLocation.equals(homeLoc.getItemAt(1)))) 
-				{
-					northCheckbox.setSelected(false);
-					southCheckbox.setSelected(false);
-					centralCheckbox.setSelected(true);
-				} else 
-				{
-					northCheckbox.setSelected(false);
-					centralCheckbox.setSelected(false);
-					southCheckbox.setSelected(true);
-				}
-			}
+                    @Override
+                    public void itemStateChanged(ItemEvent e) 
+                    {
+                        Location selectedLocation = (Location) homeLoc.getSelectedItem();
+                        if (selectedLocation.equals(homeLoc.getItemAt(0))) 
+                        {
+                            centralCheckbox.setEnabled(true);
+                            southCheckbox.setEnabled(true);
+
+                            northCheckbox.setSelected(true);
+                            northCheckbox.setEnabled(false);
+                        } else if ((selectedLocation.equals(homeLoc.getItemAt(1)))) 
+                        {
+                            northCheckbox.setEnabled(true);
+                            southCheckbox.setEnabled(true);
+
+                            centralCheckbox.setSelected(true);
+                            centralCheckbox.setEnabled(false);
+                        } else 
+                        {
+                            northCheckbox.setEnabled(true);
+                            centralCheckbox.setEnabled(true);
+
+                            southCheckbox.setSelected(true);
+                            southCheckbox.setEnabled(false);
+                        }
+                    }
 		});
 
 		homePanel.add(homeLabel);
@@ -311,7 +317,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		buttonPanel.add(saveButton);
 		buttonPanel.add(removeButton);
 		buttonPanel.add(cancelButton);
-
+                
 		// Creates panel for panel title
 		JPanel titlePanel = new JPanel();
 		// Creates label for title panel
@@ -340,12 +346,16 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 	}
 
+        public void setHomeLocation()
+        {            
+            homeLoc.setSelectedItem(referee.getHomeLocation());
+        }
 	/** 
 	 * Helper method to set the Remove referee button state
 	 * @param state 
 	 */
         public void setRemoveButtonEnabled(boolean state) {
-	removeButton.setEnabled(state);
+            removeButton.setEnabled(state);
         }
 
         /**
@@ -472,6 +482,14 @@ public final class RefereeFrame extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Please enter valid data.\n"
                             + "Invalid Entries are in red");
                     }
+            }
+            else 
+            {
+                controller.editReferee(referee, qual, 
+                        Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())),
+			(Location) homeLoc.getSelectedItem(), travel);
+                controller.updateTable();
+                dispose();
             }
         }
 }
