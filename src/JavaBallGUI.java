@@ -301,7 +301,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 				editRef.setVisible(true);
 				editRef.setTitle("Edit Referee");
 				editRef.setLocations();
-                                editRef.setHomeLocation();
+				editRef.setHomeLocation();
 				fldSearch.setText(searchFieldString);
 			} else {
 				JOptionPane.showMessageDialog(null, "Referee not found");
