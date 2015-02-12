@@ -282,7 +282,6 @@ public class JavaBallController {
     public TableModel refereeTableModel()
     {
         tableData = new RefereeTableModel(refList.getReferees());
-        
         return tableData;
     }
     
@@ -302,17 +301,16 @@ public class JavaBallController {
     public void updateTable()
     {
         table.setModel(refereeTableModel());
+        
         DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
         leftRender.setHorizontalAlignment( JLabel.LEFT );
         table.getColumnModel().getColumn(4).setCellRenderer(leftRender);
-//        table.setAutoCreateRowSorter(true);
         
         DefaultRowSorter sorter = ((DefaultRowSorter)table.getRowSorter()); 
         ArrayList list = new ArrayList();
         list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(list);
         sorter.sort();
-        
         
         // reset the table's description
         view.resetTableHeader();

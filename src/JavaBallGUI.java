@@ -248,10 +248,10 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 
 		if (controller.inputTooLarge()) {
 			JOptionPane.showMessageDialog(null,
-					"Your Refere List was too large.\n"
-							+ "Only the first 12 Referees will be shown.");
+                            "Your Refere List was too large.\n"
+                            + "Only the first 12 Referees will be shown.");
 		}
-
+                
 		// add listeners
 		btnSearch.addActionListener(this);
 		btnShowAll.addActionListener(this);

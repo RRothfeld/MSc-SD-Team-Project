@@ -311,7 +311,7 @@ public class RefereeList implements Iterable<Referee> {
 				while (refScanner.hasNextLine()) {
 					String newReferee = refScanner.nextLine();
 					if (newReferee != null) {
-                                            if (counter < MAX_REFEREES)
+                                            if (counter <= MAX_REFEREES)
                                             {
                                                 Referee referee = new Referee(newReferee);
                                                 referee.setID(createID(referee.getFirstName(),
