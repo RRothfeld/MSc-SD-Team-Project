@@ -377,11 +377,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
         }
 
-       
-        public void setQualification()
-        {
-            
-        }
         /**
 	 *
 	 */
