@@ -273,7 +273,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * The main action performed class
+	 * The action performed class
 	 * 
 	 * @param ae
 	 */
