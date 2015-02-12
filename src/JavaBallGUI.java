@@ -298,10 +298,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			Referee ref = controller.getReferee(refInfo);
 			if (ref != null) {
 				RefereeFrame editRef = new RefereeFrame(controller, ref);
-				editRef.setReferee(ref);
 				editRef.setVisible(true);
 				editRef.setTitle("Edit Referee");
 				editRef.setLocations();
+                                editRef.setHomeLocation();
+                                editRef.setQualification();
 				fldSearch.setText(searchFieldString);
 			} else {
 				JOptionPane.showMessageDialog(null, "Referee not found");
