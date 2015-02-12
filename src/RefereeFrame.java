@@ -91,21 +91,13 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 */
 	public RefereeFrame(JavaBallController controller, Referee referee) {
 
-		// Calls the default constructor
-		this(controller);
-		this.referee = referee;
-                setHomeLocation();
+            // Calls the default constructor
+            this(controller);
+            this.referee = referee;
+            setDetails();
 	}
 
-	/**
-	 *
-	 * @param referee
-	 */
-	public void setReferee(Referee referee) {
-		this.referee = referee;
-		setDetails();
-	}
-
+        
 	/**
 	 * Method to create and add referee detail components to main panel in the 
 	 * RefereeFrame GUI. Details include referee ID, first name, second name,
@@ -140,17 +132,21 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		// update ID while writing
 		FocusAdapter idUpdater = new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				String firstName = refFnameField.getText().trim();
-				String lastName = refLnameField.getText().trim();
-				if ((firstName != null && lastName != null)) {
-					if (!(firstName.equals("") || lastName.equals(""))) {
-						String ID = controller.createID(firstName, lastName);
-						refIDLabel.setText(ID);
-					}
-				}
-			}
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        if (referee == null)
+                        {
+                            String firstName = refFnameField.getText().trim();
+                            String lastName = refLnameField.getText().trim();
+                            if ((firstName != null && lastName != null)) {
+                                if (!(firstName.equals("") || lastName.equals(""))) {
+                                    String ID = controller.createID(firstName, lastName);
+                                    refIDLabel.setText(ID);
+                                }
+                            }
+                        }
+
+                    }
 		};
 		refLnameField.addFocusListener(idUpdater);
 		refFnameField.addFocusListener(idUpdater);
@@ -362,22 +358,23 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * 
 	 */
        private void setDetails() {
-	
-	refIDLabel.setText(referee.getID());		
-	refFnameField.setText(referee.getFirstName());		
-	refLnameField.setText(referee.getLastName());		
-	refMatchesField.setText(Integer.toString(referee.getAllocations()));		
-		
-	if (referee.getQualification().equals(RefQualification.IJB)) {		
-            qualLevel.setSelectedItem(RefQualification.IJB);		
-	} else {		
-            qualLevel.setSelectedItem(RefQualification.NJB);		
-	}		
-		
-	refFnameField.setEditable(false);		
-	refLnameField.setEditable(false);		
-	refMatchesField.setEditable(false);		
-		
+
+            refIDLabel.setText(referee.getID());		
+            refFnameField.setText(referee.getFirstName());		
+            refLnameField.setText(referee.getLastName());		
+            refMatchesField.setText(Integer.toString(referee.getAllocations()));		
+
+            if (referee.getQualification().equals(RefQualification.IJB)) {		
+                qualStatus.setSelectedItem(RefQualification.IJB);		
+            } else {		
+                qualStatus.setSelectedItem(RefQualification.NJB);		
+            }	
+            qualLevel.setSelectedItem(referee.getQualificationLevel());
+            
+            refFnameField.setEditable(false);		
+            refLnameField.setEditable(false);		
+            refMatchesField.setEditable(false);		
+
         }
 
         /**
@@ -479,6 +476,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
                     }
                     } catch (NumberFormatException e) {
                         allocationLabel.setForeground(Color.red);
+                        refMatchesField.setText("");
                         JOptionPane.showMessageDialog(null, "Please enter valid data.\n"
                             + "Invalid Entries are in red");
                     }
