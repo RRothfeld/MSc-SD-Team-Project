@@ -10,7 +10,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -48,12 +47,12 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	private JLabel idLabel,refIDLabel,fnameLabel,lnameLabel,allocationLabel,
 	qualLevelLabel,homeLabel;
 	private JTextField refFnameField, refLnameField, refMatchesField;
+	private JComboBox qualStatus;
 	private JComboBox<Integer> qualLevel;
 	private JComboBox<Location> homeLoc;
 	private JRadioButton njbButton, ijbButton;
 	private JCheckBox northCheckbox, centralCheckbox, southCheckbox;
 	private JButton saveButton, removeButton, cancelButton;
-	private ButtonGroup qualificationGroup;
 	// Title for referee frame
 	private String refFrameTitle;
 
@@ -196,34 +195,28 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		JPanel west = new JPanel();
 		JPanel south = new JPanel();
 
-		njbButton = new JRadioButton(RefQualification.NJB.toString());
-		ijbButton = new JRadioButton(RefQualification.IJB.toString());
-		qualificationGroup = new ButtonGroup();
-		qualificationGroup.add(njbButton);
-		qualificationGroup.add(njbButton);
-
-		njbButton.setHorizontalAlignment(SwingConstants.RIGHT);
-		njbButton.setFont(new Font("Monospaced",Font.PLAIN,14));
-
-		ijbButton.setHorizontalAlignment(SwingConstants.RIGHT);
-		ijbButton.setFont(new Font("Monospaced",Font.PLAIN,14));
+		JLabel qualStatusLabel= new JLabel("Status");
+		qualStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		qualStatus = new JComboBox();
+		for (RefQualification qual : RefQualification.values()) {
+		    qualStatus.addItem(qual);
+		}
+		
+		qualStatus.setModel(new DefaultComboBoxModel<RefQualification>(RefQualification.values()));
 
 		qualLevelLabel = new JLabel("Level");
+		qualLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		qualLevel = new JComboBox<Integer>();
 		
 		// Adds level values to qualification level JComboBox 
-		for (int i = 1; i <= Referee.MAX_QUAL_LENGTH; i++) {
-			qualLevel.addItem(i);
+		for (int level = 1; level <= RefQualification.MAXIMUM; level++) {
+			qualLevel.addItem(level);
 		}
-		qualLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		ButtonGroup qualButtons = new ButtonGroup();
-		qualButtons.add(njbButton);
-		qualButtons.add(ijbButton);
-
-		qualSubPanel.add(njbButton);
+		qualSubPanel.add(qualStatusLabel);
+		qualSubPanel.add(qualStatus);
 		qualSubPanel.add(qualLevelLabel);
-		qualSubPanel.add(ijbButton);
 		qualSubPanel.add(qualLevel);
 
 		// Creates panel for panel title
@@ -263,10 +256,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		homeLabel = new JLabel("Home");
 		homeLoc = new JComboBox<Location>();
-		homeLoc.addItem(Location.NORTH);
-		homeLoc.addItem(Location.CENTRAL);
-		homeLoc.addItem(Location.SOUTH);
-
+		
+		for (Location area : Location.values()) {
+		    homeLoc.addItem(area);
+		}
 
 		northCheckbox = new JCheckBox("North");
 		centralCheckbox = new JCheckBox("Central");
@@ -385,6 +378,17 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		centralCheckbox.setSelected(controller.refTravel(referee, Location.CENTRAL));
 		southCheckbox.setSelected(controller.refTravel(referee, Location.SOUTH));
 	}
+	
+	public static boolean isInteger(String s) {
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) {
+		JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
+	        return false;
+	    }
+	    // only got here if we didn't return false
+	    return true;
+	}
 
 
 	/**
@@ -419,7 +423,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				{
 					lnameLabel.setForeground(Color.red);
 				}
-				if (refMatchesField.getText() == null || refMatchesField.getText().equals(""))
+				if (refMatchesField.getText() == null || refMatchesField.getText().equals("") || !isInteger(refMatchesField.getText()))
 				{
 					allocationLabel.setForeground(Color.red);
 				}
@@ -428,15 +432,15 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				String c = centralCheckbox.isSelected() ? "Y" : "N";
 				String s = southCheckbox.isSelected() ? "Y" : "N";
 				String travel = n + c + s;
-				RefQualification qual = 
-						ijbButton.isSelected() ? RefQualification.IJB : RefQualification.NJB ;
+				
+				RefQualification qual = (RefQualification) qualStatus.getSelectedItem();
 
 				if (this.referee == null) 
 				{
 					if (!(refFnameField.getText().equals("")) && !(refLnameField.getText().equals("")))
 					{
 						controller.addReferee(refFnameField.getText(),
-								refLnameField.getText(),qual,
+								refLnameField.getText(), qual,
 								Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
 								Integer.parseInt(refMatchesField.getText()),
 								(Location) homeLoc.getSelectedItem(), travel);

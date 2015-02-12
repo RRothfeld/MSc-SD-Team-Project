@@ -131,7 +131,7 @@ public class JavaBallController {
 			RefQualification qualification, int qualLevel, int allocations,
 			Location home, String travel) {
 		refList.add(new Referee(refList.createID(fname, sname), fname, sname,
-				qualification.toString() + qualLevel, allocations, home
+				qualification.name() + qualLevel, allocations, home
 						.toString(), travel));
 	}
 
@@ -397,7 +397,7 @@ public class JavaBallController {
                     returnValue = referee.getLastName();
                     break;
                 case COLUMN_QUAL:
-                    returnValue = referee.getQualification().toString() + referee.getQualificationLevel();
+                    returnValue = referee.getQualification().name() + referee.getQualificationLevel();
                     break;
                 case COLUMN_ALLOC:
                     returnValue = referee.getAllocations();

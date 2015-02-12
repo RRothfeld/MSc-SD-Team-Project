@@ -25,9 +25,9 @@ public class Referee implements Comparable<Referee> {
 	private String lastName;
 	private String uniqueID;
 
-	private int qualificationLevel;
 	private String travelLocations;
 	private RefQualification qualification;
+	private int qualificationLevel;
 
 	private Location homeLocation;
 
@@ -44,7 +44,6 @@ public class Referee implements Comparable<Referee> {
 
 	private int index; // Integer used by TableModel in Controller
 	private int preSeasonAllocations;
-	protected static final int MAX_QUAL_LENGTH = 4;
 
 	// /**
 	// * Default Constructor.
@@ -77,7 +76,8 @@ public class Referee implements Comparable<Referee> {
 			this.firstName = refereeDetails[1];
 			this.lastName = refereeDetails[2];
 
-			//
+			// TODO I want to use this one liner
+			//setHomeLocation(Location.valueOf(refereeDetails[5]).name());
 			switch (refereeDetails[5]) {
 			case "North":
 				setHomeLocation(Location.NORTH);
@@ -271,7 +271,7 @@ public class Referee implements Comparable<Referee> {
 	 */
 	private void setQualifications(String qualifications) {
 		String refQual;
-		if (qualifications.length() < MAX_QUAL_LENGTH) {
+		if (qualifications.length() < RefQualification.MAXIMUM) {
 			refQual = qualifications;
 		} else {
 			refQual = qualifications.substring(0, 3);
