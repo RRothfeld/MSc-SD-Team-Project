@@ -237,7 +237,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 			// Test week number validity [1,52]
 			if (week < Season.MIN_WEEK || week > Season.MAX_WEEK) {
 				// Show error and reset week number field
-				falseWeekNumber("Week number must be between 1 and 52.");
+				invalidWeek("Week number must be between 1 and 52.");
 			} else {
 				// Retrieve further match details if number was parsed
 				MatchLevel level = (MatchLevel) cmbLevel.getSelectedItem();
@@ -250,7 +250,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 				// Test for sufficient suitable referees
 				if (suitableRefs == null) {
 					// Show error and reset week number field
-					falseWeekNumber("Week already hosts a match.");
+					invalidWeek("Week already hosts a match.");
 				} else if (suitableRefs.size() < 2) {
 					JOptionPane.showMessageDialog(null,
 							"Not enough suitable referees available.");
@@ -276,7 +276,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 			}
 		} catch (NumberFormatException ex) {
 			// Show error and reset week number field
-			falseWeekNumber("Please enter an integer for week number.");
+			invalidWeek("Please enter an integer for week number.");
 		}
 	}
 	
@@ -298,7 +298,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 	 * Resets and highlights the week number field and shows an error message
 	 * @param msg the error message to be displayed
 	 */
-	private void falseWeekNumber(String msg) {
+	private void invalidWeek(String msg) {
 		// Show error message
 		JOptionPane.showMessageDialog(null, msg);
 		
