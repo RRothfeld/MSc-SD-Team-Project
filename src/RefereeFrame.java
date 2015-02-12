@@ -494,9 +494,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
                 result = false;
             } else if (refLnameField.getText().equals("")){
                 result = false;
-            } else if (!(Pattern.matches("[\\dA-Z]+",refFnameField.getText()))){
-                result = false;
-            } else if (!(Pattern.matches("[\\dA-Z]+",refLnameField.getText()))){
+            } else if ((Pattern.matches("[\\dA-Z]+",refFnameField.getText()))){
+                result = false;              
+            } else if ((Pattern.matches("[\\dA-Z]+",refLnameField.getText()))){
                 result = false;
             } else if (qualStatus.getSelectedItem()==null){
                 result = false;
