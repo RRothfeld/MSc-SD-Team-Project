@@ -374,7 +374,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
             refFnameField.setEditable(false);		
             refLnameField.setEditable(false);		
             refMatchesField.setEditable(false);		
-
         }
 
         /**
@@ -442,7 +441,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
                     || refMatchesField.getText().equals("")) {
                 allocationLabel.setForeground(Color.red);
             }
-
+            
             // Get travel locations for referee
             String n = northCheckbox.isSelected() ? "Y" : "N";
             String c = centralCheckbox.isSelected() ? "Y" : "N";
@@ -457,10 +456,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
                     Integer.parseInt(refMatchesField.getText());
 
-                    if (!(refFnameField.getText().equals("")) && 
-                            !(refLnameField.getText().equals("")) && 
-                            !(Pattern.matches("[\\dA-Z]+",refFnameField.getText())) && 
-                            !(Pattern.matches("[\\dA-Z]+",refLnameField.getText()))) 
+                    if ((validationTests())) 
                     {
                         controller.addReferee(refFnameField.getText(),
                                 refLnameField.getText(), qual,
@@ -489,5 +485,28 @@ public final class RefereeFrame extends JFrame implements ActionListener {
                 controller.updateTable();
                 dispose();
             }
+        }
+        
+        public boolean validationTests()
+        {
+            boolean result = true;
+            if (refFnameField.getText().equals("")){
+                result = false;
+            } else if (refLnameField.getText().equals("")){
+                result = false;
+            } else if (!(Pattern.matches("[\\dA-Z]+",refFnameField.getText()))){
+                result = false;
+            } else if (!(Pattern.matches("[\\dA-Z]+",refLnameField.getText()))){
+                result = false;
+            } else if (qualStatus.getSelectedItem()==null){
+                result = false;
+            } else if (qualLevel.getSelectedItem()==null){
+                result = false;
+            } else if (!northCheckbox.isSelected() && 
+                       !centralCheckbox.isSelected() && 
+                       !southCheckbox.isSelected()){
+                result = false;
+            }
+            return result;
         }
 }
