@@ -4,6 +4,9 @@ build.xml
 
 manifest.mf
 
+MatchAllocs.txt
+RefereesOut.txt
+
 *Test.java
 *.pydevproject
 *.metadata
