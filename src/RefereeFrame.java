@@ -345,43 +345,46 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * Helper method to set the Remove referee button state
 	 * @param state 
 	 */
-	public void setRemoveButtonEnabled(boolean state) {
-		removeButton.setEnabled(state);
-	}
+    public void setRemoveButtonEnabled(boolean state) {
+	removeButton.setEnabled(state);
+    }
 
-	/**
+    /**
 	 * 
 	 */
-	private void setDetails(){
+    private void setDetails() {
 
-		refIDLabel.setText(referee.getID());
-		refFnameField.setText(referee.getFirstName());
-		refLnameField.setText(referee.getLastName());
-		refMatchesField.setText(Integer.toString(referee.getAllocations()));
-		
-		if (referee.getQualification().equals(RefQualification.IJB)) {
-			ijbButton.setSelected(true);
-			njbButton.setSelected(false);
-		} else {
-			ijbButton.setSelected(false);
-			njbButton.setSelected(true);
-		}
+	refIDLabel.setText(referee.getID());
+	refFnameField.setText(referee.getFirstName());
+	refLnameField.setText(referee.getLastName());
+	refMatchesField.setText(Integer.toString(referee.getAllocations()));
 
-		refFnameField.setEditable(false);
-		refLnameField.setEditable(false);
-		refMatchesField.setEditable(false);
-
+	if (referee.getQualification().equals(RefQualification.IJB)) {
+	    ijbButton.setSelected(true);
+	    njbButton.setSelected(false);
+	} else {
+	    ijbButton.setSelected(false);
+	    njbButton.setSelected(true);
 	}
 
-	/**
+	refFnameField.setEditable(false);
+	refLnameField.setEditable(false);
+	refMatchesField.setEditable(false);
+
+    }
+
+    /**
 	 *
 	 */
-	public void setLocations() {
-		northCheckbox.setSelected(controller.refTravel(referee, Location.NORTH));
-		centralCheckbox.setSelected(controller.refTravel(referee, Location.CENTRAL));
-		southCheckbox.setSelected(controller.refTravel(referee, Location.SOUTH));
-	}
-	
+    public void setLocations() {
+	northCheckbox
+		.setSelected(controller.refTravel(referee, Location.NORTH));
+	centralCheckbox.setSelected(controller.refTravel(referee,
+		Location.CENTRAL));
+	southCheckbox
+		.setSelected(controller.refTravel(referee, Location.SOUTH));
+    }
+
     public static boolean isInteger(String s) {
 	try {
 	    Integer.parseInt(s);
@@ -435,12 +438,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 			|| refMatchesField.getText().equals("")
 			|| !isInteger(refMatchesField.getText())) {
 
-		    allocationLabel.setForeground(Color.red);
-
 		} else {
 		    fnameLabel.setForeground(Color.black);
-		    fnameLabel.setForeground(Color.black);
-		    fnameLabel.setForeground(Color.black);
+		    lnameLabel.setForeground(Color.black);
+		    allocationLabel.setForeground(Color.black);
 		    if (refFnameField.getText() == null
 			    || refFnameField.getText().equals("")
 			    || Pattern.matches("[\\dA-Z]+",
@@ -462,8 +463,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		    String c = centralCheckbox.isSelected() ? "Y" : "N";
 		    String s = southCheckbox.isSelected() ? "Y" : "N";
 		    String travel = n + c + s;
-		    RefQualification qual = ijbButton.isSelected() ? RefQualification.IJB
-			    : RefQualification.NJB;
+		    RefQualification qual = (RefQualification) qualStatus
+			    .getSelectedItem();
 
 		    if (this.referee == null) {
 			if (!(refFnameField.getText().equals(""))
@@ -492,14 +493,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				    "Please enter valid data.\n"
 					    + "Invalid Entries are in red");
 			}
-		    } else {
-			controller.editReferee(referee, qual, Integer
-				.parseInt(String.valueOf(qualLevel
-					.getSelectedItem())),
-				(Location) homeLoc.getSelectedItem(), travel);
-
-			controller.updateTable();
-			dispose();
 		    }
 		}
 	    }
