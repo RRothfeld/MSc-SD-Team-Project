@@ -200,7 +200,7 @@ public class JavaBallController {
         }
     }
     
-	public void displaySuitableReferees(String label) {
+	public void setTableHeader(String label) {
 		view.setTableHeader(label);
 	}
 	

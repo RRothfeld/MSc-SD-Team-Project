@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -13,25 +12,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.Component;
 
 import javax.swing.Box;
-import javax.swing.JTextArea;
-import javax.swing.border.BevelBorder;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
-import javax.swing.BoxLayout;
-
-import java.awt.Dimension;
 
 /**
  * Team Foxtrot
@@ -58,7 +48,8 @@ public class AllocationFrame extends JFrame implements ActionListener {
 	private JComboBox<MatchLevel> cmbLevel;
 	private JComboBox<Location> cmbLocation;
 	private JButton btnAllocate, btnCancel;
-	private JTextArea txtrStatus;
+	private JLabel lblStatus;
+	private final JPanel statusHeaderPanel = new JPanel();
 
 	/**
 	 *
@@ -79,6 +70,131 @@ public class AllocationFrame extends JFrame implements ActionListener {
 	}
 
 	private void layoutComponents() {
+
+		JPanel outerInputPanel = new JPanel();
+		getContentPane().add(outerInputPanel, BorderLayout.NORTH);
+		outerInputPanel.setLayout(new BorderLayout(0, 0));
+
+		JPanel detailsHeaderPanel = new JPanel();
+		outerInputPanel.add(detailsHeaderPanel, BorderLayout.NORTH);
+		detailsHeaderPanel.setLayout(new BorderLayout(0, 0));
+
+		Component outerSpacerTop = Box.createVerticalStrut(5);
+		detailsHeaderPanel.add(outerSpacerTop, BorderLayout.NORTH);
+
+		JLabel lblDetailsHeader = new JLabel("Match Details");
+		detailsHeaderPanel.add(lblDetailsHeader, BorderLayout.CENTER);
+
+		Component detailsHeaderSpacer = Box.createHorizontalStrut(5);
+		detailsHeaderPanel.add(detailsHeaderSpacer, BorderLayout.WEST);
+
+		Component outerSpacerLeft = Box.createHorizontalStrut(5);
+		outerInputPanel.add(outerSpacerLeft, BorderLayout.WEST);
+
+		Component outerSpacerRight = Box.createHorizontalStrut(5);
+		outerInputPanel.add(outerSpacerRight, BorderLayout.EAST);
+
+		Component outerSpacerBottom = Box.createVerticalStrut(5 * 2);
+		outerInputPanel.add(outerSpacerBottom, BorderLayout.SOUTH);
+
+		JPanel innerInputPanel = new JPanel();
+		innerInputPanel.setBackground(Color.LIGHT_GRAY);
+		innerInputPanel.setBorder(new LineBorder(new Color(128, 128, 128)));
+		outerInputPanel.add(innerInputPanel, BorderLayout.CENTER);
+		innerInputPanel.setLayout(new BorderLayout(0, 0));
+
+		Component innerSpacerTop = Box.createVerticalStrut(5);
+		innerInputPanel.add(innerSpacerTop, BorderLayout.NORTH);
+
+		Component innerSpacerRight = Box.createHorizontalStrut(5);
+		innerInputPanel.add(innerSpacerRight, BorderLayout.EAST);
+
+		Component innerSpacerBottom = Box.createVerticalStrut(5);
+		innerInputPanel.add(innerSpacerBottom, BorderLayout.SOUTH);
+
+		Component innerSpacerLeft = Box.createHorizontalStrut(5);
+		innerInputPanel.add(innerSpacerLeft, BorderLayout.WEST);
+
+		JPanel matchDetailsPanel = new JPanel();
+		matchDetailsPanel.setBackground(Color.LIGHT_GRAY);
+		innerInputPanel.add(matchDetailsPanel, BorderLayout.CENTER);
+
+		JLabel lblWeek = new JLabel("Week Number");
+		lblWeek.setHorizontalAlignment(SwingConstants.RIGHT);
+		matchDetailsPanel.add(lblWeek);
+		matchDetailsPanel.setLayout(new GridLayout(0, 2, 0, 0));
+
+		JPanel weekPanel = new JPanel();
+		weekPanel.setBackground(Color.LIGHT_GRAY);
+		FlowLayout fl_weekPanel = (FlowLayout) weekPanel.getLayout();
+		fl_weekPanel.setHgap(10);
+		fl_weekPanel.setAlignment(FlowLayout.LEFT);
+		matchDetailsPanel.add(weekPanel);
+
+		fldWeek = new JTextField();
+		weekPanel.add(fldWeek);
+		fldWeek.setColumns(5);
+
+		JLabel lblLevel = new JLabel("Match Level");
+		lblLevel.setHorizontalAlignment(SwingConstants.RIGHT);
+		matchDetailsPanel.add(lblLevel);
+
+		JPanel levelPanel = new JPanel();
+		levelPanel.setBackground(Color.LIGHT_GRAY);
+		FlowLayout fl_levelPanel = (FlowLayout) levelPanel.getLayout();
+		fl_levelPanel.setHgap(10);
+		fl_levelPanel.setAlignment(FlowLayout.LEFT);
+		matchDetailsPanel.add(levelPanel);
+
+		cmbLevel = new JComboBox<MatchLevel>();
+		cmbLevel.setModel(new DefaultComboBoxModel<MatchLevel>(MatchLevel
+				.values()));
+		levelPanel.add(cmbLevel);
+
+		JLabel lblLocation = new JLabel("Match Location");
+		lblLocation.setHorizontalAlignment(SwingConstants.RIGHT);
+		matchDetailsPanel.add(lblLocation);
+
+		JPanel locationPanel = new JPanel();
+		locationPanel.setBackground(Color.LIGHT_GRAY);
+		FlowLayout fl_locationPanel = (FlowLayout) locationPanel.getLayout();
+		fl_locationPanel.setHgap(10);
+		fl_locationPanel.setAlignment(FlowLayout.LEFT);
+		matchDetailsPanel.add(locationPanel);
+
+		cmbLocation = new JComboBox<Location>();
+		cmbLocation.setModel(new DefaultComboBoxModel<Location>(Location
+				.values()));
+		locationPanel.add(cmbLocation);
+
+		JPanel statusPanel = new JPanel();
+		statusPanel.setBackground(UIManager.getColor("menu"));
+		getContentPane().add(statusPanel, BorderLayout.CENTER);
+		statusPanel.setLayout(new BorderLayout(0, 0));
+		statusPanel.add(statusHeaderPanel, BorderLayout.NORTH);
+		statusHeaderPanel.setLayout(new BorderLayout(0, 0));
+
+		JLabel lblStatusHeader = new JLabel("Status");
+		statusHeaderPanel.add(lblStatusHeader, BorderLayout.CENTER);
+
+		Component statusHeaderSpacer = Box.createHorizontalStrut(5);
+		statusHeaderPanel.add(statusHeaderSpacer, BorderLayout.WEST);
+
+		Component statusSpacerBottom = Box.createVerticalStrut(5);
+		statusPanel.add(statusSpacerBottom, BorderLayout.SOUTH);
+
+		lblStatus = new JLabel();
+		lblStatus.setBorder(new LineBorder(new Color(128, 128, 128)));
+		lblStatus.setFont(new Font("Dialog", Font.PLAIN, 12));
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStatus.setText("Please insert match details above.");
+		statusPanel.add(lblStatus, BorderLayout.CENTER);
+
+		Component statusSpacerLeft = Box.createHorizontalStrut(5);
+		statusPanel.add(statusSpacerLeft, BorderLayout.WEST);
+
+		Component statusSpacerRight = Box.createHorizontalStrut(5);
+		statusPanel.add(statusSpacerRight, BorderLayout.EAST);
 		JPanel buttonPanel = new JPanel();
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -90,112 +206,6 @@ public class AllocationFrame extends JFrame implements ActionListener {
 		btnCancel = new JButton("Cancel");
 		buttonPanel.add(btnCancel);
 		btnCancel.addActionListener(this);
-
-		JPanel outerInfoPanel = new JPanel();
-		getContentPane().add(outerInfoPanel, BorderLayout.NORTH);
-		outerInfoPanel.setLayout(new BorderLayout(0, 0));
-
-		Component outerSpacerLeft = Box.createHorizontalStrut(5);
-		outerInfoPanel.add(outerSpacerLeft, BorderLayout.WEST);
-
-		Component outerSpacerRight = Box.createHorizontalStrut(5);
-		outerInfoPanel.add(outerSpacerRight, BorderLayout.EAST);
-
-		Component outerSpacerTop = Box.createVerticalStrut(5);
-		outerInfoPanel.add(outerSpacerTop, BorderLayout.NORTH);
-
-		Component outerSpacerBottom = Box.createVerticalStrut(5);
-		outerInfoPanel.add(outerSpacerBottom, BorderLayout.SOUTH);
-
-		JPanel innerInfoPanel = new JPanel();
-		innerInfoPanel.setBackground(Color.LIGHT_GRAY);
-		innerInfoPanel.setBorder(new LineBorder(new Color(128, 128, 128)));
-		outerInfoPanel.add(innerInfoPanel, BorderLayout.CENTER);
-		innerInfoPanel.setLayout(new BorderLayout(0, 0));
-
-		Component innerSpacerRight = Box.createHorizontalStrut(5);
-		innerInfoPanel.add(innerSpacerRight, BorderLayout.EAST);
-
-		Component innerSpacerTop = Box.createVerticalStrut(5);
-		innerInfoPanel.add(innerSpacerTop, BorderLayout.NORTH);
-
-		Component innerSpacerBottom = Box.createVerticalStrut(5);
-		innerInfoPanel.add(innerSpacerBottom, BorderLayout.SOUTH);
-
-		Component innerSpacerLeft = Box.createHorizontalStrut(5);
-		innerInfoPanel.add(innerSpacerLeft, BorderLayout.WEST);
-
-		JPanel inputPanel = new JPanel();
-		inputPanel.setBackground(Color.LIGHT_GRAY);
-		innerInfoPanel.add(inputPanel, BorderLayout.CENTER);
-
-		JLabel lblWeek = new JLabel("Week Number");
-		lblWeek.setHorizontalAlignment(SwingConstants.RIGHT);
-		inputPanel.add(lblWeek);
-		inputPanel.setLayout(new GridLayout(0, 2, 0, 0));
-
-		JPanel weekPanel = new JPanel();
-		weekPanel.setBackground(Color.LIGHT_GRAY);
-		FlowLayout fl_weekPanel = (FlowLayout) weekPanel.getLayout();
-		fl_weekPanel.setHgap(10);
-		fl_weekPanel.setAlignment(FlowLayout.LEFT);
-		inputPanel.add(weekPanel);
-
-		fldWeek = new JTextField();
-		weekPanel.add(fldWeek);
-		fldWeek.setColumns(5);
-
-		JLabel lblLevel = new JLabel("Match Level");
-		lblLevel.setHorizontalAlignment(SwingConstants.RIGHT);
-		inputPanel.add(lblLevel);
-
-		JPanel levelPanel = new JPanel();
-		levelPanel.setBackground(Color.LIGHT_GRAY);
-		FlowLayout fl_levelPanel = (FlowLayout) levelPanel.getLayout();
-		fl_levelPanel.setHgap(10);
-		fl_levelPanel.setAlignment(FlowLayout.LEFT);
-		inputPanel.add(levelPanel);
-
-		cmbLevel = new JComboBox<MatchLevel>();
-		cmbLevel.setModel(new DefaultComboBoxModel<MatchLevel>(MatchLevel.values()));
-		levelPanel.add(cmbLevel);
-
-		JLabel lblLocation = new JLabel("Match Location");
-		lblLocation.setHorizontalAlignment(SwingConstants.RIGHT);
-		inputPanel.add(lblLocation);
-
-		JPanel locationPanel = new JPanel();
-		locationPanel.setBackground(Color.LIGHT_GRAY);
-		FlowLayout fl_locationPanel = (FlowLayout) locationPanel.getLayout();
-		fl_locationPanel.setHgap(10);
-		fl_locationPanel.setAlignment(FlowLayout.LEFT);
-		inputPanel.add(locationPanel);
-
-		cmbLocation = new JComboBox<Location>();
-		cmbLocation.setModel(new DefaultComboBoxModel<Location>(Location.values()));
-		locationPanel.add(cmbLocation);
-
-		JPanel statusPanel = new JPanel();
-		statusPanel.setBackground(UIManager.getColor("menu"));
-		getContentPane().add(statusPanel, BorderLayout.CENTER);
-		statusPanel.setLayout(new BorderLayout(0, 0));
-
-		Component statusSpacerTop = Box.createVerticalStrut(5);
-		statusPanel.add(statusSpacerTop, BorderLayout.NORTH);
-
-		Component statusSpacerBottom = Box.createVerticalStrut(5);
-		statusPanel.add(statusSpacerBottom, BorderLayout.SOUTH);
-
-		txtrStatus = new JTextArea();
-		txtrStatus.setBackground(UIManager.getColor("menu"));
-		txtrStatus.setText("Status");
-		statusPanel.add(txtrStatus, BorderLayout.CENTER);
-
-		Component statusSpacerLeft = Box.createHorizontalStrut(5);
-		statusPanel.add(statusSpacerLeft, BorderLayout.WEST);
-
-		Component statusSpacerRight = Box.createHorizontalStrut(5);
-		statusPanel.add(statusSpacerRight, BorderLayout.EAST);
 	}
 
 	/**
@@ -226,23 +236,22 @@ public class AllocationFrame extends JFrame implements ActionListener {
 								"Not enough suitable referees available!");
 					} else {
 
-						txtrStatus.setText("Successfully allocated referees: "
+						lblStatus.setText("Successfully allocated: "
 								+ suitableRefs.get(0).getID() + " "
 								+ suitableRefs.get(1).getID());
-						
+
 						btnAllocate.setEnabled(false);
 						btnCancel.setText("Close");
-						
+
 						controller.allocatedTableData(suitableRefs);
 
-						controller
-								.displaySuitableReferees("Referees ordered by suitability for Match "
-										+ week);
-
+						controller.setTableHeader("Referees ordered by "
+								+ "suitability for Match " + week);
 					}
 				}
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "Please Enter a Number");
+				JOptionPane.showMessageDialog(null,
+						"Please enter an integer for week number.");
 				fldWeek.setText("");
 				fldWeek.setBackground(Color.decode("0xFFCCCC"));
 			}
