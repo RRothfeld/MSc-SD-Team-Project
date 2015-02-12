@@ -8,6 +8,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -136,6 +137,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		refLnameField = new JTextField(5);
 		refMatchesField = new JTextField(5);
 
+
 		// update ID while writing
 		FocusAdapter idUpdater = new FocusAdapter() {
 			@Override
@@ -152,6 +154,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		};
 		refLnameField.addFocusListener(idUpdater);
 		refFnameField.addFocusListener(idUpdater);
+
 
 		refereeSubPanel.add(idLabel);
 		refereeSubPanel.add(refIDLabel);
@@ -379,88 +382,103 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		southCheckbox.setSelected(controller.refTravel(referee, Location.SOUTH));
 	}
 	
-	public static boolean isInteger(String s) {
-	    try { 
-	        Integer.parseInt(s); 
-	    } catch(NumberFormatException e) {
-		JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
-	        return false;
+    public static boolean isInteger(String s) {
+	try {
+	    Integer.parseInt(s);
+	} catch (NumberFormatException e) {
+	    JOptionPane.showMessageDialog(null, "Please enter valid data.\n"
+		    + "Invalid Entries are in red");
+	    return false;
+	}
+	// only got here if we didn't return false
+	return true;
+    }
+
+    /**
+     * This method handles events for the the Referee Frame (i.e. adding,
+     * editing and removing referee information)
+     * 
+     * @param ae
+     */
+    public void actionPerformed(ActionEvent ae) {
+	if (ae.getSource() == cancelButton) {
+
+	    // Close window
+	    dispose();
+	}
+	if (ae.getSource() == removeButton) {
+	    controller.removeReferee(referee);
+	    dispose();
+	}
+	if (ae.getSource() == saveButton) {
+
+	    if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
+		JOptionPane.showMessageDialog(null, "Sorry.\n"
+			+ "The Referee List is full!");
+
+	    } else {
+
+		if (refFnameField.getText() == null
+			|| refFnameField.getText().equals("")
+			|| Pattern
+				.matches("[\\dA-Z]+", refFnameField.getText())) {
+		    fnameLabel.setForeground(Color.red);
+		}
+		if (refLnameField.getText() == null
+			|| refLnameField.getText().equals("")
+			|| Pattern
+				.matches("[\\dA-Z]+", refLnameField.getText())) {
+		    lnameLabel.setForeground(Color.red);
+		}
+
+		if (refMatchesField.getText() == null
+			|| refMatchesField.getText().equals("")
+			|| !isInteger(refMatchesField.getText()))
+
+		{
+		    allocationLabel.setForeground(Color.red);
+		}
+		// Get travel locations for referee
+		String n = northCheckbox.isSelected() ? "Y" : "N";
+		String c = centralCheckbox.isSelected() ? "Y" : "N";
+		String s = southCheckbox.isSelected() ? "Y" : "N";
+		String travel = n + c + s;
+
+		RefQualification qual = (RefQualification) qualStatus
+			.getSelectedItem();
+
+		if (this.referee == null) {
+		    if (!(refFnameField.getText().equals(""))
+			    && !(refLnameField.getText().equals(""))
+			    && !(Pattern.matches("[\\dA-Z]+",
+				    refFnameField.getText()))
+			    && !(Pattern.matches("[\\dA-Z]+",
+				    refLnameField.getText()))) {
+			controller.addReferee(refFnameField.getText(),
+				refLnameField.getText(), qual, Integer
+					.parseInt(String.valueOf(qualLevel
+						.getSelectedItem())), Integer
+					.parseInt(refMatchesField.getText()),
+				(Location) homeLoc.getSelectedItem(), travel);
+			controller.updateTable();
+			dispose();
+
+		    } else {
+			JOptionPane.showMessageDialog(null,
+				"Please enter valid data.\n"
+					+ "Invalid Entries are in red");
+		    }
+
+		} else {
+		    controller.editReferee(referee, qual, Integer
+			    .parseInt(String.valueOf(qualLevel
+				    .getSelectedItem())), (Location) homeLoc
+			    .getSelectedItem(), travel);
+
+		    controller.updateTable();
+		    dispose();
+		}
 	    }
-	    // only got here if we didn't return false
-	    return true;
 	}
-
-
-	/**
-	 * This method handles events for the the Referee Frame (i.e. adding,
-	 * editing and removing referee information)
-	 * 
-	 * @param ae
-	 */
-	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == cancelButton) {
-
-			// Close window
-			dispose();
-		}
-		if (ae.getSource() == removeButton) {
-			controller.removeReferee(referee);
-			dispose();
-		}
-		if (ae.getSource() == saveButton) {
-
-			if (controller.indexCounter() == RefereeList.MAX_REFEREES) {
-				JOptionPane.showMessageDialog(null, "Sorry.\n"
-						+ "The Referee List is full!");
-
-			} else {
-
-				if (refFnameField.getText() == null || refFnameField.getText().equals(""))
-				{
-					fnameLabel.setForeground(Color.red);
-				}  
-				if (refLnameField.getText() == null || refLnameField.getText().equals(""))
-				{
-					lnameLabel.setForeground(Color.red);
-				}
-				if (refMatchesField.getText() == null || refMatchesField.getText().equals("") || !isInteger(refMatchesField.getText()))
-				{
-					allocationLabel.setForeground(Color.red);
-				}
-				// Get travel locations for referee
-				String n = northCheckbox.isSelected() ? "Y" : "N";
-				String c = centralCheckbox.isSelected() ? "Y" : "N";
-				String s = southCheckbox.isSelected() ? "Y" : "N";
-				String travel = n + c + s;
-				
-				RefQualification qual = (RefQualification) qualStatus.getSelectedItem();
-
-				if (this.referee == null) 
-				{
-					if (!(refFnameField.getText().equals("")) && !(refLnameField.getText().equals("")))
-					{
-						controller.addReferee(refFnameField.getText(),
-								refLnameField.getText(), qual,
-								Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())), 
-								Integer.parseInt(refMatchesField.getText()),
-								(Location) homeLoc.getSelectedItem(), travel);
-						controller.updateTable();
-						dispose();
-
-					} else {
-						JOptionPane.showMessageDialog(null, "Please enter valid data.\n"+"Invalid Entries are in red");
-					}				
-
-				}
-				else {
-					controller.editReferee(referee, qual,
-							Integer.parseInt(String.valueOf(qualLevel.getSelectedItem())),
-							(Location) homeLoc.getSelectedItem(), travel);
-
-					controller.updateTable();
-					dispose();
-				}
-			}
-		}
-	}
+    }
 }
