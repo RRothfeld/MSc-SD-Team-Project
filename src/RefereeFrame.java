@@ -199,7 +199,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		JPanel south = new JPanel();
 
 		JLabel qualStatusLabel= new JLabel("Status");
-		qualStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		qualStatusLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		
 		qualStatus = new JComboBox();
 		for (RefQualification qual : RefQualification.values()) {
@@ -209,7 +209,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		qualStatus.setModel(new DefaultComboBoxModel<RefQualification>(RefQualification.values()));
 
 		qualLevelLabel = new JLabel("Level");
-		qualLevelLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		qualLevelLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		qualLevel = new JComboBox<Integer>();
 		
 		// Adds level values to qualification level JComboBox 
@@ -351,25 +351,23 @@ public final class RefereeFrame extends JFrame implements ActionListener {
         /**
 	 * 
 	 */
-        private void setDetails() {
-
-            refIDLabel.setText(referee.getID());
-            refFnameField.setText(referee.getFirstName());
-            refLnameField.setText(referee.getLastName());
-            refMatchesField.setText(Integer.toString(referee.getAllocations()));
-
-            if (referee.getQualification().equals(RefQualification.IJB)) {
-                ijbButton.setSelected(true);
-                njbButton.setSelected(false);
-            } else {
-                ijbButton.setSelected(false);
-                njbButton.setSelected(true);
-            }
-
-            refFnameField.setEditable(false);
-            refLnameField.setEditable(false);
-            refMatchesField.setEditable(false);
-
+       private void setDetails() {
+	
+	refIDLabel.setText(referee.getID());		
+	refFnameField.setText(referee.getFirstName());		
+	refLnameField.setText(referee.getLastName());		
+	refMatchesField.setText(Integer.toString(referee.getAllocations()));		
+		
+	if (referee.getQualification().equals(RefQualification.IJB)) {		
+            qualLevel.setSelectedItem(RefQualification.IJB);		
+	} else {		
+            qualLevel.setSelectedItem(RefQualification.NJB);		
+	}		
+		
+	refFnameField.setEditable(false);		
+	refLnameField.setEditable(false);		
+	refMatchesField.setEditable(false);		
+		
         }
 
         /**
