@@ -41,6 +41,8 @@ public class JavaBallController {
 
     private final String REFEREE_FILE = "RefereesOut.txt";
     private final String MATCH_FILE   = "MatchAllocs.txt";
+    
+    private final int MAX_ID_SIZE = 4;
     	
     private TableModel tableData;
     
@@ -80,7 +82,7 @@ public class JavaBallController {
      */
     public Referee getReferee(String search) {
     	// If search query resembles an ID, retrieve referee per ID
-    	if (search.length() == 3)    	
+    	if (search.length() <= MAX_ID_SIZE)    	
             return refList.getReferee(search);
     	
     	// Else divide search query into first and last name, retrieve referee
