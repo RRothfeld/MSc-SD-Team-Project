@@ -437,7 +437,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		if (refMatchesField.getText() == null
 			|| refMatchesField.getText().equals("")
 			|| !isInteger(refMatchesField.getText())) {
-
 		} else {
 		    fnameLabel.setForeground(Color.black);
 		    lnameLabel.setForeground(Color.black);
