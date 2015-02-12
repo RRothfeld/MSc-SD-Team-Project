@@ -61,7 +61,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 
 		setTitle("Allocate Referees");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setSize(300, 250);
+		setSize(300, 260);
 		setLocationRelativeTo(null); // centres JFrame on desktop
 		setResizable(false);
 
@@ -94,11 +94,11 @@ public class AllocationFrame extends JFrame implements ActionListener {
 		Component outerSpacerRight = Box.createHorizontalStrut(5);
 		outerInputPanel.add(outerSpacerRight, BorderLayout.EAST);
 
-		Component outerSpacerBottom = Box.createVerticalStrut(5 * 2);
+		Component outerSpacerBottom = Box.createVerticalStrut(5);
 		outerInputPanel.add(outerSpacerBottom, BorderLayout.SOUTH);
 
 		JPanel innerInputPanel = new JPanel();
-		innerInputPanel.setBackground(Color.LIGHT_GRAY);
+		innerInputPanel.setBackground(Color.decode("0xDDDDDD"));
 		innerInputPanel.setBorder(new LineBorder(new Color(128, 128, 128)));
 		outerInputPanel.add(innerInputPanel, BorderLayout.CENTER);
 		innerInputPanel.setLayout(new BorderLayout(0, 0));
@@ -116,7 +116,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 		innerInputPanel.add(innerSpacerLeft, BorderLayout.WEST);
 
 		JPanel matchDetailsPanel = new JPanel();
-		matchDetailsPanel.setBackground(Color.LIGHT_GRAY);
+		matchDetailsPanel.setBackground(Color.decode("0xDDDDDD"));
 		innerInputPanel.add(matchDetailsPanel, BorderLayout.CENTER);
 
 		JLabel lblWeek = new JLabel("Week Number");
@@ -125,7 +125,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 		matchDetailsPanel.setLayout(new GridLayout(0, 2, 0, 0));
 
 		JPanel weekPanel = new JPanel();
-		weekPanel.setBackground(Color.LIGHT_GRAY);
+		weekPanel.setBackground(Color.decode("0xDDDDDD"));
 		FlowLayout fl_weekPanel = (FlowLayout) weekPanel.getLayout();
 		fl_weekPanel.setHgap(10);
 		fl_weekPanel.setAlignment(FlowLayout.LEFT);
@@ -140,7 +140,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 		matchDetailsPanel.add(lblLevel);
 
 		JPanel levelPanel = new JPanel();
-		levelPanel.setBackground(Color.LIGHT_GRAY);
+		levelPanel.setBackground(Color.decode("0xDDDDDD"));
 		FlowLayout fl_levelPanel = (FlowLayout) levelPanel.getLayout();
 		fl_levelPanel.setHgap(10);
 		fl_levelPanel.setAlignment(FlowLayout.LEFT);
@@ -156,7 +156,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 		matchDetailsPanel.add(lblLocation);
 
 		JPanel locationPanel = new JPanel();
-		locationPanel.setBackground(Color.LIGHT_GRAY);
+		locationPanel.setBackground(Color.decode("0xDDDDDD"));
 		FlowLayout fl_locationPanel = (FlowLayout) locationPanel.getLayout();
 		fl_locationPanel.setHgap(10);
 		fl_locationPanel.setAlignment(FlowLayout.LEFT);
@@ -168,7 +168,6 @@ public class AllocationFrame extends JFrame implements ActionListener {
 		locationPanel.add(cmbLocation);
 
 		JPanel statusPanel = new JPanel();
-		statusPanel.setBackground(UIManager.getColor("menu"));
 		getContentPane().add(statusPanel, BorderLayout.CENTER);
 		statusPanel.setLayout(new BorderLayout(0, 0));
 		statusPanel.add(statusHeaderPanel, BorderLayout.NORTH);
@@ -221,7 +220,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 				int week = Integer.parseInt(fldWeek.getText());
 				if (week < Season.MIN_WEEK || week > Season.MAX_WEEK) {
 					JOptionPane.showMessageDialog(null, "Invalid Week Number");
-					fldWeek.setText("");
+					falseWeekNumber();
 				} else {
 					MatchLevel level = (MatchLevel) cmbLevel.getSelectedItem();
 					Location area = (Location) cmbLocation.getSelectedItem();
@@ -231,14 +230,15 @@ public class AllocationFrame extends JFrame implements ActionListener {
 					if (suitableRefs == null) {
 						JOptionPane.showMessageDialog(null,
 								"Week already taken!");
+						falseWeekNumber();
 					} else if (suitableRefs.size() < 2) {
 						JOptionPane.showMessageDialog(null,
 								"Not enough suitable referees available!");
 					} else {
 
-						lblStatus.setText("Successfully allocated: "
-								+ suitableRefs.get(0).getID() + " "
-								+ suitableRefs.get(1).getID());
+						lblStatus.setText("Match allocated to referees "
+								+ suitableRefs.get(0).getID() + " and "
+								+ suitableRefs.get(1).getID() + ".");
 
 						btnAllocate.setEnabled(false);
 						btnCancel.setText("Close");
@@ -246,18 +246,22 @@ public class AllocationFrame extends JFrame implements ActionListener {
 						controller.allocatedTableData(suitableRefs);
 
 						controller.setTableHeader("Referees ordered by "
-								+ "suitability for Match " + week);
+								+ "suitability for match in week " + week);
 					}
 				}
 			} catch (NumberFormatException ex) {
 				JOptionPane.showMessageDialog(null,
 						"Please enter an integer for week number.");
-				fldWeek.setText("");
-				fldWeek.setBackground(Color.decode("0xFFCCCC"));
+				falseWeekNumber();
 			}
 		} else {
 			// Close window
 			dispose();
 		}
+	}
+	
+	private void falseWeekNumber() {
+		fldWeek.setText("");
+		fldWeek.setBackground(Color.decode("0xFFCCCC"));
 	}
 }

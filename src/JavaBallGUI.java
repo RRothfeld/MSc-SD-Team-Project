@@ -132,12 +132,12 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		headerTextPanel.add(lblSubHeader);
 
 		navPanel = new JPanel();
-		navPanel.setBackground(Color.LIGHT_GRAY);
+		navPanel.setBackground(Color.decode("0xDDDDDD"));
 		getContentPane().add(navPanel, BorderLayout.WEST);
 		navPanel.setLayout(new BorderLayout(0, 0));
 
 		buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.LIGHT_GRAY);
+		buttonPanel.setBackground(Color.decode("0xDDDDDD"));
 		navPanel.add(buttonPanel, BorderLayout.CENTER);
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
 
