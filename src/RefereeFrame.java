@@ -467,14 +467,12 @@ public final class RefereeFrame extends JFrame implements ActionListener {
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(null,
-                            "Please enter valid data.\n"
-                                    + "Invalid Entries are in red");
+                            "Please enter valid data.");
                     }
                     } catch (NumberFormatException e) {
                         allocationLabel.setForeground(Color.red);
                         refMatchesField.setText("");
-                        JOptionPane.showMessageDialog(null, "Please enter valid data.\n"
-                            + "Invalid Entries are in red");
+                        JOptionPane.showMessageDialog(null, "Please enter valid data.");
                     }
             }
             else 
@@ -505,6 +503,16 @@ public final class RefereeFrame extends JFrame implements ActionListener {
             } else if (!northCheckbox.isSelected() && 
                        !centralCheckbox.isSelected() && 
                        !southCheckbox.isSelected()){
+                result = false;
+            }           
+            String[] firstNameTest = refFnameField.getText().split("[a-zA-Z]+");
+            if (firstNameTest.length > 1)
+            {
+                result = false;
+            }
+            String[] lastNameTest = refLnameField.getText().split("[a-zA-Z]+");
+            if (lastNameTest.length > 1)
+            {
                 result = false;
             }
             return result;
