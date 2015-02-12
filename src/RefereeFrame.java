@@ -413,7 +413,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 						+ "The Referee List is full!");
 
 			} else {
-
+                                fnameLabel.setForeground(Color.black);
+                                fnameLabel.setForeground(Color.black);
+                                fnameLabel.setForeground(Color.black);
 				if (refFnameField.getText() == null || 
                                         refFnameField.getText().equals("") || 
                                         Pattern.matches("[\\dA-Z]+", refFnameField.getText()))
