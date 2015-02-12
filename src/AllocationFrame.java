@@ -46,7 +46,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 			highlight = Color.decode("0xFFCCCC"), border = Color.GRAY;
 	
 	/** JFrame and spacing dimensions in pixels */
-	private static final int WIDTH = 300, HEIGHT = 260, SPACING = 5;
+	private static final int WIDTH = 350, HEIGHT = 260, SPACING = 5;
 	
 	/** Reference to the JavaBallController */
 	private final JavaBallController controller;
@@ -257,14 +257,20 @@ public class AllocationFrame extends JFrame implements ActionListener {
 				} else {
 					// Update status to show the two referees, to whom the
 					// match has been allocated
-					lblStatus.setText("Match allocated to referees "
-							+ suitableRefs.get(0).getID() + " and "
-							+ suitableRefs.get(1).getID() + ".");
+					Referee ref1 = suitableRefs.get(0);
+					Referee ref2 = suitableRefs.get(1);
+					lblStatus.setText("Allocated to " + ref1.getFirstName()
+							+ " " + ref1.getLastName() + " and "
+							+ ref2.getFirstName() + " " + ref2.getLastName()
+							+ ".");
 
-					// Disable allocate button as allocation has been
-					// successful; change cancel button to close as no
+					// Disable allocate button and input fields as allocation
+					// has been successful; change cancel button to close as no
 					// process can be cancelled anymore
 					btnAllocate.setEnabled(false);
+					fldWeek.setEnabled(false);
+					cmbLevel.setEnabled(false);
+					cmbLocation.setEnabled(false);
 					btnCancel.setText("Close");
 
 					// Update table to display the suitable referees ordered
