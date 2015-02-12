@@ -287,7 +287,7 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			addRef.setRemoveButtonEnabled(false);
 		} else if (ae.getSource() == btnAllocRefs) {
 			// If allocate referee to matches button is pressed
-			AllocateReferees allocateRef = new AllocateReferees(controller);
+			AllocationFrame allocateRef = new AllocationFrame(controller);
 			allocateRef.setVisible(true);
 		} else if (ae.getSource() == btnChart) {
 			// If chart button is pressed

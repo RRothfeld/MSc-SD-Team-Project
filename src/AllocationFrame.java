@@ -51,7 +51,7 @@ import java.awt.Dimension;
  * @version 1.7
  * @since 11-02-2015
  */
-public class AllocateReferees extends JFrame implements ActionListener {
+public class AllocationFrame extends JFrame implements ActionListener {
 
 	private final JavaBallController controller;
 	private JTextField fldWeek;
@@ -64,7 +64,7 @@ public class AllocateReferees extends JFrame implements ActionListener {
 	 *
 	 * @param controller
 	 */
-	public AllocateReferees(JavaBallController controller) {
+	public AllocationFrame(JavaBallController controller) {
 
 		this.controller = controller;
 
