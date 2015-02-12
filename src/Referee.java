@@ -104,20 +104,13 @@ public class Referee implements Comparable<Referee> {
 	 * when adding new ref, or if ReadLine splits details up before creating a
 	 * Referee object.
 	 * 
-	 * @param id
-	 *            - Referee ID, format XY1
-	 * @param firstName
-	 *            - Referee first name
-	 * @param lastName
-	 *            - Referee last name
-	 * @param qual
-	 *            - Qualification type and level
-	 * @param allocCount
-	 *            - amount of matches allocated to referee
-	 * @param homeLocality
-	 *            - home area for referee
-	 * @param travel
-	 *            - string Y/N for areas Referee will travel too
+	 * @param id - Referee ID, format XY1
+	 * @param firstName - Referee first name
+	 * @param lastName - Referee last name
+	 * @param qual - Qualification type and level
+	 * @param allocCount - amount of matches allocated to referee
+	 * @param homeLocality - home area for referee
+	 * @param travel - string Y/N for areas Referee will travel too
 	 */
 	public Referee(String id, String firstName, String lastName, String qual,
 			int allocCount, String homeLocality, String travel) {

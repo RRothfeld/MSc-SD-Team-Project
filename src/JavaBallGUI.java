@@ -251,7 +251,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
                             "Your Refere List was too large.\n"
                             + "Only the first 12 Referees will be shown.");
 		}
-                
+                if (controller.idChange()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Your Refere List contained duplicate IDs.\n"
+                            + "One or more IDs have been changed to be unique.");
+                }
 		// add listeners
 		btnSearch.addActionListener(this);
 		btnShowAll.addActionListener(this);

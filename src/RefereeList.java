@@ -34,10 +34,10 @@ public class RefereeList implements Iterable<Referee> {
 	/** list of all registered referees */
 	private final ArrayList<Referee> listedReferees;
         private boolean inputFileTooLarge;
-
+        private boolean inputIDChangeRequired;
 	/** Default constructor */
 	public RefereeList() {
-            this.listedReferees = new ArrayList<Referee>();
+            this.listedReferees = new ArrayList<>();
             initFromFile(listedReferees);
 	}
 	
@@ -298,43 +298,42 @@ public class RefereeList implements Iterable<Referee> {
 	 * @param refList the RefereeList to be populated
 	 */
 	private void initFromFile(ArrayList<Referee> refList) {
-		try {
-			// Set scope of FileReader
-			FileReader refereeFile = null;
-			try {
-				// Initialise FileReader with input file and initialise scanner
-				refereeFile = new FileReader(INPUT_FILE);
-				Scanner refScanner = new Scanner(refereeFile);
-                                
-				// Read every line of input file and create referees
-                                int counter = 1;
-				while (refScanner.hasNextLine()) {
-					String newReferee = refScanner.nextLine();
-					if (newReferee != null) {
-                                            if (counter <= MAX_REFEREES)
-                                            {
-                                                Referee referee = new Referee(newReferee);
-                                                referee.setID(createID(referee.getFirstName(),
-                                                        referee.getLastName()));
-						refList.add(referee);
-                                                counter++;
-                                            }
-                                            else {
-                                                inputFileTooLarge = true;
-                                                break;
-                                            }
-					}
-				}
-				// Close scanner after usage
-				refScanner.close();
-			} finally {
-				// Close input file if it has been opened
-				if (refereeFile != null) {
-					refereeFile.close();
-				}
-			}
-		} catch (IOException e) {
-		} // Do nothing if file not found
+            try {
+                    // Set scope of FileReader
+                FileReader refereeFile = null;
+                try {
+                    // Initialise FileReader with input file and initialise scanner
+                    refereeFile = new FileReader(INPUT_FILE);
+                    Scanner refScanner = new Scanner(refereeFile);
+
+                    // Read every line of input file and create referees
+                    int counter = 1;
+                    while (refScanner.hasNextLine()) {
+                        String newReferee = refScanner.nextLine();
+                        if (newReferee != null) {
+                            if (counter <= MAX_REFEREES)
+                            {
+                                Referee referee = new Referee(newReferee);
+                                uniqueIDTest(referee);
+                                refList.add(referee);
+                                counter++;
+                            }
+                            else {
+                                inputFileTooLarge = true;
+                                break;
+                            }
+                        }
+                    }
+                    // Close scanner after usage
+                    refScanner.close();
+                } finally {
+                        // Close input file if it has been opened
+                        if (refereeFile != null) {
+                                refereeFile.close();
+                        }
+                }
+            } catch (IOException e) {
+            } // Do nothing if file not found
 	}
 	
 	/**
@@ -343,7 +342,18 @@ public class RefereeList implements Iterable<Referee> {
 	public void sort() {
 		Collections.sort(listedReferees);
 	}
-
+        
+        public void uniqueIDTest(Referee referee)
+        {
+            for (Referee ref : listedReferees)
+            {
+                if (ref.getID().equals(referee.getID()))
+                {
+                    referee.setID(createID(referee.getFirstName(),referee.getLastName()));
+                    inputIDChangeRequired = true;
+                }
+            }
+        }
 	/**
 	 * 
 	 */
@@ -357,6 +367,11 @@ public class RefereeList implements Iterable<Referee> {
         public boolean getFileSize()
         {
             return inputFileTooLarge;
+        }
+        
+        public boolean idChange()
+        {
+            return inputIDChangeRequired;
         }
 	/**
 	 * Returns an iterator of elements of type Referee
