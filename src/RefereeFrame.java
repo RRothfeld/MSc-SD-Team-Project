@@ -433,50 +433,74 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		if (refMatchesField.getText() == null
 			|| refMatchesField.getText().equals("")
-			|| !isInteger(refMatchesField.getText()))
+			|| !isInteger(refMatchesField.getText())) {
 
-		{
 		    allocationLabel.setForeground(Color.red);
-		}
-		// Get travel locations for referee
-		String n = northCheckbox.isSelected() ? "Y" : "N";
-		String c = centralCheckbox.isSelected() ? "Y" : "N";
-		String s = southCheckbox.isSelected() ? "Y" : "N";
-		String travel = n + c + s;
-
-		RefQualification qual = (RefQualification) qualStatus
-			.getSelectedItem();
-
-		if (this.referee == null) {
-		    if (!(refFnameField.getText().equals(""))
-			    && !(refLnameField.getText().equals(""))
-			    && !(Pattern.matches("[\\dA-Z]+",
-				    refFnameField.getText()))
-			    && !(Pattern.matches("[\\dA-Z]+",
-				    refLnameField.getText()))) {
-			controller.addReferee(refFnameField.getText(),
-				refLnameField.getText(), qual, Integer
-					.parseInt(String.valueOf(qualLevel
-						.getSelectedItem())), Integer
-					.parseInt(refMatchesField.getText()),
-				(Location) homeLoc.getSelectedItem(), travel);
-			controller.updateTable();
-			dispose();
-
-		    } else {
-			JOptionPane.showMessageDialog(null,
-				"Please enter valid data.\n"
-					+ "Invalid Entries are in red");
-		    }
 
 		} else {
-		    controller.editReferee(referee, qual, Integer
-			    .parseInt(String.valueOf(qualLevel
-				    .getSelectedItem())), (Location) homeLoc
-			    .getSelectedItem(), travel);
+		    fnameLabel.setForeground(Color.black);
+		    fnameLabel.setForeground(Color.black);
+		    fnameLabel.setForeground(Color.black);
+		    if (refFnameField.getText() == null
+			    || refFnameField.getText().equals("")
+			    || Pattern.matches("[\\dA-Z]+",
+				    refFnameField.getText())) {
+			fnameLabel.setForeground(Color.red);
+		    }
+		    if (refLnameField.getText() == null
+			    || refLnameField.getText().equals("")
+			    || Pattern.matches("[\\dA-Z]+",
+				    refLnameField.getText())) {
+			lnameLabel.setForeground(Color.red);
+		    }
+		    if (refMatchesField.getText() == null
+			    || refMatchesField.getText().equals("")) {
+			allocationLabel.setForeground(Color.red);
+		    }
+		    // Get travel locations for referee
+		    String n = northCheckbox.isSelected() ? "Y" : "N";
+		    String c = centralCheckbox.isSelected() ? "Y" : "N";
+		    String s = southCheckbox.isSelected() ? "Y" : "N";
+		    String travel = n + c + s;
+		    RefQualification qual = ijbButton.isSelected() ? RefQualification.IJB
+			    : RefQualification.NJB;
 
-		    controller.updateTable();
-		    dispose();
+		    if (this.referee == null) {
+			if (!(refFnameField.getText().equals(""))
+				&& !(refLnameField.getText().equals(""))
+				&& !(Pattern.matches("[\\dA-Z]+",
+					refFnameField.getText()))
+				&& !(Pattern.matches("[\\dA-Z]+",
+					refLnameField.getText()))) {
+			    controller
+				    .addReferee(
+					    refFnameField.getText(),
+					    refLnameField.getText(),
+					    qual,
+					    Integer.parseInt(String
+						    .valueOf(qualLevel
+							    .getSelectedItem())),
+					    Integer.parseInt(refMatchesField
+						    .getText()),
+					    (Location) homeLoc
+						    .getSelectedItem(), travel);
+			    controller.updateTable();
+			    dispose();
+
+			} else {
+			    JOptionPane.showMessageDialog(null,
+				    "Please enter valid data.\n"
+					    + "Invalid Entries are in red");
+			}
+		    } else {
+			controller.editReferee(referee, qual, Integer
+				.parseInt(String.valueOf(qualLevel
+					.getSelectedItem())),
+				(Location) homeLoc.getSelectedItem(), travel);
+
+			controller.updateTable();
+			dispose();
+		    }
 		}
 	    }
 	}
