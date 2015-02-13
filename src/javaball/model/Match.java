@@ -18,7 +18,7 @@ import javaball.enums.MatchLevel;
  * @author Marco Cook (2152599c)
  * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.2
+ * @version 1.4
  * @since 11-02-2015
  */
 public class Match {
@@ -98,8 +98,15 @@ public class Match {
     }
     
     /**
-     * Returns a string representation of the contents of the specified match
-     * @return a string representation of a match  */
+     * Returns a string representation of the contents of the specified match.
+     * The format is as follows "2 Junior North Dave Gray Tim Toms", where 2 is
+     * the week number, Junior is the level of the match, Dave Gray is the name 
+     * of the first suitable referee and Tim Toms is the name of the second 
+     * suitable referee. The week is a decimal number while the rest of the 
+     * information are strings. Everything is separated by tabs and the line 
+     * is followed by a carriage return.
+     * @return a string representation of a match
+     */
     @Override
     public String toString() {   
         String match = String.format("%d\t%s\t%s\t%s %s\t%s %s%n", week, level, area,
