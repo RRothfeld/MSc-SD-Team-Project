@@ -248,9 +248,8 @@ public class JavaBallController {
      * Write report and return if it worked or not.
      */
     private boolean writeOutputFile() {
-        try (FileWriter matchFile = new FileWriter(MATCH_FILE)) {
-            
-            try (FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
+        try (FileWriter matchFile = new FileWriter(MATCH_FILE);
+        		FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
                 matchFile.write("Week\tLevel\tArea\tReferee 1\tReferee 2\n");
                 for (Match match : season) {
                 	matchFile.write(match.toString());
@@ -258,7 +257,6 @@ public class JavaBallController {
                 for (Referee ref : refList) {
                     refereeFile.write(ref.toString());
                 }
-            }
             return true;
         } catch (IOException ex) {
 	    JOptionPane.showMessageDialog(null,
