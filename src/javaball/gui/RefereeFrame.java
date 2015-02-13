@@ -1,3 +1,5 @@
+package javaball.gui;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -9,6 +11,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.regex.Pattern;
+
+import javaball.controller.JavaBallController;
+import javaball.enums.Location;
+import javaball.enums.RefQualification;
+import javaball.model.Referee;
+import javaball.model.RefereeList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;

@@ -1,4 +1,9 @@
+package javaball.model;
+
 import java.util.ArrayList;
+
+import javaball.enums.Location;
+import javaball.enums.RefQualification;
 
 /**
  * Team Foxtrot JavaBall

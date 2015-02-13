@@ -1,3 +1,5 @@
+package javaball.enums;
+
 /** The level of play in a match */
 public enum MatchLevel {
 	JUNIOR("Junior"), SENIOR("Senior");

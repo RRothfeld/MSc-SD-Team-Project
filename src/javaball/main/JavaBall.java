@@ -1,3 +1,10 @@
+package javaball.main;
+
+import javaball.controller.JavaBallController;
+import javaball.gui.JavaBallGUI;
+import javaball.model.RefereeList;
+import javaball.model.Season;
+
 /**
  * Team Foxtrot
  * JavaBall Referee Allocation System
@@ -14,7 +21,7 @@
  * @author Raoul Rothfeld (2164502r)
  * 
  * @version 1.3 - final
- * @since 11-02-2015
+ * @since 13-02-2015
  */
 public class JavaBall {
 	/**

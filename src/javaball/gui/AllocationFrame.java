@@ -1,10 +1,22 @@
+package javaball.gui;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javaball.controller.JavaBallController;
+import javaball.enums.Location;
+import javaball.enums.MatchLevel;
+import javaball.model.Referee;
+import javaball.model.Season;
+
+import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,12 +26,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Component;
-
-import javax.swing.Box;
 import javax.swing.border.LineBorder;
 
 /**

@@ -1,8 +1,13 @@
+package javaball.gui;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
+import javaball.model.Referee;
+import javaball.model.RefereeList;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;

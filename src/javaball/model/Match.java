@@ -1,3 +1,8 @@
+package javaball.model;
+
+import javaball.enums.Location;
+import javaball.enums.MatchLevel;
+
 /**
  * Team Foxtrot
  * JavaBall Referee Allocation System

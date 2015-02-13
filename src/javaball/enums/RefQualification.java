@@ -1,3 +1,5 @@
+package javaball.enums;
+
 /** The qualification of a referee */
 public enum RefQualification {
 	NJB("NJB"), IJB("IJB");
