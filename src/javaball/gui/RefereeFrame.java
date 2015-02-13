@@ -52,7 +52,7 @@ import javax.swing.border.LineBorder;
  */
 public final class RefereeFrame extends JFrame implements ActionListener {
 	/** JFrame and spacing dimensions in pixels */
-	private static final int WIDTH = 350, HEIGHT = 500, SPACING = 5;
+	private static final int WIDTH = 400, HEIGHT = 550, SPACING = 5;
 
 	/** Predefined set of colours for uniform component colouring */
 	private final Color background = Color.decode("0xDDDDDD"),
@@ -123,7 +123,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		this.referee = referee;
 		
 		// Adjust JFrame title to represent which referee is edited
-		setTitle("Edit Referee: " + referee.getID());
+		setTitle("Edit Referee");
 
 		// Fill GUI components with existing referee information
 		setDetails();
@@ -300,6 +300,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		travelLabelWrapper.setBackground(background);
 		homeWrapper.setBackground(background);
 		homePanel.setBackground(background);
+		travelPanel.setBackground(background);
 		homeWrapper.setLayout(new GridLayout(0, 2, 0, 0));
 		travelLabelWrapper.setLayout(new GridLayout(0, 2, 0, 0));
 		travelPanel.setLayout(new GridLayout(0, 1, 0, 0));

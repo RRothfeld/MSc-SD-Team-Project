@@ -73,7 +73,7 @@ public class JavaBallController {
 			chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			chart.setVisible(true);
 		} else {
-			JOptionPane.showMessageDialog(null, "No referees!");
+			JOptionPane.showMessageDialog(null, "There are no referees listed.");
 		}
 	}
     
