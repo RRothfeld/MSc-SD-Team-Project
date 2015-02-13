@@ -73,7 +73,7 @@ public class Referee implements Comparable<Referee> {
 	 *            - Long line with all Referee Information
 	 */
 	public Referee(String fileLine) {
-		String[] refereeDetails = fileLine.split(" ");
+		String[] refereeDetails = fileLine.split("[ ]+");
 
 		// Check to make sure line split properly and has adequate items
 		if (refereeDetails != null && refereeDetails.length == 7) {
@@ -260,7 +260,11 @@ public class Referee implements Comparable<Referee> {
 		}
 	}
 	
-	public void setQualification(RefQualification qualification) {
+    /**
+     *
+     * @param qualification
+     */
+    public void setQualification(RefQualification qualification) {
 		this.qualification = qualification;
 	}
 
