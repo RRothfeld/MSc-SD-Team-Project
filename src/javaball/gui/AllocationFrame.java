@@ -311,11 +311,11 @@ public class AllocationFrame extends JFrame implements ActionListener {
 	 * @param msg the error message to be displayed
 	 */
 	private void invalidWeek(String msg) {
-		// Show error message
-		JOptionPane.showMessageDialog(null, msg);
-		
 		// Reset week number field
 		fldWeek.setText("");
 		fldWeek.setBackground(highlight);
+		
+		// Show error message
+		JOptionPane.showMessageDialog(null, msg);
 	}
 }

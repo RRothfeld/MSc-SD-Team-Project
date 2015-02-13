@@ -415,6 +415,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * TODO COMMENT
 	 */
 	private void protectHomeLocation() {
+		// NORTH IS DEFAULT
+		chbxNorth.setSelected(true);
+		chbxNorth.setEnabled(false);
+		
 		cmbHome.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -422,13 +426,13 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				Location selectedLocation = (Location) cmbHome
 						.getSelectedItem();
 				
-				if (selectedLocation.equals(cmbHome.getItemAt(0))) {
+				if (selectedLocation.equals(Location.NORTH)) {
 					chbxCentral.setEnabled(true);
 					chbxSouth.setEnabled(true);
 
 					chbxNorth.setSelected(true);
 					chbxNorth.setEnabled(false);
-				} else if ((selectedLocation.equals(cmbHome.getItemAt(1)))) {
+				} else if ((selectedLocation.equals(Location.CENTRAL))) {
 					chbxNorth.setEnabled(true);
 					chbxSouth.setEnabled(true);
 
@@ -551,6 +555,13 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * TODO REWORK
 	 */
 	public void processReferee() {
+		// REVERT COLOURS
+		fldFirstName.setBackground(Color.WHITE);
+		fldLastName.setBackground(Color.WHITE);
+		fldPrevAlloc.setBackground(Color.WHITE);
+		
+		boolean validInput = true;
+		
 		// Get travel locations for referee
 		String n = chbxNorth.isSelected() ? "Y" : "N";
 		String c = chbxCentral.isSelected() ? "Y" : "N";
@@ -572,16 +583,22 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				
 
 				if (firstName == null || firstName.equals("")
-						|| Pattern.matches("[\\dA-Z]+", firstName)) {
+						|| Pattern.matches("[\\dA-Z]+", firstName)
+						|| firstName.contains(" ")) {
+					validInput = false;
+					invalidInput(fldFirstName);
 				}
 				
 				if (lastName == null || lastName.equals("")
-						|| Pattern.matches("[\\dA-Z]+", lastName)) {
+						|| Pattern.matches("[\\dA-Z]+", lastName)
+						|| lastName.contains(" ")) {
+					validInput = false;
+					invalidInput(fldLastName);
 				}
 				
 				int prevAlloc = Integer.parseInt(fldPrevAlloc.getText().trim());
 				
-				if ((validationTests())) {
+				if (validInput) {
 					controller.addReferee(firstName, lastName, qual, qualLevel,
 							prevAlloc, home, travel);
 					
@@ -593,50 +610,26 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 							"Please enter valid data.");
 				}
 			} catch (NumberFormatException e) {
-				allocationLabel.setForeground(Color.red);
-				refMatchesField.setText("");
+				invalidInput(fldPrevAlloc);
 				JOptionPane.showMessageDialog(null, "Please enter valid data.");
 			}
 		} else {
-			controller.editReferee(referee, qual, Integer.parseInt(String
-					.valueOf(qualLevel.getSelectedItem())), (Location) homeLoc
-					.getSelectedItem(), travel);
+			controller.editReferee(referee, qual, qualLevel, home, travel);
+			
 			controller.updateTable();
+			
 			dispose();
 		}
 	}
-    
-    /**
-     * TODO REWORK
-     * @return
-     */
-	public boolean validationTests() {
-		boolean result = true;
-		if (refFnameField.getText().equals("")) {
-			result = false;
-		} else if (refLnameField.getText().equals("")) {
-			result = false;
-		} else if ((Pattern.matches("[\\dA-Z]+", refFnameField.getText()))) {
-			result = false;
-		} else if ((Pattern.matches("[\\dA-Z]+", refLnameField.getText()))) {
-			result = false;
-		} else if (qualStatus.getSelectedItem() == null) {
-			result = false;
-		} else if (qualLevel.getSelectedItem() == null) {
-			result = false;
-		} else if (!northCheckbox.isSelected() && !centralCheckbox.isSelected()
-				&& !southCheckbox.isSelected()) {
-			result = false;
-		}
-		String[] firstNameTest = refFnameField.getText().split("[a-zA-Z]+");
-		if (firstNameTest.length > 1) {
-			result = false;
-		}
-		String[] lastNameTest = refLnameField.getText().split("[a-zA-Z]+");
-		if (lastNameTest.length > 1) {
-			result = false;
-		}
-		return result;
+	
+	/**
+	 * 
+	 * @param field
+	 */
+	private void invalidInput(JTextField field) {
+		// Reset week number field
+		field.setText("");
+		field.setBackground(highlight);
 	}
 	
 	/**
