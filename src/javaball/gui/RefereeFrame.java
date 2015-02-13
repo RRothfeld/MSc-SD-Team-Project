@@ -47,7 +47,7 @@ import javax.swing.border.LineBorder;
  * @author Marco Cook (2152599c)
  * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.3
+ * @version 1.5 - final
  * @since 13-02-2015
  */
 public final class RefereeFrame extends JFrame implements ActionListener {
@@ -412,7 +412,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * TODO COMMENT
+	 * Preselects North as the default travel preference as North is the default
+	 * home location for a new referee. Upon changing home location, the travel
+	 * preference JCheckBoxes are updated to ensure that the home location is
+	 * being travelled to
 	 */
 	private void protectHomeLocation() {
 		// Preselect North as default input
@@ -562,7 +565,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * TODO REWORK
+	 * Processes adding a new referee or given an existing referee updates the
+	 * referee's details; validates the user's inputs
 	 */
 	public void processReferee() {
 		// Revert field colours in case they have been previously highlighted
@@ -589,23 +593,26 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		// Retrieve selected home location
 		Location home = (Location) cmbHome.getSelectedItem();
 
+		// Test if a given referee is existing (decide whether to do add or edit
+		// procedure)
 		if (this.referee == null) {
 			try {
-
+				// Retrieve user input for referee names
 				String firstName = fldFirstName.getText().trim();
 				String lastName = fldLastName.getText().trim();
 				
-
+				// Check validity of first name (input existing and consisting
+				// only of letters and spaces)
 				if (firstName == null || firstName.equals("")
-						|| Pattern.matches("[\\dA-Z]+", firstName)
-						|| firstName.contains(" ")) {
+						|| !Pattern.matches("[A-Za-z ]+", firstName)) {
 					validInput = false;
 					invalidInput(fldFirstName);
 				}
 				
+				// Check validity of last name (input existing and consisting
+				// only of letters and spaces)
 				if (lastName == null || lastName.equals("")
-						|| Pattern.matches("[\\dA-Z]+", lastName)
-						|| lastName.contains(" ")) {
+						|| !Pattern.matches("[A-Za-z ]+", lastName)) {
 					validInput = false;
 					invalidInput(fldLastName);
 				}
