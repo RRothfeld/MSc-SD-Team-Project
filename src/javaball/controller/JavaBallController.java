@@ -120,8 +120,7 @@ public class JavaBallController {
      * @param location - The location we want to know if they travel to
      * @return - whether or not referee travels to Location
      */
-    public boolean refTravel(Referee referee, Location location)
-    {
+    public boolean travelPreference(Referee referee, Location location) {
         return (referee.getTravelLocation(location));
     }
 
