@@ -44,7 +44,7 @@ import javax.swing.border.LineBorder;
  * @author Raoul Rothfeld (2164502r)
  * 
  * @version 1.8 - final
- * @since 12-02-2015
+ * @since 13-02-2015
  */
 public class AllocationFrame extends JFrame implements ActionListener {
 	/** Predefined set of colours for uniform component colouring */

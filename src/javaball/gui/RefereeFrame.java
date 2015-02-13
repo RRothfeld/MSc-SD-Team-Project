@@ -623,11 +623,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * 
+	 * TODO COMMENT
 	 * @param field
 	 */
 	private void invalidInput(JTextField field) {
-		// Reset week number field
 		field.setText("");
 		field.setBackground(highlight);
 	}
