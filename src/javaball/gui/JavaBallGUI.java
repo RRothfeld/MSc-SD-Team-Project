@@ -42,178 +42,205 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author Marco Cook (2152599c)
  * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.7
- * @since 11-02-2015
+ * @version 1.7 - final
+ * @since 13-02-2015
  */
 public class JavaBallGUI extends JFrame implements ActionListener {
 	/** JFrame and spacing dimensions in pixels */
 	private static final int WIDTH = 800, HEIGHT = 400, SPACING = 5;
 
 	/** Predefined set of colours for uniform component colouring */
-	private final Color background = Color.decode("0xDDDDDD");
+	private final Color background = Color.decode("0xDDDDDD"),
+			header = Color.DARK_GRAY;
 
 	/** Reference to the JavaBallController */
 	private final JavaBallController controller;
 
+	/** Default strings within GUI */
+	private final String defaultSearch = "Enter name or ID...";
+	private final String defaultTableHeader = "Referees ordered by ID";
 
-	private final String searchFieldString = "Enter name or ID...";
-	private final String tableHeaderString = "Referees ordered by ID";
-
+	/** Main/interactive GUI components */
 	private JTextField fldSearch;
+	private JLabel lblTableHeader;
 	private JButton btnSearch, btnShowAll, btnAddRef, btnAllocRefs, btnChart,
 			btnSaveExit;
+	
+	/** JTable to store the referee listing */
 	private JTable refereesTable;
-	private JLabel lblTableHeader;
 
 	/**
 	 * Constructor for JavaBallGUI
-	 * 
 	 * @param controller
 	 */
 	public JavaBallGUI(JavaBallController controller) {
 		// Store reference to JavaBallController
 		this.controller = controller;
 
+		// Set JFrame properties
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setTitle("JavaBall RAS");
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null); // centres JFrame on desktop
 		
+		// Create and add GUI components to JFrame
 		layoutHeader();
 		layoutNavigation();
 		layoutContent();
 		
+		// Make buttons and text field responsive to user input
 		addActionListeners();
 	}
 
+	/**
+	 * Creates and lays out the header components
+	 */
 	private void layoutHeader() {
+		// Create JPanels
 		JPanel headerPanel = new JPanel();
-		headerPanel.setBackground(Color.DARK_GRAY);
-		getContentPane().add(headerPanel, BorderLayout.NORTH);
-		headerPanel.setLayout(new BorderLayout(0, 0));
-
 		JPanel searchPanel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) searchPanel.getLayout();
-		flowLayout.setVgap(10);
-		searchPanel.setBackground(Color.DARK_GRAY);
-		headerPanel.add(searchPanel, BorderLayout.EAST);
-
-		fldSearch = new JTextField();
-		fldSearch.setText(searchFieldString);
-		searchPanel.add(fldSearch);
-		fldSearch.setColumns(15);
-
-		btnSearch = new JButton("Search");
-		searchPanel.add(btnSearch);
-
-		Component headerSpacerLeft = Box.createHorizontalStrut(10);
-		headerPanel.add(headerSpacerLeft, BorderLayout.WEST);
-
 		JPanel headerTextPanel = new JPanel();
-		headerTextPanel.setBackground(Color.DARK_GRAY);
-		headerPanel.add(headerTextPanel, BorderLayout.CENTER);
+		
+		// Set JPanel layouts/properties
+		headerPanel.setLayout(new BorderLayout(0, 0));
 		headerTextPanel.setLayout(new BoxLayout(headerTextPanel, BoxLayout.X_AXIS));
-
+		headerPanel.setBackground(header);
+		searchPanel.setBackground(header);
+		headerTextPanel.setBackground(header);
+		
+		// Set searchPanel to use a FlowLayout
+		FlowLayout flowLayout = (FlowLayout) searchPanel.getLayout();
+		flowLayout.setVgap(SPACING * 2);
+		
+		// Create search field and set its properties
+		fldSearch = new JTextField();
+		fldSearch.setText(defaultSearch);
+		fldSearch.setColumns(15);
+		
+		// Create header labels
 		JLabel lblHeader = new JLabel("JavaBall ");
-		lblHeader.setForeground(Color.WHITE);
-		lblHeader.setFont(new Font("Dialog", Font.BOLD, 18));
-		headerTextPanel.add(lblHeader);
-
 		JLabel lblSubHeader = new JLabel("Referee Allocation System");
-		lblSubHeader.setFont(new Font("Dialog", Font.PLAIN, 18));
+		
+		// Set header labels properties
+		lblHeader.setForeground(Color.WHITE);
 		lblSubHeader.setForeground(Color.WHITE);
+		lblHeader.setFont(new Font("Dialog", Font.BOLD, 18));
+		lblSubHeader.setFont(new Font("Dialog", Font.PLAIN, 18));
+		
+		// Create search button
+		btnSearch = new JButton("Search");
+		
+		// Create spacing component
+		Component headerSpacerLeft = Box.createHorizontalStrut(SPACING * 2);
+		
+		// Add header to GUI frame
+		getContentPane().add(headerPanel, BorderLayout.NORTH);
+		
+		// Add header components
+		headerPanel.add(searchPanel, BorderLayout.EAST);
+		headerPanel.add(headerSpacerLeft, BorderLayout.WEST);
+		headerPanel.add(headerTextPanel, BorderLayout.CENTER);
+		
+		// Add search components
+		searchPanel.add(fldSearch);
+		searchPanel.add(btnSearch);
+		
+		// Add header title components
+		headerTextPanel.add(lblHeader);
 		headerTextPanel.add(lblSubHeader);
 	}
 	
+	/**
+	 * Creates and lays out the navigation components
+	 */
 	private void layoutNavigation() {
+		// Create JPanels
 		JPanel navPanel = new JPanel();
-		navPanel.setBackground(Color.decode("0xDDDDDD"));
-		getContentPane().add(navPanel, BorderLayout.WEST);
-		navPanel.setLayout(new BorderLayout(0, 0));
-
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.decode("0xDDDDDD"));
-		navPanel.add(buttonPanel, BorderLayout.CENTER);
+		
+		// Set JPanel layouts/properties
+		navPanel.setLayout(new BorderLayout(0, 0));
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-
+		navPanel.setBackground(background);
+		buttonPanel.setBackground(background);
+		
+		// Create header label
 		JLabel lblNavigation = new JLabel("Navigation");
-		buttonPanel.add(lblNavigation);
-
-		Component navBtnSpacerTop = Box.createVerticalStrut(5);
-		buttonPanel.add(navBtnSpacerTop);
-
+		
+		// Create buttons
 		btnAddRef = new JButton("Add Referee");
-		buttonPanel.add(btnAddRef);
-
-		Component navBtnSpacerMiddle = Box.createVerticalStrut(5);
-		buttonPanel.add(navBtnSpacerMiddle);
-
 		btnAllocRefs = new JButton("Allocate Referees");
-		buttonPanel.add(btnAllocRefs);
-
-		Component navBtnSpacerBottom = Box.createVerticalStrut(5);
-		buttonPanel.add(navBtnSpacerBottom);
-
 		btnChart = new JButton("Show Chart");
-		buttonPanel.add(btnChart);
-
-		Component navBtnGlueBottom = Box.createVerticalGlue();
-		buttonPanel.add(navBtnGlueBottom);
-
 		btnSaveExit = new JButton("Save and Exit");
-		buttonPanel.add(btnSaveExit);
+		
+		// Create spacing components
+		Component navBtnSpacerTop = Box.createVerticalStrut(SPACING);
+		Component navBtnSpacerMiddle = Box.createVerticalStrut(SPACING);
+		Component navBtnSpacerBottom = Box.createVerticalStrut(SPACING);
+		Component navBtnGlueBottom = Box.createVerticalGlue();
+		Component navSpacerLeft = Box.createHorizontalStrut(SPACING);
+		Component navSpacerRight = Box.createHorizontalStrut(SPACING);
+		Component navSpacerTop = Box.createVerticalStrut(SPACING);
+		Component navSpacerBottom = Box.createVerticalStrut(SPACING);
+		
+		// Add navigation to GUI frame
+		getContentPane().add(navPanel, BorderLayout.WEST);
 
-		Component navSpacerLeft = Box.createHorizontalStrut(5);
+		// Add navigation components
+		navPanel.add(buttonPanel, BorderLayout.CENTER);
 		navPanel.add(navSpacerLeft, BorderLayout.WEST);
-
-		Component navSpacerRight = Box.createHorizontalStrut(5);
 		navPanel.add(navSpacerRight, BorderLayout.EAST);
-
-		Component navSpacerTop = Box.createVerticalStrut(5);
 		navPanel.add(navSpacerTop, BorderLayout.NORTH);
-
-		Component navSpacerBottom = Box.createVerticalStrut(5);
 		navPanel.add(navSpacerBottom, BorderLayout.SOUTH);
 		
+		// Add button components
+		buttonPanel.add(lblNavigation);
+		buttonPanel.add(navBtnSpacerTop);
+		buttonPanel.add(btnAddRef);
+		buttonPanel.add(navBtnSpacerMiddle);
+		buttonPanel.add(btnAllocRefs);
+		buttonPanel.add(navBtnSpacerBottom);
+		buttonPanel.add(btnChart);
+		buttonPanel.add(navBtnGlueBottom);
+		buttonPanel.add(btnSaveExit);
 	}
 	
+	/**
+	 * Creates and lays out the content (referee table) components
+	 */
 	private void layoutContent() {
-
+		// Create JPanels
 		JPanel contentPanel = new JPanel();
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(new BorderLayout(0, 0));
-
 		JPanel tableHeaderPanel = new JPanel();
-		contentPanel.add(tableHeaderPanel, BorderLayout.NORTH);
-		tableHeaderPanel.setLayout(new BorderLayout(0, 0));
-
-		lblTableHeader = new JLabel(tableHeaderString);
-		lblTableHeader.setVerticalAlignment(SwingConstants.BOTTOM);
-		// lblTableHeader.setVerticalAlignment(SwingConstants.BOTTOM);
-		tableHeaderPanel.add(lblTableHeader);
-
 		JPanel tableResetPanel = new JPanel();
-		tableHeaderPanel.add(tableResetPanel, BorderLayout.EAST);
+		
+		// Set JPanel layouts/properties
+		contentPanel.setLayout(new BorderLayout(0, 0));
+		tableHeaderPanel.setLayout(new BorderLayout(0, 0));
 		tableResetPanel.setLayout(new BoxLayout(tableResetPanel,
 				BoxLayout.X_AXIS));
-
+		
+		// Create table header label and set its properties
+		lblTableHeader = new JLabel(defaultTableHeader);
+		lblTableHeader.setVerticalAlignment(SwingConstants.BOTTOM);
+		
+		// Create reset button and set its properties
 		btnShowAll = new JButton("Show All");
 		btnShowAll.setFont(new Font("Dialog", Font.BOLD, 10));
 		btnShowAll.setEnabled(false);
-		tableResetPanel.add(btnShowAll);
-
-		Component tableHeaderSpacerRight = Box.createHorizontalStrut(5 + 1);
-		tableResetPanel.add(tableHeaderSpacerRight);
-
-		Component tableHeaderSpacerLeft = Box.createHorizontalStrut(5);
-		tableHeaderPanel.add(tableHeaderSpacerLeft, BorderLayout.WEST);
-
-		Component tableHeaderSpacerBottom = Box.createVerticalStrut(5);
-		tableHeaderPanel.add(tableHeaderSpacerBottom, BorderLayout.SOUTH);
-
-		Component tableHeaderSpacerTop = Box.createVerticalStrut(5);
-		tableHeaderPanel.add(tableHeaderSpacerTop, BorderLayout.NORTH);
-
+		
+		// Create spacing components
+		Component tableHeaderSpacerLeft = Box.createHorizontalStrut(SPACING);
+		Component tableHeaderSpacerBottom = Box.createVerticalStrut(SPACING);
+		Component tableHeaderSpacerTop = Box.createVerticalStrut(SPACING);
+		Component tableSpacerLeft = Box.createHorizontalStrut(SPACING);
+		Component tableSpacerRight = Box.createHorizontalStrut(SPACING);
+		Component tableSpacerBottom = Box.createVerticalStrut(SPACING);
+		// One pixel offset to align show all button with table border
+		Component tableHeaderSpacerRight = Box
+				.createHorizontalStrut(SPACING + 1);
+		
+		// Create table to display referee listing and set its properties
 		refereesTable = controller.getTable();
 		refereesTable.setBackground(UIManager.getColor("menu"));
 		refereesTable.setAutoCreateRowSorter(true);
@@ -222,27 +249,43 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		refereesTable.setRowSelectionAllowed(false);
 		refereesTable.setFont(new Font("Dialog", Font.PLAIN, 14));
 
+		// Create and apply table layout
 		DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
 		leftRender.setHorizontalAlignment(JLabel.LEFT);
 		refereesTable.getColumnModel().getColumn(4).setCellRenderer(leftRender);
-
-		// Create new JPane for table view
 		refereesTable.setSize(contentPanel.getWidth(), contentPanel.getHeight());
+		
+		// Create wrapper JScrollPanel to host the table
 		JScrollPane tablePane = new JScrollPane(refereesTable);
-		contentPanel.add(tablePane);
-
-		Component tableSpacerLeft = Box.createHorizontalStrut(5);
+		
+		// Add content to GUI frame
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		
+		// Add table components
+		contentPanel.add(tablePane, BorderLayout.CENTER); // Table added
+		contentPanel.add(tableHeaderPanel, BorderLayout.NORTH);
 		contentPanel.add(tableSpacerLeft, BorderLayout.WEST);
-
-		Component tableSpacerRight = Box.createHorizontalStrut(5);
 		contentPanel.add(tableSpacerRight, BorderLayout.EAST);
-
-		Component tableSpacerBottom = Box.createVerticalStrut(5);
 		contentPanel.add(tableSpacerBottom, BorderLayout.SOUTH);
+		
+		// Add table header components
+		tableHeaderPanel.add(lblTableHeader, BorderLayout.CENTER);
+		tableHeaderPanel.add(tableResetPanel, BorderLayout.EAST);
+		tableHeaderPanel.add(tableHeaderSpacerLeft, BorderLayout.WEST);
+		tableHeaderPanel.add(tableHeaderSpacerBottom, BorderLayout.SOUTH);
+		tableHeaderPanel.add(tableHeaderSpacerTop, BorderLayout.NORTH);
+
+		// Add table reset components
+		tableResetPanel.add(btnShowAll);
+		tableResetPanel.add(tableHeaderSpacerRight);
 	}
 	
+	
+	/**
+	 * Adds ActionListeners to make the GUI responsive to user interaction
+	 */
 	private void addActionListeners() {
-		// add listeners
+		// add listeners to JButtons
 		btnSearch.addActionListener(this);
 		btnShowAll.addActionListener(this);
 		btnAddRef.addActionListener(this);
@@ -250,16 +293,15 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		btnChart.addActionListener(this);
 		btnSaveExit.addActionListener(this);
 
-		// Clear the text field if the mouse is clicked in it
+		// Clear the search text field if mouse cursor enters the field
 		fldSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent event) {
-				if (fldSearch.getText().equals(searchFieldString)) {
+				if (fldSearch.getText().equals(defaultSearch)) {
 					fldSearch.setText("");
 				}
 			}
 		});
-
 	}
 
 	/**
@@ -267,45 +309,75 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	 * @param ae the action event
 	 */
 	public void actionPerformed(ActionEvent ae) {
-		// If add button is pressed
-		if (ae.getSource() == btnAddRef) {
-			RefereeFrame addRef = new RefereeFrame(controller);
-			addRef.setTitle("Add Referee");
-			addRef.setVisible(true);
-			addRef.setRemoveButtonEnabled(false);
-		} else if (ae.getSource() == btnAllocRefs) {
-			// If allocate referee to matches button is pressed
-			AllocationFrame allocateRef = new AllocationFrame(controller);
-			allocateRef.setVisible(true);
-		} else if (ae.getSource() == btnChart) {
-			// If chart button is pressed
+		// Check which button has been pressed
+		if (ae.getSource() == btnAddRef)
+			// Open referee adding frame upon add button
+			addReferee();
+		else if (ae.getSource() == btnAllocRefs)
+			// Open allocation frame upon allocation button
+			allocateReferees();
+		else if (ae.getSource() == btnChart)
+			// Open chart frame upon chart button
 			controller.openChart();
-		} else if (ae.getSource() == btnSearch) {
-			// If search button is pressed
-			String refInfo = fldSearch.getText().toLowerCase().trim();
-			Referee ref = controller.getReferee(refInfo);
-			if (ref != null) {
-				RefereeFrame editRef = new RefereeFrame(controller, ref);
-				editRef.setVisible(true);
-				editRef.setTitle("Edit Referee");
-				editRef.setLocations();
-				editRef.setHomeLocation();
-				fldSearch.setText(searchFieldString);
-			} else {
-				JOptionPane.showMessageDialog(null, "Referee not found");
-				fldSearch.setText(searchFieldString);
-			}
-		} else if (ae.getSource() == btnShowAll) {
+		else if (ae.getSource() == btnSearch)
+			 // Search for desired referee upon search button
+			searchReferee();
+		else if (ae.getSource() == btnShowAll)
+			// Update referee table upon show all button
 			controller.updateTable();
-		} else if (ae.getSource() == btnSaveExit) {
-			// If save and exit button is pressed
+		else if (ae.getSource() == btnSaveExit)
+			// Exit programme upon save and exit button
 			controller.saveExit();
+	}
+	
+	/**
+	 * Opens a referee adding frame
+	 */
+	private void addReferee() {
+		RefereeFrame addRef = new RefereeFrame(controller);
+		addRef.setTitle("Add Referee");
+		addRef.setVisible(true);
+	}
+	
+	/**
+	 * Opens an allocation frame
+	 */
+	private void allocateReferees() {
+		AllocationFrame allocateRef = new AllocationFrame(controller);
+		allocateRef.setVisible(true);
+	}
+	
+	/**
+	 * Initiate the search for a referee given the search field input and open a
+	 * referee frame with the referee's details
+	 */
+	private void searchReferee() {
+		// Retrieve user input in search field
+		String refInfo = fldSearch.getText().toLowerCase().trim();
+		
+		// Retrieve referee upon provided search query
+		Referee ref = controller.getReferee(refInfo);
+		
+		// Check if referee is existent
+		if (ref != null) {
+			// Open referee frame with a given referee
+			RefereeFrame editRef = new RefereeFrame(controller, ref);
+			editRef.setVisible(true);
+			editRef.setTitle("Edit Referee");
+			
+			// Reset the search field to default text
+			fldSearch.setText(defaultSearch);
+		} else {
+			// Otherwise show error that referee could not be found and reset
+			// the search field to default text
+			JOptionPane.showMessageDialog(null, "Referee not found.");
+			fldSearch.setText(defaultSearch);
 		}
 	}
 
 	/**
-	 * 
-	 * @param label
+	 * Sets the table header to a given String and activates the show all button
+	 * @param label the table header to be displayed
 	 */
 	public void setTableHeader(String label) {
 		btnShowAll.setEnabled(true);
@@ -313,10 +385,11 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * 
+	 * Resets the table header to its default state (default text and enable
+	 * disable show all button)
 	 */
 	public void resetTableHeader() {
-		lblTableHeader.setText(tableHeaderString);
+		lblTableHeader.setText(defaultTableHeader);
 		btnShowAll.setEnabled(false);
 	}
 }
