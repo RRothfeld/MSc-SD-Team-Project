@@ -49,8 +49,6 @@ public class JavaBallController {
     private final String MATCH_FILE   = "MatchAllocs.txt";
     
     private final int MAX_ID_SIZE = 4;
-    	
-    private TableModel tableData;
     
     private JTable table;
 	
@@ -76,10 +74,6 @@ public class JavaBallController {
 			JOptionPane.showMessageDialog(null, "There are no referees listed.");
 		}
 	}
-    
-    /**
-     * REFEREE OPERATION SECTION.
-     */
         
     /**
      * Retrieves a referee based on a search query for an ID or full name
@@ -222,10 +216,6 @@ public class JavaBallController {
     public void setView(JavaBallGUI view) {
 		this.view = view;
 	}
-
-    /**
-     * PROGRAM CLOSE SECTION.
-     */
     
     /**
      * Method to write output file and quit the program.
@@ -259,16 +249,11 @@ public class JavaBallController {
     }
     
     /**
-     * TABLE SECTION.
-     */
-    
-    /**
      * Method to create table.
      * Brought to this class to add update logic.
      * @return table with default TableModel
      */
-    public JTable getTable()
-    {
+    public JTable getTable() {
         table = new JTable(refereeTableModel());                
         return table;
     }
@@ -277,9 +262,8 @@ public class JavaBallController {
      * Method to create TableModel object for refList and return it to the GUI
      * @return - Full TableModel
      */
-    public TableModel refereeTableModel()
-    {
-        tableData = new RefereeTableModel(refList.getReferees());
+    public TableModel refereeTableModel() {
+    	TableModel tableData = new RefereeTableModel(refList.getReferees());
         return tableData;
     }
     
@@ -287,8 +271,7 @@ public class JavaBallController {
      *
      * @param allocatedReferees
      */
-    public void allocatedTableData(ArrayList<Referee> allocatedReferees)
-    {
+    public void allocatedTableData(ArrayList<Referee> allocatedReferees) {
         table.setModel(new RefereeTableModel(allocatedReferees)); 
     }
     
@@ -296,8 +279,7 @@ public class JavaBallController {
      * Method to set Table Model to RefereeList if it isn't already
      * and to sort by Referee ID.
      */
-    public void updateTable()
-    {
+    public void updateTable() {
         table.setModel(refereeTableModel());
         
         DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
@@ -318,10 +300,10 @@ public class JavaBallController {
      *
      * @return
      */
-    public int indexCounter()
-    {
+    public int indexCounter()  {
         return refList.size();
     }
+    
     // TODO we need to rethink this
     private static class RefereeTableModel extends AbstractTableModel {
 
