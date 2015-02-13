@@ -84,7 +84,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		// Set JFrame properties
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle("Add Referee");
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null); // centres JFrame on desktop
 		
@@ -120,9 +119,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		// Store reference to referee to be edited
 		this.referee = referee;
-		
-		// Adjust JFrame title to represent which referee is edited
-		setTitle("Edit Referee");
 
 		// Fill GUI components with existing referee information
 		setDetails();
@@ -337,6 +333,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		travelLabelWrapper.add(lblTravel);
 		travelLabelWrapper.add(checkBoxWrapper);
 		checkBoxWrapper.add(travelPanel);
+		
+		// Add JCheckboxes
 		travelPanel.add(chbxNorth);
 		travelPanel.add(chbxCentral);
 		travelPanel.add(chbxSouth);
@@ -351,6 +349,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		btnRemove = new JButton("Remove");
 		btnCancel = new JButton("Cancel");
 
+		// Disable remove button by default as when adding a referee, removing
+		// is not an option
+		btnRemove.setEnabled(false);
+		
 		// Add action listeners
 		btnSave.addActionListener(this);
 		btnRemove.addActionListener(this);
@@ -385,7 +387,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	private void updatableIDLabel() {
 		// Create new FocusAdapter
 		FocusAdapter idUpdater = new FocusAdapter() {
-			@Override
 			public void focusLost(FocusEvent e) {
 				// Only update ID if referee does not already have a defined ID
 				if (referee == null) {
@@ -668,21 +669,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		field.setText("");
 		field.setBackground(highlight);
 	}
-	
-	/**
-	 * Sets the GUI component for home location to the referee's home location
-	 */
-	public void setHomeLocation() {
-		cmbHome.setSelectedItem(referee.getHomeLocation());
-	}
-
-	/**
-	 * Enables or disables the remove button 
-	 * @param enabled whether the remove button should be enabled or not
-	 */
-	public void setRemoveButtonEnabled(boolean enabled) {
-		btnRemove.setEnabled(enabled);
-	}
 
 	/**
 	 * Displays the referee details according to the given referee if a referee
@@ -704,18 +690,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		// Set the qualification level according to the referee's qualification
 		cmbLevel.setSelectedItem(referee.getQualificationLevel());
-
-		// Prohibit editing the name or previous allocations of a given referee
-		fldFirstName.setEditable(false);
-		fldLastName.setEditable(false);
-		fldPrevAlloc.setEditable(false);
-	}
-
-	/**
-	 * Sets the GUI component for travel preferences to the referee's travel
-	 * preferences
-	 */
-	public void setLocations() {
+	
+		// Set the home location according to the referee's home location
+		cmbHome.setSelectedItem(referee.getHomeLocation());
+		
 		// Set north JCombobox according to referee's travel preference
 		chbxNorth.setSelected(controller.travelPreference(referee,
 				Location.NORTH));
@@ -727,5 +705,13 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		// Set south JCombobox according to referee's travel preference
 		chbxSouth.setSelected(controller.travelPreference(referee,
 				Location.SOUTH));
+		
+		// Prohibit editing the name or previous allocations of a given referee
+		fldFirstName.setEditable(false);
+		fldLastName.setEditable(false);
+		fldPrevAlloc.setEditable(false);
+		
+		// Enable remove button as the given referee might be deleted
+		btnRemove.setEnabled(true);
 	}
 }
