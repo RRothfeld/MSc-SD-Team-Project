@@ -81,57 +81,12 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		
 		// Create JPanels
 		JPanel topPanel = new JPanel();
-		JPanel refDetailsHeaderPanel = new JPanel();
-		JPanel refDetailsPanel = new JPanel();
-		JPanel innerRefDetailsPanel = new JPanel();
-		JPanel refIDPanel = new JPanel();
-		JPanel firstNamePanel = new JPanel();
-		FlowLayout fl_firstNamePanel = (FlowLayout) firstNamePanel.getLayout();
-		fl_firstNamePanel.setHgap(10);
-		fl_firstNamePanel.setAlignment(FlowLayout.LEFT);
-		JPanel lastNamePanel = new JPanel();
-		FlowLayout fl_lastNamePanel = (FlowLayout) lastNamePanel.getLayout();
-		fl_lastNamePanel.setHgap(10);
-		fl_lastNamePanel.setAlignment(FlowLayout.LEFT);
 		JPanel buttonPanel = new JPanel();
 
 		// Set JPanel layouts
 		topPanel.setLayout(new BorderLayout(0, 0));
-		refDetailsHeaderPanel.setLayout(new BorderLayout(0, 0));
-		refDetailsPanel.setLayout(new BorderLayout(0, 0));
-		innerRefDetailsPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, SPACING,
 				SPACING));
-		setFlowLayout(refIDPanel);
-		setFlowLayout(firstNamePanel);
-		setFlowLayout(lastNamePanel);
-		
-		// Set JPanel properties
-		refDetailsPanel.setBackground(background);
-		refDetailsPanel.setBorder(new LineBorder(border));
-		innerRefDetailsPanel.setBackground(background);
-	
-		// Create spacers
-		Component topSpacerTop = Box.createVerticalStrut(SPACING);
-		Component refDetailsHeaderSpacer = Box.createHorizontalStrut(SPACING);
-		Component topSpacerLeft = Box.createHorizontalStrut(SPACING);
-		Component topSpacerRight = Box.createHorizontalStrut(SPACING);
-		Component topSpacerBottom = Box.createVerticalStrut(SPACING);
-		Component refDetailsSpacerTop = Box.createVerticalStrut(SPACING);
-		Component refDetailsSpacerRight = Box.createHorizontalStrut(SPACING);
-		Component refDetailsSpacerBottom = Box.createVerticalStrut(SPACING);
-		Component refDetailsSpacerLeft = Box.createHorizontalStrut(SPACING);
-		
-		// Create JLabels
-		JLabel lblRefDetailsHeader = new JLabel("Referee Details");
-		JLabel lblRefIDLabel = new JLabel("Referee ID");
-		JLabel lblFirstName = new JLabel("First Name");
-		JLabel lblLastName = new JLabel("Last Name");
-		
-		// Set JLabel properties
-		lblRefIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblFirstName.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblLastName.setHorizontalAlignment(SwingConstants.RIGHT);
 
 		// Create JButtons
 		btnAllocate = new JButton("Save");
@@ -143,138 +98,180 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		
 		// Add wrapper JPanels to GUI
 		getContentPane().add(topPanel, BorderLayout.NORTH);
-		topPanel.add(refDetailsHeaderPanel, BorderLayout.NORTH);
-		topPanel.add(refDetailsPanel, BorderLayout.CENTER);
-		refDetailsPanel.add(innerRefDetailsPanel, BorderLayout.CENTER);
 		
-		// Add wrapper spacers to GUI
-		refDetailsHeaderPanel.add(topSpacerTop, BorderLayout.NORTH);
-		refDetailsHeaderPanel.add(refDetailsHeaderSpacer, BorderLayout.WEST);
-		topPanel.add(topSpacerLeft, BorderLayout.WEST);
-		topPanel.add(topSpacerRight, BorderLayout.EAST);
-		topPanel.add(topSpacerBottom, BorderLayout.SOUTH);
-		refDetailsPanel.add(refDetailsSpacerTop, BorderLayout.NORTH);
-		refDetailsPanel.add(refDetailsSpacerRight, BorderLayout.EAST);
-		refDetailsPanel.add(refDetailsSpacerBottom, BorderLayout.SOUTH);
-		refDetailsPanel.add(refDetailsSpacerLeft, BorderLayout.WEST);		
-	
-		// Add match details components (top of JFrame)
-		refDetailsHeaderPanel.add(lblRefDetailsHeader, BorderLayout.CENTER);
-		innerRefDetailsPanel.add(lblRefIDLabel);
-		innerRefDetailsPanel.add(refIDPanel);
-		
-		JLabel lblRefID = new JLabel("New label");
-		refIDPanel.add(lblRefID);
-		innerRefDetailsPanel.add(lblFirstName);
-		innerRefDetailsPanel.add(firstNamePanel);
-		
-		fldFirstName = new JTextField();
-		firstNamePanel.add(fldFirstName);
-		fldFirstName.setColumns(12);
-		innerRefDetailsPanel.add(lblLastName);
-		innerRefDetailsPanel.add(lastNamePanel);
-		
-		fldLastName = new JTextField();
-		lastNamePanel.add(fldLastName);
-		fldLastName.setColumns(12);
+		JPanel panel = new JPanel();
+		topPanel.add(panel, BorderLayout.NORTH);
+		panel.setLayout(new BorderLayout(0, 0));
+		JPanel refDetailsHeaderPanel = new JPanel();
+		panel.add(refDetailsHeaderPanel, BorderLayout.NORTH);
+		refDetailsHeaderPanel.setLayout(new BorderLayout(0, 0));
+				
+					// Create spacers
+					Component topSpacerTop = Box.createVerticalStrut(SPACING);
+					refDetailsHeaderPanel.add(topSpacerTop, BorderLayout.NORTH);
+					Component refDetailsHeaderSpacer = Box.createHorizontalStrut(SPACING);
+					refDetailsHeaderPanel.add(refDetailsHeaderSpacer, BorderLayout.WEST);
+					
+					// Create JLabels
+					JLabel lblRefDetailsHeader = new JLabel("Referee Details");
+					refDetailsHeaderPanel.add(lblRefDetailsHeader, BorderLayout.CENTER);
+					JPanel refDetailsPanel = new JPanel();
+					panel.add(refDetailsPanel);
+					JPanel innerRefDetailsPanel = new JPanel();
+					JPanel refIDPanel = new JPanel();
+					JPanel firstNamePanel = new JPanel();
+					FlowLayout fl_firstNamePanel = (FlowLayout) firstNamePanel.getLayout();
+					fl_firstNamePanel.setHgap(10);
+					fl_firstNamePanel.setAlignment(FlowLayout.LEFT);
+					JPanel lastNamePanel = new JPanel();
+					FlowLayout fl_lastNamePanel = (FlowLayout) lastNamePanel.getLayout();
+					fl_lastNamePanel.setHgap(10);
+					fl_lastNamePanel.setAlignment(FlowLayout.LEFT);
+					refDetailsPanel.setLayout(new BorderLayout(0, 0));
+					innerRefDetailsPanel.setLayout(new GridLayout(0, 2, 0, 0));
+					setFlowLayout(refIDPanel);
+					setFlowLayout(firstNamePanel);
+					setFlowLayout(lastNamePanel);
+					
+					// Set JPanel properties
+					refDetailsPanel.setBackground(background);
+					refDetailsPanel.setBorder(new LineBorder(border));
+					innerRefDetailsPanel.setBackground(background);
+					Component refDetailsSpacerTop = Box.createVerticalStrut(SPACING);
+					Component refDetailsSpacerRight = Box.createHorizontalStrut(SPACING);
+					Component refDetailsSpacerBottom = Box.createVerticalStrut(SPACING);
+					Component refDetailsSpacerLeft = Box.createHorizontalStrut(SPACING);
+					JLabel lblRefIDLabel = new JLabel("Referee ID");
+					JLabel lblFirstName = new JLabel("First Name");
+					JLabel lblLastName = new JLabel("Last Name");
+					
+					// Set JLabel properties
+					lblRefIDLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+					lblFirstName.setHorizontalAlignment(SwingConstants.RIGHT);
+					lblLastName.setHorizontalAlignment(SwingConstants.RIGHT);
+					refDetailsPanel.add(innerRefDetailsPanel, BorderLayout.CENTER);
+					refDetailsPanel.add(refDetailsSpacerTop, BorderLayout.NORTH);
+					refDetailsPanel.add(refDetailsSpacerRight, BorderLayout.EAST);
+					refDetailsPanel.add(refDetailsSpacerBottom, BorderLayout.SOUTH);
+					refDetailsPanel.add(refDetailsSpacerLeft, BorderLayout.WEST);		
+					innerRefDetailsPanel.add(lblRefIDLabel);
+					innerRefDetailsPanel.add(refIDPanel);
+					
+					JLabel lblRefID = new JLabel("New label");
+					refIDPanel.add(lblRefID);
+					innerRefDetailsPanel.add(lblFirstName);
+					innerRefDetailsPanel.add(firstNamePanel);
+					
+					fldFirstName = new JTextField();
+					firstNamePanel.add(fldFirstName);
+					fldFirstName.setColumns(12);
+					innerRefDetailsPanel.add(lblLastName);
+					innerRefDetailsPanel.add(lastNamePanel);
+					
+					fldLastName = new JTextField();
+					lastNamePanel.add(fldLastName);
+					fldLastName.setColumns(12);
+					Component topSpacerLeft = Box.createHorizontalStrut(SPACING);
+					panel.add(topSpacerLeft, BorderLayout.WEST);
+					Component topSpacerRight = Box.createHorizontalStrut(SPACING);
+					panel.add(topSpacerRight, BorderLayout.EAST);
+					
+					Component verticalStrut = Box.createVerticalStrut(5);
+					panel.add(verticalStrut, BorderLayout.SOUTH);
+					
+					JPanel centreTopPanel = new JPanel();
+					topPanel.add(centreTopPanel, BorderLayout.SOUTH);
+					centreTopPanel.setLayout(new BorderLayout(0, 0));
+					
+					JPanel allocHeaderPanel = new JPanel();
+					centreTopPanel.add(allocHeaderPanel, BorderLayout.NORTH);
+					allocHeaderPanel.setLayout(new BorderLayout(0, 0));
+					
+					Component centreTopSpacerTop = Box.createVerticalStrut(5);
+					allocHeaderPanel.add(centreTopSpacerTop, BorderLayout.NORTH);
+					
+					Component allocHeaderSpacer = Box.createHorizontalStrut(5);
+					allocHeaderPanel.add(allocHeaderSpacer, BorderLayout.WEST);
+					
+					JLabel lblAllocHeader = new JLabel("Match Allocations");
+					allocHeaderPanel.add(lblAllocHeader, BorderLayout.CENTER);
+					
+					JPanel allocPanel = new JPanel();
+					allocPanel.setBorder(new LineBorder(border));
+					allocPanel.setBackground(new Color(221, 221, 221));
+					centreTopPanel.add(allocPanel, BorderLayout.CENTER);
+					allocPanel.setLayout(new BorderLayout(0, 0));
+					
+					JPanel innerAllocPanel = new JPanel();
+					innerAllocPanel.setBackground(new Color(221, 221, 221));
+					allocPanel.add(innerAllocPanel, BorderLayout.CENTER);
+					innerAllocPanel.setLayout(new GridLayout(0, 2, 0, 0));
+					
+					JLabel lblPreviousAllocations = new JLabel("Previous Allocations");
+					lblPreviousAllocations.setHorizontalAlignment(SwingConstants.RIGHT);
+					innerAllocPanel.add(lblPreviousAllocations);
+					
+					JPanel prevAllocPanel = new JPanel();
+					FlowLayout fl_prevAllocPanel = (FlowLayout) prevAllocPanel.getLayout();
+					fl_prevAllocPanel.setHgap(10);
+					fl_prevAllocPanel.setAlignment(FlowLayout.LEFT);
+					innerAllocPanel.add(prevAllocPanel);
+					
+					fldPrevAlloc = new JTextField();
+					prevAllocPanel.add(fldPrevAlloc);
+					fldPrevAlloc.setColumns(5);
+					
+					Component allocSpacerBottom = Box.createVerticalStrut(5);
+					allocPanel.add(allocSpacerBottom, BorderLayout.SOUTH);
+					
+					Component allocSpacerLeft = Box.createHorizontalStrut(5);
+					allocPanel.add(allocSpacerLeft, BorderLayout.WEST);
+					
+					Component allocSpacerTop = Box.createVerticalStrut(5);
+					allocPanel.add(allocSpacerTop, BorderLayout.NORTH);
+					
+					Component allocSpacerRight = Box.createHorizontalStrut(5);
+					allocPanel.add(allocSpacerRight, BorderLayout.EAST);
+					
+					Component centreTopSpacerLeft = Box.createHorizontalStrut(5);
+					centreTopPanel.add(centreTopSpacerLeft, BorderLayout.WEST);
+					
+					Component centreTopSpacerRight = Box.createHorizontalStrut(5);
+					centreTopPanel.add(centreTopSpacerRight, BorderLayout.EAST);
+					
+					Component centreTopSpacerBottom = Box.createVerticalStrut(5);
+					centreTopPanel.add(centreTopSpacerBottom, BorderLayout.SOUTH);
 		
 		JPanel centrePanel = new JPanel();
 		getContentPane().add(centrePanel, BorderLayout.CENTER);
 		centrePanel.setLayout(new BorderLayout(0, 0));
 		
-		JPanel centreTopPanel = new JPanel();
-		centrePanel.add(centreTopPanel, BorderLayout.NORTH);
-		centreTopPanel.setLayout(new BorderLayout(0, 0));
+		JPanel refQualPanel = new JPanel();
+		centrePanel.add(refQualPanel, BorderLayout.NORTH);
+		refQualPanel.setLayout(new BorderLayout(0, 0));
 		
-		JPanel allocHeaderPanel = new JPanel();
-		centreTopPanel.add(allocHeaderPanel, BorderLayout.NORTH);
-		allocHeaderPanel.setLayout(new BorderLayout(0, 0));
-		
-		Component centreTopSpacerTop = Box.createVerticalStrut(5);
-		allocHeaderPanel.add(centreTopSpacerTop, BorderLayout.NORTH);
-		
-		Component allocHeaderSpacer = Box.createHorizontalStrut(5);
-		allocHeaderPanel.add(allocHeaderSpacer, BorderLayout.WEST);
-		
-		JLabel lblAllocHeader = new JLabel("Match Allocations");
-		allocHeaderPanel.add(lblAllocHeader, BorderLayout.CENTER);
-		
-		JPanel allocPanel = new JPanel();
-		allocPanel.setBorder(new LineBorder(border));
-		allocPanel.setBackground(new Color(221, 221, 221));
-		centreTopPanel.add(allocPanel, BorderLayout.CENTER);
-		allocPanel.setLayout(new BorderLayout(0, 0));
-		
-		JPanel innerAllocPanel = new JPanel();
-		innerAllocPanel.setBackground(new Color(221, 221, 221));
-		allocPanel.add(innerAllocPanel, BorderLayout.CENTER);
-		innerAllocPanel.setLayout(new GridLayout(0, 2, 0, 0));
-		
-		JLabel lblPreviousAllocations = new JLabel("Previous Allocations");
-		lblPreviousAllocations.setHorizontalAlignment(SwingConstants.RIGHT);
-		innerAllocPanel.add(lblPreviousAllocations);
-		
-		JPanel prevAllocPanel = new JPanel();
-		FlowLayout fl_prevAllocPanel = (FlowLayout) prevAllocPanel.getLayout();
-		fl_prevAllocPanel.setHgap(10);
-		fl_prevAllocPanel.setAlignment(FlowLayout.LEFT);
-		innerAllocPanel.add(prevAllocPanel);
-		
-		fldPrevAlloc = new JTextField();
-		prevAllocPanel.add(fldPrevAlloc);
-		fldPrevAlloc.setColumns(5);
-		
-		Component allocSpacerBottom = Box.createVerticalStrut(5);
-		allocPanel.add(allocSpacerBottom, BorderLayout.SOUTH);
-		
-		Component allocSpacerLeft = Box.createHorizontalStrut(5);
-		allocPanel.add(allocSpacerLeft, BorderLayout.WEST);
-		
-		Component allocSpacerTop = Box.createVerticalStrut(5);
-		allocPanel.add(allocSpacerTop, BorderLayout.NORTH);
-		
-		Component allocSpacerRight = Box.createHorizontalStrut(5);
-		allocPanel.add(allocSpacerRight, BorderLayout.EAST);
-		
-		Component centreTopSpacerLeft = Box.createHorizontalStrut(5);
-		centreTopPanel.add(centreTopSpacerLeft, BorderLayout.WEST);
-		
-		Component centreTopSpacerRight = Box.createHorizontalStrut(5);
-		centreTopPanel.add(centreTopSpacerRight, BorderLayout.EAST);
-		
-		Component centreTopSpacerBottom = Box.createVerticalStrut(5);
-		centreTopPanel.add(centreTopSpacerBottom, BorderLayout.SOUTH);
-		
-		JPanel centreBottomPanel = new JPanel();
-		centrePanel.add(centreBottomPanel, BorderLayout.CENTER);
-		centreBottomPanel.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel_5 = new JPanel();
-		centreBottomPanel.add(panel_5, BorderLayout.NORTH);
-		panel_5.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel_9 = new JPanel();
-		panel_5.add(panel_9, BorderLayout.NORTH);
-		panel_9.setLayout(new BorderLayout(0, 0));
+		JPanel refQualHeaderPanel = new JPanel();
+		refQualPanel.add(refQualHeaderPanel, BorderLayout.NORTH);
+		refQualHeaderPanel.setLayout(new BorderLayout(0, 0));
 		
 		Component verticalStrut_4 = Box.createVerticalStrut(5);
-		panel_9.add(verticalStrut_4, BorderLayout.NORTH);
+		refQualHeaderPanel.add(verticalStrut_4, BorderLayout.NORTH);
 		
 		Component horizontalStrut_5 = Box.createHorizontalStrut(5);
-		panel_9.add(horizontalStrut_5, BorderLayout.WEST);
+		refQualHeaderPanel.add(horizontalStrut_5, BorderLayout.WEST);
 		
 		JLabel lblRefereeQualification = new JLabel("Referee Qualification");
-		panel_9.add(lblRefereeQualification, BorderLayout.CENTER);
+		refQualHeaderPanel.add(lblRefereeQualification, BorderLayout.CENTER);
 		
-		JPanel panel_10 = new JPanel();
-		panel_10.setBorder(new LineBorder(border));
-		panel_10.setBackground(new Color(221, 221, 221));
-		panel_5.add(panel_10, BorderLayout.CENTER);
-		panel_10.setLayout(new BorderLayout(0, 0));
+		JPanel innerRefQualPanel = new JPanel();
+		innerRefQualPanel.setBorder(new LineBorder(border));
+		innerRefQualPanel.setBackground(new Color(221, 221, 221));
+		refQualPanel.add(innerRefQualPanel, BorderLayout.CENTER);
+		innerRefQualPanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_11 = new JPanel();
 		panel_11.setBackground(new Color(221, 221, 221));
-		panel_10.add(panel_11, BorderLayout.CENTER);
+		innerRefQualPanel.add(panel_11, BorderLayout.CENTER);
 		panel_11.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JLabel lblQualificationType = new JLabel("Qualification Type");
@@ -304,41 +301,41 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		panel_13.add(comboBox_3);
 		
 		Component verticalStrut_5 = Box.createVerticalStrut(5);
-		panel_10.add(verticalStrut_5, BorderLayout.NORTH);
+		innerRefQualPanel.add(verticalStrut_5, BorderLayout.NORTH);
 		
 		Component horizontalStrut_6 = Box.createHorizontalStrut(5);
-		panel_10.add(horizontalStrut_6, BorderLayout.WEST);
+		innerRefQualPanel.add(horizontalStrut_6, BorderLayout.WEST);
 		
 		Component verticalStrut_6 = Box.createVerticalStrut(5);
-		panel_10.add(verticalStrut_6, BorderLayout.SOUTH);
+		innerRefQualPanel.add(verticalStrut_6, BorderLayout.SOUTH);
 		
 		Component horizontalStrut_13 = Box.createHorizontalStrut(5);
-		panel_10.add(horizontalStrut_13, BorderLayout.EAST);
+		innerRefQualPanel.add(horizontalStrut_13, BorderLayout.EAST);
 		
 		Component horizontalStrut_7 = Box.createHorizontalStrut(5);
-		panel_5.add(horizontalStrut_7, BorderLayout.WEST);
+		refQualPanel.add(horizontalStrut_7, BorderLayout.WEST);
 		
 		Component horizontalStrut_8 = Box.createHorizontalStrut(5);
-		panel_5.add(horizontalStrut_8, BorderLayout.EAST);
+		refQualPanel.add(horizontalStrut_8, BorderLayout.EAST);
 		
 		Component verticalStrut_7 = Box.createVerticalStrut(5);
-		panel_5.add(verticalStrut_7, BorderLayout.SOUTH);
+		refQualPanel.add(verticalStrut_7, BorderLayout.SOUTH);
 		
-		JPanel panel_8 = new JPanel();
-		centreBottomPanel.add(panel_8, BorderLayout.CENTER);
-		panel_8.setLayout(new BorderLayout(0, 0));
+		JPanel locationPanel = new JPanel();
+		centrePanel.add(locationPanel, BorderLayout.CENTER);
+		locationPanel.setLayout(new BorderLayout(0, 0));
 		
 		Component horizontalStrut_9 = Box.createHorizontalStrut(5);
-		panel_8.add(horizontalStrut_9, BorderLayout.EAST);
+		locationPanel.add(horizontalStrut_9, BorderLayout.EAST);
 		
 		Component horizontalStrut_10 = Box.createHorizontalStrut(5);
-		panel_8.add(horizontalStrut_10, BorderLayout.WEST);
+		locationPanel.add(horizontalStrut_10, BorderLayout.WEST);
 		
 		Component verticalStrut_8 = Box.createVerticalStrut(5);
-		panel_8.add(verticalStrut_8, BorderLayout.NORTH);
+		locationPanel.add(verticalStrut_8, BorderLayout.SOUTH);
 		
 		JPanel panel_14 = new JPanel();
-		panel_8.add(panel_14, BorderLayout.NORTH);
+		locationPanel.add(panel_14, BorderLayout.NORTH);
 		panel_14.setLayout(new BorderLayout(0, 0));
 		
 		Component verticalStrut_9 = Box.createVerticalStrut(5);
@@ -353,7 +350,7 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		JPanel panel_15 = new JPanel();
 		panel_15.setBorder(new LineBorder(border));
 		panel_15.setBackground(new Color(221, 221, 221));
-		panel_8.add(panel_15, BorderLayout.CENTER);
+		locationPanel.add(panel_15, BorderLayout.CENTER);
 		panel_15.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_16 = new JPanel();
