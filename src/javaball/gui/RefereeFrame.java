@@ -11,11 +11,13 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.regex.Pattern;
 
 import javaball.controller.JavaBallController;
 import javaball.enums.Location;
 import javaball.enums.RefQualification;
 import javaball.model.Referee;
+import javaball.model.RefereeList;
 
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
@@ -24,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -63,7 +66,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	
 	/** Main/interactive GUI components */
 	private JButton btnSave, btnRemove, btnCancel;
-	private JLabel lblRefIDLabel, lblFirstName, lblLastName, lblRefID;
+	private JLabel lblRefIDLabel, lblRefID;
 	private JTextField fldPrevAlloc, fldFirstName, fldLastName;
 	private JComboBox<RefQualification> cmbType;
 	private JComboBox<Integer> cmbLevel;
@@ -96,13 +99,14 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		layoutLocations();
 		layoutButtons();
 		
-		// Populate GUI components (e.g. JComboBoxes)
-		populateComponents();
+		// Populate JComboBoxes
+		populateComboBoxes();
 		
 		// Make the referee ID label update as one enters referee names
 		updatableIDLabel();
 		
-		//
+		// Ensure that the home location is always enabled under travel
+		// preferences
 		protectHomeLocation();
 	}
 
@@ -122,7 +126,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		setTitle("Edit Referee: " + referee.getID());
 
 		// Fill GUI components with existing referee information
-		// setDetails(); TODO
+		setDetails();
 	}
 	
 	/**
@@ -169,8 +173,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		// Create JLabels
 		lblRefIDLabel = new JLabel("Referee ID");
-		lblFirstName = new JLabel("First Name");
-		lblLastName = new JLabel("Last Name");
+		JLabel lblFirstName = new JLabel("First Name");
+		JLabel lblLastName = new JLabel("Last Name");
 		lblRefID = new JLabel("");
 
 		// Set JLabel properties
@@ -285,15 +289,19 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		JPanel locationPanel = new JPanel();
 		JPanel homeWrapper = new JPanel();
 		JPanel homePanel = new JPanel();
-		JPanel travelWrapper = new JPanel();
+		JPanel travelLabelWrapper = new JPanel();
 		JPanel checkBoxWrapper = new JPanel();
 		travelPanel = new JPanel();
 
 		// Set JPanel layouts/properties
 		locationPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 		locationPanel.setBackground(background);
+		checkBoxWrapper.setBackground(background);
+		travelLabelWrapper.setBackground(background);
+		homeWrapper.setBackground(background);
+		homePanel.setBackground(background);
 		homeWrapper.setLayout(new GridLayout(0, 2, 0, 0));
-		travelWrapper.setLayout(new GridLayout(0, 2, 0, 0));
+		travelLabelWrapper.setLayout(new GridLayout(0, 2, 0, 0));
 		travelPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		setFlowLayout(homePanel, SPACING, false);
 		setFlowLayout(checkBoxWrapper, 3, false);
@@ -309,16 +317,29 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		// Create JComboBox
 		cmbHome = new JComboBox<Location>();
 		
+		// Create JCheckBoxes for selecting the referee's travel preferences
+		chbxNorth = new JCheckBox(Location.NORTH.toString());
+		chbxCentral= new JCheckBox(Location.CENTRAL.toString());
+		chbxSouth = new JCheckBox(Location.SOUTH.toString());
+		
+		// Set JCheckBoxes properties
+		chbxNorth.setBackground(background);
+		chbxCentral.setBackground(background);
+		chbxSouth.setBackground(background);
+		
 		// Add components to the content panels
 		locationWrapper.add(locationPanel, BorderLayout.CENTER);
 		locationPanel.add(homeWrapper);
 		homeWrapper.add(lblHome);
 		homeWrapper.add(homePanel);
 		homePanel.add(cmbHome);
-		locationPanel.add(travelWrapper);
-		travelWrapper.add(lblTravel);
-		travelWrapper.add(checkBoxWrapper);
+		locationPanel.add(travelLabelWrapper);
+		travelLabelWrapper.add(lblTravel);
+		travelLabelWrapper.add(checkBoxWrapper);
 		checkBoxWrapper.add(travelPanel);
+		travelPanel.add(chbxNorth);
+		travelPanel.add(chbxCentral);
+		travelPanel.add(chbxSouth);
 	}
 	
 	/**
@@ -342,9 +363,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * Populates GUI components such as JComboBoxes and JCheckBoxes with content
+	 * Populates GUI JComboBoxes with content
 	 */
-	private void populateComponents() {
+	private void populateComboBoxes() {
 		// Populate JComboBox for selecting referee's qualification type		
 		cmbType.setModel(new DefaultComboBoxModel<RefQualification>(
 				RefQualification.values()));
@@ -355,14 +376,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		
 		// Populate JComboBox for selecting referee's home location
 		cmbHome.setModel(new DefaultComboBoxModel<Location>(Location.values()));
-		
-		// Create JCheckBoxes for selecting the referee's travel preferences
-		chbxNorth = new JCheckBox(Location.NORTH.toString());
-		chbxCentral= new JCheckBox(Location.CENTRAL.toString());
-		chbxSouth = new JCheckBox(Location.SOUTH.toString());
-		travelPanel.add(chbxNorth);
-		travelPanel.add(chbxCentral);
-		travelPanel.add(chbxSouth);
 	}
 
 	/**
@@ -399,7 +412,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * TODO
+	 * TODO COMMENT
 	 */
 	private void protectHomeLocation() {
 		cmbHome.addItemListener(new ItemListener() {
@@ -509,58 +522,179 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 			fl_refIDPanel.setVgap(pixels + 2); // Vertical spacing
 	}
 
+	/**
+	 * TODO REWORK
+	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+	public void actionPerformed(ActionEvent ae) {
+		// Test which button has been pressed
+		if (ae.getSource() == btnSave) {
+			// Test if more referees can be added
+			if (controller.indexCounter() == RefereeList.MAX_REFEREES
+					&& referee == null)
+				JOptionPane.showMessageDialog(null,
+						"No more referees can be added.");
+			else
+				// Execute saving/editing procedure
+				processReferee();
+		} else if (ae.getSource() == btnRemove) {
+			// Remove referee and close window
+			controller.removeReferee(referee);
+			dispose();
+		} else {
+			// Close window as cancel button has been pressed
+			dispose();
+		}
 	}
 	
 	/**
-	 * TODO
+	 * TODO REWORK
+	 */
+	public void processReferee() {
+		// Get travel locations for referee
+		String n = chbxNorth.isSelected() ? "Y" : "N";
+		String c = chbxCentral.isSelected() ? "Y" : "N";
+		String s = chbxSouth.isSelected() ? "Y" : "N";
+		
+		String travel = n + c + s;
+		
+		RefQualification qual = (RefQualification) cmbType.getSelectedItem();
+		
+		int qualLevel = cmbLevel.getSelectedIndex() + 1;
+		
+		Location home = (Location) cmbHome.getSelectedItem();
+
+		if (this.referee == null) {
+			try {
+
+				String firstName = fldFirstName.getText().trim();
+				String lastName = fldLastName.getText().trim();
+				
+
+				if (firstName == null || firstName.equals("")
+						|| Pattern.matches("[\\dA-Z]+", firstName)) {
+				}
+				
+				if (lastName == null || lastName.equals("")
+						|| Pattern.matches("[\\dA-Z]+", lastName)) {
+				}
+				
+				int prevAlloc = Integer.parseInt(fldPrevAlloc.getText().trim());
+				
+				if ((validationTests())) {
+					controller.addReferee(firstName, lastName, qual, qualLevel,
+							prevAlloc, home, travel);
+					
+					controller.updateTable();
+					
+					dispose();
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Please enter valid data.");
+				}
+			} catch (NumberFormatException e) {
+				allocationLabel.setForeground(Color.red);
+				refMatchesField.setText("");
+				JOptionPane.showMessageDialog(null, "Please enter valid data.");
+			}
+		} else {
+			controller.editReferee(referee, qual, Integer.parseInt(String
+					.valueOf(qualLevel.getSelectedItem())), (Location) homeLoc
+					.getSelectedItem(), travel);
+			controller.updateTable();
+			dispose();
+		}
+	}
+    
+    /**
+     * TODO REWORK
+     * @return
+     */
+	public boolean validationTests() {
+		boolean result = true;
+		if (refFnameField.getText().equals("")) {
+			result = false;
+		} else if (refLnameField.getText().equals("")) {
+			result = false;
+		} else if ((Pattern.matches("[\\dA-Z]+", refFnameField.getText()))) {
+			result = false;
+		} else if ((Pattern.matches("[\\dA-Z]+", refLnameField.getText()))) {
+			result = false;
+		} else if (qualStatus.getSelectedItem() == null) {
+			result = false;
+		} else if (qualLevel.getSelectedItem() == null) {
+			result = false;
+		} else if (!northCheckbox.isSelected() && !centralCheckbox.isSelected()
+				&& !southCheckbox.isSelected()) {
+			result = false;
+		}
+		String[] firstNameTest = refFnameField.getText().split("[a-zA-Z]+");
+		if (firstNameTest.length > 1) {
+			result = false;
+		}
+		String[] lastNameTest = refLnameField.getText().split("[a-zA-Z]+");
+		if (lastNameTest.length > 1) {
+			result = false;
+		}
+		return result;
+	}
+	
+	/**
+	 * Sets the GUI component for home location to the referee's home location
 	 */
 	public void setHomeLocation() {
 		cmbHome.setSelectedItem(referee.getHomeLocation());
 	}
 
 	/**
-	 * Helper method to set the Remove referee button state
-	 * 
-	 * @param enabled
+	 * Enables or disables the remove button 
+	 * @param enabled whether the remove button should be enabled or not
 	 */
 	public void setRemoveButtonEnabled(boolean enabled) {
 		btnRemove.setEnabled(enabled);
 	}
 
 	/**
-	 * TODO
+	 * Displays the referee details according to the given referee if a referee
+	 * is to be edited (instead of added)
 	 */
 	private void setDetails() {
+		// Set ID, names, and the number of previous allocations according to
+		// the referee's information
+		lblRefID.setText(referee.getID());
+		fldFirstName.setText(referee.getFirstName());
+		fldLastName.setText(referee.getLastName());
+		fldPrevAlloc.setText(Integer.toString(referee.getAllocations()));
 
-		refIDLabel.setText(referee.getID());
-		refFnameField.setText(referee.getFirstName());
-		refLnameField.setText(referee.getLastName());
-		refMatchesField.setText(Integer.toString(referee.getAllocations()));
+		// Set the qualification type according to the referee's qualification
+		if (referee.getQualification().equals(RefQualification.IJB))
+			cmbType.setSelectedItem(RefQualification.IJB);
+		else
+			cmbType.setSelectedItem(RefQualification.NJB);
 
-		if (referee.getQualification().equals(RefQualification.IJB)) {
-			qualStatus.setSelectedItem(RefQualification.IJB);
-		} else {
-			qualStatus.setSelectedItem(RefQualification.NJB);
-		}
-		qualLevel.setSelectedItem(referee.getQualificationLevel());
+		// Set the qualification level according to the referee's qualification
+		cmbLevel.setSelectedItem(referee.getQualificationLevel());
 
-		refFnameField.setEditable(false);
-		refLnameField.setEditable(false);
-		refMatchesField.setEditable(false);
+		// Prohibit editing the name or previous allocations of a given referee
+		fldFirstName.setEditable(false);
+		fldLastName.setEditable(false);
+		fldPrevAlloc.setEditable(false);
 	}
 
 	/**
-	 * TODO
+	 * Sets the GUI component for travel preferences to the referee's travel
+	 * preferences
 	 */
 	public void setLocations() {
+		// Set north JCombobox according to referee's travel preference
 		chbxNorth.setSelected(controller.travelPreference(referee,
 				Location.NORTH));
+		
+		// Set central JCombobox according to referee's travel preference
 		chbxCentral.setSelected(controller.travelPreference(referee,
 				Location.CENTRAL));
+		
+		// Set south JCombobox according to referee's travel preference
 		chbxSouth.setSelected(controller.travelPreference(referee,
 				Location.SOUTH));
 	}
