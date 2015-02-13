@@ -46,15 +46,12 @@ import javax.swing.border.LineBorder;
  * @since 11-02-2015
  */
 public final class AltRefFrame extends JFrame implements ActionListener {
-	private JRadioButton njbButton, ijbButton;
-	// Title for referee frame
-	private String refFrameTitle;
 
 	private Referee referee;
 	
 	// Dimensions of referee frame
-	private final int WIDTH = 400;
-	private final int HEIGHT = 600;
+	private final int WIDTH = 350;
+	private final int HEIGHT = 500;
 	
 	/** Predefined set of colours for uniform component colouring */
 	private final Color background = Color.decode("0xDDDDDD"),
@@ -69,18 +66,17 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
-
+	
 	/**
 	 * Constructor to add components and create frame.
 	 * @param controller
-	 * @wbp.parser.constructor
 	 */
 	public AltRefFrame(JavaBallController controller) {
 
 		this.controller = controller;
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setTitle(refFrameTitle);
+		setTitle("Add Referee");
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null); //centres JFrame on desktop
 		setResizable(false);
@@ -93,9 +89,11 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		JPanel weekPanel = new JPanel();
 		JPanel levelPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) levelPanel.getLayout();
+		flowLayout.setHgap(10);
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		JPanel locationPanel = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) locationPanel.getLayout();
+		flowLayout_1.setHgap(10);
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		JPanel buttonPanel = new JPanel();
 
@@ -174,13 +172,13 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		
 		textField_1 = new JTextField();
 		levelPanel.add(textField_1);
-		textField_1.setColumns(15);
+		textField_1.setColumns(12);
 		matchDetailsPanel.add(lblLocation);
 		matchDetailsPanel.add(locationPanel);
 		
 		textField_2 = new JTextField();
 		locationPanel.add(textField_2);
-		textField_2.setColumns(15);
+		textField_2.setColumns(12);
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -220,6 +218,7 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		
 		JPanel panel_6 = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) panel_6.getLayout();
+		flowLayout_2.setHgap(10);
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		panel_4.add(panel_6);
 		
@@ -286,6 +285,7 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		
 		JPanel panel_12 = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) panel_12.getLayout();
+		flowLayout_3.setHgap(10);
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		panel_11.add(panel_12);
 		
@@ -298,6 +298,7 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		
 		JPanel panel_13 = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) panel_13.getLayout();
+		flowLayout_4.setHgap(10);
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		panel_11.add(panel_13);
 		
@@ -360,28 +361,41 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		JPanel panel_16 = new JPanel();
 		panel_16.setBackground(new Color(221, 221, 221));
 		panel_15.add(panel_16, BorderLayout.CENTER);
-		panel_16.setLayout(new GridLayout(0, 2, 0, 0));
+		panel_16.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+		
+		JPanel panel_7 = new JPanel();
+		panel_16.add(panel_7);
+		panel_7.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JLabel lblHomeLocation = new JLabel("Home Location");
+		panel_7.add(lblHomeLocation);
 		lblHomeLocation.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel_16.add(lblHomeLocation);
 		
 		JPanel panel_17 = new JPanel();
+		panel_7.add(panel_17);
 		FlowLayout flowLayout_5 = (FlowLayout) panel_17.getLayout();
+		flowLayout_5.setHgap(10);
 		flowLayout_5.setAlignment(FlowLayout.LEFT);
-		panel_16.add(panel_17);
 		
 		JComboBox<MatchLevel> comboBox_4 = new JComboBox<MatchLevel>();
 		panel_17.add(comboBox_4);
 		
+		JPanel panel_20 = new JPanel();
+		panel_16.add(panel_20);
+		panel_20.setLayout(new GridLayout(0, 2, 0, 0));
+		
 		JLabel lblTravelPreferances = new JLabel("Travel Preferences");
+		panel_20.add(lblTravelPreferances);
 		lblTravelPreferances.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel_16.add(lblTravelPreferances);
+		
+		JPanel panel_21 = new JPanel();
+		FlowLayout flowLayout_6 = (FlowLayout) panel_21.getLayout();
+		flowLayout_6.setHgap(6);
+		panel_20.add(panel_21);
 		
 		JPanel panel_18 = new JPanel();
-		FlowLayout flowLayout_6 = (FlowLayout) panel_18.getLayout();
-		flowLayout_6.setAlignment(FlowLayout.LEFT);
-		panel_16.add(panel_18);
+		panel_21.add(panel_18);
+		panel_18.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("New check box");
 		panel_18.add(chckbxNewCheckBox);
@@ -414,6 +428,21 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
+	 *
+	 * @param controller
+	 * @param referee
+	 */
+	public AltRefFrame(JavaBallController controller, Referee referee) {
+
+          // Calls the default constructor
+          this(controller);
+          
+          this.referee = referee;
+          
+          //setDetails();
+	}
+	
+	/**
 	 * Applies the defined FlowLayout and colouring to a JPanel
 	 * @param panel the JPanel to which the standard FlowLayout is applied
 	 */
@@ -423,7 +452,7 @@ public final class AltRefFrame extends JFrame implements ActionListener {
 		
 		// Apply standard FlowLayout settings
 		FlowLayout flow = (FlowLayout) panel.getLayout();
-		flow.setVgap(7);
+		flow.setVgap(SPACING + 2);
 		flow.setHgap(SPACING * 2);
 		flow.setAlignment(FlowLayout.LEFT);
 	}
