@@ -52,7 +52,7 @@ public class AllocationFrame extends JFrame implements ActionListener {
 			highlight = Color.decode("0xFFCCCC"), border = Color.GRAY;
 	
 	/** JFrame and spacing dimensions in pixels */
-	private static final int WIDTH = 350, HEIGHT = 260, SPACING = 5;
+	private static final int WIDTH = 375, HEIGHT = 260, SPACING = 5;
 	
 	/** Reference to the JavaBallController */
 	private final JavaBallController controller;

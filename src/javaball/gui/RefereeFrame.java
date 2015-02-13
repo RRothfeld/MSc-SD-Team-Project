@@ -52,7 +52,7 @@ import javax.swing.border.LineBorder;
  */
 public final class RefereeFrame extends JFrame implements ActionListener {
 	/** JFrame and spacing dimensions in pixels */
-	private static final int WIDTH = 400, HEIGHT = 550, SPACING = 5;
+	private static final int WIDTH = 365, HEIGHT = 515, SPACING = 5;
 
 	/** Predefined set of colours for uniform component colouring */
 	private final Color background = Color.decode("0xDDDDDD"),
@@ -556,24 +556,28 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * TODO REWORK
 	 */
 	public void processReferee() {
-		// REVERT COLOURS
+		// Revert field colours in case they have been previously highlighted
 		fldFirstName.setBackground(Color.WHITE);
 		fldLastName.setBackground(Color.WHITE);
 		fldPrevAlloc.setBackground(Color.WHITE);
 		
+		// Indicator of correct user input into fields (assume true)
 		boolean validInput = true;
 		
-		// Get travel locations for referee
+		// Get travel locations for referee and combine to three-letter code
 		String n = chbxNorth.isSelected() ? "Y" : "N";
 		String c = chbxCentral.isSelected() ? "Y" : "N";
 		String s = chbxSouth.isSelected() ? "Y" : "N";
-		
 		String travel = n + c + s;
 		
-		RefQualification qual = (RefQualification) cmbType.getSelectedItem();
+		// Retrieve selected referee qualification type
+		RefQualification qualType = (RefQualification) cmbType.getSelectedItem();
 		
+		// Retrieve selected referee qualification; adjust by offset of one as
+		// getSelectedIndex() returns the position (starting with 0)
 		int qualLevel = cmbLevel.getSelectedIndex() + 1;
 		
+		// Retrieve selected home location
 		Location home = (Location) cmbHome.getSelectedItem();
 
 		if (this.referee == null) {
@@ -600,7 +604,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				int prevAlloc = Integer.parseInt(fldPrevAlloc.getText().trim());
 				
 				if (validInput) {
-					controller.addReferee(firstName, lastName, qual, qualLevel,
+					controller.addReferee(firstName, lastName, qualType, qualLevel,
 							prevAlloc, home, travel);
 					
 					controller.updateTable();
@@ -615,7 +619,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Please enter valid data.");
 			}
 		} else {
-			controller.editReferee(referee, qual, qualLevel, home, travel);
+			controller.editReferee(referee, qualType, qualLevel, home, travel);
 			
 			controller.updateTable();
 			
@@ -624,8 +628,9 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 	
 	/**
-	 * TODO COMMENT
-	 * @param field
+	 * Clears a JTextField and highlights it as to show that it has contained
+	 * invalid input
+	 * @param field the JTextfield containing invalid input
 	 */
 	private void invalidInput(JTextField field) {
 		field.setText("");
