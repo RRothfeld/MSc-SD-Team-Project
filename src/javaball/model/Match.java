@@ -97,36 +97,14 @@ public class Match {
 	suitableReferees = referees;
     }
     
-//    /**
-//     *
-//     * @return
-//     */
-//    public Referee[] getReferees() {
-//        
-//        String match = String.format("%d %s %s %s %s %s %s", week, level, area,
-//            suitableReferees[0].getFirstName(), suitableReferees[0].getLastName(), 
-//            suitableReferees[1].getFirstName(), suitableReferees[1].getLastName());
-//	
-//        System.out.println(match);
-//        return this.suitableReferees;
-//    }
-    
-    /** Returns match details
-     * @return  */
-    public String report() {   
-        String match = String.format("%d\t%s\t%s\t%s %s\t%s %s", week, level, area,
+    /**
+     * Returns a string representation of the contents of the specified match
+     * @return a string representation of a match  */
+    @Override
+    public String toString() {   
+        String match = String.format("%d\t%s\t%s\t%s %s\t%s %s%n", week, level, area,
 		suitableReferees[0].getFirstName(), suitableReferees[0].getLastName(), 
                 suitableReferees[1].getFirstName(),suitableReferees[1].getLastName());
-	return match;
-    }
-
-    /**
-     * @return   */
-    @Override
-    public String toString() {
-	// TODO this method seems redundant
-	String match = String.format("%d %s %s %s %s", week, level, area,
-		suitableReferees[0].getID(), suitableReferees[1].getID());
 	return match;
     }
 }

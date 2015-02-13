@@ -105,11 +105,21 @@ public class JavaBallController {
     	}
     }
     
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @return
+     */
     public String createID(String firstName, String lastName)
     {
         return refList.createID(firstName,lastName);
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean inputTooLarge()
     {
         return refList.getFileSize();
@@ -205,15 +215,27 @@ public class JavaBallController {
         }
     }
     
-	public void setTableHeader(String label) {
+    /**
+     *
+     * @param label
+     */
+    public void setTableHeader(String label) {
 		view.setTableHeader(label);
 	}
 	
-	public void setView(JavaBallGUI view) {
+    /**
+     *
+     * @param view
+     */
+    public void setView(JavaBallGUI view) {
 		this.view = view;
 	}
         
-        public boolean idChange() {
+    /**
+     *
+     * @return
+     */
+    public boolean idChange() {
             return refList.idChange();
         }
 
@@ -237,26 +259,12 @@ public class JavaBallController {
         try (FileWriter matchFile = new FileWriter(MATCH_FILE)) {
             
             try (FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
-                String[] referees = new String[refList.size()];
-                String[] matches = new String[season.getNumMatches()];
-                
-                String matchHeader = "Week\tLevel\tArea\tReferee 1\tReferee 2\n";
-                int refCounter = 0;
-                for (Referee ref : refList) {
-                    referees[refCounter] = ref.toString();
-                    refCounter++;
-                }
-                int counter = 0;
+                matchFile.write("Week\tLevel\tArea\tReferee 1\tReferee 2\n");
                 for (Match match : season) {
-                        matches[counter] = (match.report());
-                        counter++;
+                	matchFile.write(match.toString());
                 }
-                for (String s : referees) {
-                        refereeFile.write(s);                                        
-                }
-                matchFile.write(matchHeader);
-                for (String s : matches) {
-                        matchFile.write(s + "\n");
+                for (Referee ref : refList) {
+                    refereeFile.write(ref.toString());
                 }
             }
             return true;
@@ -351,12 +359,6 @@ public class JavaBallController {
             this.listReferees = referees;
             this.columnNames  = new String[]{"ID", "First Name", "Last Name", 
                 "Qualification", "Allocations", "Home", "Travel Areas"};     
-
-//            int index = 1;
-//            for (Referee referee : listReferees)
-//            {
-//                referee.setIndex(index++);
-//            }
         }
 
         @Override

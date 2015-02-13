@@ -150,14 +150,6 @@ public class Referee implements Comparable<Referee> {
 		return qualification;
 	}
 
-	// /**
-	// *
-	// * @return - Integer value for this Referee used by TableModel
-	// */
-	// public int getIndex()
-	// {
-	// return this.index;
-	// }
 	/**
 	 * Integer value for qualification level independent of other info.
 	 * 
@@ -230,20 +222,6 @@ public class Referee implements Comparable<Referee> {
 			return this.visitSouth;
 		}
 	}
-
-	// /** FIXME This method seems unused?
-	// * Method to Change whether a Referee will travel to an Area
-	// * @param location - the location to be flipped
-	// */
-	// private void flipTravel(JavaBallController.Location location) {
-	// if (location.equals(JavaBallController.Location.NORTH)) {
-	// this.visitNorth = !visitNorth;
-	// } else if (location.equals(JavaBallController.Location.CENTRAL)) {
-	// this.visitCentre = !visitCentre;
-	// } else if (location.equals(JavaBallController.Location.SOUTH)) {
-	// this.visitSouth = !visitSouth;
-	// }
-	// }
 	
 	/**
 	 * Method to convert Referee Area Options to boolean
