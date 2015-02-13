@@ -230,20 +230,6 @@ public class Referee implements Comparable<Referee> {
 			return this.visitSouth;
 		}
 	}
-
-	// /** FIXME This method seems unused?
-	// * Method to Change whether a Referee will travel to an Area
-	// * @param location - the location to be flipped
-	// */
-	// private void flipTravel(JavaBallController.Location location) {
-	// if (location.equals(JavaBallController.Location.NORTH)) {
-	// this.visitNorth = !visitNorth;
-	// } else if (location.equals(JavaBallController.Location.CENTRAL)) {
-	// this.visitCentre = !visitCentre;
-	// } else if (location.equals(JavaBallController.Location.SOUTH)) {
-	// this.visitSouth = !visitSouth;
-	// }
-	// }
 	
 	/**
 	 * Method to convert Referee Area Options to boolean
