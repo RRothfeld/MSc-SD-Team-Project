@@ -102,7 +102,7 @@ public class Match {
      * @return a string representation of a match  */
     @Override
     public String toString() {   
-        String match = String.format("%d\t%s\t%s\t%s %s\t%s %s", week, level, area,
+        String match = String.format("%d\t%s\t%s\t%s %s\t%s %s%n", week, level, area,
 		suitableReferees[0].getFirstName(), suitableReferees[0].getLastName(), 
                 suitableReferees[1].getFirstName(),suitableReferees[1].getLastName());
 	return match;
