@@ -105,11 +105,21 @@ public class JavaBallController {
     	}
     }
     
+    /**
+     *
+     * @param firstName
+     * @param lastName
+     * @return
+     */
     public String createID(String firstName, String lastName)
     {
         return refList.createID(firstName,lastName);
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean inputTooLarge()
     {
         return refList.getFileSize();
@@ -205,15 +215,27 @@ public class JavaBallController {
         }
     }
     
-	public void setTableHeader(String label) {
+    /**
+     *
+     * @param label
+     */
+    public void setTableHeader(String label) {
 		view.setTableHeader(label);
 	}
 	
-	public void setView(JavaBallGUI view) {
+    /**
+     *
+     * @param view
+     */
+    public void setView(JavaBallGUI view) {
 		this.view = view;
 	}
         
-        public boolean idChange() {
+    /**
+     *
+     * @return
+     */
+    public boolean idChange() {
             return refList.idChange();
         }
 
@@ -337,12 +359,6 @@ public class JavaBallController {
             this.listReferees = referees;
             this.columnNames  = new String[]{"ID", "First Name", "Last Name", 
                 "Qualification", "Allocations", "Home", "Travel Areas"};     
-
-//            int index = 1;
-//            for (Referee referee : listReferees)
-//            {
-//                referee.setIndex(index++);
-//            }
         }
 
         @Override
