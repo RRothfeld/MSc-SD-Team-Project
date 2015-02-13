@@ -21,8 +21,6 @@ public class TestTableSortFilter extends JPanel {
 
     private String[] columnNames
             = {"First name", "Last name", "Score", "isCool"};
-    
-    private RefereeList refList = new RefereeList();
 
     private Object[][] data = {
         {"Marco", "Cook", 2020, true},

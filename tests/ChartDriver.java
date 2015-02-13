@@ -1,3 +1,6 @@
+import javaball.gui.ChartFrame;
+import javaball.model.RefereeList;
+
 import javax.swing.JFrame;
 
 public class ChartDriver {

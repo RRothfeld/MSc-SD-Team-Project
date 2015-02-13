@@ -1,4 +1,6 @@
 import static org.junit.Assert.*;
+import javaball.enums.*;
+import javaball.model.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,8 +19,8 @@ public class ModelTests {
 	int week;
 	for (int i = 1; i < 10; i++) {
 	    week = i;
-	    for (Match.Level lvl : Match.Level.values()){
-		for (JavaBallController.Location loc : JavaBallController.Location.values()){
+	    for (MatchLevel lvl : MatchLevel.values()){
+		for (Location loc : Location.values()){
 		    match = new Match(week, lvl, loc);
 		}
 	    }
