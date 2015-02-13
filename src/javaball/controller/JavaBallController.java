@@ -237,26 +237,12 @@ public class JavaBallController {
         try (FileWriter matchFile = new FileWriter(MATCH_FILE)) {
             
             try (FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
-                String[] referees = new String[refList.size()];
-                String[] matches = new String[season.getNumMatches()];
-                
-                String matchHeader = "Week\tLevel\tArea\tReferee 1\tReferee 2\n";
-                int refCounter = 0;
-                for (Referee ref : refList) {
-                    referees[refCounter] = ref.toString();
-                    refCounter++;
-                }
-                int counter = 0;
+                matchFile.write("Week\tLevel\tArea\tReferee 1\tReferee 2\n");
                 for (Match match : season) {
-                        matches[counter] = (match.report());
-                        counter++;
+                	matchFile.write(match.toString());
                 }
-                for (String s : referees) {
-                        refereeFile.write(s);                                        
-                }
-                matchFile.write(matchHeader);
-                for (String s : matches) {
-                        matchFile.write(s + "\n");
+                for (Referee ref : refList) {
+                    refereeFile.write(ref.toString());
                 }
             }
             return true;
