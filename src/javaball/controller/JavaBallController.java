@@ -117,14 +117,6 @@ public class JavaBallController {
     }
     
     /**
-     *
-     * @return
-     */
-    public boolean inputTooLarge()
-    {
-        return refList.getFileSize();
-    }
-    /**
      * Method to return 
      * @param referee - The Referee We Want to Know about
      * @param location - The location we want to know if they travel to
