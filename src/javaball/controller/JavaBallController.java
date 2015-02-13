@@ -222,14 +222,6 @@ public class JavaBallController {
     public void setView(JavaBallGUI view) {
 		this.view = view;
 	}
-        
-    /**
-     *
-     * @return
-     */
-    public boolean idChange() {
-            return refList.idChange();
-        }
 
     /**
      * PROGRAM CLOSE SECTION.

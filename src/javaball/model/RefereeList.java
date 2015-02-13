@@ -8,6 +8,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import javaball.enums.Location;
 import javaball.enums.MatchLevel;
 
@@ -38,8 +40,7 @@ public class RefereeList implements Iterable<Referee> {
 	
 	/** list of all registered referees */
 	private final ArrayList<Referee> listedReferees;
-        private boolean inputFileTooLarge;
-        private boolean inputIDChangeRequired;
+        
 	/** Default constructor */
 	public RefereeList() {
             this.listedReferees = new ArrayList<>();
@@ -78,8 +79,8 @@ public class RefereeList implements Iterable<Referee> {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Returns a list of all registered referees
+	 * @return an array list containing referees
 	 */
 	public ArrayList<Referee> getReferees() {
 		return listedReferees;
@@ -303,42 +304,22 @@ public class RefereeList implements Iterable<Referee> {
 	 * @param refList the RefereeList to be populated
 	 */
 	private void initFromFile(ArrayList<Referee> refList) {
-            try {
-                    // Set scope of FileReader
-                FileReader refereeFile = null;
-                try {
-                    // Initialise FileReader with input file and initialise scanner
-                    refereeFile = new FileReader(INPUT_FILE);
-                    Scanner refScanner = new Scanner(refereeFile);
+	    // Initialise FileReader with input file and initialise scanner
+	    try (FileReader refereeFile = new FileReader(INPUT_FILE)){
+		try (Scanner refScanner = new Scanner(refereeFile)) {
 
-                    // Read every line of input file and create referees
-                    int counter = 1;
-                    while (refScanner.hasNextLine()) {
-                        String newReferee = refScanner.nextLine();
-                        if (newReferee != null) {
-                            if (counter <= MAX_REFEREES)
-                            {
-                                Referee referee = new Referee(newReferee);
-                                uniqueIDTest(referee);
-                                refList.add(referee);
-                                counter++;
-                            }
-                            else {
-                                inputFileTooLarge = true;
-                                break;
-                            }
-                        }
-                    }
-                    // Close scanner after usage
-                    refScanner.close();
-                } finally {
-                        // Close input file if it has been opened
-                        if (refereeFile != null) {
-                                refereeFile.close();
-                        }
-                }
-            } catch (IOException e) {
-            } // Do nothing if file not found
+		    // Read every line of input file and create referees
+		    while (refScanner.hasNextLine()) {
+			String newReferee = refScanner.nextLine();
+				Referee referee = new Referee(newReferee);
+				refList.add(referee);
+		    }
+		}
+	    } catch (IOException e) {
+		JOptionPane.showMessageDialog(null,
+			"Error reading file. Check your privileges", "",
+			JOptionPane.ERROR_MESSAGE);
+	    } 
 	}
 	
 	/**
@@ -355,10 +336,10 @@ public class RefereeList implements Iterable<Referee> {
                 if (ref.getID().equals(referee.getID()))
                 {
                     referee.setID(createID(referee.getFirstName(),referee.getLastName()));
-                    inputIDChangeRequired = true;
                 }
             }
         }
+        
 	/**
 	 * 
 	 */
@@ -368,16 +349,7 @@ public class RefereeList implements Iterable<Referee> {
 			max = ref.getAllocations() > max ? ref.getAllocations() : max;
 		return max;
 	}
-	
-        public boolean getFileSize()
-        {
-            return inputFileTooLarge;
-        }
         
-        public boolean idChange()
-        {
-            return inputIDChangeRequired;
-        }
 	/**
 	 * Returns an iterator of elements of type Referee
 	 */
