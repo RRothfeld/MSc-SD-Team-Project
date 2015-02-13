@@ -227,11 +227,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		refereesTable.setRowSelectionAllowed(false);
 		refereesTable.setFont(new Font("Dialog", Font.PLAIN, 14));
 
-		// refereesTable.setPreferredScrollableViewportSize(new Dimension(400,
-		// 100));
-		// refereesTable.setFillsViewportHeight(false);
-		// refereesTable.getModel().addTableModelListener(table);
-
 		DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
 		leftRender.setHorizontalAlignment(JLabel.LEFT);
 		refereesTable.getColumnModel().getColumn(4).setCellRenderer(leftRender);

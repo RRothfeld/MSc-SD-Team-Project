@@ -371,7 +371,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				RefQualification.values()));
 		
 		// Populate JComboBox for selecting referee's qualification level
-		for (int level = 1; level <= 4; level++)
+		for (int level = 1; level <= RefQualification.MAXIMUM; level++)
 			cmbLevel.addItem(level);
 		
 		// Populate JComboBox for selecting referee's home location
@@ -595,7 +595,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 
 		// Test if a given referee is existing (decide whether to do add or edit
 		// procedure)
-		if (this.referee == null) {
+		if (this.referee == null) { // No referee given, thus, add new referee
 			try {
 				// Retrieve user input for referee names
 				String firstName = fldFirstName.getText().trim();
@@ -617,30 +617,46 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 					invalidInput(fldLastName);
 				}
 				
+				// Try retrieving number of allocations and parsing it to int
 				int prevAlloc = Integer.parseInt(fldPrevAlloc.getText().trim());
 				
+				// If valid names and allocations have been provided add new
+				// referee
 				if (validInput) {
-					controller.addReferee(firstName, lastName, qualType, qualLevel,
-							prevAlloc, home, travel);
-					
-					controller.updateTable();
-					
-					dispose();
+					// Add new referee with specified details
+					controller.addReferee(firstName, lastName, qualType,
+							qualLevel, prevAlloc, home, travel);
+
+					// Close window
+					updateAndDispose();
 				} else {
+					// Show error if non-valid names have been provided
 					JOptionPane.showMessageDialog(null,
 							"Please enter valid data.");
 				}
 			} catch (NumberFormatException e) {
+				// Show error if non-valid allocations have been provided
 				invalidInput(fldPrevAlloc);
 				JOptionPane.showMessageDialog(null, "Please enter valid data.");
 			}
-		} else {
+		} else { // Referee given, thus, edit given referee
+			// Edit given referee according to provided input
 			controller.editReferee(referee, qualType, qualLevel, home, travel);
 			
-			controller.updateTable();
-			
-			dispose();
+			// Close window
+			updateAndDispose();
 		}
+	}
+	
+	/**
+	 * Update the main table to reflect changes and dispose the RefereeFrame
+	 */
+	private void updateAndDispose() {
+		// Update the main table to reflect the changes
+		controller.updateTable();
+		
+		// Close the current window
+		dispose();
 	}
 	
 	/**

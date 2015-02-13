@@ -150,14 +150,6 @@ public class Referee implements Comparable<Referee> {
 		return qualification;
 	}
 
-	// /**
-	// *
-	// * @return - Integer value for this Referee used by TableModel
-	// */
-	// public int getIndex()
-	// {
-	// return this.index;
-	// }
 	/**
 	 * Integer value for qualification level independent of other info.
 	 * 
