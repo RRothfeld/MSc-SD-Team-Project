@@ -371,7 +371,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				RefQualification.values()));
 		
 		// Populate JComboBox for selecting referee's qualification level
-		for (int level = 1; level <= 4; level++)
+		for (int level = 1; level <= RefQualification.MAXIMUM; level++)
 			cmbLevel.addItem(level);
 		
 		// Populate JComboBox for selecting referee's home location

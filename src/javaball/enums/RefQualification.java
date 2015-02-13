@@ -6,6 +6,9 @@ public enum RefQualification {
 
 	/** Name of enum as instance variable */
 	private final String LocationString;
+	
+	/** Highest level of referee qualification */
+	public static int MAXIMUM = 4;
 
 	/**
 	 * Enum constructor with name
