@@ -95,7 +95,6 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setLocationRelativeTo(null); // centres JFrame on desktop
 		layoutComponents();
-		setResizable(false);
 	}
 
 	private void layoutComponents() {
@@ -282,11 +281,9 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * The action performed class
-	 * 
-	 * @param ae
+	 * Starts appropriate responses upon user interaction
+	 * @param ae the action event
 	 */
-	@Override
 	public void actionPerformed(ActionEvent ae) {
 		// If add button is pressed
 		if (ae.getSource() == btnAddRef) {

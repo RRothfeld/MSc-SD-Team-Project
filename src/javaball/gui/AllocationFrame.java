@@ -77,7 +77,6 @@ public class AllocationFrame extends JFrame implements ActionListener {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null); // Centres JFrame on desktop
-		setResizable(false);
 
 		// Adds GUI components
 		layoutComponents();

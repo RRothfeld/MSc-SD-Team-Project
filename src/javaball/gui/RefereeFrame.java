@@ -52,7 +52,7 @@ import javax.swing.border.LineBorder;
  */
 public final class RefereeFrame extends JFrame implements ActionListener {
 	/** JFrame and spacing dimensions in pixels */
-	private static final int WIDTH = 365, HEIGHT = 515, SPACING = 5;
+	private static final int WIDTH = 365, HEIGHT = 550, SPACING = 5;
 
 	/** Predefined set of colours for uniform component colouring */
 	private final Color background = Color.decode("0xDDDDDD"),
@@ -87,7 +87,6 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		setTitle("Add Referee");
 		setSize(WIDTH, HEIGHT);
 		setLocationRelativeTo(null); // centres JFrame on desktop
-		setResizable(false);
 		
 		// Establish GUI framework for holding components
 		layoutFramework();
@@ -416,35 +415,45 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	 * TODO COMMENT
 	 */
 	private void protectHomeLocation() {
-		// NORTH IS DEFAULT
+		// Preselect North as default input
 		chbxNorth.setSelected(true);
 		chbxNorth.setEnabled(false);
 		
+		// Add ItemListener for the JComboBox for selecting home location
 		cmbHome.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				
+				// Retrieve just selected home location
 				Location selectedLocation = (Location) cmbHome
 						.getSelectedItem();
 				
+				// Set the travel preferences accordingly
 				if (selectedLocation.equals(Location.NORTH)) {
-					chbxCentral.setEnabled(true);
-					chbxSouth.setEnabled(true);
-
+					// Set the selected home location as a travel preference and
+					// disallow editing of that travel preference
 					chbxNorth.setSelected(true);
 					chbxNorth.setEnabled(false);
-				} else if ((selectedLocation.equals(Location.CENTRAL))) {
-					chbxNorth.setEnabled(true);
+					// Ensure all other JCheckBoxes are editable
+					chbxCentral.setEnabled(true);
 					chbxSouth.setEnabled(true);
-
+					
+				} else if ((selectedLocation.equals(Location.CENTRAL))) {
+					// Set the selected home location as a travel preference and
+					// disallow editing of that travel preference
 					chbxCentral.setSelected(true);
 					chbxCentral.setEnabled(false);
-				} else {
+					// Ensure all other JCheckBoxes are editable
 					chbxNorth.setEnabled(true);
-					chbxCentral.setEnabled(true);
-
+					chbxSouth.setEnabled(true);
+					
+				} else {
+					// Set the selected home location as a travel preference and
+					// disallow editing of that travel preference
 					chbxSouth.setSelected(true);
 					chbxSouth.setEnabled(false);
+					// Ensure all other JCheckBoxes are editable
+					chbxNorth.setEnabled(true);
+					chbxCentral.setEnabled(true);
 				}
 			}
 		});
@@ -528,27 +537,27 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * TODO REWORK
+	 * Starts appropriate responses upon user interaction
+	 * @param ae the action event
 	 */
-	@Override
 	public void actionPerformed(ActionEvent ae) {
 		// Test which button has been pressed
 		if (ae.getSource() == btnSave) {
-			// Test if more referees can be added
+			// In case it's an adding procedure test whether more referees can
+			// be added; if not show error; otherwise proceed
 			if (controller.indexCounter() == RefereeList.MAX_REFEREES
 					&& referee == null)
 				JOptionPane.showMessageDialog(null,
 						"No more referees can be added.");
 			else
-				// Execute saving/editing procedure
-				processReferee();
+				processReferee(); // Execute saving/editing procedure
+			
 		} else if (ae.getSource() == btnRemove) {
-			// Remove referee and close window
-			controller.removeReferee(referee);
-			dispose();
+			controller.removeReferee(referee); // Remove referee
+			dispose(); // Close window
+			
 		} else {
-			// Close window as cancel button has been pressed
-			dispose();
+			dispose(); // Close window upon cancel
 		}
 	}
 	
