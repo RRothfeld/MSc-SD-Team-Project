@@ -97,20 +97,6 @@ public class Match {
 	suitableReferees = referees;
     }
     
-//    /**
-//     *
-//     * @return
-//     */
-//    public Referee[] getReferees() {
-//        
-//        String match = String.format("%d %s %s %s %s %s %s", week, level, area,
-//            suitableReferees[0].getFirstName(), suitableReferees[0].getLastName(), 
-//            suitableReferees[1].getFirstName(), suitableReferees[1].getLastName());
-//	
-//        System.out.println(match);
-//        return this.suitableReferees;
-//    }
-    
     /** Returns match details
      * @return  */
     public String report() {   
