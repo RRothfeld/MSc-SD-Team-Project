@@ -333,13 +333,13 @@ public class JavaBallController {
     // TODO we need to rethink this
     private static class RefereeTableModel extends AbstractTableModel {
 
-        private final static int COLUMN_ID     = 0;
-        private final static int COLUMN_FNAME  = 1;
-        private final static int COLUMN_SNAME  = 2;
-        private final static int COLUMN_QUAL   = 3;
-        private final static int COLUMN_ALLOC  = 4;
-        private final static int COLUMN_HOME   = 5;
-        private final static int COLUMN_TRAVEL = 6;
+		private final static int COLUMN_ID = 0;
+		private final static int COLUMN_FNAME = 1;
+		private final static int COLUMN_SNAME = 2;
+		private final static int COLUMN_QUAL = 3;
+		private final static int COLUMN_ALLOC = 4;
+		private final static int COLUMN_HOME = 5;
+		private final static int COLUMN_TRAVEL = 6;
 
         private final String[] columnNames;
 
