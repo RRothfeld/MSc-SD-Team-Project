@@ -57,11 +57,13 @@ public class Season implements Iterable<Match> {
      * @return match that is played doing that week
      */
 	public Match getMatch(int week) {
-		// find match with desired ID
+		// find match with desired ID/week number
 		for (Match match : matches) {
 			if (match.getWeek() == week)
 				return match;
 		}
+		
+		// Return null if not found
 		return null;
 	}
 
