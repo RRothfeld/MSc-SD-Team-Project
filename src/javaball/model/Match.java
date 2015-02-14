@@ -110,7 +110,7 @@ public class Match {
      */
     @Override
 	public String toString() {
-		String match = String.format("%-7s %-3s  %-3s %-3s %s%10s %s%n", Integer.toString(week), level,
+		String match = String.format("%-7s %-7s %-7s %-2s %s%9s %s%n", Integer.toString(week), level,
 				area, suitableReferees[0].getFirstName(),
 				suitableReferees[0].getLastName(),
 				suitableReferees[1].getFirstName(),

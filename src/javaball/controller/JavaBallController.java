@@ -247,7 +247,7 @@ public class JavaBallController {
 				FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
 
 			// Write headline for match output file
-			matchFile.write("Week\tLevel\tArea\tReferee 1\tReferee 2\n");
+			matchFile.write("Week\tLevel\tArea\tReferee 1\t\tReferee 2\n");
 
 			// Report on all matches in the match file
 			for (Match match : season)
