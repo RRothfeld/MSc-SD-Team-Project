@@ -304,20 +304,21 @@ public class JavaBallController {
     	// Reset the table model
         table.setModel(refereeTableModel());
         
-        // TODO
+        // Instantiate a new CellRenderer to align a cell to the left.
         DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
         leftRender.setHorizontalAlignment( JLabel.LEFT );
         
-        // TODO
+        // Apply this renderer to the Allocations Column of the Table
         table.getColumnModel().getColumn(4).setCellRenderer(leftRender);
         
-        // TODO
+        // Instantiate RowSorter object, assign it the Sorter object of table. 
         DefaultRowSorter sorter = ((DefaultRowSorter)table.getRowSorter()); 
         
-        // Create temporary list to TODO
+        // Create empty list to filled with data in the table
         ArrayList list = new ArrayList();
         
-        // TODO
+        // Implement RowSorter against the list, with sort key Column 0 of Table 
+        // in Ascending Order; Pass this to the RowSorter Object and sort table
         list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(list);
         sorter.sort();
@@ -334,7 +335,7 @@ public class JavaBallController {
      * the ArrayList passed to it, either Allocations or Full List
      */
     private static class RefereeTableModel extends AbstractTableModel {
-    	// TODO
+    	// Integer value for each Column Heading with useful name
 		private final static int COLUMN_ID = 0;
 		private final static int COLUMN_FNAME = 1;
 		private final static int COLUMN_LNAME = 2;
@@ -343,65 +344,74 @@ public class JavaBallController {
 		private final static int COLUMN_HOME = 5;
 		private final static int COLUMN_TRAVEL = 6;
 
-		// TODO
-        private final String[] columnNames;
+		// Array Containing values of Column Headers to be displayed
+        private final String[] columnNames = {"ID", "First Name", "Last Name", 
+                "Qualification", "Allocations", "Home", "Travel Areas"};
 
-        // TODO
+        // The data to be populated on the table.
         private final ArrayList<Referee> listReferees;
 
-        // TODO
+        // Constructor for RefereeTableModel
+        // Assign the TableModel data to the ArrayList passed in.
         public RefereeTableModel(ArrayList<Referee> referees) {
-            this.listReferees = referees;
-            this.columnNames  = new String[]{"ID", "First Name", "Last Name", 
-                "Qualification", "Allocations", "Home", "Travel Areas"};     
+            this.listReferees = referees;     
         }
 
-        // TODO
+        // Find out amount of rows to create in Model based on size of ArrayList
         @Override
         public int getRowCount() {
             return listReferees.size();
         }
 
-        // TODO
+        // Return number of columns, being amount of headings in columnNames.
         @Override
         public int getColumnCount() {
             return columnNames.length;
         }
 
-        // TODO
+        // Return the Column heading for Column in a given index
         @Override
         public String getColumnName(int columnIndex) {
             return columnNames[columnIndex];
         }
 
-        // TODO
+        // Return the Column type for Column in a given index
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            if (listReferees.isEmpty())
-            {
+            if (listReferees.isEmpty()) {
                 return Object.class;
             }
+            
+            // Return only if referees are available
             return getValueAt(0, columnIndex).getClass();
         }
 
-        // TODO
+        // Stop user from being able to edit the TableData
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return false;
         }
 
-        // TODO
+        /**
+         * Method to return a value in the table at a given row and column.
+         * The return type is kept as type Object to allow for multiple data 
+         * types in a table
+         * @param rowIndex - The row of data we're interested in (a referee)
+         * @param columnIndex - The column we want (information about a referee)
+         * @return The found result.
+         */
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-        	 // TODO
+        	// Get specific referee 
         	Referee referee = listReferees.get(rowIndex);
             
-        	 // TODO
+        	// Instantiate return value
         	Object returnValue = null;
-			
-        	 // TODO
+		
+                // Check for invalid rowIndex being passed
         	if (referee != null) {
-        		// TODO
+        		// get appropriate referee information based on 
+                // column index that's passed
         		switch (columnIndex) {
 				case COLUMN_ID:
 					returnValue = referee.getID();
@@ -429,23 +439,12 @@ public class JavaBallController {
 					throw new IllegalArgumentException("Invalid column index");
 				}
         		
-        		 // TODO
+        		// return found result
 				return returnValue;
 			}
         	
-        	 // TODO
+        	// if referee wasn't found, return null
 			return returnValue;
 		}
-
-        // TODO
-        @Override
-        public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        	// TODO
-        	Referee referee = listReferees.get(rowIndex);
-            
-        	// TODO
-        	if (columnIndex == COLUMN_ID)
-                referee.setIndex((int) value);
-        }
     }
 }
