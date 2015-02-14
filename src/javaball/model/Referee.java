@@ -304,14 +304,6 @@ public class Referee implements Comparable<Referee> {
 	}
 	
 	/**
-	 *
-	 * @param index
-	 */
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
-	/**
 	 * Compares two referees by ID.
 	 * 
 	 * @param ref
