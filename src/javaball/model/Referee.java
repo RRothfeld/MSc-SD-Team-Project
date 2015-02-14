@@ -226,21 +226,23 @@ public class Referee implements Comparable<Referee> {
 	 * @param qualifications value of qualification type and/or level
 	 */
 	private void setQualifications(String qualifications) {
-		String refQual;
-		
+		// Set scope of string to store qualification type
+		String qualType;
+
 		// Check if input is the maximum length for a qualification (i.e. is the
 		// qualification type AND level)
 		if (qualifications.length() < RefQualification.MAXIMUM)
 			// Input only contains type
-			refQual = qualifications;
+			qualType = qualifications;
 		else {
 			// Input contains type and level
-			refQual = qualifications.substring(0, 3);
-			setQualificationLevel(Integer.parseInt(qualifications.substring(3)));
+			qualType = qualifications.substring(0, 3);
+			Integer qualLevel = Integer.parseInt(qualifications.substring(3));
+			setQualificationLevel(qualLevel);
 		}
 		
 		// Set qualification type accordingly
-		switch (refQual.trim().toUpperCase()) {
+		switch (qualType.trim().toUpperCase()) {
 		case "NJB":
 			this.qualification = RefQualification.NJB;
 			break;

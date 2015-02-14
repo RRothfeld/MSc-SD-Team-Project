@@ -103,7 +103,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		
 		// Set JPanel layouts/properties
 		headerPanel.setLayout(new BorderLayout(0, 0));
-		headerTextPanel.setLayout(new BoxLayout(headerTextPanel, BoxLayout.X_AXIS));
+		headerTextPanel.setLayout(new BoxLayout(headerTextPanel,
+				BoxLayout.X_AXIS));
 		headerPanel.setBackground(header);
 		searchPanel.setBackground(header);
 		headerTextPanel.setBackground(header);
@@ -330,18 +331,14 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 			controller.saveExit();
 	}
 	
-	/**
-	 * Opens a referee adding frame
-	 */
+	/** Opens a referee adding frame */
 	private void addReferee() {
 		RefereeFrame addRef = new RefereeFrame(controller);
 		addRef.setTitle("Add Referee");
 		addRef.setVisible(true);
 	}
 	
-	/**
-	 * Opens an allocation frame
-	 */
+	/** Opens an allocation frame */
 	private void allocateReferees() {
 		AllocationFrame allocateRef = new AllocationFrame(controller);
 		allocateRef.setVisible(true);
