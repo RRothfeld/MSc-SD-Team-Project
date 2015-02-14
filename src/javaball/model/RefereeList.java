@@ -319,7 +319,7 @@ public class RefereeList implements Iterable<Referee> {
 			}
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,
-					"Error reading file. Check your privileges", "",
+					"Error reading file.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
