@@ -32,9 +32,6 @@ public class Referee implements Comparable<Referee> {
 	private String firstName;
 	private String lastName;
 	
-	/** Travel destination assigned to the referee */
-	private String travelLocations;
-	
 	/** Qualification type for the referee (such as NJB or IJB) */
 	private RefQualification qualification;
 	
@@ -44,11 +41,9 @@ public class Referee implements Comparable<Referee> {
 	/** The area where the referee is based */
 	private Location homeLocation;
 
-	/**
-	 * Travel preferences associated associated with the referee
-	 */
+	/** Travel preferences associated associated with the referee */
 	private boolean visitNorth;
-	private boolean visitCentre;
+	private boolean visitCentral;
 	private boolean visitSouth;
 
 	/** List of matches by week that a referee has been allocated to */
@@ -183,7 +178,14 @@ public class Referee implements Comparable<Referee> {
 	 * @return three character string of the travel preferences
 	 */
 	public String getTravelLocations() {
-		return travelLocations;
+		// Get travel locations for referee and combine to three-letter code
+		String n = visitNorth ? "Y" : "N";
+		String c = visitCentral ? "Y" : "N";
+		String s = visitSouth ? "Y" : "N";
+		String travel = n + c + s;
+		
+		// Return three-letter code
+		return travel;
 	}
 
 	/**
@@ -196,7 +198,7 @@ public class Referee implements Comparable<Referee> {
 		if (location.equals(Location.NORTH))
 			return this.visitNorth;
 		else if (location.equals(Location.CENTRAL))
-			return this.visitCentre;
+			return this.visitCentral;
 		else
 			return this.visitSouth;
 	}
@@ -215,7 +217,7 @@ public class Referee implements Comparable<Referee> {
 
 		// Store boolean values in instance variables
 		this.visitNorth = visits[0];
-		this.visitCentre = visits[1];
+		this.visitCentral = visits[1];
 		this.visitSouth = visits[2];
 	}
 	
@@ -271,7 +273,7 @@ public class Referee implements Comparable<Referee> {
 	public void setHomeLocation(Location location) {
 		this.homeLocation = location;
 	}
-
+	
 	/**
 	 * Compares two referees. The comparison is based on the Unicode value of
 	 * each character of the referee's unique identifier
