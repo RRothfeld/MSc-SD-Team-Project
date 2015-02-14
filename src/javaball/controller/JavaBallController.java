@@ -296,7 +296,8 @@ public class JavaBallController {
     }
     
     /**
-     * TODO
+     * Sets the TableModel to the current full list of Referees and
+     * order that list by ID.
      */
     public void updateTable() {
         table.setModel(refereeTableModel());
@@ -316,15 +317,21 @@ public class JavaBallController {
     }
     
     /**
-     * TODO
-     * @return
+     * Returns the current size of RefereeList 
+     * (Raoul: Used to be used by rowCount in TableModel, no longer is)
+     * 
+     * @return Current size of RefereeList.
      */
     public int indexCounter()  {
         return refList.size();
     }
     
     /**
-     * TODO
+     * Nested Class to construct and a TableModel to populate the main display 
+     * JTable based on a given ArrayList of Referees.
+     * 
+     * It defines columns and populates the rows with Referee data specific to 
+     * the ArrayList passed to it, either Allocations or Full List
      */
     private static class RefereeTableModel extends AbstractTableModel {
 
