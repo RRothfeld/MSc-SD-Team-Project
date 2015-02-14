@@ -298,7 +298,7 @@ public class Referee implements Comparable<Referee> {
 	 */
 	@Override
 	public String toString() {
-		String report = String.format("%s %s %s %s%d %d %s %s\n", this.getID(),
+		String report = String.format("%s %s %s %s%d %d %s %s%n", this.getID(),
 				this.getFirstName(), this.getLastName(),
 				this.getQualification(), this.getQualificationLevel(),
 				this.getAllocations(), this.getHomeLocation(),

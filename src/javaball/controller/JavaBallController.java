@@ -254,7 +254,7 @@ public class JavaBallController {
 			// Write separating line below headRow
 			for (int i = 0; i < headRow.length(); i++)
 				matchFile.write("-");
-			matchFile.write("\n");
+			matchFile.write(String.format("%n"));
 
 			// Report on all matches in the match file
 			for (Match match : season)
