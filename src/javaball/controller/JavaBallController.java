@@ -51,7 +51,7 @@ public class JavaBallController {
     private final String REFEREE_FILE = "RefereesOut.txt";
     private final String MATCH_FILE   = "MatchAllocs.txt";
     
-	/** Default strings within GUI */
+	/** JTable as interface between referee storage and display */
     private JTable table;
 	
     /**
@@ -62,6 +62,9 @@ public class JavaBallController {
     public JavaBallController(Season season, RefereeList refList) {
     	this.refList = refList;
     	this.season = season;
+    	
+    	// Populate table with referees
+    	this.table = new JTable(refereeTableModel());
     }
 
     /**
@@ -268,34 +271,32 @@ public class JavaBallController {
 	}
     
     /**
-     * Creates a new table to store the referees
-     * @return table with default TableModel
+     * Returns the referee table
+     * @return table with referees
      */
-    public JTable getTable() {
-        table = new JTable(refereeTableModel());                
+    public JTable getTable() {        
         return table;
     }
     
     /**
-     * Method to create TableModel object for refList and return it to the GUI
-     * @return - Full TableModel
+     * Creates and returns TableModel derived from referee list
+     * @return the TableModel with the referees
      */
     public TableModel refereeTableModel() {
-    	TableModel tableData = new RefereeTableModel(refList.getReferees());
-        return tableData;
+        return new RefereeTableModel(refList.getReferees());
     }
     
-    /**
-     *
-     * @param allocatedReferees
-     */
+	/**
+	 * Overwrites the current table with a table with referees suitable for a
+	 * specific match and ordered by suitability
+	 * @param allocatedReferees list of suitable referees ordered by ID
+	 */
     public void allocatedTableData(ArrayList<Referee> allocatedReferees) {
         table.setModel(new RefereeTableModel(allocatedReferees)); 
     }
     
     /**
-     * Method to set Table Model to RefereeList if it isn't already
-     * and to sort by Referee ID.
+     * TODO
      */
     public void updateTable() {
         table.setModel(refereeTableModel());
@@ -315,14 +316,16 @@ public class JavaBallController {
     }
     
     /**
-     *
+     * TODO
      * @return
      */
     public int indexCounter()  {
         return refList.size();
     }
     
-    // TODO we need to rethink this
+    /**
+     * TODO
+     */
     private static class RefereeTableModel extends AbstractTableModel {
 
 		private final static int COLUMN_ID = 0;
