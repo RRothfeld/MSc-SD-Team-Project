@@ -35,21 +35,21 @@ import javax.swing.table.TableModel;
  * @author Marco Cook (2152599c)
  * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.2
- * @since 11-02-2015
+ * @version 1.4
+ * @since 13-02-2015
  */
 public class JavaBallController {
-	
+	/** Default strings within GUI */
 	private JavaBallGUI view;
     private final Season season;
     private final RefereeList refList;
     private ChartFrame chart;
-
+    
+	/** File names for text output files */
     private final String REFEREE_FILE = "RefereesOut.txt";
     private final String MATCH_FILE   = "MatchAllocs.txt";
     
-    private final int MAX_ID_SIZE = 4;
-    
+	/** Default strings within GUI */
     private JTable table;
 	
     /**
@@ -81,22 +81,16 @@ public class JavaBallController {
      * @return referee with matching ID or first and last name
      */
     public Referee getReferee(String search) {
-    	// If search query resembles an ID, retrieve referee per ID
-    	if (search.length() <= MAX_ID_SIZE)    	
-            return refList.getReferee(search);
+    	// Split search input by the space character
+    	String[] query = search.split("[ ]+");
     	
-    	// Else divide search query into first and last name, retrieve referee
-    	// per first and last name
-    	else {
-    		String[] names = search.split("[ ]+");
-    		
-    		// If input does not resemble a first and last name, return null
-    		if (names.length != 2)
-    			return null;
-    		
-    		// Retrieve referee by first and last name
-    		return refList.getReferee(names[0], names[1]);
-    	}
+    	// Check how many splits have been created
+    	if (query.length == 1) // One split: search by referee ID
+            return refList.getReferee(query[0]);
+    	else if (query.length == 2) // Two splits: search by referee full name
+    		return refList.getReferee(query[0], query[1]);
+    	else // More than two splits: invalid search
+    		return null;
     }
     
     /**
