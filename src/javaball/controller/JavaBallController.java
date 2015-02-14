@@ -35,44 +35,52 @@ import javax.swing.table.TableModel;
  * @author Marco Cook (2152599c)
  * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.4
- * @since 13-02-2015
+ * @version 1.5 - final
+ * @since 14-02-2015
  */
 public class JavaBallController {
-	/** Default strings within GUI */
-	private JavaBallGUI view;
+	/** References to model components */
+	private final RefereeList refList;
     private final Season season;
-    private final RefereeList refList;
+
+    /** References to view components */
     private ChartFrame chart;
+	private JavaBallGUI view;
     
 	/** File names for text output files */
     private final String REFEREE_FILE = "RefereesOut.txt";
     private final String MATCH_FILE   = "MatchAllocs.txt";
     
-	/** Default strings within GUI */
+	/** JTable as interface between referee storage and display */
     private JTable table;
 	
     /**
-     *
-     * @param season
-     * @param refList
+     * Constructor for the JavaBallController storing references to the model
+     * @param season the season to store matches
+     * @param refList the referee list to store referees
      */
     public JavaBallController(Season season, RefereeList refList) {
+    	this.refList = refList;
     	this.season = season;
-		this.refList = refList;
+    	
+    	// Populate table with referees
+    	this.table = new JTable(refereeTableModel());
     }
 
     /**
-     *
+     * Opens a chart frame if there are referees to be shown
      */
 	public void openChart() {
+		// Check if referees are existent
 		if (refList.size() > 0) {
+			// Open chart frame
 			chart = new ChartFrame(refList);
 			chart.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			chart.setVisible(true);
-		} else {
-			JOptionPane.showMessageDialog(null, "There are no referees listed.");
-		}
+		} else
+			// Otherwise show error message
+			JOptionPane.showMessageDialog(null, "There are no "
+					+ "referees listed.");
 	}
         
     /**
@@ -94,77 +102,79 @@ public class JavaBallController {
     }
     
     /**
-     *
-     * @param firstName
-     * @param lastName
-     * @return
+     * Creates an unique ID given a full name
+     * @param firstName the first name of a referee
+     * @param lastName the last name of a referee
+     * @return a unique ID for the given referee
      */
-    public String createID(String firstName, String lastName)
-    {
-        return refList.createID(firstName,lastName);
-    }
+	public String createID(String firstName, String lastName) {
+		return refList.createID(firstName, lastName);
+	}
     
     /**
-     * Method to return 
-     * @param referee - The Referee We Want to Know about
-     * @param location - The location we want to know if they travel to
-     * @return - whether or not referee travels to Location
+     * Checks if a referee travels to a given location
+     * @param referee the referee in question for his/her travel preferences
+     * @param location the location which is in question if he/she travels to
+     * @return whether or not the referee travels to the given location
      */
     public boolean travelPreference(Referee referee, Location location) {
         return (referee.getTravelLocation(location));
     }
 
     /**
-     * Add a new Referee
-     * @param fname
-     * @param sname
-     * @param qualification
-     * @param qualLevel
-     * @param allocations
-     * @param home
-     * @param travel
+     * Adds a new referee
+     * @param firstName the first name of the referee
+     * @param lastName the last name of the referee
+     * @param qualType the qualification type of the referee (NJB/IJB)
+     * @param qualLevel the qualification level of the referee (1..4)
+     * @param allocations the previous match allocations for the referee
+     * @param home the home location of the referee
+     * @param travel the travel preferences of the referee
      */
-	public void addReferee(String fname, String sname,
-			RefQualification qualification, int qualLevel, int allocations,
+	public void addReferee(String firstName, String lastName,
+			RefQualification qualType, int qualLevel, int allocations,
 			Location home, String travel) {
-		refList.add(new Referee(refList.createID(fname, sname), fname, sname,
-				qualification.name() + qualLevel, allocations, home
-						.toString(), travel));
+		// Call upon the RefereeList's add method to add a referee with all
+		// details given as parameters
+		refList.add(new Referee(refList.createID(firstName, lastName),
+				firstName, lastName, qualType.name() + qualLevel, allocations,
+				home.toString(), travel));
 	}
 
     /**
-     * Method to edit fields of Referee
-     * 
-     * @param referee
-     * @param travel
-     * @param qualification
-     * @param qualLevel
-     * @param home
+     * Edits details of an existent referee
+     * @param referee the referee to be edited
+     * @param qualType the qualification type of the referee (NJB/IJB)
+     * @param qualLevel the qualification level of the referee (1..4)
+     * @param home the home location of the referee
+     * @param travel the travel preferences of the referee
      */
-	public void editReferee(Referee referee, RefQualification qualification,
+	public void editReferee(Referee referee, RefQualification qualType,
 			int qualLevel, Location home, String travel) {
-		referee.setTravelLocation(travel);
-		referee.setHomeLocation(home);
-		referee.setQualification(qualification);
+		// Call upon setter methods for changing the referee details
+		referee.setQualification(qualType);
 		referee.setQualificationLevel(qualLevel);
+		referee.setHomeLocation(home);
+		referee.setTravelLocation(travel);
 	}
 
     /**
-     * Removes referee for RefereeList
-     * @param ref - Referee to be removed
+     * Removes a referee from the RefereeList
+     * @param referee the referee to be removed
      */
-    public void removeReferee(Referee ref) {
-            refList.remove(ref);
-            updateTable();
-    }
+	public void removeReferee(Referee referee) {
+		refList.remove(referee);
+	}
 
-    /**
-     * 
-     * @param week
-     * @param level
-     * @param location
-     * @return 
-     */
+	/**
+	 * Retrieve a list of suitable referees for a given match and allocate the
+	 * two most suitable referees to said match; Return suitability list for
+	 * display within the referee table
+	 * @param week the week in which the match shall take place
+	 * @param level the match's level (Junior or Senior)
+	 * @param location the match's location
+	 * @return a list of referees ordered by suitability for the given match
+	 */
     public ArrayList<Referee> allocateReferees(int week, MatchLevel level,
                     Location location) {
         // Create new match without referees
@@ -173,46 +183,52 @@ public class JavaBallController {
         // Check if match ID is already in use
         if (season.getMatch(week) == null) {
             // Retrieve all suitable Referees for that match
-            ArrayList<Referee> availableReferees = refList.getSuitableReferees(match);
+			ArrayList<Referee> availableReferees = refList
+					.getSuitableReferees(match);
+
             // Select the two most suitable referees and pass them to the match
-            if (availableReferees.size() > 1)
-            {
-                Referee[] suitableReferees = { availableReferees.get(0),
-                            availableReferees.get(1) };
-                match.setReferees(suitableReferees);
-                season.addMatch(match);
-                // Add the fully filled in match to the current season
+			if (availableReferees.size() > 1) {
+				// Retrieve the two most suitable referees
+				Referee[] suitableReferees = {availableReferees.get(0),
+						availableReferees.get(1)};
+				
+				// Allocate these referees to the match and add the fully
+				// filled in match to the current season
+				match.setReferees(suitableReferees);
+				season.addMatch(match);
+
+				// Pass reference of that match to the allocated referees
+				availableReferees.get(0).addMatch(match);
+				availableReferees.get(1).addMatch(match);
+			}
             
-                availableReferees.get(0).addMatch(match);
-                availableReferees.get(1).addMatch(match);
-                // Return indication of successful referee allocation
-            }
-            
+            // Return the list of referees ordered by suitability
             return availableReferees;
         }
         else {
+        	// Otherwise return error (week already in use)
             return null;
         }
     }
     
     /**
-     *
-     * @param label
+     * Sets the table header in the main GUI to a specified text
+     * @param label the text to be displayed as the table header
      */
     public void setTableHeader(String label) {
 		view.setTableHeader(label);
 	}
 	
     /**
-     *
-     * @param view
+     * Stores a reference to the view within the JavaBallController
+     * @param view the main GUI
      */
     public void setView(JavaBallGUI view) {
 		this.view = view;
 	}
     
     /**
-     * Method to write output file and quit the program.
+     * Writes output file and quits the programme
      */
     public void saveExit() {
     	// Exit programme if data has been successfully saved
@@ -220,58 +236,68 @@ public class JavaBallController {
         	System.exit(0);
     }
     
-    /**
-     * Write report and return if it worked or not.
-     */
-    private boolean writeOutputFile() {
-        try (FileWriter matchFile = new FileWriter(MATCH_FILE);
-        		FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
-                matchFile.write("Week\tLevel\tArea\tReferee 1\tReferee 2\n");
-                for (Match match : season) {
-                	matchFile.write(match.toString());
-                }
-                for (Referee ref : refList) {
-                    refereeFile.write(ref.toString());
-                }
-            return true;
-        } catch (IOException ex) {
-	    JOptionPane.showMessageDialog(null,
-		    "Error writing to file. Check your privileges", "",
-		    JOptionPane.ERROR_MESSAGE);
-                return false;
-        } 
-    }
+	/**
+	 * Writes the match and referee output files
+	 * @return whether or not the saving (output writing) was successful
+	 */
+	private boolean writeOutputFile() {
+		// Try creating the two output files
+		try (FileWriter matchFile = new FileWriter(MATCH_FILE);
+				FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
+
+			// Write headline for match output file
+			matchFile.write("Week\tLevel\tArea\tReferee 1\tReferee 2\n");
+
+			// Report on all matches in the match file
+			for (Match match : season)
+				matchFile.write(match.toString());
+
+			// report on all referees in the referee file
+			for (Referee ref : refList)
+				refereeFile.write(ref.toString());
+
+			// Return indication of success if no exceptions have been thrown
+			return true;
+
+		} catch (IOException ex) {
+			// In case of an exception display error message
+			JOptionPane.showMessageDialog(null,
+					"Error writing to file.", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			
+			// Return indication that saving was not successful
+			return false;
+		}
+	}
     
     /**
-     * Method to create table.
-     * Brought to this class to add update logic.
-     * @return table with default TableModel
+     * Returns the referee table
+     * @return table with referees
      */
-    public JTable getTable() {
-        table = new JTable(refereeTableModel());                
+    public JTable getTable() {        
         return table;
     }
     
     /**
-     * Method to create TableModel object for refList and return it to the GUI
-     * @return - Full TableModel
+     * Creates and returns TableModel derived from referee list
+     * @return the TableModel with the referees
      */
     public TableModel refereeTableModel() {
-    	TableModel tableData = new RefereeTableModel(refList.getReferees());
-        return tableData;
+        return new RefereeTableModel(refList.getReferees());
     }
     
-    /**
-     *
-     * @param allocatedReferees
-     */
+	/**
+	 * Overwrites the current table with a table with referees suitable for a
+	 * specific match and ordered by suitability
+	 * @param allocatedReferees list of suitable referees ordered by ID
+	 */
     public void allocatedTableData(ArrayList<Referee> allocatedReferees) {
         table.setModel(new RefereeTableModel(allocatedReferees)); 
     }
     
     /**
-     * Method to set Table Model to RefereeList if it isn't already
-     * and to sort by Referee ID.
+     * Sets the TableModel to the current full list of Referees and
+     * order that list by ID.
      */
     public void updateTable() {
         table.setModel(refereeTableModel());
@@ -291,14 +317,22 @@ public class JavaBallController {
     }
     
     /**
-     *
-     * @return
+     * Returns the current size of RefereeList 
+     * (Raoul: Used to be used by rowCount in TableModel, no longer is)
+     * 
+     * @return Current size of RefereeList.
      */
     public int indexCounter()  {
         return refList.size();
     }
     
-    // TODO we need to rethink this
+    /**
+     * Nested Class to construct and a TableModel to populate the main display 
+     * JTable based on a given ArrayList of Referees.
+     * 
+     * It defines columns and populates the rows with Referee data specific to 
+     * the ArrayList passed to it, either Allocations or Full List
+     */
     private static class RefereeTableModel extends AbstractTableModel {
 
 		private final static int COLUMN_ID = 0;
