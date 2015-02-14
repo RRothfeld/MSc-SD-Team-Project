@@ -296,19 +296,28 @@ public class JavaBallController {
         table.setModel(new RefereeTableModel(allocatedReferees)); 
     }
     
-    /** TODO
+    /**
      * Sets the TableModel to the current full list of Referees and
      * order that list by ID.
      */
     public void updateTable() {
+    	// Reset the table model
         table.setModel(refereeTableModel());
         
+        // TODO
         DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
         leftRender.setHorizontalAlignment( JLabel.LEFT );
+        
+        // TODO
         table.getColumnModel().getColumn(4).setCellRenderer(leftRender);
         
+        // TODO
         DefaultRowSorter sorter = ((DefaultRowSorter)table.getRowSorter()); 
+        
+        // Create temporary list to TODO
         ArrayList list = new ArrayList();
+        
+        // TODO
         list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(list);
         sorter.sort();
@@ -325,40 +334,47 @@ public class JavaBallController {
      * the ArrayList passed to it, either Allocations or Full List
      */
     private static class RefereeTableModel extends AbstractTableModel {
-
+    	// TODO
 		private final static int COLUMN_ID = 0;
 		private final static int COLUMN_FNAME = 1;
-		private final static int COLUMN_SNAME = 2;
+		private final static int COLUMN_LNAME = 2;
 		private final static int COLUMN_QUAL = 3;
 		private final static int COLUMN_ALLOC = 4;
 		private final static int COLUMN_HOME = 5;
 		private final static int COLUMN_TRAVEL = 6;
 
+		// TODO
         private final String[] columnNames;
 
+        // TODO
         private final ArrayList<Referee> listReferees;
 
+        // TODO
         public RefereeTableModel(ArrayList<Referee> referees) {
             this.listReferees = referees;
             this.columnNames  = new String[]{"ID", "First Name", "Last Name", 
                 "Qualification", "Allocations", "Home", "Travel Areas"};     
         }
 
+        // TODO
         @Override
         public int getRowCount() {
             return listReferees.size();
         }
 
+        // TODO
         @Override
         public int getColumnCount() {
             return columnNames.length;
         }
 
+        // TODO
         @Override
         public String getColumnName(int columnIndex) {
             return columnNames[columnIndex];
         }
 
+        // TODO
         @Override
         public Class<?> getColumnClass(int columnIndex) {
             if (listReferees.isEmpty())
@@ -368,54 +384,68 @@ public class JavaBallController {
             return getValueAt(0, columnIndex).getClass();
         }
 
+        // TODO
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
             return false;
         }
 
+        // TODO
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            Referee referee = listReferees.get(rowIndex);
-            Object returnValue = null;
-            if (referee != null)
-            {    
-                switch (columnIndex) {
-                case COLUMN_ID:
-                    returnValue = referee.getID();
-                    break;
-                case COLUMN_FNAME:
-                    returnValue = referee.getFirstName();
-                    break;
-                case COLUMN_SNAME:
-                    returnValue = referee.getLastName();
-                    break;
-                case COLUMN_QUAL:
-                    returnValue = referee.getQualification().name() + referee.getQualificationLevel();
-                    break;
-                case COLUMN_ALLOC:
-                    returnValue = referee.getAllocations();
-                    break;
-                case COLUMN_HOME:
-                    returnValue = referee.getHomeLocation();
-                    break;
-                case COLUMN_TRAVEL:
-                    returnValue = referee.getTravelLocations();
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid column index");
-                }     
-            return returnValue;
-            }
-            return returnValue;
-        }
+        	 // TODO
+        	Referee referee = listReferees.get(rowIndex);
+            
+        	 // TODO
+        	Object returnValue = null;
+			
+        	 // TODO
+        	if (referee != null) {
+        		// TODO
+        		switch (columnIndex) {
+				case COLUMN_ID:
+					returnValue = referee.getID();
+					break;
+				case COLUMN_FNAME:
+					returnValue = referee.getFirstName();
+					break;
+				case COLUMN_LNAME:
+					returnValue = referee.getLastName();
+					break;
+				case COLUMN_QUAL:
+					returnValue = referee.getQualification().name()
+							+ referee.getQualificationLevel();
+					break;
+				case COLUMN_ALLOC:
+					returnValue = referee.getAllocations();
+					break;
+				case COLUMN_HOME:
+					returnValue = referee.getHomeLocation();
+					break;
+				case COLUMN_TRAVEL:
+					returnValue = referee.getTravelLocations();
+					break;
+				default:
+					throw new IllegalArgumentException("Invalid column index");
+				}
+        		
+        		 // TODO
+				return returnValue;
+			}
+        	
+        	 // TODO
+			return returnValue;
+		}
 
+        // TODO
         @Override
         public void setValueAt(Object value, int rowIndex, int columnIndex) {
-            Referee referee = listReferees.get(rowIndex);
-            if (columnIndex == COLUMN_ID)
-            {
+        	// TODO
+        	Referee referee = listReferees.get(rowIndex);
+            
+        	// TODO
+        	if (columnIndex == COLUMN_ID)
                 referee.setIndex((int) value);
-            }
         }
     }
 }
