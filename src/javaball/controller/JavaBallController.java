@@ -317,9 +317,8 @@ public class JavaBallController {
         // Create empty list to filled with data in the table
         ArrayList list = new ArrayList();
         
-        // Implement RowSorter against the list, with sortkey Column 0 of Table 
-        // in Ascending Order.
-        // Pass this to the RowSorter Object and sort the table
+        // Implement RowSorter against the list, with sort key Column 0 of Table 
+        // in Ascending Order; Pass this to the RowSorter Object and sort table
         list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(list);
         sorter.sort();
@@ -376,13 +375,14 @@ public class JavaBallController {
             return columnNames[columnIndex];
         }
 
-        // 
+        // Return the Column type for Column in a given index
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            if (listReferees.isEmpty())
-            {
+            if (listReferees.isEmpty()) {
                 return Object.class;
             }
+            
+            // Return only if referees are available
             return getValueAt(0, columnIndex).getClass();
         }
 
@@ -405,13 +405,13 @@ public class JavaBallController {
         	// Get specific referee 
         	Referee referee = listReferees.get(rowIndex);
             
-        	 // Instantiate return value
+        	// Instantiate return value
         	Object returnValue = null;
 		
                 // Check for invalid rowIndex being passed
         	if (referee != null) {
         		// get appropriate referee information based on 
-                        // column index that's passed
+                // column index that's passed
         		switch (columnIndex) {
 				case COLUMN_ID:
 					returnValue = referee.getID();
@@ -439,11 +439,11 @@ public class JavaBallController {
 					throw new IllegalArgumentException("Invalid column index");
 				}
         		
-        		 // retun found result
+        		// return found result
 				return returnValue;
 			}
         	
-        	 // if referee wasn't found, return null
+        	// if referee wasn't found, return null
 			return returnValue;
 		}
     }
