@@ -270,14 +270,6 @@ public class Referee implements Comparable<Referee> {
 	public void setHomeLocation(Location location) {
 		this.homeLocation = location;
 	}
-	
-	/**
-	 * 
-	 * @param ID
-	 */
-	public void setID(String ID) {
-		this.uniqueID = ID;
-	}
 
 	/**
 	 * Compares two referees. The comparison is based on the 
