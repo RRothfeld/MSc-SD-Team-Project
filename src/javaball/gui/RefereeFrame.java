@@ -48,7 +48,7 @@ import javax.swing.border.LineBorder;
  * @author Raoul Rothfeld (2164502r)
  * 
  * @version 1.5 - final
- * @since 13-02-2015
+ * @since 14-02-2015
  */
 public final class RefereeFrame extends JFrame implements ActionListener {
 	/** JFrame and spacing dimensions in pixels */
@@ -558,7 +558,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 			
 		} else if (ae.getSource() == btnRemove) {
 			controller.removeReferee(referee); // Remove referee
-			dispose(); // Close window
+			updateAndDispose(); // Close window
 			
 		} else {
 			dispose(); // Close window upon cancel
