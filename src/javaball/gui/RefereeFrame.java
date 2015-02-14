@@ -547,19 +547,10 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		// Test which button has been pressed
 		if (ae.getSource() == btnSave) {
-			// In case it's an adding procedure test whether more referees can
-			// be added; if not show error; otherwise proceed
-			if (controller.indexCounter() == RefereeList.MAX_REFEREES
-					&& referee == null)
-				JOptionPane.showMessageDialog(null,
-						"No more referees can be added.");
-			else
-				processReferee(); // Execute saving/editing procedure
-			
+				processReferee(); // Process entered details
 		} else if (ae.getSource() == btnRemove) {
 			controller.removeReferee(referee); // Remove referee
 			updateAndDispose(); // Close window
-			
 		} else {
 			dispose(); // Close window upon cancel
 		}
@@ -621,15 +612,18 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				// Try retrieving number of allocations and parsing it to int
 				int prevAlloc = Integer.parseInt(fldPrevAlloc.getText().trim());
 				
-				// If valid names and allocations have been provided add new
-				// referee
+				// If valid names and allocations have been provided add referee
 				if (validInput) {
 					// Add new referee with specified details
-					controller.addReferee(firstName, lastName, qualType,
-							qualLevel, prevAlloc, home, travel);
-
-					// Close window
-					updateAndDispose();
+					if(controller.addReferee(firstName, lastName, qualType,
+							qualLevel, prevAlloc, home, travel))
+						// Close window
+						updateAndDispose();
+					else
+						// Show error if no more referee can be added
+						JOptionPane.showMessageDialog(null,
+								"No more referees can be added.");
+					
 				} else {
 					// Show error if non-valid names have been provided
 					JOptionPane.showMessageDialog(null,

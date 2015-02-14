@@ -130,13 +130,14 @@ public class JavaBallController {
      * @param allocations the previous match allocations for the referee
      * @param home the home location of the referee
      * @param travel the travel preferences of the referee
+     * @return indication of success of adding the referee
      */
-	public void addReferee(String firstName, String lastName,
+	public boolean addReferee(String firstName, String lastName,
 			RefQualification qualType, int qualLevel, int allocations,
 			Location home, String travel) {
 		// Call upon the RefereeList's add method to add a referee with all
 		// details given as parameters
-		refList.add(new Referee(refList.createID(firstName, lastName),
+		return refList.add(new Referee(refList.createID(firstName, lastName),
 				firstName, lastName, qualType.name() + qualLevel, allocations,
 				home.toString(), travel));
 	}
@@ -295,7 +296,7 @@ public class JavaBallController {
         table.setModel(new RefereeTableModel(allocatedReferees)); 
     }
     
-    /**
+    /** TODO
      * Sets the TableModel to the current full list of Referees and
      * order that list by ID.
      */
@@ -316,17 +317,7 @@ public class JavaBallController {
         view.resetTableHeader();
     }
     
-    /**
-     * Returns the current size of RefereeList 
-     * (Raoul: Used to be used by rowCount in TableModel, no longer is)
-     * 
-     * @return Current size of RefereeList.
-     */
-    public int indexCounter()  {
-        return refList.size();
-    }
-    
-    /**
+    /** TODO
      * Nested Class to construct and a TableModel to populate the main display 
      * JTable based on a given ArrayList of Referees.
      * 
