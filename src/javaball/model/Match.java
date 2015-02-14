@@ -103,18 +103,22 @@ public class Match {
      * The format is as follows "2 Junior North Dave Gray Tim Toms", where 2 is
      * the week number, Junior is the level of the match, Dave Gray is the name 
      * of the first suitable referee and Tim Toms is the name of the second 
-     * suitable referee. The week is a decimal number while the rest of the 
-     * information are strings. Everything is separated by tabs and the line 
-     * is followed by a carriage return.
+     * suitable referee.
      * @return a string representation of a match
      */
-    @Override
+	@Override
 	public String toString() {
-		String match = String.format("%-7s %-7s %-7s %-2s %s%9s %s%n", Integer.toString(week), level,
-				area, suitableReferees[0].getFirstName(),
-				suitableReferees[0].getLastName(),
-				suitableReferees[1].getFirstName(),
-				suitableReferees[1].getLastName());
+		// Combine first and last names
+		String nameRef1 = suitableReferees[0].getFirstName() + " "
+				+ suitableReferees[0].getLastName();
+		String nameRef2 = suitableReferees[1].getFirstName() + " "
+				+ suitableReferees[1].getLastName();
+		
+		// Combine all match details into a string
+		String match = String.format("%-5d %-7s %-7s %-17s %-17s%n",
+				week, level, area, nameRef1, nameRef2);
+		
+		// Return one line match report
 		return match;
 	}
 }
