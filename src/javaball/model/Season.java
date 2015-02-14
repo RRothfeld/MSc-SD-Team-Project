@@ -24,7 +24,6 @@ import java.util.Iterator;
 public class Season implements Iterable<Match> {
     
     /** Total number of matches per season */
-    //public static final int MAX_MATCHES = 52;
     public static final int MIN_WEEK = 1;
     public static final int MAX_WEEK = 52; // represents max matches
     
@@ -37,8 +36,8 @@ public class Season implements Iterable<Match> {
     }
     
     /** 
-     * Returns all matches
-     * @return  
+     * Returns all matches in the season
+     * @return array list of matches in the season
      */
     public ArrayList<Match> getMatches() {
 	return matches;
@@ -46,7 +45,7 @@ public class Season implements Iterable<Match> {
     
     /** 
      * Method for adding a match to a season
-     * @param match 
+     * @param match object
      */
     public void addMatch(Match match) {
 	matches.add(match);
@@ -54,8 +53,8 @@ public class Season implements Iterable<Match> {
     
     /** 
      * Return match based on week number
-     * @param week
-     * @return  
+     * @param week number from 1 to 52
+     * @return match that is played doing that week
      */
     public Match getMatch(int week) {
 	// find match with desired ID
