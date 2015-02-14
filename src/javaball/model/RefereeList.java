@@ -348,8 +348,8 @@ public class RefereeList implements Iterable<Referee> {
 	}
 
 	/**
-	 * Returns an iterator of elements of type Referee Allows for generalised
-	 * for-loops
+	 * Returns an iterator of elements of type Referee, thus allows for
+	 * generalised for-loops
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override
