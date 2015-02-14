@@ -115,7 +115,7 @@ public class Match {
 				+ suitableReferees[1].getLastName();
 		
 		// Combine all match details into a string
-		String match = String.format("%-5d %-7s %-7s %-17s %-17s%n",
+		String match = String.format("%-5d %-7s %-8s %-17s %-17s%n",
 				week, level, area, nameRef1, nameRef2);
 		
 		// Return one line match report

@@ -247,7 +247,7 @@ public class JavaBallController {
 				FileWriter refereeFile = new FileWriter(REFEREE_FILE)) {
 
 			// Write headline for match output file
-			String headRow = String.format("%-5s %-7s %-7s %-17s %-17s%n",
+			String headRow = String.format("%-5s %-7s %-8s %-17s %-17s%n",
 					"Week", "Level", "Area", "Referee 1", "Referee 2");
 			matchFile.write(headRow);
 			
