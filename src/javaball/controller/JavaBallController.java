@@ -324,8 +324,8 @@ public class JavaBallController {
         // Create empty list to filled with data in the table
         ArrayList list = new ArrayList();
         
-        // Implement RowSorter against the list, with sort key Column 0 of Table 
-        // in Ascending Order; Pass this to the RowSorter Object and sort table
+		// Implement RowSorter against the list, with ascending sort on first
+        // column; pass this to the RowSorter Object and sort table
         list.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(list);
         sorter.sort();

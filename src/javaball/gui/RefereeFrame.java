@@ -576,7 +576,8 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 		String travel = n + c + s;
 		
 		// Retrieve selected referee qualification type
-		RefQualification qualType = (RefQualification) cmbType.getSelectedItem();
+		RefQualification qualType = (RefQualification) cmbType
+				.getSelectedItem();
 		
 		// Retrieve selected referee qualification; adjust by offset of one as
 		// getSelectedIndex() returns the position (starting with 0)
