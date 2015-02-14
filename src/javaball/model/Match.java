@@ -18,12 +18,12 @@ import javaball.enums.MatchLevel;
  * @author Marco Cook (2152599c)
  * @author Raoul Rothfeld (2164502r)
  * 
- * @version 1.4
- * @since 11-02-2015
+ * @version 1.5 - final
+ * @since 14-02-2015
  */
 public class Match {
     /** The week when a match is held also serves as an ID */
-    private int week; // week when the match is held 1-52
+    private int week;
 
     /** The area where the match is held. */
     private Location area;
@@ -34,68 +34,69 @@ public class Match {
     /** Suitable referees for the match */
     private Referee[] suitableReferees;
     
-    /**
-     * Instantiates a new Match given a calendar week, area the match is held
-     * in, level of the match
-     * @param week the number of the calendar match is held in (1-52)
-     * @param level of the match (Junior or Senior)
-     * @param area that the match is held in
-     */
-    public Match(int week, MatchLevel level, Location area) {
-	setWeek(week);
-	this.level = level;
-	this.area = area;
-	this.suitableReferees = new Referee[2];
-    }
-    
-    /** Returns the week number which is also match ID
-     * @return  */
-    public int getWeek() {
-	return week;
-    }
-
-    /** Returns the area where the match is held
-     * @return  */
-    public Location getArea() {
-	return area;
-    }
-
-    /** Returns match level (i.e. Senior or Junior
-     * @return  */
-    public MatchLevel getLevel() {
-	return level;
-    }
-    
-    /** Set the week number which is also match ID
-     * @param week
-     * @return  */
-    public boolean setWeek(int week) {
-	if (week >= Season.MIN_WEEK && week <= Season.MAX_WEEK) {
-	    this.week = week;
-	    return true;
+	/**
+	 * Instantiates a new Match given a calendar week, area the match is held
+	 * in, and a level of the match
+	 * @param week the number of the calendar match is held in (1-52)
+	 * @param level of the match (Junior or Senior)
+	 * @param area that the match is held in
+	 */
+	public Match(int week, MatchLevel level, Location area) {
+		this.week = week;
+		this.level = level;
+		this.area = area;
+		
+		// Array to store suitable referees
+		this.suitableReferees = new Referee[2];
 	}
-	return false;
-    }
 
-    /** Set the area where match is held
-     * @param area */
-    public void setArea(Location area) {
-	this.area = area;
-    }
+	/**
+	 * Returns the week number which is also match ID
+	 * @return the week number
+	 */
+	public int getWeek() {
+		return week;
+	}
+
+	/**
+	 * Returns the area where the match is held
+	 * @return the area
+	 */
+	public Location getArea() {
+		return area;
+	}
+
+	/**
+	 * Returns match level (i.e. Senior or Junior)
+	 * @return the match level
+	 */
+	public MatchLevel getLevel() {
+		return level;
+	}
+
+	/**
+	 * Set the area where match is held
+	 * @param area where match is to be held
+	 */
+	public void setArea(Location area) {
+		this.area = area;
+	}
     
-    /** Set match level (i.e. Senior or Junior
-     * @param level */
-    public void getLevel(MatchLevel level) {
-	this.level = level;
-    }
+	/**
+	 * Set match level (i.e. Senior or Junior
+	 * @param level the level of the match
+	 */
+	public void getLevel(MatchLevel level) {
+		this.level = level;
+	}
     
     /**
-     * Method to set the Suitable Referees once created by RefereeList
-     * @param referees - ArrayList containing 2 suitable referees
+     * Populates the match's suitable referees array
+     * @param referees, an array containing the two suitable referees
      */
-    public void setReferees(Referee[] referees){
-	suitableReferees = referees;
-    }
+	public void setReferees(Referee[] referees) {
+		suitableReferees = referees;
+	}
     
     /**
      * Returns a string representation of the contents of the specified match.
@@ -108,10 +109,12 @@ public class Match {
      * @return a string representation of a match
      */
     @Override
-    public String toString() {   
-        String match = String.format("%d\t%s\t%s\t%s %s\t%s %s%n", week, level, area,
-		suitableReferees[0].getFirstName(), suitableReferees[0].getLastName(), 
-                suitableReferees[1].getFirstName(),suitableReferees[1].getLastName());
-	return match;
-    }
+	public String toString() {
+		String match = String.format("%d\t%s\t%s\t%s %s\t%s %s%n", week, level,
+				area, suitableReferees[0].getFirstName(),
+				suitableReferees[0].getLastName(),
+				suitableReferees[1].getFirstName(),
+				suitableReferees[1].getLastName());
+		return match;
+	}
 }
