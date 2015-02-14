@@ -319,7 +319,7 @@ public class RefereeList implements Iterable<Referee> {
 			}
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null,
-					INPUT_FILE + "could not be read.", "Error",
+					INPUT_FILE + " could not be read.", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
