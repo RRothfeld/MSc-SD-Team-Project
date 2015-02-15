@@ -597,7 +597,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				// Check validity of first name (input existing and consisting
 				// only of letters and spaces)
 				if (firstName == null || firstName.equals("")
-						|| !Pattern.matches("[A-Za-z]+", firstName)) {
+						|| !Pattern.matches("[A-Za-z-]+", firstName)) {
 					validInput = false;
 					invalidInput(fldFirstName);
 				}
@@ -605,7 +605,7 @@ public final class RefereeFrame extends JFrame implements ActionListener {
 				// Check validity of last name (input existing and consisting
 				// only of letters and spaces)
 				if (lastName == null || lastName.equals("")
-						|| !Pattern.matches("[A-Za-z]+", lastName)) {
+						|| !Pattern.matches("[A-Za-z-]+", lastName)) {
 					validInput = false;
 					invalidInput(fldLastName);
 				}
