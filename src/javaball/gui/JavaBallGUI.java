@@ -254,7 +254,8 @@ public class JavaBallGUI extends JFrame implements ActionListener {
 		DefaultTableCellRenderer leftRender = new DefaultTableCellRenderer();
 		leftRender.setHorizontalAlignment(JLabel.LEFT);
 		refereesTable.getColumnModel().getColumn(4).setCellRenderer(leftRender);
-		refereesTable.setSize(contentPanel.getWidth(), contentPanel.getHeight());
+		refereesTable.setSize(contentPanel.getWidth(),
+				contentPanel.getHeight());
 		
 		// Create wrapper JScrollPanel to host the table
 		JScrollPane tablePane = new JScrollPane(refereesTable);
