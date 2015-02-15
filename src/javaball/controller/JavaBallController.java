@@ -260,7 +260,8 @@ public class JavaBallController {
 			for (Match match : season)
 				matchFile.write(match.toString());
 
-			// report on all referees in the referee file
+			// report on all referees in the referee file, ensure order by ID
+			refList.sort();
 			for (Referee ref : refList)
 				refereeFile.write(ref.toString());
 
